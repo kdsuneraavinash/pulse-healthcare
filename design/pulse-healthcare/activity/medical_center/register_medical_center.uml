@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_9msEMCa3EemyB422JQ4x-Q" name="activity_medical_center">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_9qhbUCa3EemyB422JQ4x-Q">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Activity" xmi:id="_9nFs0Ca3EemyB422JQ4x-Q" name="Register medical center" node="_BKu_oCbtEemDDt0xq2Q3ug _8qkAECbsEemDDt0xq2Q3ug _vPe7ACbsEemDDt0xq2Q3ug _sTV6ACbsEemDDt0xq2Q3ug _Pn1-4CbsEemDDt0xq2Q3ug _736QkCbrEemDDt0xq2Q3ug _1ADn8CbrEemDDt0xq2Q3ug _xMw8gCbrEemDDt0xq2Q3ug _BBggQCbvEemDDt0xq2Q3ug _bax24CbrEemDDt0xq2Q3ug _CQxL4CbzEemDDt0xq2Q3ug _L1qCgCbzEemDDt0xq2Q3ug _eHjskCbzEemDDt0xq2Q3ug _dynh4Cb0EemDDt0xq2Q3ug _iAAS4Cb1EemDDt0xq2Q3ug _w_29YCb1EemDDt0xq2Q3ug _BkqMcCb2EemDDt0xq2Q3ug _Knzn8Cb2EemDDt0xq2Q3ug _R39YoCbyEemDDt0xq2Q3ug" group="_In0m0CbuEemDDt0xq2Q3ug _GMjeQCbuEemDDt0xq2Q3ug _-oRNcCbtEemDDt0xq2Q3ug">
+    <edge xmi:type="uml:ControlFlow" xmi:id="_N_N-wCbtEemDDt0xq2Q3ug" target="_xMw8gCbrEemDDt0xq2Q3ug" source="_bax24CbrEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_QY82QCbtEemDDt0xq2Q3ug" target="_1ADn8CbrEemDDt0xq2Q3ug" source="_xMw8gCbrEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_XHkqYCbtEemDDt0xq2Q3ug" target="_Pn1-4CbsEemDDt0xq2Q3ug" source="_vPe7ACbsEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_Y3lPcCbtEemDDt0xq2Q3ug" name="Yes" target="_sTV6ACbsEemDDt0xq2Q3ug" source="_Pn1-4CbsEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_cIaHACbtEemDDt0xq2Q3ug" target="_BKu_oCbtEemDDt0xq2Q3ug" source="_8qkAECbsEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_Y-0GkCbyEemDDt0xq2Q3ug" target="_R39YoCbyEemDDt0xq2Q3ug" source="_BBggQCbvEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_vlTyUCbyEemDDt0xq2Q3ug" name="Yes" target="_vPe7ACbsEemDDt0xq2Q3ug" source="_R39YoCbyEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_GAdJsCbzEemDDt0xq2Q3ug" target="_CQxL4CbzEemDDt0xq2Q3ug" source="_sTV6ACbsEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_G18AMCbzEemDDt0xq2Q3ug" target="_8qkAECbsEemDDt0xq2Q3ug" source="_CQxL4CbzEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_NzscgCbzEemDDt0xq2Q3ug" target="_L1qCgCbzEemDDt0xq2Q3ug" source="_BKu_oCbtEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_RrkF8CbzEemDDt0xq2Q3ug" name="" target="_BBggQCbvEemDDt0xq2Q3ug" source="_736QkCbrEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_jT2LQCbzEemDDt0xq2Q3ug" name="No" target="_eHjskCbzEemDDt0xq2Q3ug" source="_R39YoCbyEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_K7vigCb0EemDDt0xq2Q3ug" target="_736QkCbrEemDDt0xq2Q3ug" source="_eHjskCbzEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_j1zzYCb0EemDDt0xq2Q3ug" name="No" target="_dynh4Cb0EemDDt0xq2Q3ug" source="_Pn1-4CbsEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_ol3MkCb1EemDDt0xq2Q3ug" target="_736QkCbrEemDDt0xq2Q3ug" source="_iAAS4Cb1EemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_sZEYcCb1EemDDt0xq2Q3ug" target="_iAAS4Cb1EemDDt0xq2Q3ug" source="_1ADn8CbrEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_0zLeACb1EemDDt0xq2Q3ug" target="_w_29YCb1EemDDt0xq2Q3ug" source="_iAAS4Cb1EemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_HU2pcCb2EemDDt0xq2Q3ug" target="_BkqMcCb2EemDDt0xq2Q3ug" source="_L1qCgCbzEemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_I6pikCb2EemDDt0xq2Q3ug" target="_BkqMcCb2EemDDt0xq2Q3ug" source="_w_29YCb1EemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_MXMh8Cb2EemDDt0xq2Q3ug" target="_Knzn8Cb2EemDDt0xq2Q3ug" source="_BkqMcCb2EemDDt0xq2Q3ug"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_CEOV8Cb5EemDDt0xq2Q3ug" target="_BkqMcCb2EemDDt0xq2Q3ug" source="_dynh4Cb0EemDDt0xq2Q3ug"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_-oRNcCbtEemDDt0xq2Q3ug" name="Medical Center" node="_bax24CbrEemDDt0xq2Q3ug _xMw8gCbrEemDDt0xq2Q3ug _736QkCbrEemDDt0xq2Q3ug _BKu_oCbtEemDDt0xq2Q3ug _L1qCgCbzEemDDt0xq2Q3ug _w_29YCb1EemDDt0xq2Q3ug _BkqMcCb2EemDDt0xq2Q3ug _Knzn8Cb2EemDDt0xq2Q3ug">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_3JI-4CbsEemDDt0xq2Q3ug">
+        <body>Login details&#xD;
+</body>
+      </ownedComment>
+    </group>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_GMjeQCbuEemDDt0xq2Q3ug" name="System" node="_1ADn8CbrEemDDt0xq2Q3ug _BBggQCbvEemDDt0xq2Q3ug _R39YoCbyEemDDt0xq2Q3ug _CQxL4CbzEemDDt0xq2Q3ug _eHjskCbzEemDDt0xq2Q3ug">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_022vACbzEemDDt0xq2Q3ug">
+        <body>Medical center details&#xD;
+</body>
+      </ownedComment>
+    </group>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_In0m0CbuEemDDt0xq2Q3ug" name="Admin" node="_vPe7ACbsEemDDt0xq2Q3ug _sTV6ACbsEemDDt0xq2Q3ug _Pn1-4CbsEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:InitialNode" xmi:id="_bax24CbrEemDDt0xq2Q3ug" name="" outgoing="_N_N-wCbtEemDDt0xq2Q3ug" inPartition="_-oRNcCbtEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_xMw8gCbrEemDDt0xq2Q3ug" name="Request to register the medical center" incoming="_N_N-wCbtEemDDt0xq2Q3ug" outgoing="_QY82QCbtEemDDt0xq2Q3ug" inPartition="_-oRNcCbtEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_1ADn8CbrEemDDt0xq2Q3ug" name="Prompt for medical center details" incoming="_QY82QCbtEemDDt0xq2Q3ug" outgoing="_sZEYcCb1EemDDt0xq2Q3ug" inPartition="_GMjeQCbuEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_736QkCbrEemDDt0xq2Q3ug" name="Enter medical center details" incoming="_K7vigCb0EemDDt0xq2Q3ug _ol3MkCb1EemDDt0xq2Q3ug" outgoing="_RrkF8CbzEemDDt0xq2Q3ug" inPartition="_-oRNcCbtEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:DecisionNode" xmi:id="_Pn1-4CbsEemDDt0xq2Q3ug" name="Verified?" incoming="_XHkqYCbtEemDDt0xq2Q3ug" outgoing="_Y3lPcCbtEemDDt0xq2Q3ug _j1zzYCb0EemDDt0xq2Q3ug" inPartition="_In0m0CbuEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_sTV6ACbsEemDDt0xq2Q3ug" name="Confirm registration" incoming="_Y3lPcCbtEemDDt0xq2Q3ug" outgoing="_GAdJsCbzEemDDt0xq2Q3ug" inPartition="_In0m0CbuEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_vPe7ACbsEemDDt0xq2Q3ug" name="Verify request" incoming="_vlTyUCbyEemDDt0xq2Q3ug" outgoing="_XHkqYCbtEemDDt0xq2Q3ug" inPartition="_In0m0CbuEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_8qkAECbsEemDDt0xq2Q3ug" name="Send login details" incoming="_G18AMCbzEemDDt0xq2Q3ug" outgoing="_cIaHACbtEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_BKu_oCbtEemDDt0xq2Q3ug" name="First login" incoming="_cIaHACbtEemDDt0xq2Q3ug" outgoing="_NzscgCbzEemDDt0xq2Q3ug" inPartition="_-oRNcCbtEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_BBggQCbvEemDDt0xq2Q3ug" name="Basic validation" incoming="_RrkF8CbzEemDDt0xq2Q3ug" outgoing="_Y-0GkCbyEemDDt0xq2Q3ug" inPartition="_GMjeQCbuEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:DecisionNode" xmi:id="_R39YoCbyEemDDt0xq2Q3ug" name="Valid?" incoming="_Y-0GkCbyEemDDt0xq2Q3ug" outgoing="_vlTyUCbyEemDDt0xq2Q3ug _jT2LQCbzEemDDt0xq2Q3ug" inPartition="_GMjeQCbuEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_CQxL4CbzEemDDt0xq2Q3ug" name="Add medical center to database" incoming="_GAdJsCbzEemDDt0xq2Q3ug" outgoing="_G18AMCbzEemDDt0xq2Q3ug" inPartition="_GMjeQCbuEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_L1qCgCbzEemDDt0xq2Q3ug" name="Change default password" incoming="_NzscgCbzEemDDt0xq2Q3ug" outgoing="_HU2pcCb2EemDDt0xq2Q3ug" inPartition="_-oRNcCbtEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_eHjskCbzEemDDt0xq2Q3ug" name="Inform of invalid data" incoming="_jT2LQCbzEemDDt0xq2Q3ug" outgoing="_K7vigCb0EemDDt0xq2Q3ug" inPartition="_GMjeQCbuEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_dynh4Cb0EemDDt0xq2Q3ug" name="Reject request" incoming="_j1zzYCb0EemDDt0xq2Q3ug" outgoing="_CEOV8Cb5EemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:ForkNode" xmi:id="_iAAS4Cb1EemDDt0xq2Q3ug" name="" incoming="_sZEYcCb1EemDDt0xq2Q3ug" outgoing="_ol3MkCb1EemDDt0xq2Q3ug _0zLeACb1EemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_w_29YCb1EemDDt0xq2Q3ug" name="Cancel" incoming="_0zLeACb1EemDDt0xq2Q3ug" outgoing="_I6pikCb2EemDDt0xq2Q3ug" inPartition="_-oRNcCbtEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:JoinNode" xmi:id="_BkqMcCb2EemDDt0xq2Q3ug" name="" incoming="_HU2pcCb2EemDDt0xq2Q3ug _I6pikCb2EemDDt0xq2Q3ug _CEOV8Cb5EemDDt0xq2Q3ug" outgoing="_MXMh8Cb2EemDDt0xq2Q3ug" inPartition="_-oRNcCbtEemDDt0xq2Q3ug"/>
+    <node xmi:type="uml:ActivityFinalNode" xmi:id="_Knzn8Cb2EemDDt0xq2Q3ug" name="" incoming="_MXMh8Cb2EemDDt0xq2Q3ug" inPartition="_-oRNcCbtEemDDt0xq2Q3ug"/>
+  </packagedElement>
+</uml:Model>
