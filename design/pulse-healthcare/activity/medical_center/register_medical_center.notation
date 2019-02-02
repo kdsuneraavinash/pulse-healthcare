@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/gmfdiag/style" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_9nJXMCa3EemyB422JQ4x-Q" type="PapyrusUMLActivityDiagram" name="Activity Diagram" measurementUnit="Pixel">
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/gmfdiag/style" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_9nJXMCa3EemyB422JQ4x-Q" type="PapyrusUMLActivityDiagram" name="register_medical_center_activity" measurementUnit="Pixel">
   <children xmi:type="notation:Shape" xmi:id="_9nJXMSa3EemyB422JQ4x-Q" type="Activity_Shape">
     <children xmi:type="notation:DecorationNode" xmi:id="_9nJXMia3EemyB422JQ4x-Q" type="Activity_NameLabel"/>
     <children xmi:type="notation:DecorationNode" xmi:id="_9nJXMya3EemyB422JQ4x-Q" type="Activity_KeywordLabel"/>
@@ -85,7 +85,7 @@
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-oa-dibtEemDDt0xq2Q3ug"/>
         </children>
         <element xmi:type="uml:ActivityPartition" href="register_medical_center.uml#_-oRNcCbtEemDDt0xq2Q3ug"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-oa-cSbtEemDDt0xq2Q3ug" x="15" y="8" width="341" height="919"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-oa-cSbtEemDDt0xq2Q3ug" x="15" y="8" width="341" height="918"/>
       </children>
       <children xmi:type="notation:Shape" xmi:id="_GMsoMCbuEemDDt0xq2Q3ug" type="ActivityPartition_Shape">
         <children xmi:type="notation:DecorationNode" xmi:id="_GMsoMibuEemDDt0xq2Q3ug" type="ActivityPartition_NameLabel"/>
