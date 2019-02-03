@@ -86,7 +86,7 @@
             </children>
             <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_fejrwSejEembKN0KULybNA"/>
             <element xmi:type="uml:OpaqueAction" href="medicine_information.uml#_feezQCejEembKN0KULybNA"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fejrxiejEembKN0KULybNA" x="154" y="295" width="121" height="41"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fejrxiejEembKN0KULybNA" x="134" y="295" width="141" height="41"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_pfpWMCejEembKN0KULybNA" type="OpaqueAction_Shape">
             <children xmi:type="notation:DecorationNode" xmi:id="_pfp9QCejEembKN0KULybNA" type="OpaqueAction_NameLabel"/>
@@ -203,7 +203,7 @@
     <element xmi:type="uml:ControlFlow" href="medicine_information.uml#_kMGY8CejEembKN0KULybNA"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_kMLRciejEembKN0KULybNA" points="[540, 259, -643984, -643984]$[580, 260, -643984, -643984]$[573, 360, -643984, -643984]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kMXesCejEembKN0KULybNA" id="(0.9929078014184397,0.48148148148148145)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kMXesSejEembKN0KULybNA" id="(0.6611570247933884,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kMXesSejEembKN0KULybNA" id="(0.723404255319149,0.0)"/>
   </edges>
   <edges xmi:type="notation:Connector" xmi:id="_i1ut0CehEemJ-cg8qZ34mg" type="ControlFlow_Edge" source="_fejrwCejEembKN0KULybNA" target="_zYwwYCejEembKN0KULybNA">
     <children xmi:type="notation:DecorationNode" xmi:id="_i1vU4CehEemJ-cg8qZ34mg" type="ControlFlow_NameLabel">
