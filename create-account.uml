@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_SOidoCeXEembKN0KULybNA" name="create-account">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_SSLngCeXEembKN0KULybNA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Activity" xmi:id="_jibAQCeXEembKN0KULybNA" name="create-account" node="_nlP8gCeXEembKN0KULybNA _jG72wCeaEembKN0KULybNA _nRpjsCeaEembKN0KULybNA _v1OHQCeaEembKN0KULybNA _cR6DMCebEembKN0KULybNA _jVHAMCebEembKN0KULybNA _tXMJICebEembKN0KULybNA _2zlyICebEembKN0KULybNA _FnY9oCecEembKN0KULybNA _MDJgICecEembKN0KULybNA _krJJkCecEembKN0KULybNA _2xXIECecEembKN0KULybNA _86C9kCecEembKN0KULybNA _KJcXECedEembKN0KULybNA _EPwxcCeeEembKN0KULybNA _bgyn8CeeEembKN0KULybNA _p4z2YCeeEembKN0KULybNA __VPtUCefEembKN0KULybNA _Q9fWYCegEembKN0KULybNA" group="_Y6IEgCeaEembKN0KULybNA _aiw2QCeaEembKN0KULybNA">
+    <ownedBehavior xmi:type="uml:Activity" xmi:id="_nkzQkCeXEembKN0KULybNA" name="Create User Profile" node="_nkzQvyeXEembKN0KULybNA _nkzQwCeXEembKN0KULybNA _nkzQwSeXEembKN0KULybNA _nkzQwieXEembKN0KULybNA _nkzQwyeXEembKN0KULybNA _nkzQxCeXEembKN0KULybNA _nkzQxSeXEembKN0KULybNA _nkzQxieXEembKN0KULybNA _nkzQxyeXEembKN0KULybNA _nkzQyCeXEembKN0KULybNA _nkzQySeXEembKN0KULybNA _nkzQyieXEembKN0KULybNA _nkzQyyeXEembKN0KULybNA _nkzQzCeXEembKN0KULybNA _nkzQzSeXEembKN0KULybNA _nkzQzieXEembKN0KULybNA _nkzQzyeXEembKN0KULybNA _nkzQ0CeXEembKN0KULybNA _nkzQ0SeXEembKN0KULybNA _nkzQ0ieXEembKN0KULybNA _nkzQ0yeXEembKN0KULybNA _nkzQ1CeXEembKN0KULybNA _nkzQ1SeXEembKN0KULybNA _nkzQ1ieXEembKN0KULybNA _nkzQ1yeXEembKN0KULybNA _nkzQ2CeXEembKN0KULybNA _nkzQ2SeXEembKN0KULybNA _nkzQ2ieXEembKN0KULybNA _nkzQ2yeXEembKN0KULybNA _nkzQ3CeXEembKN0KULybNA _nkzQ3SeXEembKN0KULybNA _nkzQ3ieXEembKN0KULybNA _nkzQ3yeXEembKN0KULybNA _nkzQ4CeXEembKN0KULybNA _nkzQ4SeXEembKN0KULybNA _nkzQ4ieXEembKN0KULybNA _nkzQ4yeXEembKN0KULybNA _nkzQ5CeXEembKN0KULybNA _nkzQ5SeXEembKN0KULybNA" group="_nkzQkSeXEembKN0KULybNA _nkzQkieXEembKN0KULybNA _nkzQkyeXEembKN0KULybNA _nkzQlCeXEembKN0KULybNA _nkzQlSeXEembKN0KULybNA _nkzQlieXEembKN0KULybNA _nkzQlyeXEembKN0KULybNA _nkzQmCeXEembKN0KULybNA">
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQmSeXEembKN0KULybNA" target="_nkzQwCeXEembKN0KULybNA" source="_nkzQvyeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQmieXEembKN0KULybNA" target="_nkzQwSeXEembKN0KULybNA" source="_nkzQwCeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQmyeXEembKN0KULybNA" target="_nkzQwieXEembKN0KULybNA" source="_nkzQwSeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQnCeXEembKN0KULybNA" target="_nkzQwyeXEembKN0KULybNA" source="_nkzQwieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQnSeXEembKN0KULybNA" target="_nkzQxCeXEembKN0KULybNA" source="_nkzQwyeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQnieXEembKN0KULybNA" name="No" target="_nkzQxSeXEembKN0KULybNA" source="_nkzQxCeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQnyeXEembKN0KULybNA" target="_nkzQxieXEembKN0KULybNA" source="_nkzQxSeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQoCeXEembKN0KULybNA" name="Yes" target="_nkzQxyeXEembKN0KULybNA" source="_nkzQxCeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQoSeXEembKN0KULybNA" name="No" target="_nkzQyCeXEembKN0KULybNA" source="_nkzQxieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQoieXEembKN0KULybNA" name="Yes" target="_nkzQySeXEembKN0KULybNA" source="_nkzQxieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQoyeXEembKN0KULybNA" target="_nkzQwyeXEembKN0KULybNA" source="_nkzQySeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQpCeXEembKN0KULybNA" target="_nkzQyieXEembKN0KULybNA" source="_nkzQyCeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQpSeXEembKN0KULybNA" target="_nkzQyyeXEembKN0KULybNA" source="_nkzQxyeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQpieXEembKN0KULybNA" target="_nkzQzCeXEembKN0KULybNA" source="_nkzQyyeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQpyeXEembKN0KULybNA" name="No" target="_nkzQzSeXEembKN0KULybNA" source="_nkzQzCeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQqCeXEembKN0KULybNA" target="_nkzQzieXEembKN0KULybNA" source="_nkzQzSeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQqSeXEembKN0KULybNA" target="_nkzQzCeXEembKN0KULybNA" source="_nkzQzieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQqieXEembKN0KULybNA" name="Yes" target="_nkzQzyeXEembKN0KULybNA" source="_nkzQzCeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQqyeXEembKN0KULybNA" target="_nkzQ0CeXEembKN0KULybNA" source="_nkzQzyeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQrCeXEembKN0KULybNA" target="_nkzQ0ieXEembKN0KULybNA" source="_nkzQ0SeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQrSeXEembKN0KULybNA" target="_nkzQ0yeXEembKN0KULybNA" source="_nkzQ0ieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQrieXEembKN0KULybNA" target="_nkzQ1CeXEembKN0KULybNA" source="_nkzQ0yeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQryeXEembKN0KULybNA" name="Yes" target="_nkzQ1SeXEembKN0KULybNA" source="_nkzQ1CeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQsCeXEembKN0KULybNA" target="_nkzQ1yeXEembKN0KULybNA" source="_nkzQ1ieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQsSeXEembKN0KULybNA" target="_nkzQ2CeXEembKN0KULybNA" source="_nkzQ1yeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQsieXEembKN0KULybNA" target="_nkzQ2SeXEembKN0KULybNA" source="_nkzQ2CeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQsyeXEembKN0KULybNA" target="_nkzQ2ieXEembKN0KULybNA" source="_nkzQ2SeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQtCeXEembKN0KULybNA" name="No" target="_nkzQ2yeXEembKN0KULybNA" source="_nkzQ2ieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQtSeXEembKN0KULybNA" target="_nkzQ3CeXEembKN0KULybNA" source="_nkzQ2yeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQtieXEembKN0KULybNA" target="_nkzQ2ieXEembKN0KULybNA" source="_nkzQ3CeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQtyeXEembKN0KULybNA" name="Yes" target="_nkzQ3SeXEembKN0KULybNA" source="_nkzQ2ieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQuCeXEembKN0KULybNA" target="_nkzQ3ieXEembKN0KULybNA" source="_nkzQ3SeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQuSeXEembKN0KULybNA" target="_nkzQ3yeXEembKN0KULybNA" source="_nkzQ4CeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQuieXEembKN0KULybNA" target="_nkzQ4SeXEembKN0KULybNA" source="_nkzQ3yeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQuyeXEembKN0KULybNA" target="_nkzQ4ieXEembKN0KULybNA" source="_nkzQ4SeXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQvCeXEembKN0KULybNA" name="No" target="_nkzQ4yeXEembKN0KULybNA" source="_nkzQ4ieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQvSeXEembKN0KULybNA" name="Yes" target="_nkzQ5CeXEembKN0KULybNA" source="_nkzQ4ieXEembKN0KULybNA"/>
+      <edge xmi:type="uml:ControlFlow" xmi:id="_nkzQvieXEembKN0KULybNA" target="_nkzQ5SeXEembKN0KULybNA" source="_nkzQ5CeXEembKN0KULybNA"/>
+      <group xmi:type="uml:ActivityPartition" xmi:id="_nkzQkSeXEembKN0KULybNA" name="System" node="_nkzQwSeXEembKN0KULybNA _nkzQwyeXEembKN0KULybNA _nkzQxCeXEembKN0KULybNA _nkzQxSeXEembKN0KULybNA _nkzQxyeXEembKN0KULybNA _nkzQzCeXEembKN0KULybNA _nkzQzSeXEembKN0KULybNA _nkzQzyeXEembKN0KULybNA _nkzQ0CeXEembKN0KULybNA"/>
+      <group xmi:type="uml:ActivityPartition" xmi:id="_nkzQkieXEembKN0KULybNA" name="User" node="_nkzQvyeXEembKN0KULybNA _nkzQwCeXEembKN0KULybNA _nkzQwieXEembKN0KULybNA _nkzQxieXEembKN0KULybNA _nkzQyCeXEembKN0KULybNA _nkzQySeXEembKN0KULybNA _nkzQyieXEembKN0KULybNA _nkzQyyeXEembKN0KULybNA _nkzQzieXEembKN0KULybNA"/>
+      <group xmi:type="uml:ActivityPartition" xmi:id="_nkzQkyeXEembKN0KULybNA" name="Patient" node="_nkzQ0SeXEembKN0KULybNA _nkzQ0ieXEembKN0KULybNA _nkzQ1CeXEembKN0KULybNA"/>
+      <group xmi:type="uml:ActivityPartition" xmi:id="_nkzQlCeXEembKN0KULybNA" name="System" node="_nkzQ0yeXEembKN0KULybNA _nkzQ1SeXEembKN0KULybNA"/>
+      <group xmi:type="uml:ActivityPartition" xmi:id="_nkzQlSeXEembKN0KULybNA" name="Patient" node="_nkzQ1ieXEembKN0KULybNA _nkzQ1yeXEembKN0KULybNA _nkzQ2SeXEembKN0KULybNA _nkzQ3CeXEembKN0KULybNA"/>
+      <group xmi:type="uml:ActivityPartition" xmi:id="_nkzQlieXEembKN0KULybNA" name="System" node="_nkzQ2CeXEembKN0KULybNA _nkzQ2ieXEembKN0KULybNA _nkzQ2yeXEembKN0KULybNA _nkzQ3SeXEembKN0KULybNA _nkzQ3ieXEembKN0KULybNA"/>
+      <group xmi:type="uml:ActivityPartition" xmi:id="_nkzQlyeXEembKN0KULybNA" name="Patient" node="_nkzQ3yeXEembKN0KULybNA _nkzQ4CeXEembKN0KULybNA"/>
+      <group xmi:type="uml:ActivityPartition" xmi:id="_nkzQmCeXEembKN0KULybNA" name="System" node="_nkzQ4SeXEembKN0KULybNA _nkzQ4ieXEembKN0KULybNA _nkzQ4yeXEembKN0KULybNA _nkzQ5CeXEembKN0KULybNA _nkzQ5SeXEembKN0KULybNA"/>
+      <node xmi:type="uml:InitialNode" xmi:id="_nkzQvyeXEembKN0KULybNA" name="Start" outgoing="_nkzQmSeXEembKN0KULybNA" inPartition="_nkzQkieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQwCeXEembKN0KULybNA" name="Request to create new profile" incoming="_nkzQmSeXEembKN0KULybNA" outgoing="_nkzQmieXEembKN0KULybNA" inPartition="_nkzQkieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQwSeXEembKN0KULybNA" name="Prompts for user NIC" incoming="_nkzQmieXEembKN0KULybNA" outgoing="_nkzQmyeXEembKN0KULybNA" inPartition="_nkzQkSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQwieXEembKN0KULybNA" name="Provide NIC" incoming="_nkzQmyeXEembKN0KULybNA" outgoing="_nkzQnCeXEembKN0KULybNA" inPartition="_nkzQkieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQwyeXEembKN0KULybNA" name="Check Validity" incoming="_nkzQnCeXEembKN0KULybNA _nkzQoyeXEembKN0KULybNA" outgoing="_nkzQnSeXEembKN0KULybNA" inPartition="_nkzQkSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:DecisionNode" xmi:id="_nkzQxCeXEembKN0KULybNA" name="Valid ?" incoming="_nkzQnSeXEembKN0KULybNA" outgoing="_nkzQnieXEembKN0KULybNA _nkzQoCeXEembKN0KULybNA" inPartition="_nkzQkSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQxSeXEembKN0KULybNA" name="Inform not valid and option to change" incoming="_nkzQnieXEembKN0KULybNA" outgoing="_nkzQnyeXEembKN0KULybNA" inPartition="_nkzQkSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:DecisionNode" xmi:id="_nkzQxieXEembKN0KULybNA" name="Change NIC ?" incoming="_nkzQnyeXEembKN0KULybNA" outgoing="_nkzQoSeXEembKN0KULybNA _nkzQoieXEembKN0KULybNA" inPartition="_nkzQkieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQxyeXEembKN0KULybNA" name="Prompts for User Information" incoming="_nkzQoCeXEembKN0KULybNA" outgoing="_nkzQpSeXEembKN0KULybNA" inPartition="_nkzQkSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQyCeXEembKN0KULybNA" name="Cancel" incoming="_nkzQoSeXEembKN0KULybNA" outgoing="_nkzQpCeXEembKN0KULybNA" inPartition="_nkzQkieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQySeXEembKN0KULybNA" name="Change NIC" incoming="_nkzQoieXEembKN0KULybNA" outgoing="_nkzQoyeXEembKN0KULybNA" inPartition="_nkzQkieXEembKN0KULybNA"/>
+      <node xmi:type="uml:FlowFinalNode" xmi:id="_nkzQyieXEembKN0KULybNA" name="End" incoming="_nkzQpCeXEembKN0KULybNA" inPartition="_nkzQkieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQyyeXEembKN0KULybNA" name="Provide User Information" incoming="_nkzQpSeXEembKN0KULybNA" outgoing="_nkzQpieXEembKN0KULybNA" inPartition="_nkzQkieXEembKN0KULybNA"/>
+      <node xmi:type="uml:DecisionNode" xmi:id="_nkzQzCeXEembKN0KULybNA" name="All feilds are filled?" incoming="_nkzQpieXEembKN0KULybNA _nkzQqSeXEembKN0KULybNA" outgoing="_nkzQpyeXEembKN0KULybNA _nkzQqieXEembKN0KULybNA" inPartition="_nkzQkSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQzSeXEembKN0KULybNA" name="Request to fill all the feilds" incoming="_nkzQpyeXEembKN0KULybNA" outgoing="_nkzQqCeXEembKN0KULybNA" inPartition="_nkzQkSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQzieXEembKN0KULybNA" name="Fill all the feilds" incoming="_nkzQqCeXEembKN0KULybNA" outgoing="_nkzQqSeXEembKN0KULybNA" inPartition="_nkzQkieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQzyeXEembKN0KULybNA" name="Create User Account" incoming="_nkzQqieXEembKN0KULybNA" outgoing="_nkzQqyeXEembKN0KULybNA" inPartition="_nkzQkSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:FlowFinalNode" xmi:id="_nkzQ0CeXEembKN0KULybNA" name="End" incoming="_nkzQqyeXEembKN0KULybNA" inPartition="_nkzQkSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:InitialNode" xmi:id="_nkzQ0SeXEembKN0KULybNA" name="Start" outgoing="_nkzQrCeXEembKN0KULybNA" inPartition="_nkzQkyeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ0ieXEembKN0KULybNA" name="Request Timeline" incoming="_nkzQrCeXEembKN0KULybNA" outgoing="_nkzQrSeXEembKN0KULybNA" inPartition="_nkzQkyeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ0yeXEembKN0KULybNA" name="Generate Timeline and Display" incoming="_nkzQrSeXEembKN0KULybNA" outgoing="_nkzQrieXEembKN0KULybNA" inPartition="_nkzQlCeXEembKN0KULybNA"/>
+      <node xmi:type="uml:DecisionNode" xmi:id="_nkzQ1CeXEembKN0KULybNA" name="Navigate to Homescreen" incoming="_nkzQrieXEembKN0KULybNA" outgoing="_nkzQryeXEembKN0KULybNA" inPartition="_nkzQkyeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ1SeXEembKN0KULybNA" name="Go back to Homescreen" incoming="_nkzQryeXEembKN0KULybNA" inPartition="_nkzQlCeXEembKN0KULybNA"/>
+      <node xmi:type="uml:InitialNode" xmi:id="_nkzQ1ieXEembKN0KULybNA" name="Start" outgoing="_nkzQsCeXEembKN0KULybNA" inPartition="_nkzQlSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ1yeXEembKN0KULybNA" name="Request to add medication reminders" incoming="_nkzQsCeXEembKN0KULybNA" outgoing="_nkzQsSeXEembKN0KULybNA" inPartition="_nkzQlSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ2CeXEembKN0KULybNA" name="Prompt the reminders addition window" incoming="_nkzQsSeXEembKN0KULybNA" outgoing="_nkzQsieXEembKN0KULybNA" inPartition="_nkzQlieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ2SeXEembKN0KULybNA" name="Provide details for the reminder" incoming="_nkzQsieXEembKN0KULybNA" outgoing="_nkzQsyeXEembKN0KULybNA" inPartition="_nkzQlSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:DecisionNode" xmi:id="_nkzQ2ieXEembKN0KULybNA" name="Valid Details?" incoming="_nkzQsyeXEembKN0KULybNA _nkzQtieXEembKN0KULybNA" outgoing="_nkzQtCeXEembKN0KULybNA _nkzQtyeXEembKN0KULybNA" inPartition="_nkzQlieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ2yeXEembKN0KULybNA" name="Request to enter valid details" incoming="_nkzQtCeXEembKN0KULybNA" outgoing="_nkzQtSeXEembKN0KULybNA" inPartition="_nkzQlieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ3CeXEembKN0KULybNA" name="Re-enter details" incoming="_nkzQtSeXEembKN0KULybNA" outgoing="_nkzQtieXEembKN0KULybNA" inPartition="_nkzQlSeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ3SeXEembKN0KULybNA" name="Save the details and set the reminder" incoming="_nkzQtyeXEembKN0KULybNA" outgoing="_nkzQuCeXEembKN0KULybNA" inPartition="_nkzQlieXEembKN0KULybNA"/>
+      <node xmi:type="uml:FlowFinalNode" xmi:id="_nkzQ3ieXEembKN0KULybNA" name="End" incoming="_nkzQuCeXEembKN0KULybNA" inPartition="_nkzQlieXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ3yeXEembKN0KULybNA" name="Request Medicine Description" incoming="_nkzQuSeXEembKN0KULybNA" outgoing="_nkzQuieXEembKN0KULybNA" inPartition="_nkzQlyeXEembKN0KULybNA"/>
+      <node xmi:type="uml:InitialNode" xmi:id="_nkzQ4CeXEembKN0KULybNA" name="Start" outgoing="_nkzQuSeXEembKN0KULybNA" inPartition="_nkzQlyeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ4SeXEembKN0KULybNA" name="Search relavant sources for the details" incoming="_nkzQuieXEembKN0KULybNA" outgoing="_nkzQuyeXEembKN0KULybNA" inPartition="_nkzQmCeXEembKN0KULybNA"/>
+      <node xmi:type="uml:DecisionNode" xmi:id="_nkzQ4ieXEembKN0KULybNA" name="Details Found?" incoming="_nkzQuyeXEembKN0KULybNA" outgoing="_nkzQvCeXEembKN0KULybNA _nkzQvSeXEembKN0KULybNA" inPartition="_nkzQmCeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ4yeXEembKN0KULybNA" name="Inform not found and prompt medcine list again" incoming="_nkzQvCeXEembKN0KULybNA" inPartition="_nkzQmCeXEembKN0KULybNA"/>
+      <node xmi:type="uml:OpaqueAction" xmi:id="_nkzQ5CeXEembKN0KULybNA" name="Prompt medicine details" incoming="_nkzQvSeXEembKN0KULybNA" outgoing="_nkzQvieXEembKN0KULybNA" inPartition="_nkzQmCeXEembKN0KULybNA"/>
+      <node xmi:type="uml:ActivityFinalNode" xmi:id="_nkzQ5SeXEembKN0KULybNA" name="End" incoming="_nkzQvieXEembKN0KULybNA" inPartition="_nkzQmCeXEembKN0KULybNA"/>
+    </ownedBehavior>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_rKe2cCeaEembKN0KULybNA" target="_nRpjsCeaEembKN0KULybNA" source="_jG72wCeaEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_xvKrcCeaEembKN0KULybNA" target="_v1OHQCeaEembKN0KULybNA" source="_nRpjsCeaEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_m5uWcCebEembKN0KULybNA" target="_cR6DMCebEembKN0KULybNA" source="_v1OHQCeaEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_qzk84CebEembKN0KULybNA" target="_jVHAMCebEembKN0KULybNA" source="_cR6DMCebEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_wRTJ0CebEembKN0KULybNA" target="_tXMJICebEembKN0KULybNA" source="_jVHAMCebEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_BPfwUCecEembKN0KULybNA" name="No" target="_2zlyICebEembKN0KULybNA" source="_tXMJICebEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_PqCHQCecEembKN0KULybNA" name="Yes" target="_MDJgICecEembKN0KULybNA" source="_FnY9oCecEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_SzcvQCecEembKN0KULybNA" target="_jVHAMCebEembKN0KULybNA" source="_MDJgICecEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_nFqrQCecEembKN0KULybNA" name="No" target="_krJJkCecEembKN0KULybNA" source="_FnY9oCecEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_5bJ00CecEembKN0KULybNA" target="_2xXIECecEembKN0KULybNA" source="_krJJkCecEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_AoYQgCedEembKN0KULybNA" name="Yes" target="_86C9kCecEembKN0KULybNA" source="_tXMJICebEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_eFTMECeeEembKN0KULybNA" name="No" target="_bgyn8CeeEembKN0KULybNA" source="_EPwxcCeeEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_uGnTkCeeEembKN0KULybNA" name="Yes" target="_p4z2YCeeEembKN0KULybNA" source="_EPwxcCeeEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_3YPagCefEembKN0KULybNA" target="_KJcXECedEembKN0KULybNA" source="_86C9kCecEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_6NB2UCefEembKN0KULybNA" target="_EPwxcCeeEembKN0KULybNA" source="_KJcXECedEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_LbrToCegEembKN0KULybNA" target="__VPtUCefEembKN0KULybNA" source="_bgyn8CeeEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_NQxNACegEembKN0KULybNA" target="_EPwxcCeeEembKN0KULybNA" source="__VPtUCefEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_aBREACegEembKN0KULybNA" target="_Q9fWYCegEembKN0KULybNA" source="_p4z2YCeeEembKN0KULybNA"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_Y6IEgCeaEembKN0KULybNA" name="Patient" node="_jG72wCeaEembKN0KULybNA _nRpjsCeaEembKN0KULybNA _cR6DMCebEembKN0KULybNA _FnY9oCecEembKN0KULybNA _MDJgICecEembKN0KULybNA _krJJkCecEembKN0KULybNA _2xXIECecEembKN0KULybNA _KJcXECedEembKN0KULybNA __VPtUCefEembKN0KULybNA"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_aiw2QCeaEembKN0KULybNA" name="System" node="_v1OHQCeaEembKN0KULybNA _jVHAMCebEembKN0KULybNA _tXMJICebEembKN0KULybNA _2zlyICebEembKN0KULybNA _86C9kCecEembKN0KULybNA _EPwxcCeeEembKN0KULybNA _bgyn8CeeEembKN0KULybNA _p4z2YCeeEembKN0KULybNA _Q9fWYCegEembKN0KULybNA"/>
+    <node xmi:type="uml:CallBehaviorAction" xmi:id="_nlP8gCeXEembKN0KULybNA" name="CallBehaviorAction1" behavior="_nkzQkCeXEembKN0KULybNA"/>
+    <node xmi:type="uml:InitialNode" xmi:id="_jG72wCeaEembKN0KULybNA" name="Start" outgoing="_rKe2cCeaEembKN0KULybNA" inPartition="_Y6IEgCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_nRpjsCeaEembKN0KULybNA" name="Request to create new Account" incoming="_rKe2cCeaEembKN0KULybNA" outgoing="_xvKrcCeaEembKN0KULybNA" inPartition="_Y6IEgCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_v1OHQCeaEembKN0KULybNA" name="Prompts for user NIC" incoming="_xvKrcCeaEembKN0KULybNA" outgoing="_m5uWcCebEembKN0KULybNA" inPartition="_aiw2QCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_cR6DMCebEembKN0KULybNA" name="Provide NIC" incoming="_m5uWcCebEembKN0KULybNA" outgoing="_qzk84CebEembKN0KULybNA" inPartition="_Y6IEgCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_jVHAMCebEembKN0KULybNA" name="Check Validity" incoming="_qzk84CebEembKN0KULybNA _SzcvQCecEembKN0KULybNA" outgoing="_wRTJ0CebEembKN0KULybNA" inPartition="_aiw2QCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:DecisionNode" xmi:id="_tXMJICebEembKN0KULybNA" name="Valid ?" incoming="_wRTJ0CebEembKN0KULybNA" outgoing="_BPfwUCecEembKN0KULybNA _AoYQgCedEembKN0KULybNA" inPartition="_aiw2QCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_2zlyICebEembKN0KULybNA" name="Inform not valid and option to change" incoming="_BPfwUCecEembKN0KULybNA" inPartition="_aiw2QCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:DecisionNode" xmi:id="_FnY9oCecEembKN0KULybNA" name="Change NIC?" outgoing="_PqCHQCecEembKN0KULybNA _nFqrQCecEembKN0KULybNA" inPartition="_Y6IEgCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_MDJgICecEembKN0KULybNA" name="Chnage NIC" incoming="_PqCHQCecEembKN0KULybNA" outgoing="_SzcvQCecEembKN0KULybNA" inPartition="_Y6IEgCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_krJJkCecEembKN0KULybNA" name="Cancel" incoming="_nFqrQCecEembKN0KULybNA" outgoing="_5bJ00CecEembKN0KULybNA" inPartition="_Y6IEgCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:ActivityFinalNode" xmi:id="_2xXIECecEembKN0KULybNA" name="End" incoming="_5bJ00CecEembKN0KULybNA" inPartition="_Y6IEgCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_86C9kCecEembKN0KULybNA" name="Prompts for User information" incoming="_AoYQgCedEembKN0KULybNA" outgoing="_3YPagCefEembKN0KULybNA" inPartition="_aiw2QCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_KJcXECedEembKN0KULybNA" name="Provide User information" incoming="_3YPagCefEembKN0KULybNA" outgoing="_6NB2UCefEembKN0KULybNA" inPartition="_Y6IEgCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:DecisionNode" xmi:id="_EPwxcCeeEembKN0KULybNA" name="All feilds are filled?" incoming="_6NB2UCefEembKN0KULybNA _NQxNACegEembKN0KULybNA" outgoing="_eFTMECeeEembKN0KULybNA _uGnTkCeeEembKN0KULybNA" inPartition="_aiw2QCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_bgyn8CeeEembKN0KULybNA" name="Request to fill all the feilds" incoming="_eFTMECeeEembKN0KULybNA" outgoing="_LbrToCegEembKN0KULybNA" inPartition="_aiw2QCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_p4z2YCeeEembKN0KULybNA" name="Create User Account" incoming="_uGnTkCeeEembKN0KULybNA" outgoing="_aBREACegEembKN0KULybNA" inPartition="_aiw2QCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="__VPtUCefEembKN0KULybNA" name="Provide user information" incoming="_LbrToCegEembKN0KULybNA" outgoing="_NQxNACegEembKN0KULybNA" inPartition="_Y6IEgCeaEembKN0KULybNA"/>
+    <node xmi:type="uml:ActivityFinalNode" xmi:id="_Q9fWYCegEembKN0KULybNA" name="End" incoming="_aBREACegEembKN0KULybNA" inPartition="_aiw2QCeaEembKN0KULybNA"/>
+  </packagedElement>
+</uml:Model>
