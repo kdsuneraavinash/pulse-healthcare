@@ -257,7 +257,7 @@
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T-bEMScZEem-RcAoFxT45w"/>
     </children>
     <element xmi:type="uml:Activity" href="register_doctor.uml#_T-TvYCcZEem-RcAoFxT45w"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T-bEMicZEem-RcAoFxT45w" width="1377" height="2303"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T-bEMicZEem-RcAoFxT45w" width="1325" height="1239"/>
   </children>
   <styles xmi:type="notation:StringValueStyle" xmi:id="_T-bEMycZEem-RcAoFxT45w" name="diagram_compatibility_version" stringValue="1.4.0"/>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_T-bENCcZEem-RcAoFxT45w"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/gmfdiag/style" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_T-bEICcZEem-RcAoFxT45w" type="PapyrusUMLActivityDiagram" name="register_doctor_activity" measurementUnit="Pixel">
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/gmfdiag/style" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_T-bEICcZEem-RcAoFxT45w" type="PapyrusUMLActivityDiagram" name="register_patient_activity" measurementUnit="Pixel">
   <children xmi:type="notation:Shape" xmi:id="_T-bEIScZEem-RcAoFxT45w" type="Activity_Shape">
     <children xmi:type="notation:DecorationNode" xmi:id="_T-bEIicZEem-RcAoFxT45w" type="Activity_NameLabel">
       <element xmi:type="uml:Activity" href="register_patient.uml#_T-TvYCcZEem-RcAoFxT45w"/>
@@ -344,7 +344,7 @@
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T-bEMScZEem-RcAoFxT45w"/>
     </children>
     <element xmi:type="uml:Activity" href="register_patient.uml#_T-TvYCcZEem-RcAoFxT45w"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T-bEMicZEem-RcAoFxT45w" width="1377" height="2303"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T-bEMicZEem-RcAoFxT45w" width="1319" height="1221"/>
   </children>
   <styles xmi:type="notation:StringValueStyle" xmi:id="_T-bEMycZEem-RcAoFxT45w" name="diagram_compatibility_version" stringValue="1.4.0"/>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_T-bENCcZEem-RcAoFxT45w"/>

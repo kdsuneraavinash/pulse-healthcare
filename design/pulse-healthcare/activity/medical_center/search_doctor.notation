@@ -177,7 +177,7 @@
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_74WV4Sc1Eemb9twJh9hqwg"/>
     </children>
     <element xmi:type="uml:Activity" href="search_doctor.uml#_74Mk0Cc1Eemb9twJh9hqwg"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_74WV4ic1Eemb9twJh9hqwg"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_74WV4ic1Eemb9twJh9hqwg" height="721"/>
   </children>
   <styles xmi:type="notation:StringValueStyle" xmi:id="_74WV4yc1Eemb9twJh9hqwg" name="diagram_compatibility_version" stringValue="1.4.0"/>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_74WV5Cc1Eemb9twJh9hqwg"/>
