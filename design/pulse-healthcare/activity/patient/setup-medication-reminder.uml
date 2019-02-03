@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="__x4KgCeVEembKN0KULybNA" name="PatientUML">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="__2fkwCeVEembKN0KULybNA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Activity" xmi:id="_p83lECegEembKN0KULybNA" name="setup-medication-reminder" node="_8P8T0CegEembKN0KULybNA _-3j2UCegEembKN0KULybNA _QPUMUCehEembKN0KULybNA _VHW5UCehEembKN0KULybNA _r7Fv0CehEembKN0KULybNA _OTjNwCeiEembKN0KULybNA _YJ5AwCeiEembKN0KULybNA _kZWnQCeiEembKN0KULybNA _vQnrwCeiEembKN0KULybNA" group="_2mKA0CegEembKN0KULybNA _4Su3YCegEembKN0KULybNA">
+    <edge xmi:type="uml:ControlFlow" xmi:id="_Op4fkCehEembKN0KULybNA" target="_-3j2UCegEembKN0KULybNA" source="_8P8T0CegEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_Th2UECehEembKN0KULybNA" target="_QPUMUCehEembKN0KULybNA" source="_-3j2UCegEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_nat78CehEembKN0KULybNA" target="_VHW5UCehEembKN0KULybNA" source="_QPUMUCehEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_yFv7QCehEembKN0KULybNA" target="_r7Fv0CehEembKN0KULybNA" source="_VHW5UCehEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_acBbcCeiEembKN0KULybNA" name="No" target="_YJ5AwCeiEembKN0KULybNA" source="_r7Fv0CehEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_fvm08CeiEembKN0KULybNA" target="_OTjNwCeiEembKN0KULybNA" source="_YJ5AwCeiEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_hZF7QCeiEembKN0KULybNA" target="_r7Fv0CehEembKN0KULybNA" source="_OTjNwCeiEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_ozrdgCeiEembKN0KULybNA" name="Yes" target="_kZWnQCeiEembKN0KULybNA" source="_r7Fv0CehEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_wa4fcCeiEembKN0KULybNA" target="_vQnrwCeiEembKN0KULybNA" source="_kZWnQCeiEembKN0KULybNA"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_2mKA0CegEembKN0KULybNA" name="Patient" node="_8P8T0CegEembKN0KULybNA _-3j2UCegEembKN0KULybNA _VHW5UCehEembKN0KULybNA _OTjNwCeiEembKN0KULybNA"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_4Su3YCegEembKN0KULybNA" name="System" node="_QPUMUCehEembKN0KULybNA _r7Fv0CehEembKN0KULybNA _YJ5AwCeiEembKN0KULybNA _kZWnQCeiEembKN0KULybNA _vQnrwCeiEembKN0KULybNA"/>
+    <node xmi:type="uml:InitialNode" xmi:id="_8P8T0CegEembKN0KULybNA" name="Start" outgoing="_Op4fkCehEembKN0KULybNA" inPartition="_2mKA0CegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_-3j2UCegEembKN0KULybNA" name="Request to add medication reminders" incoming="_Op4fkCehEembKN0KULybNA" outgoing="_Th2UECehEembKN0KULybNA" inPartition="_2mKA0CegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_QPUMUCehEembKN0KULybNA" name="Prompt the reminders addition window" incoming="_Th2UECehEembKN0KULybNA" outgoing="_nat78CehEembKN0KULybNA" inPartition="_4Su3YCegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_VHW5UCehEembKN0KULybNA" name="Provide details for the reminder" incoming="_nat78CehEembKN0KULybNA" outgoing="_yFv7QCehEembKN0KULybNA" inPartition="_2mKA0CegEembKN0KULybNA"/>
+    <node xmi:type="uml:DecisionNode" xmi:id="_r7Fv0CehEembKN0KULybNA" name="Valid Details?" incoming="_yFv7QCehEembKN0KULybNA _hZF7QCeiEembKN0KULybNA" outgoing="_acBbcCeiEembKN0KULybNA _ozrdgCeiEembKN0KULybNA" inPartition="_4Su3YCegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_OTjNwCeiEembKN0KULybNA" name="Re-enter details" incoming="_fvm08CeiEembKN0KULybNA" outgoing="_hZF7QCeiEembKN0KULybNA" inPartition="_2mKA0CegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_YJ5AwCeiEembKN0KULybNA" name="Request to enetr valid details" incoming="_acBbcCeiEembKN0KULybNA" outgoing="_fvm08CeiEembKN0KULybNA" inPartition="_4Su3YCegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_kZWnQCeiEembKN0KULybNA" name="Save the details and set the reminder" incoming="_ozrdgCeiEembKN0KULybNA" outgoing="_wa4fcCeiEembKN0KULybNA" inPartition="_4Su3YCegEembKN0KULybNA"/>
+    <node xmi:type="uml:ActivityFinalNode" xmi:id="_vQnrwCeiEembKN0KULybNA" name="End" incoming="_wa4fcCeiEembKN0KULybNA" inPartition="_4Su3YCegEembKN0KULybNA"/>
+  </packagedElement>
+</uml:Model>
