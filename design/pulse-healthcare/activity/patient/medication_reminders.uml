@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="__x4KgCeVEembKN0KULybNA" name="PatientUML">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="__2fkwCeVEembKN0KULybNA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Activity" xmi:id="_p83lECegEembKN0KULybNA" name="Medication reminder setup" node="_8P8T0CegEembKN0KULybNA _-3j2UCegEembKN0KULybNA _QPUMUCehEembKN0KULybNA _VHW5UCehEembKN0KULybNA _kZWnQCeiEembKN0KULybNA _vQnrwCeiEembKN0KULybNA _mP8gACejEemJ-cg8qZ34mg _zdITACejEemJ-cg8qZ34mg" group="_2mKA0CegEembKN0KULybNA _4Su3YCegEembKN0KULybNA">
+    <edge xmi:type="uml:ControlFlow" xmi:id="_Op4fkCehEembKN0KULybNA" target="_-3j2UCegEembKN0KULybNA" source="_8P8T0CegEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_nat78CehEembKN0KULybNA" target="_VHW5UCehEembKN0KULybNA" source="_QPUMUCehEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_p7IYUCejEemJ-cg8qZ34mg" target="_mP8gACejEemJ-cg8qZ34mg" source="_kZWnQCeiEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_q827ECejEemJ-cg8qZ34mg" target="_vQnrwCeiEembKN0KULybNA" source="_mP8gACejEemJ-cg8qZ34mg"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_wD6UcCejEemJ-cg8qZ34mg" target="_kZWnQCeiEembKN0KULybNA" source="_VHW5UCehEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_6LgPgCejEemJ-cg8qZ34mg" target="_zdITACejEemJ-cg8qZ34mg" source="_-3j2UCegEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_7TX2gCejEemJ-cg8qZ34mg" target="_QPUMUCehEembKN0KULybNA" source="_zdITACejEemJ-cg8qZ34mg"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_2mKA0CegEembKN0KULybNA" name="Patient" node="_8P8T0CegEembKN0KULybNA _-3j2UCegEembKN0KULybNA _VHW5UCehEembKN0KULybNA"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_4Su3YCegEembKN0KULybNA" name="System" node="_QPUMUCehEembKN0KULybNA _kZWnQCeiEembKN0KULybNA _vQnrwCeiEembKN0KULybNA _mP8gACejEemJ-cg8qZ34mg _zdITACejEemJ-cg8qZ34mg"/>
+    <node xmi:type="uml:InitialNode" xmi:id="_8P8T0CegEembKN0KULybNA" name="" outgoing="_Op4fkCehEembKN0KULybNA" inPartition="_2mKA0CegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_-3j2UCegEembKN0KULybNA" name="Request to add/remove medication reminders" incoming="_Op4fkCehEembKN0KULybNA" outgoing="_6LgPgCejEemJ-cg8qZ34mg" inPartition="_2mKA0CegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_QPUMUCehEembKN0KULybNA" name="Prompt to select active medications" incoming="_7TX2gCejEemJ-cg8qZ34mg" outgoing="_nat78CehEembKN0KULybNA" inPartition="_4Su3YCegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_VHW5UCehEembKN0KULybNA" name="Enable/disable reminders" incoming="_nat78CehEembKN0KULybNA" outgoing="_wD6UcCejEemJ-cg8qZ34mg" inPartition="_2mKA0CegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_kZWnQCeiEembKN0KULybNA" name="Save medication reminders" incoming="_wD6UcCejEemJ-cg8qZ34mg" outgoing="_p7IYUCejEemJ-cg8qZ34mg" inPartition="_4Su3YCegEembKN0KULybNA"/>
+    <node xmi:type="uml:ActivityFinalNode" xmi:id="_vQnrwCeiEembKN0KULybNA" name="" incoming="_q827ECejEemJ-cg8qZ34mg" inPartition="_4Su3YCegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_mP8gACejEemJ-cg8qZ34mg" name="Enable/Disable relevnt reminders" incoming="_p7IYUCejEemJ-cg8qZ34mg" outgoing="_q827ECejEemJ-cg8qZ34mg" inPartition="_4Su3YCegEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_zdITACejEemJ-cg8qZ34mg" name="Load medication reminders" incoming="_6LgPgCejEemJ-cg8qZ34mg" outgoing="_7TX2gCejEemJ-cg8qZ34mg" inPartition="_4Su3YCegEembKN0KULybNA"/>
+  </packagedElement>
+</uml:Model>

@@ -18,11 +18,11 @@
     <group xmi:type="uml:ActivityPartition" xmi:id="_ASwEkCc2Eemb9twJh9hqwg" name="System" node="_0cjnwCc3Eemb9twJh9hqwg _8PA3cCc3Eemb9twJh9hqwg _-lN50Cc3Eemb9twJh9hqwg _H9URoCc4Eemb9twJh9hqwg"/>
     <node xmi:type="uml:InitialNode" xmi:id="_x53BgCc3Eemb9twJh9hqwg" name="" outgoing="_bkPN4Cc4Eemb9twJh9hqwg" inPartition="_-yaTMCc1Eemb9twJh9hqwg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_yWUUACc3Eemb9twJh9hqwg" name="Request Search Doctor" incoming="_bkPN4Cc4Eemb9twJh9hqwg" outgoing="_ca5wICc4Eemb9twJh9hqwg" inPartition="_-yaTMCc1Eemb9twJh9hqwg"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_0cjnwCc3Eemb9twJh9hqwg" name="Prompt for Doctor ID" incoming="_ca5wICc4Eemb9twJh9hqwg" outgoing="_dO-RYCc4Eemb9twJh9hqwg" inPartition="_ASwEkCc2Eemb9twJh9hqwg"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_4UOc4Cc3Eemb9twJh9hqwg" name="Provide Doctor ID" incoming="_dO-RYCc4Eemb9twJh9hqwg _icvWwCc4Eemb9twJh9hqwg" outgoing="_eNpgICc4Eemb9twJh9hqwg" inPartition="_-yaTMCc1Eemb9twJh9hqwg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_0cjnwCc3Eemb9twJh9hqwg" name="Prompt for Doctor NID" incoming="_ca5wICc4Eemb9twJh9hqwg" outgoing="_dO-RYCc4Eemb9twJh9hqwg" inPartition="_ASwEkCc2Eemb9twJh9hqwg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_4UOc4Cc3Eemb9twJh9hqwg" name="Provide Doctor NID" incoming="_dO-RYCc4Eemb9twJh9hqwg _icvWwCc4Eemb9twJh9hqwg" outgoing="_eNpgICc4Eemb9twJh9hqwg" inPartition="_-yaTMCc1Eemb9twJh9hqwg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_8PA3cCc3Eemb9twJh9hqwg" name="Check for account exsistance" incoming="_eNpgICc4Eemb9twJh9hqwg" outgoing="_fDAa0Cc4Eemb9twJh9hqwg" inPartition="_ASwEkCc2Eemb9twJh9hqwg"/>
     <node xmi:type="uml:DecisionNode" xmi:id="_-lN50Cc3Eemb9twJh9hqwg" name="Exsists?" incoming="_fDAa0Cc4Eemb9twJh9hqwg" outgoing="_fmzEYCc4Eemb9twJh9hqwg _gm1lECc4Eemb9twJh9hqwg" inPartition="_ASwEkCc2Eemb9twJh9hqwg"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_CCIsoCc4Eemb9twJh9hqwg" name="ID invalid/ Account not found" incoming="_fmzEYCc4Eemb9twJh9hqwg" outgoing="_icvWwCc4Eemb9twJh9hqwg"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_CCIsoCc4Eemb9twJh9hqwg" name="NID invalid/ Account not found" incoming="_fmzEYCc4Eemb9twJh9hqwg" outgoing="_icvWwCc4Eemb9twJh9hqwg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_H9URoCc4Eemb9twJh9hqwg" name="Show account details" incoming="_gm1lECc4Eemb9twJh9hqwg" outgoing="_hXJnsCc4Eemb9twJh9hqwg" inPartition="_ASwEkCc2Eemb9twJh9hqwg"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_LG3cgCc4Eemb9twJh9hqwg" name="View account details" incoming="_hXJnsCc4Eemb9twJh9hqwg" outgoing="_hzwEICc4Eemb9twJh9hqwg" inPartition="_-yaTMCc1Eemb9twJh9hqwg"/>
     <node xmi:type="uml:ActivityFinalNode" xmi:id="_NgBsQCc4Eemb9twJh9hqwg" name="" incoming="_hzwEICc4Eemb9twJh9hqwg" inPartition="_-yaTMCc1Eemb9twJh9hqwg"/>

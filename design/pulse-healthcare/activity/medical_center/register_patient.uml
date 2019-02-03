@@ -42,8 +42,8 @@
       </ownedComment>
     </group>
     <node xmi:type="uml:OpaqueAction" xmi:id="_-slBsCcZEem-RcAoFxT45w" name="Request to create a patient account" incoming="_4yCjoCceEemf6vVTz1epvA" outgoing="_1uMU8CcaEemf6vVTz1epvA" inPartition="_6FUisCcZEem-RcAoFxT45w"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_FKan0CcaEem-RcAoFxT45w" name="Prompt for patient NIC" incoming="_1uMU8CcaEemf6vVTz1epvA" outgoing="_44NZ4CcaEemf6vVTz1epvA" inPartition="_9PDTwCcZEem-RcAoFxT45w"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_QiQCwCcaEem-RcAoFxT45w" name="Provide patient NIC" incoming="_44NZ4CcaEemf6vVTz1epvA _EnjV4CcbEemf6vVTz1epvA" outgoing="_9prk0CcaEemf6vVTz1epvA" inPartition="_6FUisCcZEem-RcAoFxT45w"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_FKan0CcaEem-RcAoFxT45w" name="Prompt for patient NID" incoming="_1uMU8CcaEemf6vVTz1epvA" outgoing="_44NZ4CcaEemf6vVTz1epvA" inPartition="_9PDTwCcZEem-RcAoFxT45w"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_QiQCwCcaEem-RcAoFxT45w" name="Provide patient NID" incoming="_44NZ4CcaEemf6vVTz1epvA _EnjV4CcbEemf6vVTz1epvA" outgoing="_9prk0CcaEemf6vVTz1epvA" inPartition="_6FUisCcZEem-RcAoFxT45w"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_a3L2QCcaEemf6vVTz1epvA" name="Check validity" incoming="_9prk0CcaEemf6vVTz1epvA" outgoing="_-pwhwCcaEemf6vVTz1epvA" inPartition="_9PDTwCcZEem-RcAoFxT45w"/>
     <node xmi:type="uml:DecisionNode" xmi:id="_fl_HsCcaEemf6vVTz1epvA" name="Valid?" incoming="_-pwhwCcaEemf6vVTz1epvA" outgoing="_B3DkMCcbEemf6vVTz1epvA _fHG94CcbEemf6vVTz1epvA" inPartition="_9PDTwCcZEem-RcAoFxT45w"/>
     <node xmi:type="uml:OpaqueAction" xmi:id="_iSWnUCcaEemf6vVTz1epvA" name="Inform invalidity" incoming="_B3DkMCcbEemf6vVTz1epvA" outgoing="_EnjV4CcbEemf6vVTz1epvA" inPartition="_9PDTwCcZEem-RcAoFxT45w"/>

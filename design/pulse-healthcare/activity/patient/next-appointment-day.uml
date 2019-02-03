@@ -3,34 +3,26 @@
   <packageImport xmi:type="uml:PackageImport" xmi:id="_6HYAoCenEembKN0KULybNA">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
-  <packagedElement xmi:type="uml:Activity" xmi:id="_6De_ICenEembKN0KULybNA" name="next-appointment-day" node="__9SEECenEembKN0KULybNA _BdkLECeoEembKN0KULybNA _KadNkCeoEembKN0KULybNA _O0RtgCeoEembKN0KULybNA _W5UiACeoEembKN0KULybNA _aXM-ICeoEembKN0KULybNA _lMshACeoEembKN0KULybNA _qt8jECeoEembKN0KULybNA _wRjVkCeoEembKN0KULybNA _0GiDECeoEembKN0KULybNA _D5HLACepEembKN0KULybNA _Gwr1ECepEembKN0KULybNA _Ne-SACepEembKN0KULybNA" group="_9Np1ECenEembKN0KULybNA _-z4MACenEembKN0KULybNA">
+  <packagedElement xmi:type="uml:Activity" xmi:id="_6De_ICenEembKN0KULybNA" name="next-appointment-day" node="__9SEECenEembKN0KULybNA _BdkLECeoEembKN0KULybNA _KadNkCeoEembKN0KULybNA _O0RtgCeoEembKN0KULybNA _wRjVkCeoEembKN0KULybNA _D5HLACepEembKN0KULybNA _Gwr1ECepEembKN0KULybNA _Ne-SACepEembKN0KULybNA _qt8jECeoEembKN0KULybNA _PUVN8CelEemJ-cg8qZ34mg" group="_9Np1ECenEembKN0KULybNA _-z4MACenEembKN0KULybNA">
     <edge xmi:type="uml:ControlFlow" xmi:id="_JSYyQCeoEembKN0KULybNA" target="_BdkLECeoEembKN0KULybNA" source="__9SEECenEembKN0KULybNA"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_Mx0GgCeoEembKN0KULybNA" target="_KadNkCeoEembKN0KULybNA" source="_BdkLECeoEembKN0KULybNA"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_Sj9rUCeoEembKN0KULybNA" target="_O0RtgCeoEembKN0KULybNA" source="_KadNkCeoEembKN0KULybNA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_c_hrQCeoEembKN0KULybNA" target="_aXM-ICeoEembKN0KULybNA" source="_W5UiACeoEembKN0KULybNA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_eDqBwCeoEembKN0KULybNA" target="_W5UiACeoEembKN0KULybNA" source="_O0RtgCeoEembKN0KULybNA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_oCY7wCeoEembKN0KULybNA" name="No" target="_lMshACeoEembKN0KULybNA" source="_aXM-ICeoEembKN0KULybNA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_usVEMCeoEembKN0KULybNA" target="_qt8jECeoEembKN0KULybNA" source="_lMshACeoEembKN0KULybNA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_x6fCQCeoEembKN0KULybNA" name="No" target="_wRjVkCeoEembKN0KULybNA" source="_qt8jECeoEembKN0KULybNA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_5wG6sCeoEembKN0KULybNA" name="Yes" target="_0GiDECeoEembKN0KULybNA" source="_qt8jECeoEembKN0KULybNA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_BXBBsCepEembKN0KULybNA" target="_W5UiACeoEembKN0KULybNA" source="_0GiDECeoEembKN0KULybNA"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_E3yZwCepEembKN0KULybNA" target="_D5HLACepEembKN0KULybNA" source="_wRjVkCeoEembKN0KULybNA"/>
-    <edge xmi:type="uml:ControlFlow" xmi:id="_K21yICepEembKN0KULybNA" name="Yes" target="_Gwr1ECepEembKN0KULybNA" source="_aXM-ICeoEembKN0KULybNA"/>
     <edge xmi:type="uml:ControlFlow" xmi:id="_O63BMCepEembKN0KULybNA" target="_Ne-SACepEembKN0KULybNA" source="_Gwr1ECepEembKN0KULybNA"/>
-    <group xmi:type="uml:ActivityPartition" xmi:id="_9Np1ECenEembKN0KULybNA" name="Patient" node="__9SEECenEembKN0KULybNA _BdkLECeoEembKN0KULybNA _O0RtgCeoEembKN0KULybNA _qt8jECeoEembKN0KULybNA _wRjVkCeoEembKN0KULybNA _0GiDECeoEembKN0KULybNA _D5HLACepEembKN0KULybNA"/>
-    <group xmi:type="uml:ActivityPartition" xmi:id="_-z4MACenEembKN0KULybNA" name="System" node="_KadNkCeoEembKN0KULybNA _W5UiACeoEembKN0KULybNA _aXM-ICeoEembKN0KULybNA _lMshACeoEembKN0KULybNA _Gwr1ECepEembKN0KULybNA _Ne-SACepEembKN0KULybNA"/>
-    <node xmi:type="uml:InitialNode" xmi:id="__9SEECenEembKN0KULybNA" name="Start" outgoing="_JSYyQCeoEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_BdkLECeoEembKN0KULybNA" name="Request to set reminder for next appointment date" incoming="_JSYyQCeoEembKN0KULybNA" outgoing="_Mx0GgCeoEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_KadNkCeoEembKN0KULybNA" name="Prompt reminder adder" incoming="_Mx0GgCeoEembKN0KULybNA" outgoing="_Sj9rUCeoEembKN0KULybNA" inPartition="_-z4MACenEembKN0KULybNA"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_O0RtgCeoEembKN0KULybNA" name="Provide details for the reminder" incoming="_Sj9rUCeoEembKN0KULybNA" outgoing="_eDqBwCeoEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_W5UiACeoEembKN0KULybNA" name="Check validity of the details" incoming="_eDqBwCeoEembKN0KULybNA _BXBBsCepEembKN0KULybNA" outgoing="_c_hrQCeoEembKN0KULybNA" inPartition="_-z4MACenEembKN0KULybNA"/>
-    <node xmi:type="uml:DecisionNode" xmi:id="_aXM-ICeoEembKN0KULybNA" name="Valid?" incoming="_c_hrQCeoEembKN0KULybNA" outgoing="_oCY7wCeoEembKN0KULybNA _K21yICepEembKN0KULybNA" inPartition="_-z4MACenEembKN0KULybNA"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_lMshACeoEembKN0KULybNA" name="Inform not valid and option to change" incoming="_oCY7wCeoEembKN0KULybNA" outgoing="_usVEMCeoEembKN0KULybNA" inPartition="_-z4MACenEembKN0KULybNA"/>
-    <node xmi:type="uml:DecisionNode" xmi:id="_qt8jECeoEembKN0KULybNA" name="Change?" incoming="_usVEMCeoEembKN0KULybNA" outgoing="_x6fCQCeoEembKN0KULybNA _5wG6sCeoEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_wRjVkCeoEembKN0KULybNA" name="Cancel" incoming="_x6fCQCeoEembKN0KULybNA" outgoing="_E3yZwCepEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_0GiDECeoEembKN0KULybNA" name="Provide details for the reminder" incoming="_5wG6sCeoEembKN0KULybNA" outgoing="_BXBBsCepEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_8Tn9ICekEemJ-cg8qZ34mg" target="_qt8jECeoEembKN0KULybNA" source="_O0RtgCeoEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_IBBYYCelEemJ-cg8qZ34mg" name="Confirm" target="_Gwr1ECepEembKN0KULybNA" source="_qt8jECeoEembKN0KULybNA"/>
+    <edge xmi:type="uml:ControlFlow" xmi:id="_SdmE8CelEemJ-cg8qZ34mg" name="Edit" target="_PUVN8CelEemJ-cg8qZ34mg" source="_qt8jECeoEembKN0KULybNA"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_9Np1ECenEembKN0KULybNA" name="Patient" node="__9SEECenEembKN0KULybNA _BdkLECeoEembKN0KULybNA _O0RtgCeoEembKN0KULybNA _qt8jECeoEembKN0KULybNA _wRjVkCeoEembKN0KULybNA _D5HLACepEembKN0KULybNA"/>
+    <group xmi:type="uml:ActivityPartition" xmi:id="_-z4MACenEembKN0KULybNA" name="System" node="_KadNkCeoEembKN0KULybNA _Gwr1ECepEembKN0KULybNA _Ne-SACepEembKN0KULybNA _PUVN8CelEemJ-cg8qZ34mg"/>
+    <node xmi:type="uml:InitialNode" xmi:id="__9SEECenEembKN0KULybNA" name="" outgoing="_JSYyQCeoEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_BdkLECeoEembKN0KULybNA" name="Request to set appoinment reminder" incoming="_JSYyQCeoEembKN0KULybNA" outgoing="_Mx0GgCeoEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_KadNkCeoEembKN0KULybNA" name="Load doctor appointment date" incoming="_Mx0GgCeoEembKN0KULybNA" outgoing="_Sj9rUCeoEembKN0KULybNA" inPartition="_-z4MACenEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_O0RtgCeoEembKN0KULybNA" name="Confirm/Edit apointment date" incoming="_Sj9rUCeoEembKN0KULybNA" outgoing="_8Tn9ICekEemJ-cg8qZ34mg" inPartition="_9Np1ECenEembKN0KULybNA"/>
+    <node xmi:type="uml:DecisionNode" xmi:id="_qt8jECeoEembKN0KULybNA" name="" incoming="_8Tn9ICekEemJ-cg8qZ34mg" outgoing="_IBBYYCelEemJ-cg8qZ34mg _SdmE8CelEemJ-cg8qZ34mg" inPartition="_9Np1ECenEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_wRjVkCeoEembKN0KULybNA" name="Cancel" outgoing="_E3yZwCepEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
     <node xmi:type="uml:ActivityFinalNode" xmi:id="_D5HLACepEembKN0KULybNA" name="End" incoming="_E3yZwCepEembKN0KULybNA" inPartition="_9Np1ECenEembKN0KULybNA"/>
-    <node xmi:type="uml:OpaqueAction" xmi:id="_Gwr1ECepEembKN0KULybNA" name="Set up reminder" incoming="_K21yICepEembKN0KULybNA" outgoing="_O63BMCepEembKN0KULybNA" inPartition="_-z4MACenEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_Gwr1ECepEembKN0KULybNA" name="Set up reminder" incoming="_IBBYYCelEemJ-cg8qZ34mg" outgoing="_O63BMCepEembKN0KULybNA" inPartition="_-z4MACenEembKN0KULybNA"/>
     <node xmi:type="uml:ActivityFinalNode" xmi:id="_Ne-SACepEembKN0KULybNA" name="End" incoming="_O63BMCepEembKN0KULybNA" inPartition="_-z4MACenEembKN0KULybNA"/>
+    <node xmi:type="uml:OpaqueAction" xmi:id="_PUVN8CelEemJ-cg8qZ34mg" name="Prompt for date" incoming="_SdmE8CelEemJ-cg8qZ34mg" inPartition="_-z4MACenEembKN0KULybNA"/>
   </packagedElement>
 </uml:Model>

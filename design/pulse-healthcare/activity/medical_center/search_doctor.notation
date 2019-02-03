@@ -255,7 +255,7 @@
     <styles xmi:type="notation:FontStyle" xmi:id="_dPa9USc4Eemb9twJh9hqwg"/>
     <element xmi:type="uml:ControlFlow" href="search_doctor.uml#_dO-RYCc4Eemb9twJh9hqwg"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_dPa9Uic4Eemb9twJh9hqwg" points="[665, 220, -643984, -643984]$[665, 241, -643984, -643984]$[224, 241, -643984, -643984]$[273, 280, -643984, -643984]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dPt4QCc4Eemb9twJh9hqwg" id="(0.5241935483870968,1.0)"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dPt4QCc4Eemb9twJh9hqwg" id="(0.48872180451127817,1.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dPt4QSc4Eemb9twJh9hqwg" id="(0.41509433962264153,0.0)"/>
   </edges>
   <edges xmi:type="notation:Connector" xmi:id="_eOGMECc4Eemb9twJh9hqwg" type="ControlFlow_Edge" source="_4UYN4Cc3Eemb9twJh9hqwg" target="_8PA3cSc3Eemb9twJh9hqwg">
