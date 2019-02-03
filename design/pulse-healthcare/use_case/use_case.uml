@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_EUvTkCaXEem_IM3Ru9cTJg" name="model">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_EahLcCaXEem_IM3Ru9cTJg">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_-jG9ECafEemyB422JQ4x-Q" name="Medical Center"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_Kiwl8CagEemyB422JQ4x-Q" name="Request to register medical center"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_Nn5K4CagEemyB422JQ4x-Q" name="Search a doctor by ID">
+    <include xmi:type="uml:Include" xmi:id="_R3VNgCalEemyB422JQ4x-Q" addition="_GN1a0CalEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_PR3ZYCagEemyB422JQ4x-Q" name="Register a doctor">
+    <include xmi:type="uml:Include" xmi:id="_S4yDcCalEemyB422JQ4x-Q" addition="_GN1a0CalEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_SqsWYCagEemyB422JQ4x-Q" name="Search a patient by ID">
+    <include xmi:type="uml:Include" xmi:id="_T0mygCalEemyB422JQ4x-Q" addition="_Ja6a0CalEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_UUqk4CagEemyB422JQ4x-Q" name="Register a patient">
+    <include xmi:type="uml:Include" xmi:id="_UW2j8CalEemyB422JQ4x-Q" addition="_Ja6a0CalEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_eB3C8CagEemyB422JQ4x-Q" memberEnd="_eCZOcCagEemyB422JQ4x-Q _eCk0oCagEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_eB-XsCagEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_eB-XsSagEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_eCZOcCagEemyB422JQ4x-Q" name="medical center" type="_-jG9ECafEemyB422JQ4x-Q" association="_eB3C8CagEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_eCk0oCagEemyB422JQ4x-Q" name="register a new account" type="_Kiwl8CagEemyB422JQ4x-Q" association="_eB3C8CagEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ercygCagEemyB422JQ4x-Q" memberEnd="_ereAoCagEemyB422JQ4x-Q _ereAoSagEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_erdZkCagEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_erdZkSagEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ereAoCagEemyB422JQ4x-Q" name="medical center" type="_-jG9ECafEemyB422JQ4x-Q" association="_ercygCagEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ereAoSagEemyB422JQ4x-Q" name="search a doctor by id" type="_Nn5K4CagEemyB422JQ4x-Q" association="_ercygCagEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_fcSZkCagEemyB422JQ4x-Q" memberEnd="_fcTnsCagEemyB422JQ4x-Q _fcTnsSagEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_fcTAoCagEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_fcTAoSagEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_fcTnsCagEemyB422JQ4x-Q" name="medical center" type="_-jG9ECafEemyB422JQ4x-Q" association="_fcSZkCagEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_fcTnsSagEemyB422JQ4x-Q" name="register a doctor" type="_PR3ZYCagEemyB422JQ4x-Q" association="_fcSZkCagEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ggnkYCagEemyB422JQ4x-Q" memberEnd="_ggoLcSagEemyB422JQ4x-Q _ggoLciagEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ggnkYSagEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ggoLcCagEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ggoLcSagEemyB422JQ4x-Q" name="medical center" type="_-jG9ECafEemyB422JQ4x-Q" association="_ggnkYCagEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ggoLciagEemyB422JQ4x-Q" name="search a patient by id" type="_SqsWYCagEemyB422JQ4x-Q" association="_ggnkYCagEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_hFo9ACagEemyB422JQ4x-Q" memberEnd="_hFpkEiagEemyB422JQ4x-Q _hFqLICagEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_hFpkECagEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_hFpkESagEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_hFpkEiagEemyB422JQ4x-Q" name="medical center" type="_-jG9ECafEemyB422JQ4x-Q" association="_hFo9ACagEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_hFqLICagEemyB422JQ4x-Q" name="register a patient" type="_UUqk4CagEemyB422JQ4x-Q" association="_hFo9ACagEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_ny_l0CagEemyB422JQ4x-Q" name="Patient (with NIC)"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_qvnvACagEemyB422JQ4x-Q" memberEnd="_qvpkMCagEemyB422JQ4x-Q _qvpkMSagEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_qvoWECagEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_qvo9ICagEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_qvpkMCagEemyB422JQ4x-Q" name="register a patient" type="_UUqk4CagEemyB422JQ4x-Q" association="_qvnvACagEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_qvpkMSagEemyB422JQ4x-Q" name="patient (with nic)" type="_ny_l0CagEemyB422JQ4x-Q" association="_qvnvACagEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_mEvCUCaiEemyB422JQ4x-Q" name="Doctor"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_op5twCaiEemyB422JQ4x-Q" name="Check-in at a medical center">
+    <extend xmi:type="uml:Extend" xmi:id="_yFOxACaoEemyB422JQ4x-Q" extendedCase="_zIf2wCamEemyB422JQ4x-Q" extensionLocation="_yFPYECaoEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_B3YC0CajEemyB422JQ4x-Q" name="Add Prescription">
+    <include xmi:type="uml:Include" xmi:id="_z1nmACanEemyB422JQ4x-Q" addition="_zIf2wCamEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_McfAUCajEemyB422JQ4x-Q" name="View Timeline (prev prescriptions)">
+    <include xmi:type="uml:Include" xmi:id="_0hyIcCanEemyB422JQ4x-Q" addition="_zIf2wCamEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_O54P0CajEemyB422JQ4x-Q" name="Attach reports">
+    <include xmi:type="uml:Include" xmi:id="_1AxKgCanEemyB422JQ4x-Q" addition="_zIf2wCamEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_VJCgwCajEemyB422JQ4x-Q" name="Assign next appointment">
+    <include xmi:type="uml:Include" xmi:id="_2VmPcCanEemyB422JQ4x-Q" addition="_zIf2wCamEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_Yqa80CajEemyB422JQ4x-Q" name="Bookmark medical center"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_NYKI8CakEemyB422JQ4x-Q" memberEnd="_NYL-ISakEemyB422JQ4x-Q _NYNMQCakEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_NYLXECakEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_NYL-ICakEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_NYL-ISakEemyB422JQ4x-Q" name="add prescription" type="_B3YC0CajEemyB422JQ4x-Q" association="_NYKI8CakEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_NYNMQCakEemyB422JQ4x-Q" name="doctor" type="_mEvCUCaiEemyB422JQ4x-Q" association="_NYKI8CakEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_PKXGYCakEemyB422JQ4x-Q" memberEnd="_PKYUgCakEemyB422JQ4x-Q _PKYUgSakEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PKXtcCakEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PKXtcSakEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PKYUgCakEemyB422JQ4x-Q" name="view timeline" type="_McfAUCajEemyB422JQ4x-Q" association="_PKXGYCakEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PKYUgSakEemyB422JQ4x-Q" name="doctor" type="_mEvCUCaiEemyB422JQ4x-Q" association="_PKXGYCakEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_QZ3mcCakEemyB422JQ4x-Q" memberEnd="_QZ4NgiakEemyB422JQ4x-Q _QZ40kCakEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QZ4NgCakEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QZ4NgSakEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_QZ4NgiakEemyB422JQ4x-Q" name="attach reports" type="_O54P0CajEemyB422JQ4x-Q" association="_QZ3mcCakEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_QZ40kCakEemyB422JQ4x-Q" name="doctor" type="_mEvCUCaiEemyB422JQ4x-Q" association="_QZ3mcCakEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_RJAkYCakEemyB422JQ4x-Q" memberEnd="_RJBLciakEemyB422JQ4x-Q _RJBygCakEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_RJBLcCakEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RJBLcSakEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_RJBLciakEemyB422JQ4x-Q" name="assign next appointment" type="_VJCgwCajEemyB422JQ4x-Q" association="_RJAkYCakEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_RJBygCakEemyB422JQ4x-Q" name="doctor" type="_mEvCUCaiEemyB422JQ4x-Q" association="_RJAkYCakEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Rrke4CakEemyB422JQ4x-Q" memberEnd="_RrltASakEemyB422JQ4x-Q _RrmUECakEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_RrlF8CakEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_RrltACakEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_RrltASakEemyB422JQ4x-Q" name="save medical center" type="_Yqa80CajEemyB422JQ4x-Q" association="_Rrke4CakEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_RrmUECakEemyB422JQ4x-Q" name="doctor" type="_mEvCUCaiEemyB422JQ4x-Q" association="_Rrke4CakEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_GN1a0CalEemyB422JQ4x-Q" name="Check for doctor account exsistance"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_Ja6a0CalEemyB422JQ4x-Q" name="Check for patient account exsistance"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_zIf2wCamEemyB422JQ4x-Q" name="Select a patient account">
+    <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_kMuJECaoEemyB422JQ4x-Q" name="ExtensionPoint2"/>
+    <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_yFPYECaoEemyB422JQ4x-Q" name="ExtensionPoint3"/>
+    <include xmi:type="uml:Include" xmi:id="_rIv8gCanEemyB422JQ4x-Q" addition="_SqsWYCagEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_1SOjYCamEemyB422JQ4x-Q" memberEnd="_1SQYkCamEemyB422JQ4x-Q _1SQ_oCamEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_1SPKcCamEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_1SPKcSamEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_1SQYkCamEemyB422JQ4x-Q" name="select a patient account" type="_zIf2wCamEemyB422JQ4x-Q" association="_1SOjYCamEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_1SQ_oCamEemyB422JQ4x-Q" name="doctor" type="_mEvCUCaiEemyB422JQ4x-Q" association="_1SOjYCamEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_VaayYCaoEemyB422JQ4x-Q" memberEnd="_VadOoiaoEemyB422JQ4x-Q _Vad1sCaoEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_VadOoCaoEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_VadOoSaoEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_VadOoiaoEemyB422JQ4x-Q" name="check-in at a medical center" type="_op5twCaiEemyB422JQ4x-Q" association="_VaayYCaoEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Vad1sCaoEemyB422JQ4x-Q" type="_mEvCUCaiEemyB422JQ4x-Q" association="_VaayYCaoEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_7yp0YCavEemyB422JQ4x-Q" name="Patient"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_Bo8SUCawEemyB422JQ4x-Q" name="Add medication reminder"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_Ex1V4CawEemyB422JQ4x-Q" name="Add next appointment reminder"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_HV3Y4CawEemyB422JQ4x-Q" name="View description/side effects... of a medication"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Ou_ikCawEemyB422JQ4x-Q" memberEnd="_OvBXwCawEemyB422JQ4x-Q _OvBXwSawEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_OvAwsCawEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_OvAwsSawEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_OvBXwCawEemyB422JQ4x-Q" name="patient" type="_7yp0YCavEemyB422JQ4x-Q" association="_Ou_ikCawEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_OvBXwSawEemyB422JQ4x-Q" name="add medication reminder" type="_Bo8SUCawEemyB422JQ4x-Q" association="_Ou_ikCawEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_PMqWACawEemyB422JQ4x-Q" memberEnd="_PMrkISawEemyB422JQ4x-Q _PMrkIiawEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PMq9ECawEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PMrkICawEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PMrkISawEemyB422JQ4x-Q" name="patient" type="_7yp0YCavEemyB422JQ4x-Q" association="_PMqWACawEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PMrkIiawEemyB422JQ4x-Q" name="add next appointment reminder" type="_Ex1V4CawEemyB422JQ4x-Q" association="_PMqWACawEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_PvJYACawEemyB422JQ4x-Q" memberEnd="_PvKmICawEemyB422JQ4x-Q _PvKmISawEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PvJ_ECawEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PvJ_ESawEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PvKmICawEemyB422JQ4x-Q" name="patient" type="_7yp0YCavEemyB422JQ4x-Q" association="_PvJYACawEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PvKmISawEemyB422JQ4x-Q" name="view description/side effects... of a medication" type="_HV3Y4CawEemyB422JQ4x-Q" association="_PvJYACawEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Vg8XgCawEemyB422JQ4x-Q" memberEnd="_Vg8-kiawEemyB422JQ4x-Q _Vg9loCawEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Vg8-kCawEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Vg8-kSawEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Vg8-kiawEemyB422JQ4x-Q" name="patient" type="_7yp0YCavEemyB422JQ4x-Q" association="_Vg8XgCawEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Vg9loCawEemyB422JQ4x-Q" name="view timeline (prev prescriptions)" type="_McfAUCajEemyB422JQ4x-Q" association="_Vg8XgCawEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_otBx4CawEemyB422JQ4x-Q" name="Enable/disable reminders"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_sYG8gCawEemyB422JQ4x-Q" memberEnd="_sYHjkiawEemyB422JQ4x-Q _sYIKoCawEemyB422JQ4x-Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_sYHjkCawEemyB422JQ4x-Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_sYHjkSawEemyB422JQ4x-Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_sYHjkiawEemyB422JQ4x-Q" name="patient" type="_7yp0YCavEemyB422JQ4x-Q" association="_sYG8gCawEemyB422JQ4x-Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_sYIKoCawEemyB422JQ4x-Q" name="enable/disable reminders" type="_otBx4CawEemyB422JQ4x-Q" association="_sYG8gCawEemyB422JQ4x-Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_07LgQCbxEemDDt0xq2Q3ug" name="Admin"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_31lb4CbxEemDDt0xq2Q3ug" name="View medical center requests"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_706_QCbxEemDDt0xq2Q3ug" name="Register medical center">
+    <include xmi:type="uml:Include" xmi:id="_GULMYCbyEemDDt0xq2Q3ug" addition="_31lb4CbxEemDDt0xq2Q3ug"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_BxDmgCbyEemDDt0xq2Q3ug" memberEnd="_BxNXgCbyEemDDt0xq2Q3ug _BxNXgSbyEemDDt0xq2Q3ug">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_BxDmgSbyEemDDt0xq2Q3ug" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_BxDmgibyEemDDt0xq2Q3ug" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_BxNXgCbyEemDDt0xq2Q3ug" name="view medical center requests" type="_31lb4CbxEemDDt0xq2Q3ug" association="_BxDmgCbyEemDDt0xq2Q3ug"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_BxNXgSbyEemDDt0xq2Q3ug" name="admin" type="_07LgQCbxEemDDt0xq2Q3ug" association="_BxDmgCbyEemDDt0xq2Q3ug"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_DLdH8CbyEemDDt0xq2Q3ug" memberEnd="_DLdH8ybyEemDDt0xq2Q3ug _DLdH9CbyEemDDt0xq2Q3ug">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_DLdH8SbyEemDDt0xq2Q3ug" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_DLdH8ibyEemDDt0xq2Q3ug" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_DLdH8ybyEemDDt0xq2Q3ug" name="admin" type="_07LgQCbxEemDDt0xq2Q3ug" association="_DLdH8CbyEemDDt0xq2Q3ug"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_DLdH9CbyEemDDt0xq2Q3ug" name="register medical center" type="_706_QCbxEemDDt0xq2Q3ug" association="_DLdH8CbyEemDDt0xq2Q3ug"/>
+  </packagedElement>
+</uml:Model>
