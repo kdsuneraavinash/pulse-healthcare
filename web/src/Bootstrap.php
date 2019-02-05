@@ -70,7 +70,13 @@ $klein = new Klein\Klein();
 /// and first = TYPE, second = /path, third = function response()
 $routes = getRoutes();
 foreach ($routes as $route) {
-    $klein->respond($route[0], $route[1], $route[2]);
+    $type = $route[0];
+    $route_path = $route[1];
+
+    $controller = new $route[2][0];
+    $method = $route[2][1];
+    $callback = [$controller, $method];
+    $klein->respond($type, $route_path, $callback);
 }
 
 /// getRouterErrorHandlers() has 2D arrays where each row is a handler

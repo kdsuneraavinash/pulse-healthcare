@@ -7,15 +7,7 @@ function getRoutes()
     return [
         [
             'GET', '/hello-world',
-            function () {
-                return 'Hello World!';
-            }
-        ],
-        [
-            'GET', '/another-route',
-            function () {
-                return 'Another Route!';
-            }
+            ['Pulse\Controllers\Homepage', 'show']
         ]
     ];
 }
