@@ -8,6 +8,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Whoops;
 use Symfony\Component\HttpFoundation;
+use Klein;
 
 
 /// ========================================================
@@ -62,6 +63,33 @@ $httpResponse = new HttpFoundation\Response();
 /// ========================================================
 
 require __DIR__ . '/../src/Routes.php';
+
+$klein = new Klein\Klein();
+
+/// Get routes has 2D arrays where each row is a route
+/// and first = TYPE, second = /path, third = function response()
+$routes = getRoutes();
+foreach ($routes as $route) {
+    $klein->respond($route[0], $route[1], $route[2]);
+}
+
+/// getRouterErrorHandlers() has 2D arrays where each row is a handler
+/// and first = ERROR_CODE, second = response body
+///
+/// getRouterDefaultErrorHandler($code) will have the
+/// default response (Unhandles error)
+$klein->onHttpError(function (int $code, Klein\Klein $router) {
+    $router_err_handlers = getRouterErrorHandlers();
+    foreach ($router_err_handlers as $handler) {
+        if ($code == $handler[0]) {
+            $router->response()->body($handler[1]);
+            return;
+        }
+    }
+    $router->response()->body(getRouterDefaultErrorHandler($code));
+});
+
+$klein->dispatch();
 
 
 /// ========================================================

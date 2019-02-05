@@ -2,45 +2,34 @@
 
 namespace Pulse;
 
-use Klein;
+function getRoutes()
+{
+    return [
+        [
+            'GET', '/hello-world',
+            function () {
+                return 'Hello World!';
+            }
+        ],
+        [
+            'GET', '/another-route',
+            function () {
+                return 'Another Route!';
+            }
+        ]
+    ];
+}
 
-$klein = new Klein\Klein();
+function getRouterErrorHandlers()
+{
+    return [
+        [
+            404, 'Error 404'
+        ]
+    ];
+}
 
-
-/// ========================================================
-/// Routes
-/// ========================================================
-
-$klein->respond('GET', '/hello-world', function () {
-    return 'Hello World!';
-});
-$klein->respond('GET', '/another-route', function () {
-    return 'Another Route!';
-});
-
-
-/// ========================================================
-/// Handles errors that can occur because of routing
-/// https://github.com/klein/klein.php/wiki/Handling-404's
-/// ========================================================
-
-$klein->onHttpError(function (int $code, Klein\Klein $router) {
-    switch ($code) {
-        case 404:
-            $router->response()->body(
-                'Error 404'
-            );
-            break;
-        default:
-            $router->response()->body(
-                'Error ' . $code . ' Happened'
-            );
-    }
-});
-
-
-/// ========================================================
-/// Dispatching Routes
-/// ========================================================
-
-$klein->dispatch();
+function getRouterDefaultErrorHandler(int $code)
+{
+    return 'Error ' . $code . ' Happened';
+}
