@@ -1,7 +1,10 @@
 {
   "name": "Pulse-Healthcare",
   "description": "A medical healthcare site to assist patients and doctors.",
-  "keywords": ["healthcare", "medical-history"],
+  "keywords": [
+    "healthcare",
+    "medical-history"
+  ],
   "license": "MIT",
   "authors": [
     {
@@ -23,7 +26,8 @@
   "require": {
     "php": ">=7.0.0",
     "filp/whoops": "~2.3",
-    "symfony/http-foundation": "^4.2"
+    "symfony/http-foundation": "^4.2",
+    "klein/klein": "^2.1"
   },
   "autoload": {
     "psr-4": {

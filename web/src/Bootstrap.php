@@ -6,6 +6,7 @@ namespace Pulse;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Whoops;
 use Symfony\Component\HttpFoundation;
 
 
@@ -23,13 +24,12 @@ error_reporting(E_ALL);
 $environment = 'development';
 
 /// Register the error handler
-$whoops = new \Whoops\Run;
+$whoops = new Whoops\Run;
 if ($environment !== 'production') {
-    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler);
 } else {
     $whoops->pushHandler(function (\Exception $e) {
-        // TODO: Friendly error page and send an email to the developer
-        echo 'Error Occurred in Production Mode: ' . $e->getCode();
+        // TODO: Log error or send an email to dev
     });
 }
 
@@ -45,10 +45,27 @@ $whoops->register();
 /// https://symfony.com/doc/current/components/http_foundation.html
 /// ========================================================
 
+//TODO: Checkout other HTTP Component Handlers and determine the
+// most lightweight and easy to use library
+
 $httpRequest = HttpFoundation\Request::createFromGlobals();
 $httpResponse = new HttpFoundation\Response();
 
-$httpResponse->setContent("<h1>Hello world again!</h1>");
-$httpResponse->setStatusCode(200);
+
+/// ========================================================
+/// = Klein.php
+/// ========================================================
+/// Router
+/// --------------------------------------------------------
+/// DOCUMENTATION
+/// https://github.com/klein/klein.php
+/// ========================================================
+
+require __DIR__ . '/../src/Routes.php';
+
+
+/// ========================================================
+/// = HTTP Foundation sending response
+/// ========================================================
 
 $httpResponse->send();
