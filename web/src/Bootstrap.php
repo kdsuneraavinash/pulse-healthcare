@@ -3,10 +3,19 @@
 namespace Pulse;
 
 /// Autoloader PSR-4
+
 require __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\HttpFoundation;
+
 
 /// ========================================================
 /// = Whoops Initialization
+/// ========================================================
+/// Error Reporter
+/// --------------------------------------------------------
+/// DOCUMENTATION
+/// https://github.com/filp/whoops
 /// ========================================================
 
 error_reporting(E_ALL);
@@ -23,7 +32,23 @@ if ($environment !== 'production') {
         echo 'Error Occurred in Production Mode: ' . $e->getCode();
     });
 }
+
 $whoops->register();
 
-// Test whoops
-// throw new \Exception;
+
+/// ========================================================
+/// = HTTP Foundation Initialization
+/// ========================================================
+/// HTTP Component Handler
+/// --------------------------------------------------------
+/// DOCUMENTATION
+/// https://symfony.com/doc/current/components/http_foundation.html
+/// ========================================================
+
+$httpRequest = HttpFoundation\Request::createFromGlobals();
+$httpResponse = new HttpFoundation\Response();
+
+$httpResponse->setContent("<h1>Hello world again!</h1>");
+$httpResponse->setStatusCode(200);
+
+$httpResponse->send();
