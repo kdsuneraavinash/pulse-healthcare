@@ -27,7 +27,8 @@
     "php": ">=7.0.0",
     "filp/whoops": "~2.3",
     "symfony/http-foundation": "^4.2",
-    "klein/klein": "^2.1"
+    "klein/klein": "^2.1",
+    "mustache/mustache": "^2.12"
   },
   "autoload": {
     "psr-4": {

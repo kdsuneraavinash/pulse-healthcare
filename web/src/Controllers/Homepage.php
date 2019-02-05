@@ -6,15 +6,16 @@ use Pulse\BaseController;
 
 class Homepage extends BaseController
 {
-    public function __construct($req, $res)
+    public function __construct($req, $res, $rend)
     {
-        parent::__construct($req, $res);
+        parent::__construct($req, $res, $rend);
     }
 
     public function show()
     {
-        $content = '<h1>Hello World</h1>';
-        $content .= 'Hello ' . $this->request->get('name', 'stranger');
-        $this->response->setContent($content);
+        $data = [
+            'name' => $this->request->get('name', 'stranger'),
+        ];
+        $this->render('HomePage', $data);
     }
 }

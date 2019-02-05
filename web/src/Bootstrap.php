@@ -9,6 +9,8 @@ require __DIR__ . '/../vendor/autoload.php';
 use Whoops;
 use Symfony\Component\HttpFoundation;
 use Klein;
+use Mustache_Engine;
+use Mustache_Loader_FilesystemLoader;
 
 
 /// ========================================================
@@ -54,6 +56,23 @@ $httpResponse = new HttpFoundation\Response();
 
 
 /// ========================================================
+/// = Mustache Initialization
+/// ========================================================
+/// Template Engine
+/// --------------------------------------------------------
+/// DOCUMENTATION
+/// https://github.com/bobthecow/mustache.php
+/// ========================================================
+
+$mustache = new Mustache_Engine([
+    'loader' => new Mustache_Loader_FilesystemLoader(
+        dirname(__DIR__) . '/templates', [
+        'extension' => '.html',
+    ]),
+]);
+
+
+/// ========================================================
 /// = Klein.php
 /// ========================================================
 /// Router
@@ -73,7 +92,7 @@ foreach ($routes as $route) {
     $type = $route[0];
     $route_path = $route[1];
 
-    $controller = new $route[2][0]($httpRequest, $httpResponse);
+    $controller = new $route[2][0]($httpRequest, $httpResponse, $mustache);
     $method = $route[2][1];
     $callback = [$controller, $method];
     $klein->respond($type, $route_path, $callback);
