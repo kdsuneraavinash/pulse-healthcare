@@ -1,0 +1,31 @@
+{
+  "name": "Pulse-Healthcare",
+  "description": "A medical healthcare site to assist patients and doctors.",
+  "keywords": ["healthcare", "medical-history"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "K. D. Sunera Avinash Chandrasiri",
+      "email": "suneraavinash.17@cse.mrt.ac.lk",
+      "role": "Main Developer"
+    },
+    {
+      "name": "T. Anju Chamantha",
+      "email": "anjuchamantha.17@cse.mrt.ac.lk",
+      "role": "Frontend Developer"
+    },
+    {
+      "name": "Lahiru Udayanga de Silva",
+      "email": "lahirudesilva.17@cse.mrt.ac.lk",
+      "role": "Backend Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pulse\\": "src/"
+    }
+  }
+}
