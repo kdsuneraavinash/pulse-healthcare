@@ -73,7 +73,7 @@ foreach ($routes as $route) {
     $type = $route[0];
     $route_path = $route[1];
 
-    $controller = new $route[2][0];
+    $controller = new $route[2][0]($httpRequest, $httpResponse);
     $method = $route[2][1];
     $callback = [$controller, $method];
     $klein->respond($type, $route_path, $callback);

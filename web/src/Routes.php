@@ -5,19 +5,15 @@ namespace Pulse;
 function getRoutes()
 {
     return [
-        [
-            'GET', '/hello-world',
-            ['Pulse\Controllers\Homepage', 'show']
-        ]
+        // ['METHOD', '/path, ['Pulse\Controllers\Controller', 'method']]
+        ['GET', '/hello-world', ['Pulse\Controllers\Homepage', 'show']]
     ];
 }
 
 function getRouterErrorHandlers()
 {
     return [
-        [
-            404, 'Error 404'
-        ]
+        [404, 'Error 404']
     ];
 }
 
