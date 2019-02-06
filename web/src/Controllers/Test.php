@@ -5,7 +5,7 @@ namespace Pulse\Controllers;
 use Pulse\BaseController;
 use DB;
 
-class Homepage extends BaseController
+class Test extends BaseController
 {
     public function __construct($req, $res, $rend)
     {

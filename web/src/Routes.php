@@ -6,7 +6,7 @@ function getRoutes()
 {
     return [
         // ['METHOD', '/path, ['Pulse\Controllers\Controller', 'method']]
-        ['GET', '/hello-world', ['Pulse\Controllers\Homepage', 'show']]
+        ['GET', '/test', ['Pulse\Controllers\Test', 'show']]
     ];
 }
 
