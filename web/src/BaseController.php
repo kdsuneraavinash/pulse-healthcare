@@ -11,7 +11,7 @@ abstract class BaseController
     protected $request;
     protected $rederer;
 
-    public function __construct(HttpFoundation\Request $httpRequest,
+    protected function __construct(HttpFoundation\Request $httpRequest,
                                 HttpFoundation\Response $httpResponse,
                                 Mustache_Engine $rederer)
     {
@@ -20,7 +20,7 @@ abstract class BaseController
         $this->rederer = $rederer;
     }
 
-    public function render(string $template, array $context){
+    protected function render(string $template, array $context){
         $rendered = $this->rederer->render($template, $context);
         $this->response->setContent($rendered);
     }
