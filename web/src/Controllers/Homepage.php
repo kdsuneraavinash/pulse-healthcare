@@ -3,6 +3,7 @@
 namespace Pulse\Controllers;
 
 use Pulse\BaseController;
+use DB;
 
 class Homepage extends BaseController
 {
@@ -13,8 +14,13 @@ class Homepage extends BaseController
 
     public function show()
     {
+        $get_string = $this->request->get('name', 'stranger');
+
+        $db_query = DB::query("SELECT * FROM test");
+
         $data = [
-            'name' => $this->request->get('name', 'stranger'),
+            'name' => $get_string,
+            'db' =>  $db_query,
         ];
         $this->render('HomePage', $data);
     }

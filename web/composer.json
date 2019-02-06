@@ -28,7 +28,8 @@
     "filp/whoops": "~2.3",
     "symfony/http-foundation": "^4.2",
     "klein/klein": "^2.1",
-    "mustache/mustache": "^2.12"
+    "mustache/mustache": "^2.12",
+    "sergeytsalkov/meekrodb": "^2.3"
   },
   "autoload": {
     "psr-4": {

@@ -8,9 +8,10 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Whoops;
 use Symfony\Component\HttpFoundation;
-use Klein;
+use DB;
 use Mustache_Engine;
 use Mustache_Loader_FilesystemLoader;
+use Klein;
 
 
 /// ========================================================
@@ -53,6 +54,44 @@ $whoops->register();
 
 $httpRequest = HttpFoundation\Request::createFromGlobals();
 $httpResponse = new HttpFoundation\Response();
+
+
+/// ========================================================
+/// = MeekroDB Initialization
+/// ========================================================
+/// Database Handler
+/// --------------------------------------------------------
+/// DOCUMENTATION
+/// https://meekro.com/docs.php
+/// ========================================================
+
+/*
+ * SETUP MYSQL
+ *
+ * $ sudo mysql
+ * > ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+ * $ mysql_secure_installation
+ *
+ * $ mysql -u root -p
+ * > CREATE USER 'pulse_root'@'localhost' IDENTIFIED BY 'password';
+ * > CREATE DATABASE pulse;
+ * > GRANT ALL PRIVILEGES ON pulse . * TO 'pulse_root'@'localhost';
+ * > CREATE TABLE test (
+ *  ->     ID int NOT NULL,
+ *  ->     LastName varchar(255) NOT NULL,
+ *  ->     FirstName varchar(255),
+ *  ->     Age int,
+ *  ->     PRIMARY KEY (ID)
+ *  -> );
+ * > INSERT INTO test (ID, LastName, FirstName, Age ) VALUES (170081, "Chandrasiri", 'Sunera', 22 );
+ * > SELECT * FROM test;
+ * */
+DB::$user = 'pulse_root';
+DB::$password = 'password';
+DB::$dbName = 'pulse';
+DB::$host = 'localhost';
+DB::$port = '3306';
+DB::$encoding = 'latin1';
 
 
 /// ========================================================
