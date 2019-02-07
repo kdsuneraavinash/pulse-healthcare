@@ -49,7 +49,7 @@ $whoops->register();
 /// https://symfony.com/doc/current/components/http_foundation.html
 /// ========================================================
 
-//TODO: Checkout other HTTP Component Handlers and determine the
+// TODO: Checkout other HTTP Component Handlers and determine the
 // most lightweight and easy to use library
 
 $httpRequest = HttpFoundation\Request::createFromGlobals();
@@ -65,27 +65,6 @@ $httpResponse = new HttpFoundation\Response();
 /// https://meekro.com/docs.php
 /// ========================================================
 
-/*
- * SETUP MYSQL
- *
- * $ sudo mysql
- * > ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
- * $ mysql_secure_installation
- *
- * $ mysql -u root -p
- * > CREATE USER 'pulse_root'@'localhost' IDENTIFIED BY 'password';
- * > CREATE DATABASE pulse;
- * > GRANT ALL PRIVILEGES ON pulse . * TO 'pulse_root'@'localhost';
- * > CREATE TABLE test (
- *  ->     ID int NOT NULL,
- *  ->     LastName varchar(255) NOT NULL,
- *  ->     FirstName varchar(255),
- *  ->     Age int,
- *  ->     PRIMARY KEY (ID)
- *  -> );
- * > INSERT INTO test (ID, LastName, FirstName, Age ) VALUES (170081, "Chandrasiri", 'Sunera', 22 );
- * > SELECT * FROM test;
- * */
 DB::$user = 'pulse_root';
 DB::$password = 'password';
 DB::$dbName = 'pulse';
