@@ -26,7 +26,7 @@
   "require": {
     "php": ">=7.0.0",
     "filp/whoops": "~2.3",
-    "symfony/http-foundation": "^4.2",
+    "patricklouys/http": "~1.4",
     "klein/klein": "^2.1",
     "mustache/mustache": "^2.12",
     "sergeytsalkov/meekrodb": "^2.3"

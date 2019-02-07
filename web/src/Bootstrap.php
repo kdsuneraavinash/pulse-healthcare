@@ -7,7 +7,7 @@ namespace Pulse;
 require __DIR__ . '/../vendor/autoload.php';
 
 use Whoops;
-use Symfony\Component\HttpFoundation;
+use Http;
 use DB;
 use Mustache_Engine;
 use Mustache_Loader_FilesystemLoader;
@@ -41,19 +41,19 @@ $whoops->register();
 
 
 /// ========================================================
-/// = HTTP Foundation Initialization
+/// = HTTP Initialization
 /// ========================================================
 /// HTTP Component Handler
 /// --------------------------------------------------------
 /// DOCUMENTATION
-/// https://symfony.com/doc/current/components/http_foundation.html
+/// https://github.com/PatrickLouys/http
 /// ========================================================
 
 // TODO: Checkout other HTTP Component Handlers and determine the
 // most lightweight and easy to use library
 
-$httpRequest = HttpFoundation\Request::createFromGlobals();
-$httpResponse = new HttpFoundation\Response();
+$httpRequest = new Http\HttpRequest($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
+$httpResponse = new Http\HttpResponse;
 
 
 /// ========================================================
@@ -100,6 +100,7 @@ $mustache = new Mustache_Engine([
 /// ========================================================
 
 require __DIR__ . '/../src/Routes.php';
+require __DIR__ . '/../src/BaseController.php';
 
 $klein = new Klein\Klein();
 
@@ -110,7 +111,8 @@ foreach ($routes as $route) {
     $type = $route[0];
     $route_path = $route[1];
 
-    $controller = new $route[2][0]($httpRequest, $httpResponse, $mustache);
+    $controller = new $route[2][0]();
+    BaseController::activate($controller, $httpRequest, $httpResponse, $mustache);
     $method = $route[2][1];
     $callback = [$controller, $method];
     $klein->respond($type, $route_path, $callback);
@@ -136,7 +138,11 @@ $klein->dispatch();
 
 
 /// ========================================================
-/// = HTTP Foundation sending response
+/// = HTTP sending response
 /// ========================================================
 
-$httpResponse->send();
+foreach ($httpResponse->getHeaders() as $header) {
+    header($header, false);
+}
+
+echo $httpResponse->getContent();

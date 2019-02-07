@@ -7,14 +7,9 @@ use DB;
 
 class Test extends BaseController
 {
-    public function __construct($req, $res, $rend)
-    {
-        parent::__construct($req, $res, $rend);
-    }
-
     public function show()
     {
-        $get_string = $this->request->get('name', 'stranger');
+        $get_string = $this->getRequest()->getParameter('name', 'stranger');
 
         $db_query = DB::query("SELECT * FROM test");
 
@@ -22,6 +17,6 @@ class Test extends BaseController
             'name' => $get_string,
             'db' =>  $db_query,
         ];
-        $this->render('HomePage', $data);
+        $this->render('Test', $data);
     }
 }
