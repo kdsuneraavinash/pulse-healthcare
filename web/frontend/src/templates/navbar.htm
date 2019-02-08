@@ -4,7 +4,7 @@
         <div class="container">
 
             <!-- Logo -->
-            <a class="navbar-brand waves-effect pr-3" href="#" target="_blank">
+            <a class="navbar-brand pr-3" href="#">
                 <strong>MediKit</strong>
             </a>
 
@@ -24,13 +24,13 @@
                     {% for href, caption in nav_links %}
                     {% if (caption == NAME) %}
                     <li class="nav-item active">
-                        <a class="nav-link waves-effect text-dark" href="{{href}}"><b>{{caption}}</b>
+                        <a class="nav-link text-dark" href="{{href}}"><b>{{caption}}</b>
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     {% else %}
                     <li class="nav-item px-1">
-                        <a href="{{href}}" class="nav-link waves-effect text-dark" target="_blank">{{caption}}</a>
+                        <a href="{{href}}" class="nav-link text-dark">{{caption}}</a>
                     </li>
                     {% endif %}
                     {% endfor %}
@@ -40,7 +40,7 @@
                 <!-- Sign In Button -->
                 <ul class="navbar-nav nav-flex-icons">
                     <li class="nav-item">
-                        <a href="#" class="nav-link btn btn-outline-success waves-effect" target="_blank">
+                        <a href="#" class="nav-link btn btn-outline-success waves-effect">
                             <i class="fas fa-user-circle"></i> &nbsp; Sign In</a>
                     </li>
                 </ul>
