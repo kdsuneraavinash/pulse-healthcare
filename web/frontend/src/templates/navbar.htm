@@ -1,50 +1,47 @@
+<!--suppress HtmlUnknownTarget -->
 <header>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <nav class="navbar fixed-top navbar-expand-lg bg-white darken-4 scrolling-navbar">
         <div class="container">
 
-            <a class="navbar-brand waves-effect" href="#" target="_blank">
-                <strong class="blue-text">MediKit</strong>
+            <!-- Logo -->
+            <a class="navbar-brand waves-effect pr-3" href="#" target="_blank">
+                <strong>MediKit</strong>
             </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <!-- Expander -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
+                    aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Links -->
+            <div class="collapse navbar-collapse" id="navbar-content">
                 <ul class="navbar-nav mr-auto">
+
+                    {# These are to highlight the current page as the active page #}
+                    {% set nav_links = [('#', 'Home'), ('#', 'About MediKit'), ('#', 'Services'), ('#', 'Contact')] %}
+
+                    {% for href, caption in nav_links %}
+                    {% if (caption == NAME) %}
                     <li class="nav-item active">
-                        <a class="nav-link waves-effect" href="https://google.com/">Home
+                        <a class="nav-link waves-effect text-dark" href="{{href}}"><b>{{caption}}</b>
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link waves-effect" target="_blank">About
-                            MediKit</a>
+                    {% else %}
+                    <li class="nav-item px-1">
+                        <a href="{{href}}" class="nav-link waves-effect text-dark" target="_blank">{{caption}}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link waves-effect" target="_blank">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link waves-effect" target="_blank">Contact</a>
-                    </li>
+                    {% endif %}
+                    {% endfor %}
+
                 </ul>
 
+                <!-- Sign In Button -->
                 <ul class="navbar-nav nav-flex-icons">
                     <li class="nav-item">
-                        <a href="https://www.facebook.com/" class="nav-link waves-effect" target="_blank">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://twitter.com/" class="nav-link waves-effect" target="_blank">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link border border-light rounded waves-effect" target="_blank">
-                            <i class="fas fa-user-circle"></i>Sign In
-                        </a>
+                        <a href="#" class="nav-link btn btn-outline-success waves-effect" target="_blank">
+                            <i class="fas fa-user-circle"></i> &nbsp; Sign In</a>
                     </li>
                 </ul>
 

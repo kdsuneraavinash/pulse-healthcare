@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% set NAME = 'Home' %}
+
 <head>
-    {% include "header.htm" %}
+    {% include "header.htm" with context %}
+    <title>MediKit</title>
+
+    <!-- Custom Page CSS -->
     <link href="css/login.css" rel="stylesheet">
 </head>
 
