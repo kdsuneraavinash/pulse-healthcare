@@ -14,12 +14,12 @@
 <body>
     {% include "navbar.htm" %}
 
-    <main class="mt-5 pt-5">
+    <main class="mt-sm-5 pt-5">
         <div class="container">
-            <section class="card blue-gradient wow fadeIn">
-                <div class="card-body row">
+            <section class="wow fadeIn">
+                <div class="row">
 
-                    <div class="col-lg-8 text-white text-center py-5 px-5 my-5">
+                    <div class="border col-lg-8 text-white blue-gradient text-center p-5">
                         <h1 class="mb-4">
                             <strong>MediKit 1.0.1</strong>
                         </h1>
@@ -34,23 +34,20 @@
                         </a>
                     </div>
 
-                    <div class="col-lg-4 d-flex justify-content-center" id="login-side">
-                        <div class="card" id="login-card">
+                    <div class="border col-lg-4 d-flex justify-content-center">
+                            <form action="" method="get" class="text-center p-5">
+                                <p class="h4 mb-4">SIGN IN</p>
 
-                            <form class="text-center p-5">
-                                <p class="h4 mb-4">Sign in</p>
+                                <input type="text" id="loginID" name="loginID" class="form-control mb-4" placeholder="User ID">
 
-                                <input type="text" id="defaultLoginFormID" class="form-control mb-4" placeholder="User ID">
-
-                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4"
+                                <input type="password" id="password" name="password" class="form-control mb-4"
                                     placeholder="Password">
 
                                 <div class="justify-content-around">
                                     <div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
-                                            <label class="custom-control-label" for="defaultLoginFormRemember">Remember
-                                                me</label>
+                                            <input type="checkbox" class="custom-control-input" id="remember" name="remember">
+                                            <label class="custom-control-label" for="remember">Remember me</label>
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +55,6 @@
                                 <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
 
                             </form>
-                        </div>
                     </div>
 
                 </div>
@@ -76,6 +72,7 @@
                 </div>
 
             </section>
+
         </div>
     </main>
 
