@@ -13,6 +13,8 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Klein;
 
+define('TEMPLATES', __DIR__ . '/../templates');
+define('CACHE', __DIR__ . '/../cache');
 
 /// ========================================================
 /// = Whoops Initialization
@@ -82,7 +84,7 @@ DB::$encoding = 'latin1';
 /// https://twig.sensiolabs.org/
 /// ========================================================
 
-$loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
+$loader = new Twig_Loader_Filesystem(TEMPLATES);
 $twig = new Twig_Environment($loader, [
 //    'cache' => __DIR__ . '/../cache',
 ]);
@@ -125,12 +127,13 @@ $klein->onHttpError(function (int $code, Klein\Klein $router) {
     $router_err_handlers = getRouterErrorHandlers();
     foreach ($router_err_handlers as $handler) {
         if ($code == $handler[0]) {
-            $router->response()->body($handler[1]);
+            $router->response()->body(generateErrorPage($handler[1]));
             return;
         }
     }
-    $router->response()->body(getRouterDefaultErrorHandler($code));
+    $router->response()->body(generateErrorPage('other'));
 });
+
 
 $klein->dispatch();
 

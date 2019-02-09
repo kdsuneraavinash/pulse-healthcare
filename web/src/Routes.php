@@ -2,6 +2,9 @@
 
 namespace Pulse;
 
+use Twig_Environment;
+use Twig_Loader_Filesystem;
+
 function getRoutes()
 {
     return [
@@ -13,11 +16,10 @@ function getRoutes()
 function getRouterErrorHandlers()
 {
     return [
-        [404, 'Error 404']
+        [404, '404']
     ];
 }
 
-function getRouterDefaultErrorHandler(int $code)
-{
-    return 'Error ' . $code . ' Happened';
+function generateErrorPage(string $name){
+    return file_get_contents('error/'.$name.'.html');
 }
