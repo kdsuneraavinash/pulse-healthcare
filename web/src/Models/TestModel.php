@@ -22,15 +22,15 @@ class Person extends BaseModel
 
     function saveInDatabase()
     {
-        $existQuery = DB::query("SELECT * FROM test WHERE ID = %i;", $this->id);
-        if (count($existQuery) == 0) {
-            DB::insert('test', array(
-                'ID' => $this->id,
-                'LastName' => $this->lastName,
-                'FirstName' => $this->firstName,
-                'Age' => $this->age,
-            ));
-        }
+//        $existQuery = DB::query("SELECT * FROM test WHERE ID = %i;", $this->id);
+//        if (count($existQuery) == 0) {
+//            DB::insert('test', array(
+//                'ID' => $this->id,
+//                'LastName' => $this->lastName,
+//                'FirstName' => $this->firstName,
+//                'Age' => $this->age,
+//            ));
+//        }
 
     }
 

@@ -28,7 +28,7 @@
     "filp/whoops": "~2.3",
     "patricklouys/http": "~1.4",
     "klein/klein": "^2.1",
-    "mustache/mustache": "^2.12",
+    "twig/twig": "^2.0",
     "sergeytsalkov/meekrodb": "^2.3"
   },
   "autoload": {

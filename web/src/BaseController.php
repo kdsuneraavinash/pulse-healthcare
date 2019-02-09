@@ -3,7 +3,7 @@
 namespace Pulse;
 
 use Http;
-use Mustache_Engine;
+use Twig_Environment;
 
 abstract class BaseController
 {
@@ -16,12 +16,12 @@ abstract class BaseController
      * @param BaseController $controller Controller
      * @param Http\HttpRequest $httpRequest HTTP Request Object
      * @param Http\HttpResponse $httpResponse HTTP Response Object
-     * @param Mustache_Engine $rederer HTML Rendering Object
+     * @param Twig_Environment $rederer HTML Rendering Object
      */
     public static function activate(BaseController $controller,
                                     Http\HttpRequest $httpRequest,
                                     Http\HttpResponse $httpResponse,
-                                    Mustache_Engine $rederer)
+                                    Twig_Environment $rederer)
     {
         $controller->response = $httpResponse;
         $controller->request = $httpRequest;
@@ -45,9 +45,9 @@ abstract class BaseController
     }
 
     /**
-     * @return Mustache_Engine rendering engine
+     * @return Twig_Environment rendering engine
      */
-    protected function getRenderer(): Mustache_Engine
+    protected function getRenderer(): Twig_Environment
     {
         return $this->rederer;
     }
@@ -58,7 +58,11 @@ abstract class BaseController
      */
     protected function render(string $template, array $context)
     {
-        $rendered = $this->getRenderer()->render($template, $context);
-        $this->getResponse()->setContent($rendered);
+        try {
+            $rendered = $this->getRenderer()->render($template, $context);
+            $this->getResponse()->setContent($rendered);
+        } catch (\Exception $e) {
+            $this->getResponse()->setContent($e->getMessage());
+        }
     }
 }

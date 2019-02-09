@@ -37,14 +37,14 @@
             </tr>
             </thead>
             <tbody>
-            {{# db}}
+            {% for row in db %}
             <tr>
-                <td>{{ ID }}</td>
-                <td>{{ FirstName }}</td>
-                <td>{{ LastName }}</td>
-                <td>{{ Age }}</td>
+                <td>{{ row['ID'] }}</td>
+                <td>{{ row['FirstName'] }}</td>
+                <td>{{ row['LastName'] }}</td>
+                <td>{{ row['Age'] }}</td>
             </tr>
-            {{/ db}}
+            {% endfor %}
             </tbody>
         </table>
     </div>

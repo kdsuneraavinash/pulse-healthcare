@@ -9,8 +9,8 @@ require __DIR__ . '/../vendor/autoload.php';
 use Whoops;
 use Http;
 use DB;
-use Mustache_Engine;
-use Mustache_Loader_FilesystemLoader;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
 use Klein;
 
 
@@ -74,19 +74,17 @@ DB::$encoding = 'latin1';
 
 
 /// ========================================================
-/// = Mustache Initialization
+/// = Twig Initialization
 /// ========================================================
 /// Template Engine
 /// --------------------------------------------------------
 /// DOCUMENTATION
-/// https://github.com/bobthecow/mustache.php
+/// https://twig.sensiolabs.org/
 /// ========================================================
 
-$mustache = new Mustache_Engine([
-    'loader' => new Mustache_Loader_FilesystemLoader(
-        dirname(__DIR__) . '/templates', [
-        'extension' => '.html',
-    ]),
+$loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
+$twig = new Twig_Environment($loader, [
+    'cache' => __DIR__ . '/../cache',
 ]);
 
 
@@ -99,8 +97,8 @@ $mustache = new Mustache_Engine([
 /// https://github.com/klein/klein.php
 /// ========================================================
 
-require __DIR__ . '/../src/Routes.php';
-require __DIR__ . '/../src/BaseController.php';
+require __DIR__ . '/Routes.php';
+require __DIR__ . '/BaseController.php';
 
 $klein = new Klein\Klein();
 
@@ -112,7 +110,7 @@ foreach ($routes as $route) {
     $route_path = $route[1];
 
     $controller = new $route[2][0]();
-    BaseController::activate($controller, $httpRequest, $httpResponse, $mustache);
+    BaseController::activate($controller, $httpRequest, $httpResponse, $twig);
     $method = $route[2][1];
     $callback = [$controller, $method];
     $klein->respond($type, $route_path, $callback);
