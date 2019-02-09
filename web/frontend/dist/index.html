@@ -1,68 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
 <head>
-    <meta charset="utf-8">
+    <!--suppress HtmlUnknownTarget -->
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>MediKit</title>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 <!-- Bootstrap core CSS -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/css/mdb.min.css" rel="stylesheet">
+
+<!-- Public Stylesheet-->
+<link href="css/stylesheet.css" rel="stylesheet">
+    <title>MediKit</title>
+
+    <!-- Custom Page CSS -->
     <link href="css/login.css" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+<!--suppress HtmlUnknownTarget -->
+<header>
+    <nav class="navbar fixed-top navbar-expand-lg bg-white darken-4 scrolling-navbar">
         <div class="container">
 
-            <a class="navbar-brand waves-effect" href="#" target="_blank">
-                <strong class="blue-text">MediKit</strong>
+            <!-- Logo -->
+            <a class="navbar-brand pr-3" href="#">
+                <strong>MediKit</strong>
             </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <!-- Expander -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
+                    aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Links -->
+            <div class="collapse navbar-collapse" id="navbar-content">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link waves-effect" href="https://google.com/">Home
+
+                    
+                    
+
+                    
+                    
+                    <li class="nav-item active px-1">
+                        <a class="nav-link text-dark" href="#"><b>Home</b>
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link waves-effect" target="_blank">About
-                            MediKit</a>
+                    
+                    
+                    
+                    <li class="nav-item px-1">
+                        <a href="#" class="nav-link text-dark">About MediKit</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link waves-effect" target="_blank">Services</a>
+                    
+                    
+                    
+                    <li class="nav-item px-1">
+                        <a href="#" class="nav-link text-dark">Services</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link waves-effect" target="_blank">Contact</a>
+                    
+                    
+                    
+                    <li class="nav-item px-1">
+                        <a href="#" class="nav-link text-dark">Contact</a>
                     </li>
+                    
+                    
+
                 </ul>
 
+                <!-- Sign In Button -->
                 <ul class="navbar-nav nav-flex-icons">
                     <li class="nav-item">
-                        <a href="https://www.facebook.com/" class="nav-link waves-effect" target="_blank">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://twitter.com/" class="nav-link waves-effect" target="_blank">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link border border-light rounded waves-effect" target="_blank">
-                            <i class="fas fa-user-circle"></i>Sign In
-                        </a>
+                        <a href="#" class="nav-link btn btn-outline-success waves-effect">
+                            <i class="fas fa-user-circle"></i> &nbsp; Sign In</a>
                     </li>
                 </ul>
 
@@ -73,103 +92,98 @@
 
 </header>
 
-    <main class="mt-5 pt-5">
-        <div class="container">
-            <section class="card blue-gradient wow fadeIn">
-                <div class="card-body row">
+<main class="mt-sm-5 pt-5">
+    <div class="container">
+        <section class="wow fadeIn">
+            <div class="row">
 
-                    <div class="col-lg-8 text-white text-center py-5 px-5 my-5">
-                        <h1 class="mb-4">
-                            <strong>MediKit 1.0.1</strong>
-                        </h1>
-                        <h4>
-                            <strong>Best & free platform to mange all your medical needs</strong>
-                        </h4>
-                        <p class="mb-4">
-                            Loved by over 500 doctors, 2000 patients & 100 medical centers.
-                        </p>
-                        <a target="_blank" class="btn btn-outline-white btn-lg">
-                            CREATE ACCOUNT
-                        </a>
-                    </div>
+                <div class="border col-lg-8 text-white blue-gradient text-center p-5">
+                    <h1 class="mb-4">
+                        <strong>MediKit 1.0.1</strong>
+                    </h1>
+                    <h4>
+                        <strong>Best & free platform to mange all your medical needs</strong>
+                    </h4>
+                    <p class="mb-4">
+                        Loved by over 500 doctors, 2000 patients & 100 medical centers.
+                    </p>
+                    <a target="_blank" class="btn btn-outline-white btn-lg">
+                        CREATE ACCOUNT
+                    </a>
+                </div>
 
-                    <div class="col-lg-4 d-flex justify-content-center" id="login-side">
-                        <div class="card" id="login-card">
+                <div class="border col-lg-4 d-flex justify-content-center">
+                    <form action="" method="get" class="needs-validation p-5" novalidate>
+                        <p class="h4 mb-4 text-center">SIGN IN</p>
 
-                            <form class="text-center p-5">
-                                <p class="h4 mb-4">Sign in</p>
-
-                                <input type="text" id="defaultLoginFormID" class="form-control mb-4" placeholder="User ID">
-
-                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4"
-                                    placeholder="Password">
-
-                                <div class="justify-content-around">
-                                    <div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
-                                            <label class="custom-control-label" for="defaultLoginFormRemember">Remember
-                                                me</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
-
-                            </form>
+                        <div class="input-group mb-4">
+                            <input type="text" id="loginID" name="loginID" class="form-control"
+                                   placeholder="User ID"
+                                   required>
                         </div>
-                    </div>
 
+                        <div class="input-group mb-4">
+                            <input type="password" id="password" name="password" class="form-control"
+                                   placeholder="Password" required>
+                        </div>
+
+                        <div class="justify-content-around">
+                            <div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="remember" name="remember">
+                                    <label class="custom-control-label" for="remember">Remember me</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
+
+                    </form>
                 </div>
-            </section>
 
-            <section class="pt-5">
+            </div>
+        </section>
 
-                <div class="wow fadeIn">
-                    <h2 class="h1 text-center mb-5">What is MediKit?</h2>
-                    <p class="text-center">MediKit is the world most popular Health Care App for connecting the needs
-                        in medical industry. </p>
-                    <p class="text-center mb-5 pb-5">Trusted by over
-                        <strong>10 000</strong> users. Easy to use & manage health data with all the records,
-                        prescriptions etc.</p>
-                </div>
+        <section class="pt-5">
 
-            </section>
-        </div>
-    </main>
+            <div class="wow fadeIn">
+                <h2 class="h1 text-center mb-5">What is MediKit?</h2>
+                <p class="text-center">MediKit is the world most popular Health Care App for connecting the needs
+                    in medical industry. </p>
+                <p class="text-center mb-5 pb-5">Trusted by over
+                    <strong>10 000</strong> users. Easy to use & manage health data with all the records,
+                    prescriptions etc.</p>
+            </div>
 
-    <footer class="page-footer text-center font-small mdb-color darken-2 mt-4 wow fadeIn">
+        </section>
 
-    <div class="pt-4">
-        <a class="btn btn-outline-white" href="" target="_blank" role="button">Create Account
-        </a>
-        <a class="btn btn-outline-white" href="" target="_blank" role="button">Sign In
-        </a>
     </div>
+</main>
 
+<footer class="page-footer text-center font-small mdb-color wow fadeIn">
     <hr class="my-4">
-
     <div class="pb-4">
-        <a href="https://www.facebook.com/" target="_blank">
+        <a href="#">
             <i class="fab fa-facebook-f mr-3"></i>
         </a>
-        <a href="https://twitter.com/" target="_blank">
+        <a href="#">
             <i class="fab fa-twitter mr-3"></i>
         </a>
-        <a href="https://www.youtube.com/" target="_blank">
+        <a href="#">
             <i class="fas fa-info-circle"></i>
         </a>
 
     </div>
 
     <div class="footer-copyright py-3">
-        	&copy; 2018 Copyright:
-        <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> teamPulse.com </a>
+        &copy; 2018 Copyright:
+        <a href="#"> teampulse.com </a>
     </div>
 
 </footer>
-    <!-- SCRIPTS -->
+<!-- SCRIPTS -->
 <!-- JQuery -->
+<!--suppress HtmlUnknownTarget -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
@@ -182,6 +196,8 @@
     // Animations initialization
     new WOW().init();
 </script>
+<script src="js/main.js"></script>
+<script src="js/login.js"></script>
 
 </body>
 
