@@ -3,6 +3,7 @@
 {% set NAME = 'Debug' %}
 
 <!doctype html>
+<!--suppress HtmlUnknownTarget -->
 <html lang="en">
 <head>
     {% include("part/header.htm.twig") %}
@@ -13,20 +14,48 @@
 {% include("part/navbar.htm.twig") %}
 
 <main>
-    <div class="container wow fadeIn">
+    <div class="container">
 
         {{ Test.test_card_top('GET Request test:') }}
-        <p>GET['name'] = <i>{{ name }}</i></p>
+        <table class="table table-bordered">
+            <thead class="thead">
+            <tr>
+                <th scope="col">GET</th>
+                <th scope="col">POST</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ get }}</td>
+                <td>{{ post }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="/test" method="get" class="text-right">
+                            <input type="text" name="key" class="form-control" placeholder="Key">
+                            <button type="submit" class="btn btn-amber btn-sm">GET</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/test" method="post" class="text-right">
+                        <input type="text" name="key" class="form-control" placeholder="Key">
+                        <button type="submit" class="btn btn-blue-grey btn-sm">POST</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
         {{ Test.test_card_bottom() }}
 
         {{ Test.test_card_top('Database test:') }}
-        <table class="table">
+        <table class="table table-bordered">
             <thead class="thead">
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">FirstName</th>
                 <th scope="col">LastName</th>
                 <th scope="col">Age</th>
+                <th scope="col">Password</th>
             </tr>
             </thead>
             <tbody>
@@ -36,10 +65,15 @@
                     <td>{{ row['FirstName'] }}</td>
                     <td>{{ row['LastName'] }}</td>
                     <td>{{ row['Age'] }}</td>
+                    <td>{{ row['Password'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        {{ Test.test_card_bottom() }}
+
+        {{ Test.test_card_top('Session test:') }}
+
         {{ Test.test_card_bottom() }}
 
     </div>

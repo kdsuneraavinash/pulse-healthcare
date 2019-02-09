@@ -12,6 +12,7 @@ use DB;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Klein;
+use Pulse\MVC\BaseController;
 
 define('TEMPLATES', __DIR__ . '/../templates');
 define('CACHE', __DIR__ . '/../cache');
@@ -100,7 +101,7 @@ $twig = new Twig_Environment($loader, [
 /// ========================================================
 
 require __DIR__ . '/Routes.php';
-require __DIR__ . '/BaseController.php';
+require __DIR__ . '/MVC/BaseController.php';
 
 $klein = new Klein\Klein();
 
@@ -131,7 +132,7 @@ $klein->onHttpError(function (int $code, Klein\Klein $router) {
             return;
         }
     }
-    $router->response()->body(generateErrorPage('other'));
+    $router->response()->body(generateErrorPage('other') . $code );
 });
 
 

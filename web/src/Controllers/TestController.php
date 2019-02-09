@@ -2,18 +2,20 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\BaseController;
+use Pulse\MVC\BaseController;
 use DB;
 
 class TestController extends BaseController
 {
     public function show()
     {
-        $get_string = $this->getRequest()->getParameter('name', 'stranger');
+        $get_string = $this->getRequest()->getQueryParameter('key');
+        $post_string = $this->getRequest()->getBodyParameter('key');
         $db_query = DB::query("SELECT * FROM test;");
 
         $data = [
-            'name' => $get_string,
+            'get' => $get_string,
+            'post' => $post_string,
             'db' => $db_query,
         ];
         $this->render('TestTemplate.html.twig', $data);
