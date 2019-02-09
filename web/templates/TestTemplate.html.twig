@@ -1,36 +1,28 @@
+{% import "macro/test.htm.twig" as Test %}
+
+{% set NAME = 'Debug' %}
+
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
+    {% include("part/header.htm.twig") %}
+    <title>Tests</title>
 </head>
 <body>
+{% include("part/navbar.htm.twig") %}
 
+<main>
+    <div class="container wow fadeIn">
 
-<div class="container">
-    <h1 class="my-3">Hello World</h1>
-    <hr/>
-    <div class="card p-4 my-3">
-        <h2>GET Request test:</h2>
-        <hr/>
-        <button class="btn btn-primary">Name is <i>{{ name }}</i></button>
-    </div>
-    <div class="card p-4 my-3">
-        <h2>
-            Database test
-        </h2>
-        <hr/>
+        {{ Test.test_card_top('GET Request test:') }}
+        <p>GET['name'] = <i>{{ name }}</i></p>
+        {{ Test.test_card_bottom() }}
+
+        {{ Test.test_card_top('Database test:') }}
         <table class="table">
-            <thead class="thead-dark">
+            <thead class="thead">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">FirstName</th>
                 <th scope="col">LastName</th>
                 <th scope="col">Age</th>
@@ -38,28 +30,21 @@
             </thead>
             <tbody>
             {% for row in db %}
-            <tr>
-                <td>{{ row['ID'] }}</td>
-                <td>{{ row['FirstName'] }}</td>
-                <td>{{ row['LastName'] }}</td>
-                <td>{{ row['Age'] }}</td>
-            </tr>
+                <tr>
+                    <td>{{ row['ID'] }}</td>
+                    <td>{{ row['FirstName'] }}</td>
+                    <td>{{ row['LastName'] }}</td>
+                    <td>{{ row['Age'] }}</td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
+        {{ Test.test_card_bottom() }}
+
     </div>
-</div>
+</main>
 
-
-<!-- JavaScript -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous"></script>
+{% include("part/footer.htm.twig") %}
+{% include("part/scripts.htm.twig") %}
 </body>
 </html>

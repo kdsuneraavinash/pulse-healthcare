@@ -84,7 +84,7 @@ DB::$encoding = 'latin1';
 
 $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
 $twig = new Twig_Environment($loader, [
-    'cache' => __DIR__ . '/../cache',
+//    'cache' => __DIR__ . '/../cache',
 ]);
 
 
