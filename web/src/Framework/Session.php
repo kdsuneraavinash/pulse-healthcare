@@ -2,8 +2,8 @@
 
 namespace Pulse\Framework;
 
-use DB;
 use Pulse\Utils;
+use DB;
 
 define('USER_EXPIRATION_DAYS', 1);
 define('SALT_LENGTH', 32);
@@ -16,7 +16,7 @@ class Session
 
     /**
      * Session constructor.
-     * Throws a Exception if user does not exist
+     * @throws \Exception if user does not exist
      * @param string $userId User id of the user
      * @param string $sessionKey Session key
      */
@@ -36,6 +36,7 @@ class Session
      * Create a new user session
      * @param string $userId User ID of the user to create session
      * @return Session Created Session Object
+     * @throws \Exception if user does not exist
      */
     public static function createSession(string $userId): Session
     {
@@ -91,6 +92,7 @@ class Session
      * @param string $userId User Id to resume session
      * @param string $sessionKey Session Key of the session to resume
      * @return Session|null Created session(null if session key is invalid)
+     * @throws \Exception if user does not exist
      */
     public static function resumeSession(string $userId, string $sessionKey): ?Session
     {
@@ -120,8 +122,12 @@ class Session
      */
     public function closeSession()
     {
-        DB::delete('sessions', "user = %s AND session_key = UNHEX(%s)",
-            $this->getUserId(), $this->getSessionKey());
+        Session::closeSessionWithContext($this->getUserId(), $this->getSessionKey());
+    }
+
+    public static function closeSessionWithContext(string $id, string $sessionKey)
+    {
+        DB::delete('sessions', "user = %s AND session_key = UNHEX(%s)", $id, $sessionKey);
     }
 
     private function getUserId(): string

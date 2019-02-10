@@ -1,0 +1,69 @@
+{% import "macro/test.htm.twig" as Test %}
+
+{% set NAME = 'Debug' %}
+
+<!doctype html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+<head>
+    {% include("part/header.htm.twig") %}
+    {% include("part/nojs.htm.twig") %}
+    <title>Tests</title>
+</head>
+<body>
+{% include("part/navbar.htm.twig") %}
+
+<main>
+    <div class="container">
+        {{ Test.test_card_top('Logged In As:') }}
+        <p>{{ text }}</p>
+        <p>SESSION_KEY = {{ session['SESSION_KEY'] }}
+            <br/>
+            SESSION_USER = {{ session['SESSION_USER'] }}
+        </p>
+        {{ Test.test_card_bottom() }}
+
+        {{ Test.test_card_top('Login:') }}
+        <form action="/login" method="post">
+            <input type="text" name="user" class="form-control" placeholder="Name" required>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-danger">LogOut</button>
+        </form>
+        {{ Test.test_card_bottom() }}
+
+        {{ Test.test_card_top('Session Table:') }}
+        <table class="table table-bordered">
+            <thead class="thead">
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">IPAddress</th>
+                <th scope="col">UserAgent</th>
+                <th scope="col">Created</th>
+                <th scope="col">Expires</th>
+                <th scope="col">SessionKey</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in db_session %}
+                <tr>
+                    <td>{{ row['user'] }}</td>
+                    <td>{{ row['ip_address'] }}</td>
+                    <td>{{ row['user_agent'] }}</td>
+                    <td>{{ row['created'] }}</td>
+                    <td>{{ row['expires'] }}</td>
+                    <td>{{ row['session_key'] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ Test.test_card_bottom() }}
+
+    </div>
+</main>
+
+{% include("part/footer.htm.twig") %}
+{% include("part/scripts.htm.twig") %}
+</body>
+</html>

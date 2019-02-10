@@ -72,33 +72,6 @@
         </table>
         {{ Test.test_card_bottom() }}
 
-        {{ Test.test_card_top('Session test:') }}
-        <table class="table table-bordered">
-            <thead class="thead">
-            <tr>
-                <th scope="col">User</th>
-                <th scope="col">IPAddress</th>
-                <th scope="col">UserAgent</th>
-                <th scope="col">Created</th>
-                <th scope="col">Expires</th>
-                <th scope="col">SessionKey</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for row in db_session %}
-                <tr>
-                    <td>{{ row['user'] }}</td>
-                    <td>{{ row['ip_address'] }}</td>
-                    <td>{{ row['user_agent'] }}</td>
-                    <td>{{ row['created'] }}</td>
-                    <td>{{ row['expires'] }}</td>
-                    <td>{{ row['session_key'] }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {{ Test.test_card_bottom() }}
-
     </div>
 </main>
 

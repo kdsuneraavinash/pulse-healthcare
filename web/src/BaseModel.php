@@ -2,6 +2,6 @@
 
 namespace Pulse;
 
-abstract class BaseModel
+interface BaseModel
 {
 }
