@@ -29,58 +29,14 @@
    mysql -u root -p
    ```
 
-5. Create the database and table.
-
-   ```sql
-   CREATE USER 'pulse_root'@'localhost' IDENTIFIED BY 'password';
-   CREATE DATABASE pulse;
-   USE pulse;
-   GRANT ALL PRIVILEGES ON pulse . * TO 'pulse_root'@'localhost';
-
-   create table test
-   (
-     ID        varchar(32)             not null
-       primary key,
-     LastName  varchar(255)            not null,
-     FirstName varchar(255)            null,
-     Age       int                     null,
-     Password  varchar(128) default '' not null
-   );
-   ```
-   
-   ```sql
-   create table user_agents
-   (
-     id         int auto_increment
-       primary key,
-     user_agent text       not null,
-     hash       binary(20) not null,
-     constraint user_agents_hash_uindex
-       unique (hash)
-   )
-     comment 'Table to save user agents';
-   
-   create table sessions
-   (
-     user        varchar(32) not null,
-     ip_address  varchar(45) not null,
-     user_agent  int         not null,
-     created     datetime    not null,
-     expires     datetime    not null,
-     session_key binary(20)  not null,
-     primary key (user, ip_address, user_agent),
-     constraint sessions_user_agents_id_fk
-       foreign key (user_agent) references user_agents (id)
-         on delete cascade
-   )
-     comment 'Table to store sessions of all users';
-   ```
-   
-   ```sql
-   INSERT INTO test (ID, LastName, FirstName, Age ) VALUES (170081, "Chandrasiri", 'Sunera', 22 );
-   SELECT * FROM test;
-   ```
+5. Create the database and table. Refer to `web/database` for database scripts.
 
 6. Run `web/public/` folder from `PHP`.
+
+    ```bash
+    cd web/public
+    php -S localhost:8000
+    ```
+
 7. Navigate to `http://localhost:8000/test` to verify that everything is working properly.
 
