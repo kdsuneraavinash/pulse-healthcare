@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pulse\Controllers;
+namespace Pulse\Controllers\Test;
 
 use DB;
 use Pulse\BaseController;

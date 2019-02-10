@@ -24,11 +24,11 @@
         {{ Test.test_card_bottom() }}
 
         {{ Test.test_card_top('Login:') }}
-        <form action="/login" method="post">
+        <form action="/test/login" method="post">
             <input type="text" name="user" class="form-control" placeholder="Name" required>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        <form action="/logout" method="post">
+        <form action="/test/logout" method="post">
             <button type="submit" class="btn btn-danger">LogOut</button>
         </form>
         {{ Test.test_card_bottom() }}
@@ -50,10 +50,10 @@
                 <tr>
                     <td>{{ row['user'] }}</td>
                     <td>{{ row['ip_address'] }}</td>
-                    <td>{{ row['user_agent'] }}</td>
+                    <td>{{ user_agents[row['user_agent']] }}</td>
                     <td>{{ row['created'] }}</td>
                     <td>{{ row['expires'] }}</td>
-                    <td>{{ row['session_key'] }}</td>
+                    <td>{{ row['HEX(session_key)'] }}</td>
                 </tr>
             {% endfor %}
             </tbody>

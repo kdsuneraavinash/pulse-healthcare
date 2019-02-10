@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pulse\Controllers;
+namespace Pulse\Controllers\Test;
 
 use DB;
 use Pulse\BaseController;
@@ -16,7 +16,7 @@ class LogoutController extends BaseController
             unset($_SESSION["SESSION_USER"]);
         }
 
-        header("Location: http://$_SERVER[HTTP_HOST]/login");
+        header("Location: http://$_SERVER[HTTP_HOST]/test/login");
         exit();
     }
 }

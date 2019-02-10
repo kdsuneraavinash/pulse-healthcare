@@ -6,11 +6,11 @@ function getRoutes()
 {
     return [
         // ['METHOD', '/path, ['Pulse\Controllers\Controller', 'method']]
-        ['GET', '/test', ['Pulse\Controllers\TestController', 'show']],
-        ['POST', '/test', ['Pulse\Controllers\TestController', 'show']],
-        ['GET', '/login', ['Pulse\Controllers\LoginController', 'show']],
-        ['POST', '/login', ['Pulse\Controllers\LoginController', 'show']],
-        ['POST', '/logout', ['Pulse\Controllers\LogoutController', 'show']],
+        ['GET', '/test', ['Pulse\Controllers\Test\TestController', 'show']],
+        ['POST', '/test', ['Pulse\Controllers\Test\TestController', 'show']],
+        ['GET', '/test/login', ['Pulse\Controllers\Test\LoginController', 'show']],
+        ['POST', '/test/login', ['Pulse\Controllers\Test\LoginController', 'show']],
+        ['POST', '/test/logout', ['Pulse\Controllers\Test\LogoutController', 'show']],
     ];
 }
 

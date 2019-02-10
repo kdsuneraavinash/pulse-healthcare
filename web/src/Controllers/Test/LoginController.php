@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pulse\Controllers;
+namespace Pulse\Controllers\Test;
 
 use DB;
 use Pulse\BaseController;
@@ -47,7 +47,7 @@ class LoginController extends BaseController
                 }
 
                 /// After login redirect back to this page
-                header("Location: http://$_SERVER[HTTP_HOST]/login");
+                header("Location: http://$_SERVER[HTTP_HOST]/test/login");
                 exit();
             } else {
                 $text .= "No request. ";
@@ -75,10 +75,17 @@ class LoginController extends BaseController
         }
 
 
-        $db_session_query = DB::query("SELECT * FROM sessions;");
+        $db_session_query = DB::query("SELECT user, ip_address, user_agent, created, expires, HEX(session_key) FROM sessions;");
+        $user_agents = DB::query("SELECT id, user_agent FROM user_agents;");
+        $user_agents_mapped = array();
+
+        for($i = 0; $i<count($user_agents); $i++){
+            $user_agents_mapped[$user_agents[$i]['id']]  = $user_agents[$i]['user_agent'];
+        }
         $data = [
             'text' => $text,
             'session' => $_SESSION,
+            'user_agents' => $user_agents_mapped,
             'db_session' => $db_session_query
         ];
         $this->render('LoginTemplate.html.twig', $data);
