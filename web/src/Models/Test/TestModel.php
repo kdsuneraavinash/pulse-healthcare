@@ -2,8 +2,7 @@
 
 namespace Pulse\Models;
 
-use DB;
-use Pulse\MVC\BaseModel;
+use Pulse\BaseModel;
 
 class Person extends BaseModel
 {

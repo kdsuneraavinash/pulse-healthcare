@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pulse\MVC;
+namespace Pulse;
 
 use Http;
 use Twig_Environment;

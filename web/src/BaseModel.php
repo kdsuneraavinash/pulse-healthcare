@@ -1,6 +1,6 @@
 <?php
 
-namespace Pulse\MVC;
+namespace Pulse;
 
 abstract class BaseModel
 {
