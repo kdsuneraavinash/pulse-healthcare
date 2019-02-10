@@ -2,8 +2,8 @@
 
 namespace Pulse\Framework;
 
-use Pulse\Utils;
 use DB;
+use Pulse\Utils;
 
 define('USER_EXPIRATION_DAYS', 1);
 define('SALT_LENGTH', 32);

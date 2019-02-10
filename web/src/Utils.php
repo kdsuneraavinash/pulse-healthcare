@@ -2,8 +2,6 @@
 
 namespace Pulse;
 
-use Pulse;
-
 define('MIN_CHR_ASCII', 33);
 define('MAX_CHR_ASCII', 126);
 

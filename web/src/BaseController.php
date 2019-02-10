@@ -29,27 +29,11 @@ abstract class BaseController
     }
 
     /**
-     * @return Http\HttpResponse response object
-     */
-    protected function getResponse(): Http\HttpResponse
-    {
-        return $this->response;
-    }
-
-    /**
      * @return Http\HttpRequest request object
      */
     protected function getRequest(): Http\HttpRequest
     {
         return $this->request;
-    }
-
-    /**
-     * @return Twig_Environment rendering engine
-     */
-    protected function getRenderer(): Twig_Environment
-    {
-        return $this->rederer;
     }
 
     /**
@@ -64,5 +48,21 @@ abstract class BaseController
         } catch (\Exception $e) {
             $this->getResponse()->setContent($e->getMessage());
         }
+    }
+
+    /**
+     * @return Twig_Environment rendering engine
+     */
+    protected function getRenderer(): Twig_Environment
+    {
+        return $this->rederer;
+    }
+
+    /**
+     * @return Http\HttpResponse response object
+     */
+    protected function getResponse(): Http\HttpResponse
+    {
+        return $this->response;
     }
 }

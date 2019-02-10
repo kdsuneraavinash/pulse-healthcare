@@ -2,8 +2,8 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\BaseController;
 use DB;
+use Pulse\BaseController;
 
 class TestController extends BaseController
 {

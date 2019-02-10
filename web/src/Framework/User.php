@@ -13,14 +13,14 @@ class User
         $this->id = $id;
     }
 
-    public function getID(): ?string
-    {
-        return $this->id;
-    }
-
     public static function getUserIfExists($userId): ?array
     {
         $query = DB::queryFirstRow('SELECT * FROM test WHERE ID = %s', $userId);
         return $query;
+    }
+
+    public function getID(): ?string
+    {
+        return $this->id;
     }
 }

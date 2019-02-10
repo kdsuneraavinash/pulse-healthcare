@@ -19,6 +19,11 @@ class Person extends BaseModel
         $this->age = $age;
     }
 
+    static function loadAllFromDatabase()
+    {
+
+    }
+
     function saveInDatabase()
     {
 //        $existQuery = DB::query("SELECT * FROM test WHERE ID = %i;", $this->id);
@@ -30,11 +35,6 @@ class Person extends BaseModel
 //                'Age' => $this->age,
 //            ));
 //        }
-
-    }
-
-    static function loadAllFromDatabase()
-    {
 
     }
 }

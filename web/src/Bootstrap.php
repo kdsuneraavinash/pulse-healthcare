@@ -6,24 +6,26 @@ namespace Pulse;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Whoops;
-use Http;
 use DB;
-use Twig_Loader_Filesystem;
-use Twig_Environment;
+use Http;
 use Klein;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
+use Whoops;
 
 define('TEMPLATES', __DIR__ . '/../templates');
 define('CACHE', __DIR__ . '/../cache');
 
-/// ========================================================
-/// = Whoops Initialization
-/// ========================================================
-/// Error Reporter
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://github.com/filp/whoops
-/// ========================================================
+/**
+ * ========================================================
+ * = Whoops Initialization
+ * ========================================================
+ * Error Reporter
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://github.com/filp/whoops
+ * ========================================================
+ */
 
 error_reporting(E_ALL);
 
@@ -42,30 +44,31 @@ if ($environment !== 'production') {
 $whoops->register();
 
 
-/// ========================================================
-/// = HTTP Initialization
-/// ========================================================
-/// HTTP Component Handler
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://github.com/PatrickLouys/http
-/// ========================================================
-
-// TODO: Checkout other HTTP Component Handlers and determine the
-// most lightweight and easy to use library
+/**
+ * ========================================================
+ * = HTTP Initialization
+ * ========================================================
+ * HTTP Component Handler
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://github.com/PatrickLouys/http
+ * ========================================================
+ */
 
 $httpRequest = new Http\HttpRequest($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
 $httpResponse = new Http\HttpResponse;
 
 
-/// ========================================================
-/// = MeekroDB Initialization
-/// ========================================================
-/// Database Handler
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://meekro.com/docs.php
-/// ========================================================
+/**
+ * ========================================================
+ * = MeekroDB Initialization
+ * ========================================================
+ * Database Handler
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://meekro.com/docs.php
+ * ========================================================
+ */
 
 DB::$user = 'pulse_root';
 DB::$password = 'password';
@@ -75,14 +78,16 @@ DB::$port = '3306';
 DB::$encoding = 'latin1';
 
 
-/// ========================================================
-/// = Twig Initialization
-/// ========================================================
-/// Template Engine
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://twig.sensiolabs.org/
-/// ========================================================
+/**
+ * ========================================================
+ * = Twig Initialization
+ * ========================================================
+ * Template Engine
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://twig.sensiolabs.org/
+ * ========================================================
+ */
 
 $loader = new Twig_Loader_Filesystem(TEMPLATES);
 $twig = new Twig_Environment($loader, [
@@ -90,14 +95,16 @@ $twig = new Twig_Environment($loader, [
 ]);
 
 
-/// ========================================================
-/// = Klein.php
-/// ========================================================
-/// Router
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://github.com/klein/klein.php
-/// ========================================================
+/**
+ * ========================================================
+ * = Klein.php
+ * ========================================================
+ * Router
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://github.com/klein/klein.php
+ * ========================================================
+ */
 
 require __DIR__ . '/Routes.php';
 require __DIR__ . '/BaseController.php';
@@ -138,9 +145,11 @@ $klein->onHttpError(function (int $code, Klein\Klein $router) {
 $klein->dispatch();
 
 
-/// ========================================================
-/// = HTTP sending response
-/// ========================================================
+/**
+ * ========================================================
+ * = HTTP sending response
+ * ========================================================
+ */
 
 foreach ($httpResponse->getHeaders() as $header) {
     header($header, false);
