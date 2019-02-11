@@ -6,9 +6,9 @@ namespace Pulse;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use DB;
 use Http;
 use Klein;
+use Pulse\Database;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Whoops;
@@ -70,12 +70,7 @@ $httpResponse = new Http\HttpResponse;
  * ========================================================
  */
 
-DB::$user = 'pulse_root';
-DB::$password = 'password';
-DB::$dbName = 'pulse';
-DB::$host = 'localhost';
-DB::$port = '3306';
-DB::$encoding = 'latin1';
+Database::init();
 
 
 /**
