@@ -35,10 +35,10 @@ class LoginController extends BaseController
                     /// Previously logged user asking to resume
                     $session = Session::resumeSession($_SESSION["SESSION_USER"], $_SESSION["SESSION_KEY"]);
                     if ($session == null) {
-                        // Session expired
+                        // Session.php expired
                         unset($_SESSION["SESSION_KEY"]);
                         unset($_SESSION["SESSION_USER"]);
-                        $text .= "Session Expired. ";
+                        $text .= "Session.php Expired. ";
                     } else {
                         $_SESSION["SESSION_USER"] = $id;
                         $_SESSION["SESSION_KEY"] = $session->getSessionKey();
@@ -56,10 +56,10 @@ class LoginController extends BaseController
                     /// Previously logged user asking to resume
                     $session = Session::resumeSession($_SESSION["SESSION_USER"], $_SESSION["SESSION_KEY"]);
                     if ($session == null) {
-                        // Session expired
+                        // Session.php expired
                         unset($_SESSION["SESSION_KEY"]);
                         unset($_SESSION["SESSION_USER"]);
-                        $text .= "Session Expired. ";
+                        $text .= "Session.php Expired. ";
                     } else {
                         $_SESSION["SESSION_USER"] = $id;
                         $_SESSION["SESSION_KEY"] = $session->getSessionKey();
@@ -69,7 +69,7 @@ class LoginController extends BaseController
             }
 
         } catch (\Exception $e) {
-            $text .= "User does not exist. ";
+            $text .= "BaseUser does not exist. ";
             unset($_SESSION["SESSION_KEY"]);
             unset($_SESSION["SESSION_USER"]);
         }

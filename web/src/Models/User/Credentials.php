@@ -26,7 +26,7 @@ define('SALT_LENGTH', 40);
  *
  *
  * Class Credentials
- * @package Pulse\Models\User
+ * @package Pulse\Models\BaseUser
  */
 class Credentials implements BaseModel
 {

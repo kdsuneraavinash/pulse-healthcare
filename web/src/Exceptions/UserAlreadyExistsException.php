@@ -6,6 +6,6 @@ class UserAlreadyExistsException extends UserExistenceException
 {
     public function __toString()
     {
-        return "Error:: User '$this->userId' already exists";
+        return "Error:: BaseUser '$this->userId' already exists";
     }
 }

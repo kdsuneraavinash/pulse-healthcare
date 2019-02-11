@@ -11,6 +11,6 @@ abstract class UserExistenceException extends \Exception
     public function __construct(string $userId, Throwable $previous = null)
     {
         $this->userId = $userId;
-        parent::__construct("Error:: User '$this->userId' not found", 1404, $previous);
+        parent::__construct("Error:: BaseUser '$this->userId' not found", 1404, $previous);
     }
 }

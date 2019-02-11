@@ -1,31 +1,32 @@
 <?php declare(strict_types=1);
 
-namespace Pulse\Framework;
+namespace Pulse\Models\User;
 
-use Pulse\Utils;
 use DB;
+use Pulse\Exceptions\UserNotExistException;
+use Pulse\Models\BaseModel;
+use Pulse\Utils;
 
 define('USER_EXPIRATION_DAYS', 1);
-define('SALT_LENGTH', 32);
+define('SALT_LENGTH', 40);
 
 
-class Session
+class Session implements BaseModel
 {
     private $userId;
     private $sessionKey;
 
     /**
      * Session constructor.
-     * @throws \Exception if user does not exist
-     * @param string $userId User id of the user
+     * @param string $userId BaseUser id of the user
      * @param string $sessionKey Session key
+     * @throws UserNotExistException if user does not exist
      */
     private function __construct(string $userId, string $sessionKey)
     {
-        // Check a user exists
-        $user = User::getUserIfExists($userId);
-        if ($user == null) {
-            throwException(new \Exception("User Does Not Exist", 601));
+        $user = new TestUser($userId);
+        if (!$user->exists()) {
+            throw new UserNotExistException($userId);
         }
 
         $this->userId = $userId;
@@ -34,14 +35,14 @@ class Session
 
     /**
      * Create a new user session
-     * @param string $userId User ID of the user to create session
+     * @param string $userId BaseUser ID of the user to create session
      * @return Session Created Session Object
-     * @throws \Exception if user does not exist
+     * @throws UserNotExistException
      */
     public static function createSession(string $userId): Session
     {
         $ipAddress = Utils::getClientIP();
-        $userAgent = UserAgent::fromCurrentUserAgent();
+        $userAgent = BrowserUserAgent::fromCurrentUserAgent();
         $sessionKey = Session::getEncryptedSessionKey($userId, $userAgent, $ipAddress);
 
         $primaryKey = array(
@@ -68,36 +69,16 @@ class Session
     }
 
     /**
-     * Generate a session key using a user-defined salt
-     * @param string $userId User id of the user to generate session key
-     * @param UserAgent $userAgent User agent of the session
-     * @param string $ip IP of the session
-     * @return string Generated session key
-     */
-    private static function getEncryptedSessionKey(string $userId, UserAgent $userAgent, string $ip): string
-    {
-        return sha1(Session::generateSalt() . time() . $userId . $userAgent . $ip);
-    }
-
-    /**
-     * Set salts for session key
-     */
-    private static function generateSalt(): string
-    {
-        return Utils::generateRandomString(SALT_LENGTH);
-    }
-
-    /**
      * Resumes a user session
-     * @param string $userId User Id to resume session
+     * @param string $userId BaseUser Id to resume session
      * @param string $sessionKey Session Key of the session to resume
      * @return Session|null Created session(null if session key is invalid)
-     * @throws \Exception if user does not exist
+     * @throws UserNotExistException
      */
     public static function resumeSession(string $userId, string $sessionKey): ?Session
     {
         $ipAddress = Utils::getClientIP();
-        $userAgent = UserAgent::fromCurrentUserAgent();
+        $userAgent = BrowserUserAgent::fromCurrentUserAgent();
 
         $query = DB::queryFirstRow('SELECT session_key FROM sessions ' .
             'WHERE user = %s AND ip_address = %s AND user_agent = %i AND ' .
@@ -112,29 +93,40 @@ class Session
         return new Session($userId, $sessionKey);
     }
 
-    public static function closeAllSessionsOfUser($userId)
-    {
-        DB::delete('sessions', "user=%s", $userId);
-    }
-
     /**
      * Close a user session
      */
     public function closeSession()
     {
-        Session::closeSessionWithContext($this->getUserId(), $this->getSessionKey());
+        Session::closeSessionOfContext($this->userId, $this->sessionKey);
     }
 
-    public static function closeSessionWithContext(string $id, string $sessionKey)
+    /**
+     * Close a user session
+     * @param string $id
+     * @param string $sessionKey
+     */
+    public static function closeSessionOfContext(string $id, string $sessionKey)
     {
         DB::delete('sessions', "user = %s AND session_key = UNHEX(%s)", $id, $sessionKey);
     }
 
-    private function getUserId(): string
+    /**
+     * Generate a session key using a user-defined salt
+     * @param string $userId BaseUser id of the user to generate session key
+     * @param BrowserUserAgent $userAgent BaseUser agent of the session
+     * @param string $ip IP of the session
+     * @return string Generated session key
+     */
+    private static function getEncryptedSessionKey(string $userId, BrowserUserAgent $userAgent, string $ip): string
     {
-        return $this->userId;
+        $salt = Utils::generateRandomString(SALT_LENGTH);;
+        return sha1($salt . time() . $userId . $userAgent . $ip);
     }
 
+    /**
+     * @return string
+     */
     public function getSessionKey(): string
     {
         return $this->sessionKey;

@@ -6,6 +6,6 @@ class UserNotExistException extends UserExistenceException
 {
     public function __toString()
     {
-        return "Error:: User '$this->userId' not found";
+        return "Error:: BaseUser '$this->userId' not found";
     }
 }

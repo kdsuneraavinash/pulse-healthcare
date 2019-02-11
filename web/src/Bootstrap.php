@@ -8,7 +8,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Http;
 use Klein;
-use Pulse\Database;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Whoops;
