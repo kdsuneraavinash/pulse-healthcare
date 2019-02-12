@@ -8,23 +8,13 @@ use Pulse\Models\BaseModel;
 use Pulse\Utils;
 
 define('PEPPER', '14a5168782azxa5b4648de2chjufcb3afed6drt4');
-define('SALT_LENGTH', 40);
+define('CREDENTIALS_SALT_LENGTH', 40);
 
 /**
  * Secured user who will implement 'user_credentials' table
  * This will make sure of
  * - hashing and storing user passwords
  * - authenticating a user
- *
- *
- * __construct                  private
- * fromNewCredentials           public static
- * fromExistingCredentials      public static
- * createCredentials            private
- * updateCredentials            private
- * deleteCredentials            private
- *
- *
  * Class Credentials
  * @package Pulse\Models\BaseUser
  */
@@ -52,16 +42,24 @@ class Credentials implements BaseModel
      * @param string $userId
      * @param string $password
      * @return Credentials|null
+     * @throws Exceptions\UserNotExistException
      * @throws Exceptions\UserAlreadyExistsException
      */
-    public static function fromNewCredentials(string $userId, string $password): ?Credentials
+    public static function fromNewCredentials(string $userId, string $password): Credentials
     {
+        $query = DB::queryFirstRow("SELECT user_id from users WHERE user_id=%s", $userId);
+        if ($query == null){
+            // User not existing
+            throw new Exceptions\UserNotExistException($userId);
+        }
+
         $existingUser = DB::queryFirstRow("SELECT user_id from user_credentials WHERE user_id=%s", $userId);
         if ($existingUser != null) {
+            // Credentials Existing
             throw new Exceptions\UserAlreadyExistsException($userId);
         }
 
-        $salt = Utils::generateRandomString(SALT_LENGTH);
+        $salt = Utils::generateRandomString(CREDENTIALS_SALT_LENGTH);
         $credentials = new Credentials($userId, $password, $salt);
         $credentials->createCredentials();
         return $credentials;
@@ -121,6 +119,6 @@ class Credentials implements BaseModel
      */
     private function getHashedPassword(): string
     {
-        return hash('sha256', $this->userId . PEPPER . $this->password);
+        return hash('sha256', $this->userId . PEPPER . $this->password . $this->salt);
     }
 }

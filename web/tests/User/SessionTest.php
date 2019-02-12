@@ -143,7 +143,7 @@ final class SessionTest extends TestCase
     /**
      * @depends testSecondSessionTriedToCloseSession
      */
-    public function testSessionEmulation()
+    public function testCloseSessionFromAnotherIP()
     {
         $_SERVER['HTTP_USER_AGENT'] = SessionTest::$customUserAgent;
         SessionTest::getSessionPc()->closeSession();

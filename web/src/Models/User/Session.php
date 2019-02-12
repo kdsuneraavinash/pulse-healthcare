@@ -8,7 +8,7 @@ use Pulse\Models\BaseModel;
 use Pulse\Utils;
 
 define('USER_EXPIRATION_DAYS', 1);
-define('SALT_LENGTH', 40);
+define('SESSION_SALT_LENGTH', 40);
 
 
 class Session implements BaseModel
@@ -24,7 +24,7 @@ class Session implements BaseModel
      */
     private function __construct(string $userId, string $sessionKey)
     {
-        $user = new TestUser($userId);
+        $user = new User($userId);
         if (!$user->exists()) {
             throw new UserNotExistException($userId);
         }
@@ -52,14 +52,14 @@ class Session implements BaseModel
         $record = array(
             'created' => DB::sqleval("NOW()"),
             'expires' => DB::sqleval("ADDDATE(NOW(), " . USER_EXPIRATION_DAYS . ")"),
-            'session_key' => DB::sqleval("UNHEX('$sessionKey')")
+            'session_key' => $sessionKey
         );
 
-        $query = DB::queryFirstRow('SELECT HEX(session_key) FROM sessions WHERE user=%s AND ip_address=%s AND user_agent=%i',
+        $query = DB::queryFirstRow('SELECT session_key FROM sessions WHERE user=%s AND ip_address=%s AND user_agent=%i',
             $userId, $ipAddress, $userAgent->getId());
         if ($query != null) {
             // Exists: Get existing data - Must Not Update since old session keys will become invalid
-            $sessionKey = $query['HEX(session_key)'];
+            $sessionKey = $query['session_key'];
         } else {
             // Does Not Exist: Insert session
             DB::insert('sessions', array_merge($primaryKey, $record));
@@ -82,7 +82,7 @@ class Session implements BaseModel
 
         $query = DB::queryFirstRow('SELECT session_key FROM sessions ' .
             'WHERE user = %s AND ip_address = %s AND user_agent = %i AND ' .
-            'session_key = UNHEX(%s) AND expires > NOW() ',
+            'session_key = %s AND expires > NOW() ',
             $userId, $ipAddress, $userAgent->getId(), $sessionKey);
 
         // Return null if session didn't exist
@@ -98,7 +98,7 @@ class Session implements BaseModel
      */
     public function closeSession()
     {
-        Session::closeSessionOfContext($this->userId, $this->sessionKey);
+        Session::closeSessionOfContext($this->getSessionUserId(), $this->getSessionKey());
     }
 
     /**
@@ -108,7 +108,7 @@ class Session implements BaseModel
      */
     public static function closeSessionOfContext(string $id, string $sessionKey)
     {
-        DB::delete('sessions', "user = %s AND session_key = UNHEX(%s)", $id, $sessionKey);
+        DB::delete('sessions', "user = %s AND session_key = %s", $id, $sessionKey);
     }
 
     /**
@@ -120,7 +120,7 @@ class Session implements BaseModel
      */
     private static function getEncryptedSessionKey(string $userId, BrowserUserAgent $userAgent, string $ip): string
     {
-        $salt = Utils::generateRandomString(SALT_LENGTH);;
+        $salt = Utils::generateRandomString(SESSION_SALT_LENGTH);
         return sha1($salt . time() . $userId . $userAgent . $ip);
     }
 
@@ -130,5 +130,13 @@ class Session implements BaseModel
     public function getSessionKey(): string
     {
         return $this->sessionKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSessionUserId(): string
+    {
+        return $this->userId;
     }
 }
