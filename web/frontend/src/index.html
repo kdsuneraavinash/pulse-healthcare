@@ -12,79 +12,81 @@
 </head>
 
 <body>
-{% include "navbar.htm" %}
+    {% include "navbar.htm" %}
 
-<main class="mt-sm-5 pt-5">
-    <div class="container">
-        <section class="wow fadeIn">
-            <div class="row">
+    <main class="mt-sm-5 pt-5">
+        <div class="container">
+            <section class="wow fadeIn">
+                <div class="row">
 
-                <div class="border col-lg-8 text-white blue-gradient text-center p-5">
-                    <h1 class="mb-4">
-                        <strong>MediKit 1.0.1</strong>
-                    </h1>
-                    <h4>
-                        <strong>Best & free platform to mange all your medical needs</strong>
-                    </h4>
-                    <p class="mb-4">
-                        Loved by over 500 doctors, 2000 patients & 100 medical centers.
-                    </p>
-                    <a target="_blank" class="btn btn-outline-white btn-lg">
-                        CREATE ACCOUNT
-                    </a>
-                </div>
+                    <div class="border col-lg-8 text-white blue-gradient text-center p-5">
+                        <h1 class="mb-4">
+                            <strong>MediKit 1.0.1</strong>
+                        </h1>
+                        <h4>
+                            <strong>Best & free platform to mange all your medical needs</strong>
+                        </h4>
+                        <p class="mb-4">
+                            Loved by over 500 doctors, 2000 patients & 100 medical centers.
+                        </p>
+                        <h3 class="mb-4">
+                            <strong>Are you a Medical Center?</strong>
+                        </h3>
+                        <a href="medi_center_reg.html" class="btn btn-outline-white btn-lg">
+                            CREATE ACCOUNT
+                        </a>
+                    </div>
 
-                <div class="border col-lg-4 d-flex justify-content-center">
-                    <form action="" method="get" class="needs-validation p-5" novalidate>
-                        <p class="h4 mb-4 text-center">SIGN IN</p>
+                    <div class="border col-lg-4 d-flex justify-content-center">
+                        <form action="" method="get" class="needs-validation p-5" novalidate>
+                            <p class="h4 mb-4 text-center">SIGN IN</p>
 
-                        <div class="input-group mb-4">
-                            <input type="text" id="loginID" name="loginID" class="form-control"
-                                   placeholder="User ID"
-                                   required>
-                        </div>
+                            <div class="input-group mb-4">
+                                <input type="text" id="loginID" name="loginID" class="form-control" placeholder="User ID"
+                                    required>
+                            </div>
 
-                        <div class="input-group mb-4">
-                            <input type="password" id="password" name="password" class="form-control"
-                                   placeholder="Password" required>
-                        </div>
+                            <div class="input-group mb-4">
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                                    required>
+                            </div>
 
-                        <div class="justify-content-around">
-                            <div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="remember" name="remember">
-                                    <label class="custom-control-label" for="remember">Remember me</label>
+                            <div class="justify-content-around">
+                                <div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="remember" name="remember">
+                                        <label class="custom-control-label" for="remember">Remember me</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
+                            <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
 
-                    </form>
+                        </form>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="pt-5">
+
+                <div class="wow fadeIn">
+                    <h2 class="h1 text-center mb-5">What is MediKit?</h2>
+                    <p class="text-center">MediKit is the world most popular Health Care App for connecting the needs
+                        in medical industry. </p>
+                    <p class="text-center mb-5 pb-5">Trusted by over
+                        <strong>10 000</strong> users. Easy to use & manage health data with all the records,
+                        prescriptions etc.</p>
                 </div>
 
-            </div>
-        </section>
+            </section>
 
-        <section class="pt-5">
+        </div>
+    </main>
 
-            <div class="wow fadeIn">
-                <h2 class="h1 text-center mb-5">What is MediKit?</h2>
-                <p class="text-center">MediKit is the world most popular Health Care App for connecting the needs
-                    in medical industry. </p>
-                <p class="text-center mb-5 pb-5">Trusted by over
-                    <strong>10 000</strong> users. Easy to use & manage health data with all the records,
-                    prescriptions etc.</p>
-            </div>
-
-        </section>
-
-    </div>
-</main>
-
-{% include "footer.htm" %}
-{% include "scripts.htm" %}
-<script src="js/login.js"></script>
+    {% include "footer.htm" %}
+    {% include "scripts.htm" %}
+    <script src="js/login.js"></script>
 
 </body>
 

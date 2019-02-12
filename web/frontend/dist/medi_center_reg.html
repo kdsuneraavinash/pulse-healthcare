@@ -17,7 +17,7 @@
 
 <!-- Public Stylesheet-->
 <link href="css/stylesheet.css" rel="stylesheet">
-    <title>MediKit</title>
+    <title>Medi Center Registration</title>
 
     <!-- Custom Page CSS -->
     <link href="css/login.css" rel="stylesheet">
@@ -97,51 +97,94 @@
             <section class="wow fadeIn">
                 <div class="row">
 
-                    <div class="border col-lg-8 text-white blue-gradient text-center p-5">
-                        <h1 class="mb-4">
+                    <div class="border col-lg-4 text-white blue-gradient text-center p-5">
+                        <h1 class="mb-5">
                             <strong>MediKit 1.0.1</strong>
                         </h1>
-                        <h4>
+                        <h4 class="mb-5">
                             <strong>Best & free platform to mange all your medical needs</strong>
                         </h4>
-                        <p class="mb-4">
+                        <p class="mb-5">
                             Loved by over 500 doctors, 2000 patients & 100 medical centers.
                         </p>
-                        <h3 class="mb-4">
-                            <strong>Are you a Medical Center?</strong>
+                        <h3 class="mb-5">
+                            <strong>Already has an account?</strong>
                         </h3>
-                        <a href="medi_center_reg.html" class="btn btn-outline-white btn-lg">
-                            CREATE ACCOUNT
+                        <a href="index.html" class="btn btn-outline-white btn-lg">
+                            SIGN IN
                         </a>
                     </div>
 
-                    <div class="border col-lg-4 d-flex justify-content-center">
-                        <form action="" method="get" class="needs-validation p-5" novalidate>
-                            <p class="h4 mb-4 text-center">SIGN IN</p>
 
-                            <div class="input-group mb-4">
-                                <input type="text" id="loginID" name="loginID" class="form-control" placeholder="User ID"
-                                    required>
-                            </div>
+                    <div class="col-lg-8">
+                        <form class=" border border-light p-5">
+                            <p class="text-center h4 mb-5">Medical Center Registration</p>
 
-                            <div class="input-group mb-4">
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
-                                    required>
-                            </div>
-
-                            <div class="justify-content-around">
-                                <div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="remember" name="remember">
-                                        <label class="custom-control-label" for="remember">Remember me</label>
-                                    </div>
+                            <div class="form-group row">
+                                <label for="mediCentername" class="col-lg-3 col-form-label">Name</label>
+                                <div class="col-lg-9 mb-1">
+                                    <input type="text" class="form-control" id="mediCentername" placeholder="Enter Medical Center Name">
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
+                            <div class="form-group row">
+                                <label for="regID" class="col-lg-3 col-form-label">Reg ID</label>
+                                <div class="col-lg-9 mb-1">
+                                    <input type="text" id="regID" class="form-control" placeholder="PHSRC Reg ID">
+                                </div>
+                            </div>
 
-                        </form>
-                    </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-lg-3 col-form-label">Email</label>
+                                <div class="col-lg-9 mb-1">
+                                    <input type="email" id="email" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="fax" class="col-lg-3 col-form-label">Fax</label>
+                                <div class="col-lg-9 mb-1">
+                                    <input type="tel" id="fax" class="form-control" placeholder="Enter Fax Number">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="phone" class="col-lg-3 col-form-label">Phone</label>
+                                <div class="col-lg-9 mb-1">
+                                    <input type="tel" class="form-control" id="phone" placeholder="Enter Phone Number">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="address1" class="col-lg-3 col-form-label">Address Line 1</label>
+                                <div class="col-lg-9 mb-1">
+                                    <input type="text" class="form-control" id="address1" placeholder="Address No, Street 1">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="address2" class="col-lg-3 col-form-label">Address Line 2</label>
+                                <div class="col-lg-9 mb-1">
+                                    <input type="text" id="address2" class="form-control" placeholder="Street 2">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="city" class="col-lg-3 col-form-label">City</label>
+                                <div class="col-lg-9 mb-1">
+                                    <input type="text" class="form-control" id="city" placeholder="City">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="postalCode" class="col-lg-3 col-form-label">Postal Code</label>
+                                <div class="col-lg-9 mb-1">
+                                    <input type="text" id="postalCode" class="form-control" placeholder="Postal Code">
+                                </div>
+                            </div>
+
+
+                    </div class>
 
                 </div>
             </section>
