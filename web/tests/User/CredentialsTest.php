@@ -19,8 +19,8 @@ final class CredentialsTest extends TestCase
     public static function setSharedVariables()
     {
         Database::init();
-        CredentialsTest::$userId = "testUser123";
-        CredentialsTest::$fakeId = "testUser1234";
+        CredentialsTest::$userId = "pTest";
+        CredentialsTest::$fakeId = "testUser123";
         CredentialsTest::$userPassword = "113.59.194.60";
         CredentialsTest::$secondPassword = "233.34.56.788";
         CredentialsTest::$fakePassword = "113.34.56.788";
@@ -32,9 +32,9 @@ final class CredentialsTest extends TestCase
         DB::delete('user_credentials', "user_id = %s", CredentialsTest::$userId);
     }
 
-
     /**
      * @throws Exceptions\UserAlreadyExistsException
+     * @throws Exceptions\UserNotExistException
      */
     public function testLoginFromNewAccount()
     {
@@ -42,7 +42,6 @@ final class CredentialsTest extends TestCase
         $this->assertInstanceOf(Credentials::class, $credentials);
         $this->assertTrue($credentials->authenticate());
     }
-
 
     /**
      * @depends testLoginFromNewAccount
@@ -69,6 +68,7 @@ final class CredentialsTest extends TestCase
     /**
      * @depends testLoginFromFakePassword
      * @throws Exceptions\UserAlreadyExistsException
+     * @throws Exceptions\UserNotExistException
      */
     public function testLoginFromNewAccountForExistingUser()
     {

@@ -4,7 +4,7 @@ namespace Pulse\Exceptions;
 
 use Throwable;
 
-abstract class LoginCookiesNotSetException extends \Exception
+class LoginCookiesNotSetException extends \Exception
 {
     public function __construct(Throwable $previous = null)
     {

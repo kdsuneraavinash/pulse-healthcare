@@ -69,10 +69,10 @@ class Credentials implements BaseModel
      * Reads credentials
      * @param string $userId
      * @param string $password
-     * @return Credentials|null
+     * @return Credentials
      * @throws Exceptions\UserNotExistException
      */
-    public static function fromExistingCredentials(string $userId, string $password): ?Credentials
+    public static function fromExistingCredentials(string $userId, string $password): Credentials
     {
         $query = DB::queryFirstRow("SELECT salt from user_credentials WHERE user_id=%s", $userId);
         if ($query == null) {

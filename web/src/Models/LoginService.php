@@ -3,6 +3,7 @@
 namespace Pulse\Models;
 
 use DB;
+use Pulse\Exceptions\AlreadyLoggedInException;
 use Pulse\Models\User\Credentials;
 use Pulse\Models\User\Session;
 
@@ -13,8 +14,7 @@ define('SESSION_KEY', 'SESSION_KEY');
 
 class LoginService implements BaseModel
 {
-    public static $testFlag = false;
-    private static $testCookie = array();
+    private static $testFlag = false;
 
     /**
      * @return Session|null
@@ -30,7 +30,7 @@ class LoginService implements BaseModel
 
             if ($session == null) {
                 // Session key invalid: delete cookie
-                LoginService::deleteCookie();
+                LoginService::deleteSession();
                 return null;
             } else {
                 // Session key valid: LOGIN
@@ -47,14 +47,14 @@ class LoginService implements BaseModel
      * @return Session|null
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function logInSession(string $userId, string $password): ?Session
+    public static function logInSession(string $userId, string $password): ?Session
     {
         // Delete previous cookies
-        LoginService::deleteCookie();
+        LoginService::deleteSession();
 
         // Verify correct password and authenticate
         $credentials = Credentials::fromExistingCredentials($userId, $password);
-        if ($credentials == null) {
+        if (!$credentials->authenticate()) {
             // Invalid credentials
             return null;
         }
@@ -68,14 +68,20 @@ class LoginService implements BaseModel
     /**
      * @param string $userId
      * @param string $password
-     * @return Session|null
+     * @return Session
      * @throws \Pulse\Exceptions\UserAlreadyExistsException
      * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws AlreadyLoggedInException
      */
-    public static function signInSession(string $userId, string $password): ?Session
+    public static function signInSession(string $userId, string $password): Session
     {
+        $currentSession = LoginService::continueSession();
+        if ($currentSession != null){
+            throw new AlreadyLoggedInException($userId);
+        }
+
         // Delete previous cookies
-        LoginService::deleteCookie();
+        LoginService::deleteSession();
 
         // Verify correct password and authenticate
         Credentials::fromNewCredentials($userId, $password);
@@ -85,15 +91,23 @@ class LoginService implements BaseModel
         return $session;
     }
 
+
+    /**
+     */
+    public static function signOutSession()
+    {
+        LoginService::deleteSession();
+    }
+
     /**
      * @return string
      */
     private static function getSessionUser(): ?string
     {
-        if (!isset(LoginService::getCookieVariable()[SESSION_USER])) {
+        if (!isset($_COOKIE[SESSION_USER])) {
             return null;
         }
-        return LoginService::getCookieVariable()[SESSION_USER];
+        return $_COOKIE[SESSION_USER];
     }
 
     /**
@@ -101,10 +115,10 @@ class LoginService implements BaseModel
      */
     private static function getSessionKey(): ?string
     {
-        if (!isset(LoginService::getCookieVariable()[SESSION_KEY])) {
+        if (!isset($_COOKIE[SESSION_KEY])) {
             return null;
         }
-        return LoginService::getCookieVariable()[SESSION_KEY];
+        return $_COOKIE[SESSION_KEY];
     }
 
     /**
@@ -121,21 +135,14 @@ class LoginService implements BaseModel
      */
     private static function sessionCookiesExist(): bool
     {
-        return isset(LoginService::getCookieVariable()[SESSION_KEY]) and isset(LoginService::getCookieVariable()[SESSION_USER]);
+        return isset($_COOKIE[SESSION_KEY]) and isset($_COOKIE[SESSION_USER]);
     }
 
-    private static function deleteCookie()
+    private static function deleteSession()
     {
         DB::delete('sessions', 'user=%s', LoginService::getSessionUser());
-    }
-
-    public static function getCookieVariable(): array
-    {
-        if (LoginService::$testFlag) {
-            return LoginService::$testCookie;
-        } else {
-            return $_COOKIE;
-        }
+        unset($_COOKIE[SESSION_KEY]);
+        unset($_COOKIE[SESSION_USER]);
     }
 
     /**
@@ -145,9 +152,13 @@ class LoginService implements BaseModel
     private static function setCookie(string $name, string $value)
     {
         if (LoginService::$testFlag) {
-            LoginService::$testCookie[$name] = $value;
+            $_COOKIE[$name] = $value;
         } else {
             setcookie($name, $value, time() + (SECONDS_PER_DAY * COOKIE_VALID_PERIOD_DAYS), "/");
         }
+    }
+
+    public static function setTestEnvironment(){
+        LoginService::$testFlag = true;
     }
 }
