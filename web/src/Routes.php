@@ -8,9 +8,9 @@ function getRoutes()
         // ['METHOD', '/path, ['Pulse\Controllers\Controller', 'method']]
         ['GET', '/test', ['Pulse\Controllers\Test\TestController', 'show']],
         ['POST', '/test', ['Pulse\Controllers\Test\TestController', 'show']],
-        ['GET', '/test/login', ['Pulse\Controllers\Test\LoginController', 'show']],
-        ['POST', '/test/login', ['Pulse\Controllers\Test\LoginController', 'show']],
-        ['POST', '/test/logout', ['Pulse\Controllers\Test\LogoutController', 'show']],
+        ['GET', '/test/login', ['Pulse\Controllers\LoginController', 'show']],
+        ['POST', '/test/login', ['Pulse\Controllers\LoginController', 'show']],
+        ['POST', '/test/logout', ['Pulse\Controllers\LogoutController', 'show']],
     ];
 }
 

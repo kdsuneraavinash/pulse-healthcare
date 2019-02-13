@@ -11,9 +11,13 @@ class LoginController extends BaseController
 {
     public function show()
     {
-        $text = "";
         $userId = $this->getRequest()->getBodyParameter('user');
         $password = $this->getRequest()->getBodyParameter('password');
+
+        if ($userId == null || $password == null){
+            echo "POST Request required";
+            exit;
+        }
 
         try {
             $session = LoginService::logInSession($userId, $password);
@@ -23,7 +27,7 @@ class LoginController extends BaseController
         }
 
         if ($session == null){
-            echo "Invalid Credentials";
+            echo "Invalid Credentials $userId: $password";
             exit;
         }
 
@@ -35,7 +39,10 @@ class LoginController extends BaseController
             $user_agents_mapped[$user_agents[$i]['id']] = $user_agents[$i]['user_agent'];
         }
         $data = [
-            'session' => $session,
+            'session' => array(
+                "SESSION_KEY" => $session->getSessionKey(),
+                "SESSION_USER"=>$session->getSessionUserId()
+            ),
             'user_agents' => $user_agents_mapped,
             'db_session' => $db_session_query
         ];

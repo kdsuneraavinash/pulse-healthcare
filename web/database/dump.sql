@@ -28,7 +28,7 @@ CREATE TABLE `sessions` (
   `user_agent` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `expires` datetime NOT NULL,
-  `session_key` binary(20) NOT NULL,
+  `session_key` char(40) NOT NULL,
   PRIMARY KEY (`user`,`ip_address`,`user_agent`),
   KEY `sessions_user_agents_id_fk` (`user_agent`),
   CONSTRAINT `sessions_user_agents_id_fk` FOREIGN KEY (`user_agent`) REFERENCES `user_agents` (`id`) ON DELETE CASCADE
@@ -81,10 +81,10 @@ DROP TABLE IF EXISTS `user_agents`;
 CREATE TABLE `user_agents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_agent` text NOT NULL,
-  `hash` binary(20) NOT NULL,
+  `hash` char(40) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_agents_hash_uindex` (`hash`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COMMENT='Table to save user agents';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 COMMENT='Table to save user agents';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,6 +93,7 @@ CREATE TABLE `user_agents` (
 
 LOCK TABLES `user_agents` WRITE;
 /*!40000 ALTER TABLE `user_agents` DISABLE KEYS */;
+INSERT INTO `user_agents` (`id`, `user_agent`, `hash`) VALUES (9,'UNKNOWN','25ba44ec3b391ba4ce5fbbd2979635e254775e7d'),(11,'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36','2d13425a6c604c6a91f6ffedec343a81e891b535'),(12,'PostmanRuntime/7.6.0','7c437b88e1cb7d09660f2b2ace2f865fb3fd6fb6');
 /*!40000 ALTER TABLE `user_agents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +118,58 @@ CREATE TABLE `user_credentials` (
 
 LOCK TABLES `user_credentials` WRITE;
 /*!40000 ALTER TABLE `user_credentials` DISABLE KEYS */;
+INSERT INTO `user_credentials` (`user_id`, `password`, `salt`) VALUES ('pTest','ea105ab7d916d160e651245d6f5cabb63ac6e5c5c1948b2c9bb5920d8e583c4e','\"kM05(jChwqbG_ulK:jgk)hnkO%14S!J9JKq[%-C');
 /*!40000 ALTER TABLE `user_credentials` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_types`
+--
+
+DROP TABLE IF EXISTS `user_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_types` (
+  `id` varchar(10) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store User Types';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_types`
+--
+
+LOCK TABLES `user_types` WRITE;
+/*!40000 ALTER TABLE `user_types` DISABLE KEYS */;
+INSERT INTO `user_types` (`id`, `description`) VALUES ('admin','Admin User'),('doctor','Doctor'),('med_center','Medical Center'),('patient','Patient');
+/*!40000 ALTER TABLE `user_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `user_id` varchar(32) NOT NULL,
+  `user_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `users_user_types_id_fk` (`user_type`),
+  CONSTRAINT `users_user_types_id_fk` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store all user details';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`user_id`, `user_type`) VALUES ('pTest','patient');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -129,4 +181,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-11 23:02:45
+-- Dump completed on 2019-02-13 22:01:41
