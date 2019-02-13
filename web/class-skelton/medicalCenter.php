@@ -6,7 +6,11 @@ class MedicalCenter{
     private $doctorsArray;
 
     private function removeUser(){
-        
+        //implentation of removeUser() function
+    }
+
+    private function addDoctor(){
+        //implentation of addDoctor() function 
     }
 
    
