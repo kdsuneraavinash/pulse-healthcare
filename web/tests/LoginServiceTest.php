@@ -21,6 +21,7 @@ final class LoginServiceTest extends TestCase
 
     public static function deleteDatabaseEntries()
     {
+        DB::delete('user_credentials', "user_id = %s", LoginServiceTest::$userId);
     }
 
 
@@ -40,8 +41,11 @@ final class LoginServiceTest extends TestCase
      */
     public function testTryToSignIn()
     {
+        LoginService::$testFlag = true;
         $session = LoginService::signInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
         $this->assertNotNull($session);
+
+        echo LoginService::getCookieVariable()['SESSION_KEY'];
     }
 
 }

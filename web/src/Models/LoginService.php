@@ -13,6 +13,9 @@ define('SESSION_KEY', 'SESSION_KEY');
 
 class LoginService implements BaseModel
 {
+    public static $testFlag = false;
+    private static $testCookie = array();
+
     /**
      * @return Session|null
      * @throws \Pulse\Exceptions\UserNotExistException
@@ -83,23 +86,14 @@ class LoginService implements BaseModel
     }
 
     /**
-     * @param string $name
-     * @param string $value
-     */
-    private static function setCookie(string $name, string $value)
-    {
-        setcookie($name, $value, time() + (SECONDS_PER_DAY * COOKIE_VALID_PERIOD_DAYS), "/");
-    }
-
-    /**
      * @return string
      */
     private static function getSessionUser(): ?string
     {
-        if (!isset($_COOKIE[SESSION_USER])) {
+        if (!isset(LoginService::getCookieVariable()[SESSION_USER])) {
             return null;
         }
-        return $_COOKIE[SESSION_USER];
+        return LoginService::getCookieVariable()[SESSION_USER];
     }
 
     /**
@@ -107,10 +101,10 @@ class LoginService implements BaseModel
      */
     private static function getSessionKey(): ?string
     {
-        if (!isset($_COOKIE[SESSION_KEY])) {
+        if (!isset(LoginService::getCookieVariable()[SESSION_KEY])) {
             return null;
         }
-        return $_COOKIE[SESSION_KEY];
+        return LoginService::getCookieVariable()[SESSION_KEY];
     }
 
     /**
@@ -127,11 +121,33 @@ class LoginService implements BaseModel
      */
     private static function sessionCookiesExist(): bool
     {
-        return isset($_COOKIE[SESSION_KEY]) and isset($_COOKIE[SESSION_USER]);
+        return isset(LoginService::getCookieVariable()[SESSION_KEY]) and isset(LoginService::getCookieVariable()[SESSION_USER]);
     }
 
     private static function deleteCookie()
     {
         DB::delete('sessions', 'user=%s', LoginService::getSessionUser());
+    }
+
+    public static function getCookieVariable(): array
+    {
+        if (LoginService::$testFlag) {
+            return LoginService::$testCookie;
+        } else {
+            return $_COOKIE;
+        }
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     */
+    private static function setCookie(string $name, string $value)
+    {
+        if (LoginService::$testFlag) {
+            LoginService::$testCookie[$name] = $value;
+        } else {
+            setcookie($name, $value, time() + (SECONDS_PER_DAY * COOKIE_VALID_PERIOD_DAYS), "/");
+        }
     }
 }
