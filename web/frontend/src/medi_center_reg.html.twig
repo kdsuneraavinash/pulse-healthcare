@@ -4,17 +4,17 @@
 {% set NAME = 'Home' %}
 
 
-{% import 'form_fields.htm' as form_fields %}
+{% import 'macro/form_fields.htm.twig' as form_fields %}
 
 <head>
-    {% include "header.htm" with context %}
+    {% include "part/header.htm.twig" with context %}
     <title>Medi Center Registration</title>
 </head>
 
 <body>
 <div class="bg-image"></div>
 
-{% include "navbar.htm" %}
+{% include "part/navbar.htm.twig" %}
 
 <main class="mt-sm-5 pt-5">
     <div class="container">
@@ -64,8 +64,8 @@
     </div>
 </main>
 
-{% include "footer.htm" %}
-{% include "scripts.htm" %}
+{% include "part/footer.htm.twig" %}
+{% include "part/scripts.htm.twig" %}
 <script src="js/register-medcenter.js"></script>
 
 </body>
