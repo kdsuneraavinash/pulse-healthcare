@@ -6,22 +6,25 @@ namespace Pulse;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Whoops;
-use Symfony\Component\HttpFoundation;
-use DB;
-use Mustache_Engine;
-use Mustache_Loader_FilesystemLoader;
+use Http;
 use Klein;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
+use Whoops;
 
+define('TEMPLATES', __DIR__ . '/../templates');
+define('CACHE', __DIR__ . '/../cache');
 
-/// ========================================================
-/// = Whoops Initialization
-/// ========================================================
-/// Error Reporter
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://github.com/filp/whoops
-/// ========================================================
+/**
+ * ========================================================
+ * = Whoops Initialization
+ * ========================================================
+ * Error Reporter
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://github.com/filp/whoops
+ * ========================================================
+ */
 
 error_reporting(E_ALL);
 
@@ -40,66 +43,65 @@ if ($environment !== 'production') {
 $whoops->register();
 
 
-/// ========================================================
-/// = HTTP Foundation Initialization
-/// ========================================================
-/// HTTP Component Handler
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://symfony.com/doc/current/components/http_foundation.html
-/// ========================================================
+/**
+ * ========================================================
+ * = HTTP Initialization
+ * ========================================================
+ * HTTP Component Handler
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://github.com/PatrickLouys/http
+ * ========================================================
+ */
 
-// TODO: Checkout other HTTP Component Handlers and determine the
-// most lightweight and easy to use library
-
-$httpRequest = HttpFoundation\Request::createFromGlobals();
-$httpResponse = new HttpFoundation\Response();
-
-
-/// ========================================================
-/// = MeekroDB Initialization
-/// ========================================================
-/// Database Handler
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://meekro.com/docs.php
-/// ========================================================
-
-DB::$user = 'pulse_root';
-DB::$password = 'password';
-DB::$dbName = 'pulse';
-DB::$host = 'localhost';
-DB::$port = '3306';
-DB::$encoding = 'latin1';
+$httpRequest = new Http\HttpRequest($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
+$httpResponse = new Http\HttpResponse;
 
 
-/// ========================================================
-/// = Mustache Initialization
-/// ========================================================
-/// Template Engine
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://github.com/bobthecow/mustache.php
-/// ========================================================
+/**
+ * ========================================================
+ * = MeekroDB Initialization
+ * ========================================================
+ * Database Handler
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://meekro.com/docs.php
+ * ========================================================
+ */
 
-$mustache = new Mustache_Engine([
-    'loader' => new Mustache_Loader_FilesystemLoader(
-        dirname(__DIR__) . '/templates', [
-        'extension' => '.html',
-    ]),
+Database::init();
+
+
+/**
+ * ========================================================
+ * = Twig Initialization
+ * ========================================================
+ * Template Engine
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://twig.sensiolabs.org/
+ * ========================================================
+ */
+
+$loader = new Twig_Loader_Filesystem(TEMPLATES);
+$twig = new Twig_Environment($loader, [
+//    'cache' => __DIR__ . '/../cache',
 ]);
 
 
-/// ========================================================
-/// = Klein.php
-/// ========================================================
-/// Router
-/// --------------------------------------------------------
-/// DOCUMENTATION
-/// https://github.com/klein/klein.php
-/// ========================================================
+/**
+ * ========================================================
+ * = Klein.php
+ * ========================================================
+ * Router
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://github.com/klein/klein.php
+ * ========================================================
+ */
 
-require __DIR__ . '/../src/Routes.php';
+require __DIR__ . '/Routes.php';
+require __DIR__ . '/BaseController.php';
 
 $klein = new Klein\Klein();
 
@@ -110,7 +112,8 @@ foreach ($routes as $route) {
     $type = $route[0];
     $route_path = $route[1];
 
-    $controller = new $route[2][0]($httpRequest, $httpResponse, $mustache);
+    $controller = new $route[2][0]();
+    BaseController::activate($controller, $httpRequest, $httpResponse, $twig);
     $method = $route[2][1];
     $callback = [$controller, $method];
     $klein->respond($type, $route_path, $callback);
@@ -125,18 +128,25 @@ $klein->onHttpError(function (int $code, Klein\Klein $router) {
     $router_err_handlers = getRouterErrorHandlers();
     foreach ($router_err_handlers as $handler) {
         if ($code == $handler[0]) {
-            $router->response()->body($handler[1]);
+            $router->response()->body(generateErrorPage($handler[1]));
             return;
         }
     }
-    $router->response()->body(getRouterDefaultErrorHandler($code));
+    $router->response()->body(generateErrorPage('other') . $code);
 });
+
 
 $klein->dispatch();
 
 
-/// ========================================================
-/// = HTTP Foundation sending response
-/// ========================================================
+/**
+ * ========================================================
+ * = HTTP sending response
+ * ========================================================
+ */
 
-$httpResponse->send();
+foreach ($httpResponse->getHeaders() as $header) {
+    header($header, false);
+}
+
+echo $httpResponse->getContent();

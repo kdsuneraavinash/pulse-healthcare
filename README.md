@@ -29,18 +29,14 @@
    mysql -u root -p
    ```
 
-5. Create the database and table.
-
-   ```sql
-   CREATE USER 'pulse_root'@'localhost' IDENTIFIED BY 'password';
-   CREATE DATABASE pulse;
-   USE pulse;
-   GRANT ALL PRIVILEGES ON pulse . * TO 'pulse_root'@'localhost';
-   CREATE TABLE test (ID int NOT NULL, LastName varchar(255) NOT NULL, FirstName varchar(255), Age int,PRIMARY KEY (ID));
-   INSERT INTO test (ID, LastName, FirstName, Age ) VALUES (170081, "Chandrasiri", 'Sunera', 22 );
-   SELECT * FROM test;
-   ```
+5. Create the database and table. Refer to `web/database` for database scripts.
 
 6. Run `web/public/` folder from `PHP`.
+
+    ```bash
+    cd web/public
+    php -S localhost:8000
+    ```
+
 7. Navigate to `http://localhost:8000/test` to verify that everything is working properly.
 
