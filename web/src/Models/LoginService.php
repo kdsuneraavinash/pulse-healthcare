@@ -76,7 +76,7 @@ class LoginService implements BaseModel
     public static function signInSession(string $userId, string $password): Session
     {
         $currentSession = LoginService::continueSession();
-        if ($currentSession != null){
+        if ($currentSession != null) {
             throw new AlreadyLoggedInException($userId);
         }
 
@@ -158,7 +158,8 @@ class LoginService implements BaseModel
         }
     }
 
-    public static function setTestEnvironment(){
+    public static function setTestEnvironment()
+    {
         LoginService::$testFlag = true;
     }
 }

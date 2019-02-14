@@ -6,7 +6,7 @@ use Throwable;
 
 class AlreadyLoggedInException extends \Exception
 {
-    public function __construct(string $userId,Throwable $previous = null)
+    public function __construct(string $userId, Throwable $previous = null)
     {
         parent::__construct("User is already logged in as $userId.", 1406, $previous);
     }

@@ -1,10 +1,10 @@
 <!--suppress HtmlUnknownTarget -->
 <header>
-    <nav class="navbar fixed-top navbar-expand-lg bg-white darken-4 scrolling-navbar">
+    <nav class="navbar navbar-dark fixed-top navbar-expand-lg unique-color-dark scrolling-navbar">
         <div class="container">
 
             <!-- Logo -->
-            <a class="navbar-brand pr-3" href="#">
+            <a class="navbar-brand pr-3" href="{{ site }}">
                 <strong>MediKit</strong>
             </a>
 
@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse" id="navbar-content">
                 <ul class="navbar-nav mr-auto">
 
-                    {% set nav_links = [['#', 'Home'], ['#', 'About MediKit'], ['#', 'Services'], ['#', 'Contact']] %}
+                    {% set nav_links = [[site, 'Home'], ['/profile', 'Profile'], ['#', 'About MediKit'], ['#', 'Services'], ['#', 'Contact']] %}
 
                     {% for item in nav_links %}
                         {% set href = item[0] %}
@@ -26,33 +26,44 @@
 
                         {% if (caption == NAME) %}
                             <li class="nav-item active px-1">
-                                <a class="nav-link text-dark" href="{{ href }}"><b>{{ caption }}</b>
+                                <a class="nav-link text-white" href="{{ href }}"><b>{{ caption }}</b>
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                         {% else %}
                             <li class="nav-item px-1">
-                                <a href="{{ href }}" class="nav-link text-dark">{{ caption }}</a>
+                                <a href="{{ href }}" class="nav-link text-white">{{ caption }}</a>
                             </li>
                         {% endif %}
                     {% endfor %}
                 </ul>
 
-                {% if (NAME != "Debug") %}
+                {% if (user_id == null) %}
                     <!-- Sign In Button -->
                     <ul class="navbar-nav nav-flex-icons">
                         <li class="nav-item">
-                            <a href="#" class="nav-link btn btn-outline-success waves-effect">
+                            <a href="{{ site }}/login" class="nav-link btn btn-outline-white waves-effect">
                                 <i class="fas fa-user-circle"></i> &nbsp; Sign In</a>
                         </li>
                     </ul>
+                {% else %}
+                    <!-- Sign Out Button -->
+                    <ul class="navbar-nav nav-flex-icons">
+                        <li class="nav-item">
+                            <form method="post" action="{{ site }}/logout">
+                                <button type="submit" class="nav-link btn btn-outline-yellow waves-effect">
+                                    <i class="fas fa-power-off"></i> &nbsp; Sign Out</button>
+                            </form>
+                        </li>
+                    </ul>
                 {% endif %}
+
 
             </div>
 
         </div>
     </nav>
 
-    <div style="height:64px;"></div>
+    <div style="height:50px;"></div>
 
 </header>
