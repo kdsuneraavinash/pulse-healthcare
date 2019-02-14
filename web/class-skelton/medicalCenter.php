@@ -1,16 +1,20 @@
-<?php include "account.php"?>
+<?php include "account.php";?>
+<?php include "IFavouritable.php";?>
+
 <?php
 
-class MedicalCenter extends Account{
+class MedicalCenter extends Account implements IFavouritable {
     private $location;
     private $patientsArray;
     private $doctorsArray;
+    private $loginCredential;
 
-    public function __construct($location){
+    public function __construct($loginCredential,$location){
+
         $this->location = $location;
         $this->patientsArray = Array();
         $this->doctorsArray = Array();
-        
+        $this->loginCredential = Array();
 
     }
 

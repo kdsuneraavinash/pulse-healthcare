@@ -1,3 +1,4 @@
+<?php include "account.php";?>
 <?php
 
 abstract class User extends Account{
