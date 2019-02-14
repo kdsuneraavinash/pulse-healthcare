@@ -6,7 +6,7 @@ abstract class User extends Account{
     protected $age;
     protected $gender;
     
-    function __construct($firstName,$lastName,$age,$gender){
+    public function __construct($firstName,$lastName,$age,$gender){
         $this->firstName=$firstName;
         $this->lastName=$lastName;
         $this->age=$age;
