@@ -1,0 +1,9 @@
+input{
+    min-width: 250px;
+}
+
+.call-to-action{
+    background-image: url(https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg);
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+}

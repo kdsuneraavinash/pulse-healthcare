@@ -3,6 +3,8 @@
 
 {% set NAME = 'Home' %}
 
+{% import 'form_fields.htm' as form_fields %}
+
 <head>
     {% include "header.htm" with context %}
     <title>MediKit</title>
@@ -12,68 +14,57 @@
 </head>
 
 <body>
-    {% include "navbar.htm" %}
+<div class="bg-image"></div>
 
-    <main class="mt-sm-5 pt-5">
-        <div class="container">
-            <section class="wow fadeIn">
-                <div class="row">
+{% include "navbar.htm" %}
 
-                    <div class="border col-lg-8 text-white text-center p-5" style="background-image: url(https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg);">
-                        <h1 class="mb-4">
-                            <strong>MediKit 1.0.1</strong>
-                        </h1>
-                        <h4>
-                            <strong>Best & free platform to mange all your medical needs</strong>
-                        </h4>
-                        <p class="mb-4">
-                            Loved by over 500 doctors, 2000 patients & 100 medical centers.
-                        </p>
-                        <h3 class="mb-4">
-                            <strong>Are you a Medical Center?</strong>
-                        </h3>
-                        <a href="medi_center_reg.html" class="btn btn-outline-white btn-lg">
-                            CREATE ACCOUNT
-                        </a>
-                    </div>
+<main class="mt-sm-5 pt-5">
+    <div class="container">
+        <section class="wow fadeIn">
+            <div class="row">
 
-                    <div class="border col-lg-4 d-flex justify-content-center">
-                        <form action="" method="get" class="needs-validation p-5" novalidate>
-                            <p class="h4 mb-4 text-center">SIGN IN</p>
-
-                            <div class="input-group mb-4">
-                                <input type="text" name="user" class="form-control" placeholder="User ID"
-                                    required>
-                            </div>
-
-                            <div class="input-group mb-4">
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
-                                    required>
-                            </div>
-
-                            <div class="justify-content-around">
-                                <div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="remember" name="remember">
-                                        <label class="custom-control-label" for="remember">Remember me</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
-
-                        </form>
-                    </div>
-
+                <div class="border col-lg-8 text-white text-center p-5 bg-gradient">
+                    <h1 class="mb-4">
+                        <strong>MediKit 0.0.1 alpha</strong>
+                    </h1>
+                    <h4>
+                        <strong>Best & free platform to mange all your medical needs</strong>
+                    </h4>
+                    <p class="mb-4">
+                        Loved by over 500 doctors, 2000 patients & 100 medical centers.
+                    </p>
+                    <h3 class="mb-4">
+                        <strong>Are you a Medical Center?</strong>
+                    </h3>
+                    <a class="btn btn-outline-white btn-lg" href="medi_center_reg.html">
+                        CREATE ACCOUNT
+                    </a>
                 </div>
-            </section>
 
-        </div>
-    </main>
+                <div class="border col-lg-4 d-flex justify-content-center bg-white">
+                    <form action="" class="needs-validation p-5" method="get" novalidate>
+                        <p class="h4 mb-4 text-center">SIGN IN</p>
 
-    {% include "footer.htm" %}
-    {% include "scripts.htm" %}
-    <script src="js/login.js"></script>
+                        {{ form_fields.input('user', 'User ID') }}
+                        {{ form_fields.input('password', 'Password', 'password') }}
+
+                        <!--<div class="justify-content-around">-->
+                            <!--{{ form_fields.check_box('remember', 'Remember me') }}-->
+                        <!--</div>-->
+
+                        <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
+
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+</main>
+
+{% include "footer.htm" %}
+{% include "scripts.htm" %}
 
 </body>
 

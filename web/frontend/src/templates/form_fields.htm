@@ -1,0 +1,26 @@
+<!--suppress XmlDuplicatedId, HtmlUnknownAttribute -->
+
+{% macro input(name, placeholder='', type='text') -%}
+<div class="input-group mb-4">
+    <input type="{{type}}" name="{{name}}" id="{{name}}" class="form-control" placeholder="{{placeholder}}"
+           required>
+</div>
+{%- endmacro %}
+
+{% macro input_with_label(name, label='', placeholder='', type='text', required='required') -%}
+<div class="form-group row">
+    <label for="{{name}}" class="col-lg-3 col-form-label">{{label}}</label>
+    <div class="col-lg-9">
+        <input type="{{type}}" class="form-control" id="{{name}}" placeholder="{{placeholder}}" {{required}}>
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro check_box(name, text) -%}
+<div>
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="{{name}}" name="{{name}}">
+        <label class="custom-control-label" for="{{name}}">{{text}}</label>
+    </div>
+</div>
+{%- endmacro %}

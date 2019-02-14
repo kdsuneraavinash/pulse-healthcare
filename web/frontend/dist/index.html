@@ -3,6 +3,8 @@
 
 
 
+
+
 <head>
     <!--suppress HtmlUnknownTarget -->
 <meta charset="utf-8">
@@ -24,7 +26,9 @@
 </head>
 
 <body>
-    <!--suppress HtmlUnknownTarget -->
+<div class="bg-image"></div>
+
+<!--suppress HtmlUnknownTarget -->
 <header>
     <nav class="navbar fixed-top navbar-expand-lg bg-white darken-4 scrolling-navbar">
         <div class="container">
@@ -80,7 +84,7 @@
                 <!-- Sign In Button -->
                 <ul class="navbar-nav nav-flex-icons">
                     <li class="nav-item">
-                        <a href="#" class="nav-link btn btn-outline-success waves-effect">
+                        <a href="#" class="nav-link btn btn-outline-dark waves-effect">
                             <i class="fas fa-user-circle" href="index.html"></i> &nbsp; Sign In</a>
                     </li>
                 </ul>
@@ -92,64 +96,63 @@
 
 </header>
 
-    <main class="mt-sm-5 pt-5">
-        <div class="container">
-            <section class="wow fadeIn">
-                <div class="row">
+<main class="mt-sm-5 pt-5">
+    <div class="container">
+        <section class="wow fadeIn">
+            <div class="row">
 
-                    <div class="border col-lg-8 text-white text-center p-5" style="background-image: url(https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg);">
-                        <h1 class="mb-4">
-                            <strong>MediKit 1.0.1</strong>
-                        </h1>
-                        <h4>
-                            <strong>Best & free platform to mange all your medical needs</strong>
-                        </h4>
-                        <p class="mb-4">
-                            Loved by over 500 doctors, 2000 patients & 100 medical centers.
-                        </p>
-                        <h3 class="mb-4">
-                            <strong>Are you a Medical Center?</strong>
-                        </h3>
-                        <a href="medi_center_reg.html" class="btn btn-outline-white btn-lg">
-                            CREATE ACCOUNT
-                        </a>
-                    </div>
-
-                    <div class="border col-lg-4 d-flex justify-content-center">
-                        <form action="" method="get" class="needs-validation p-5" novalidate>
-                            <p class="h4 mb-4 text-center">SIGN IN</p>
-
-                            <div class="input-group mb-4">
-                                <input type="text" name="user" class="form-control" placeholder="User ID"
-                                    required>
-                            </div>
-
-                            <div class="input-group mb-4">
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
-                                    required>
-                            </div>
-
-                            <div class="justify-content-around">
-                                <div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="remember" name="remember">
-                                        <label class="custom-control-label" for="remember">Remember me</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
-
-                        </form>
-                    </div>
-
+                <div class="border col-lg-8 text-white text-center p-5 bg-gradient">
+                    <h1 class="mb-4">
+                        <strong>MediKit 0.0.1 alpha</strong>
+                    </h1>
+                    <h4>
+                        <strong>Best & free platform to mange all your medical needs</strong>
+                    </h4>
+                    <p class="mb-4">
+                        Loved by over 500 doctors, 2000 patients & 100 medical centers.
+                    </p>
+                    <h3 class="mb-4">
+                        <strong>Are you a Medical Center?</strong>
+                    </h3>
+                    <a class="btn btn-outline-white btn-lg" href="medi_center_reg.html">
+                        CREATE ACCOUNT
+                    </a>
                 </div>
-            </section>
 
-        </div>
-    </main>
+                <div class="border col-lg-4 d-flex justify-content-center bg-white">
+                    <form action="" class="needs-validation p-5" method="get" novalidate>
+                        <p class="h4 mb-4 text-center">SIGN IN</p>
 
-    <footer class="page-footer text-center font-small mdb-color wow fadeIn">
+                        <div class="input-group mb-4">
+    <input type="text" name="user" id="user" class="form-control" placeholder="User ID"
+           required>
+</div>
+                        <div class="input-group mb-4">
+    <input type="password" name="password" id="password" class="form-control" placeholder="Password"
+           required>
+</div>
+
+                        <!--<div class="justify-content-around">-->
+                            <!--<div>
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="remember" name="remember">
+        <label class="custom-control-label" for="remember">Remember me</label>
+    </div>
+</div>-->
+                        <!--</div>-->
+
+                        <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
+
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<footer class="page-footer text-center font-small mdb-color">
     <div class="my-4"></div>
     <div class="pb-4">
         <a href="#">
@@ -170,7 +173,7 @@
     </div>
 
 </footer>
-    <!-- SCRIPTS -->
+<!-- SCRIPTS -->
 <!-- JQuery -->
 <!--suppress HtmlUnknownTarget -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -186,7 +189,6 @@
     new WOW().init();
 </script>
 <script src="js/main.js"></script>
-    <script src="js/login.js"></script>
 
 </body>
 
