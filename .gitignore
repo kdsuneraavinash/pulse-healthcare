@@ -2,3 +2,5 @@
 **/vendor
 **/cache
 *.cache
+**/dist/**/*.twig
+**/*__jb_*
