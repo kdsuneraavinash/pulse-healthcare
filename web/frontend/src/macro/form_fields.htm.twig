@@ -1,5 +1,3 @@
-<!--suppress XmlDuplicatedId, HtmlUnknownAttribute -->
-
 {% macro input(name, placeholder='', type='text') -%}
 <div class="input-group mb-4">
     <input type="{{type}}" name="{{name}}" id="{{name}}" class="form-control" placeholder="{{placeholder}}"
@@ -22,5 +20,5 @@
         <input type="checkbox" class="custom-control-input" id="{{name}}" name="{{name}}">
         <label class="custom-control-label" for="{{name}}">{{text}}</label>
     </div>
-</div> 
+</div>
 {%- endmacro %}

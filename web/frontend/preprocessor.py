@@ -27,14 +27,14 @@ class Functions:
 
         try:
             template = jinja2.Environment(loader=jinja2.FileSystemLoader(
-                "src/templates"), extensions=['jinja2.ext.do']).from_string(content)
+                "src"), extensions=['jinja2.ext.do']).from_string(content)
             result = template.render()
         except Exception as e:
             ConsoleController.print_error("{} : {} ({})".format(
                 file, str(e).capitalize(), type(e).__name__))
             result = content
 
-        with open(file, "w") as fw:
+        with open(file.replace(".twig", ""), "w") as fw:
             fw.write(result)
 
     @staticmethod
@@ -114,11 +114,6 @@ ____________ _________________ _____ _____   _    _  ___ _____ _____  _   _  ___
 
 class DistController:
     @staticmethod
-    def delete_template_folder():
-        if os.path.exists("dist/templates"):
-            shutil.rmtree("dist/templates", ignore_errors=True)
-
-    @staticmethod
     def _copytree(src, dst, symlinks=False, ignore=None):
         """ https://stackoverflow.com/questions/1868714/how-do-i-copy-an-entire-directory-of-files-into-an-existing-directory-using-pyth """
         for item in os.listdir(src):
@@ -143,7 +138,7 @@ class DistController:
     def walk_directory():
         for dirpath, _, fnames in os.walk("dist"):
             for f in fnames:
-                if f.endswith(".html"):
+                if f.endswith(".html.twig"):
                     Functions.found_html(os.path.join(dirpath, f))
                 elif f.endswith(".css"):
                     Functions.found_css(os.path.join(dirpath, f))
@@ -185,7 +180,6 @@ class Handler(FileSystemEventHandler):
               (event.event_type, event.src_path))
         DistController.copy_all_to_dist()
         DistController.walk_directory()
-        DistController.delete_template_folder()
         print("Ready...")
 
 
