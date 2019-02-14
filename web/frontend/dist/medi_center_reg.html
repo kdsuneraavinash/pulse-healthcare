@@ -125,43 +125,43 @@
                         <div class="form-group row">
     <label for="name" class="col-lg-3 col-form-label">Name</label>
     <div class="col-lg-9">
-        <input type="text" class="form-control" id="name" placeholder="Medical Center Name" required>
+        <input type="text" name="name" class="form-control" id="name" placeholder="Medical Center Name" required>
     </div>
 </div>
                         <div class="form-group row">
     <label for="phsrc" class="col-lg-3 col-form-label">Reg ID</label>
     <div class="col-lg-9">
-        <input type="text" class="form-control" id="phsrc" placeholder="PHSRC Reg ID" required>
+        <input type="text" name="phsrc" class="form-control" id="phsrc" placeholder="PHSRC/SECTION/ID" required>
     </div>
 </div>
                         <div class="form-group row">
     <label for="email" class="col-lg-3 col-form-label">Email</label>
     <div class="col-lg-9">
-        <input type="email" class="form-control" id="email" placeholder="Email" required>
+        <input type="email" name="email" class="form-control" id="email" placeholder="email@website.com" required>
     </div>
 </div>
                         <div class="form-group row">
-    <label for="fax" class="col-lg-3 col-form-label">Fax</label>
+    <label for="fax" class="col-lg-3 col-form-label">Fax (Optional)</label>
     <div class="col-lg-9">
-        <input type="fax" class="form-control" id="fax" placeholder="Fax Number (Optional)" >
+        <input type="fax" name="fax" class="form-control" id="fax" placeholder="+13235551234" >
     </div>
 </div>
                         <div class="form-group row">
-    <label for="phone" class="col-lg-3 col-form-label">Phone</label>
+    <label for="phonenumber" class="col-lg-3 col-form-label">Phone</label>
     <div class="col-lg-9">
-        <input type="tel" class="form-control" id="phone" placeholder="Phone Number" required>
+        <input type="tel" name="phonenumber" class="form-control" id="phonenumber" placeholder="0123366548" required>
     </div>
 </div>
                         <div class="form-group row">
-    <label for="address1" class="col-lg-3 col-form-label">Address</label>
+    <label for="address" class="col-lg-3 col-form-label">Address</label>
     <div class="col-lg-9">
-        <input type="text" class="form-control" id="address1" placeholder="Address" required>
+        <input type="text" name="address" class="form-control" id="address" placeholder="Medical Center Address" required>
     </div>
 </div>
                         <div class="form-group row">
     <label for="postal" class="col-lg-3 col-form-label">Postal Code</label>
     <div class="col-lg-9">
-        <input type="text" class="form-control" id="postal" placeholder="Postal Code" required>
+        <input type="text" name="postal" class="form-control" id="postal" placeholder="Postal Code" required>
     </div>
 </div>
 
@@ -214,6 +214,7 @@
     new WOW().init();
 </script>
 <script src="js/main.js"></script>
+<script src="js/register-medcenter.js"></script>
 
 </body>
 

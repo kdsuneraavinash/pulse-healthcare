@@ -45,11 +45,11 @@
                         <p class="text-center h4 mb-5">MEDICAL CENTER REGISTRATION</p>
 
                         {{ form_fields.input_with_label('name', 'Name', 'Medical Center Name', 'text') }}
-                        {{ form_fields.input_with_label('phsrc', 'Reg ID', 'PHSRC Reg ID', 'text') }}
-                        {{ form_fields.input_with_label('email', 'Email', 'Email', 'email') }}
-                        {{ form_fields.input_with_label('fax', 'Fax', 'Fax Number (Optional)', 'fax', required='') }}
-                        {{ form_fields.input_with_label('phone', 'Phone', 'Phone Number', 'tel') }}
-                        {{ form_fields.input_with_label('address1', 'Address', 'Address', 'text') }}
+                        {{ form_fields.input_with_label('phsrc', 'Reg ID', 'PHSRC/SECTION/ID', 'text') }}
+                        {{ form_fields.input_with_label('email', 'Email', 'email@website.com', 'email') }}
+                        {{ form_fields.input_with_label('fax', 'Fax (Optional)', '+13235551234', 'fax', required='') }}
+                        {{ form_fields.input_with_label('phonenumber', 'Phone', '0123366548', 'tel') }}
+                        {{ form_fields.input_with_label('address', 'Address', 'Medical Center Address', 'text') }}
                         {{ form_fields.input_with_label('postal', 'Postal Code', 'Postal Code', 'text') }}
 
                        <div class="text-right">
@@ -66,6 +66,7 @@
 
 {% include "footer.htm" %}
 {% include "scripts.htm" %}
+<script src="js/register-medcenter.js"></script>
 
 </body>
 
