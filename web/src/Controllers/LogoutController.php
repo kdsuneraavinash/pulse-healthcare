@@ -2,7 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\BaseController;
 use Pulse\Models\LoginService;
 
 class LogoutController extends BaseController

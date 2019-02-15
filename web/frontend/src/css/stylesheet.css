@@ -2,7 +2,7 @@ html {
     overflow-x: unset;
 }
 
-.bg-image{
+.bg-image {
     background-image: url(https://stmed.net/sites/default/files/purple-white-wallpapers-25285-6626443.jpg);
     background-size: cover;
     background-attachment: fixed;
@@ -15,14 +15,14 @@ html {
     overflow: hidden;
 }
 
-.bg-gradient{
-    background: #0e244a;/* Old Browsers */
+.bg-gradient {
+    background: #0e244a; /* Old Browsers */
     background: -moz-linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* FF3.6+ */
     background: -webkit-linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* Chrome10+,Safari5.1+ */
     background: -o-linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* Opera 11.10+ */
     background: -ms-linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* IE 10+ */
-    background: linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%);/* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0e244a', endColorstr='#004da5', GradientType=1 );/* IE6-9 fallback on horizontal gradient */
+    background: linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0e244a', endColorstr='#004da5', GradientType=1); /* IE6-9 fallback on horizontal gradient */
 }
 
 /*
@@ -46,7 +46,7 @@ body::-webkit-scrollbar-thumb {
 Sticky Footer
  */
 
-html{
+html {
     position: relative;
     min-height: 100%;
 }
@@ -58,6 +58,6 @@ footer {
     height: 123px;
 }
 
-main{
+main {
     margin-bottom: 150px;
 }

@@ -2,7 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 use Pulse\Database;
-use Pulse\Exceptions;
 use Pulse\Models\User\BrowserUserAgent;
 
 final class BrowserUserAgentTest extends TestCase

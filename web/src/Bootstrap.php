@@ -85,7 +85,8 @@ Database::init();
 
 $loader = new Twig_Loader_Filesystem(TEMPLATES);
 $twig = new Twig_Environment($loader, [
-//    'cache' => __DIR__ . '/../cache',
+    // TODO: Uncomment to cache and speedup process of templating
+    //    'cache' => __DIR__ . '/../cache',
 ]);
 
 
@@ -101,7 +102,7 @@ $twig = new Twig_Environment($loader, [
  */
 
 require __DIR__ . '/Routes.php';
-require __DIR__ . '/BaseController.php';
+require __DIR__ . '/Controllers/BaseController.php';
 
 $klein = new Klein\Klein();
 
@@ -113,7 +114,7 @@ foreach ($routes as $route) {
     $route_path = $route[1];
 
     $controller = new $route[2][0]();
-    BaseController::activate($controller, $httpRequest, $httpResponse, $twig);
+    Controllers\BaseController::activate($controller, $httpRequest, $httpResponse, $twig);
     $method = $route[2][1];
     $callback = [$controller, $method];
     $klein->respond($type, $route_path, $callback);

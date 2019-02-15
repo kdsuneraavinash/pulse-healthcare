@@ -2,9 +2,6 @@
 <!--suppress HtmlUnknownTarget -->
 <html lang="en">
 
-{% set NAME = 'Home' %}
-
-
 {% import 'macro/form_fields.htm.twig' as form_fields %}
 
 <head>
@@ -52,9 +49,9 @@
                         {{ form_fields.input_with_label('address', 'Address', 'Medical Center Address', 'text') }}
                         {{ form_fields.input_with_label('postal', 'Postal Code', 'Postal Code', 'text') }}
 
-                       <div class="text-right">
-                           <button class="btn btn-primary my-4" type="submit">Submit</button>
-                       </div>
+                        <div class="text-right">
+                            <button class="btn btn-primary my-4" type="submit">Submit</button>
+                        </div>
                     </form>
                 </div>
 

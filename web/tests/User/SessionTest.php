@@ -32,7 +32,8 @@ final class SessionTest extends TestCase
         DB::delete('sessions', "user = %s", SessionTest::$userId);
     }
 
-    public static function toSession($session) : Session{
+    public static function toSession($session): Session
+    {
         return $session;
     }
 
@@ -52,7 +53,8 @@ final class SessionTest extends TestCase
      * @depends testCreateSession
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testResumeSession(){
+    public function testResumeSession()
+    {
         SessionTest::$session2 = Session::resumeSession(SessionTest::$userId, SessionTest::getSession()->getSessionKey());
         $this->assertNotNull(SessionTest::$session2);
 
@@ -64,7 +66,8 @@ final class SessionTest extends TestCase
      * @depends testResumeSession
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testCreateAnotherSession(){
+    public function testCreateAnotherSession()
+    {
         SessionTest::$session = Session::createSession(SessionTest::$userId);
         $query = SessionTest::getSessions();
         $this->assertCount(1, $query);
@@ -74,7 +77,8 @@ final class SessionTest extends TestCase
      * @depends testCreateAnotherSession
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testCreateSessionFromAnotherIP(){
+    public function testCreateSessionFromAnotherIP()
+    {
         $_SERVER['REMOTE_ADDR'] = SessionTest::$customIP;
         SessionTest::$session_pc = Session::createSession(SessionTest::$userId);
         $query = SessionTest::getSessions();
@@ -86,7 +90,8 @@ final class SessionTest extends TestCase
      * @depends testCreateSessionFromAnotherIP
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testCreateSessionFromAnotherBrowser(){
+    public function testCreateSessionFromAnotherBrowser()
+    {
         $_SERVER['HTTP_USER_AGENT'] = SessionTest::$customUserAgent;
         SessionTest::$session_browser = Session::createSession(SessionTest::$userId);
         $query = SessionTest::getSessions();
@@ -97,7 +102,8 @@ final class SessionTest extends TestCase
      * @depends testCreateSessionFromAnotherBrowser
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testCreateSessionAgainFromAnotherBrowser(){
+    public function testCreateSessionAgainFromAnotherBrowser()
+    {
         Session::createSession(SessionTest::$userId);
         $query = SessionTest::getSessions();
         $this->assertCount(3, $query);
@@ -106,7 +112,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testCreateSessionAgainFromAnotherBrowser
      */
-    public function testBrowserSessionOfOtherBrowserClosed(){
+    public function testBrowserSessionOfOtherBrowserClosed()
+    {
         SessionTest::getSessionBrowser()->closeSession();
         $query = SessionTest::getSessions();
         $this->assertCount(2, $query);
@@ -116,7 +123,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testBrowserSessionOfOtherBrowserClosed
      */
-    public function testCloseFirstSession(){
+    public function testCloseFirstSession()
+    {
         SessionTest::getSession()->closeSession();
         $query = SessionTest::getSessions();
         $this->assertCount(1, $query);
@@ -126,7 +134,8 @@ final class SessionTest extends TestCase
      * @depends testCloseFirstSession
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testAnotherSessionTriedToResumeSession(){
+    public function testAnotherSessionTriedToResumeSession()
+    {
         $session4 = Session::resumeSession(SessionTest::$userId, SessionTest::getSession()->getSessionKey());
         $this->assertNull($session4);
     }
@@ -134,7 +143,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testAnotherSessionTriedToResumeSession
      */
-    public function testSecondSessionTriedToCloseSession(){
+    public function testSecondSessionTriedToCloseSession()
+    {
         SessionTest::getSession2()->closeSession();
         $query = SessionTest::getSessions();
         $this->assertCount(1, $query);

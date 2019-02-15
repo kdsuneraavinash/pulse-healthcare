@@ -20,7 +20,7 @@ final class LoginServiceTest extends TestCase
         LoginServiceTest::$userId = "pTest";
         LoginServiceTest::$password = "password";
         LoginServiceTest::$fakePassword = "fakePassword";
-        //LoginServiceTest::deleteDatabaseEntries();
+        LoginServiceTest::deleteDatabaseEntries();
     }
 
     public static function deleteDatabaseEntries()

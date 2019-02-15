@@ -2,7 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\BaseController;
 use Pulse\Exceptions\UserNotExistException;
 use Pulse\Models\LoginService;
 
@@ -17,9 +16,9 @@ class HomePageController extends BaseController
     {
         try {
             $session = LoginService::continueSession();
-            if ($session != null){
+            if ($session != null) {
                 $userId = $session->getSessionUserId();
-            }else{
+            } else {
                 $userId = null;
             }
         } catch (UserNotExistException $e) {

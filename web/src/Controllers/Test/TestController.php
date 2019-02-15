@@ -3,10 +3,15 @@
 namespace Pulse\Controllers\Test;
 
 use DB;
-use Pulse\BaseController;
+use Pulse\Controllers\BaseController;
 
 class TestController extends BaseController
 {
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function show()
     {
         $get_string = $this->getRequest()->getQueryParameter('key');

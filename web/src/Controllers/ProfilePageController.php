@@ -2,7 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\BaseController;
 use Pulse\Exceptions\UserNotExistException;
 use Pulse\Models\LoginService;
 

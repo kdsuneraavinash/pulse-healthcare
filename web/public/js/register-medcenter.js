@@ -44,7 +44,7 @@ $(document).ready(function () {
             let addressValid = checkField(address, address.val() !== "");
             let postalValid = checkField(postal, postal.val() !== "");
 
-            if(nameValid && phsrcValid && emailValid && faxValid && phoneNumberValid && addressValid && postalValid){
+            if (nameValid && phsrcValid && emailValid && faxValid && phoneNumberValid && addressValid && postalValid) {
                 form.submit();
             }
         }, false);

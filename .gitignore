@@ -4,3 +4,4 @@
 *.cache
 **/dist/**/*.twig
 **/*__jb_*
+**/frontend/dist
