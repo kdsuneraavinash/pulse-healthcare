@@ -12,6 +12,7 @@ class User
     {
         $this->userId = $userId;
     }
+
     public function exists(): bool
     {
         $query = DB::queryFirstRow('SELECT * FROM users WHERE user_id = %s', $this->userId);

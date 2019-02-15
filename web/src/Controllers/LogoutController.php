@@ -2,16 +2,19 @@
 
 namespace Pulse\Controllers;
 
-use DB;
 use Pulse\BaseController;
 use Pulse\Models\LoginService;
 
 class LogoutController extends BaseController
 {
-    public function show()
+    public function post()
     {
+        $redirect = $this->getRequest()->getBodyParameter('redirect');
+        if ($redirect == null) {
+            $redirect = "http://$_SERVER[HTTP_HOST]";
+        }
         LoginService::signOutSession();
-        header("Location: http://$_SERVER[HTTP_HOST]/test/login");
+        header("Location: $redirect");
         exit();
     }
 }

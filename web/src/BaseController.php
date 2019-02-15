@@ -39,15 +39,15 @@ abstract class BaseController
     /**
      * @param string $template Template file name (without extension)
      * @param array $context Values to pass into file
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     protected function render(string $template, array $context)
     {
-        try {
-            $rendered = $this->getRenderer()->render($template, $context);
-            $this->getResponse()->setContent($rendered);
-        } catch (\Exception $e) {
-            $this->getResponse()->setContent($e->getMessage());
-        }
+        $rendered = $this->getRenderer()->render($template, $context);
+        $this->getResponse()->setContent($rendered);
+
     }
 
     /**

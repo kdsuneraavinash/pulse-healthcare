@@ -48,7 +48,7 @@ class Credentials implements BaseModel
     public static function fromNewCredentials(string $userId, string $password): Credentials
     {
         $query = DB::queryFirstRow("SELECT user_id from users WHERE user_id=%s", $userId);
-        if ($query == null){
+        if ($query == null) {
             // User not existing
             throw new Exceptions\UserNotExistException($userId);
         }

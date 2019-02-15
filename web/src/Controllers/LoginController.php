@@ -2,19 +2,20 @@
 
 namespace Pulse\Controllers;
 
-use DB;
 use Pulse\BaseController;
 use Pulse\Exceptions\UserNotExistException;
 use Pulse\Models\LoginService;
 
 class LoginController extends BaseController
 {
-    public function show()
+    /**
+     */
+    public function post()
     {
         $userId = $this->getRequest()->getBodyParameter('user');
         $password = $this->getRequest()->getBodyParameter('password');
 
-        if ($userId == null || $password == null){
+        if ($userId == null || $password == null) {
             echo "POST Request required";
             exit;
         }
@@ -26,26 +27,38 @@ class LoginController extends BaseController
             exit;
         }
 
-        if ($session == null){
+        if ($session == null) {
             echo "Invalid Credentials $userId: $password";
             exit;
         }
 
-        $db_session_query = DB::query("SELECT user, ip_address, user_agent, created, expires, HEX(session_key) FROM sessions;");
-        $user_agents = DB::query("SELECT id, user_agent FROM user_agents;");
-        $user_agents_mapped = array();
+        header("Location: http://$_SERVER[HTTP_HOST]/profile");
+        exit;
+    }
 
-        for ($i = 0; $i < count($user_agents); $i++) {
-            $user_agents_mapped[$user_agents[$i]['id']] = $user_agents[$i]['user_agent'];
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function get()
+    {
+        try {
+            $session = LoginService::continueSession();
+            if ($session != null) {
+                $this->render('AlreadyLoggedIn.html.twig', array(
+                    'user' => $session->getSessionUserId(),
+                    'redirect' => "http://$_SERVER[HTTP_HOST]/login",
+                    'site' => "http://$_SERVER[HTTP_HOST]",
+                    'user_id' => $session->getSessionUserId()
+                ));
+                return;
+            }
+        } catch (UserNotExistException $ex) {
+            LoginService::signOutSession();
         }
-        $data = [
-            'session' => array(
-                "SESSION_KEY" => $session->getSessionKey(),
-                "SESSION_USER"=>$session->getSessionUserId()
-            ),
-            'user_agents' => $user_agents_mapped,
-            'db_session' => $db_session_query
-        ];
-        $this->render('LoginTemplate.html.twig', $data);
+        $this->render('LoginPage.html.twig', array(
+            'site' => "http://$_SERVER[HTTP_HOST]"
+        ));
     }
 }
