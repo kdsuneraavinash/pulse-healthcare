@@ -1,2 +1,7 @@
 **/.idea
 **/vendor
+**/cache
+*.cache
+**/dist/**/*.twig
+**/*__jb_*
+**/frontend/dist

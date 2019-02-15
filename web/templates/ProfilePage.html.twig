@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "part/header.htm.twig" %}
+    {% include("part/nojs.htm.twig") %}
+    <title>MediKit</title>
+</head>
+
+<body>
+
+{% include "part/navbar.htm.twig" %}
+
+<main>
+    <div class="container-fluid white">
+        <hr class="mb-5 mt-0">
+        <div class="container">
+            <section class="section extra-margins mt-5 py-5 text-center text-lg-left">
+                <div class="row my-xl-5 py-xl-4">
+
+                    <div class="col-sm-12 col-md-5 col-xl-5 mb-4">
+                        <div class="view overlay">
+                            <img src="https://format-com-cld-res.cloudinary.com/image/private/s--Q6bw0Lij--/c_limit,g_center,h_400,w_65535/a_auto,fl_keep_iptc.progressive,q_95/30388-2127009-JiB_Wallpaper_O_Yellow.jpg"
+                                 class="img-fluid z-depth-1" alt="">
+                            <div class="mask rgba-white-slight"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-xl-6">
+
+                        <h3 class="dark-grey-text pb-2 font-weight-bold">
+                            <strong>About me</strong>
+                        </h3>
+                        <p class="gold-text mb-4 text-uppercase font-weight-bold">SOME FACTS ABOUT ME</p>
+                        <hr>
+
+                        <p class="dark-grey-text mt-4 text-justify">Nemo enim ipsam voluptatem quia voluptas sit
+                            aspernatur aut odit aut fugit, sed quia consequuntur
+                            magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
+                            dolorem
+                            ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
+                            tempora
+                            incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam,
+                            quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
+                            commodi
+                            consequatur. Quis autem vel eum iure reprehenderit.</p>
+
+                        <p class="dark-grey-text text-justify">Nemo enim ipsam voluptatem quia voluptas sit aspernatur
+                            aut odit aut fugit, sed quia consequuntur
+                            magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
+                            dolorem
+                            ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
+                            tempora
+                            incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+
+                        <h5 class="text-right font-weight-bold dark-grey-text mt-5">
+                            <em>John Doe</em>
+                        </h5>
+                    </div>
+
+                </div>
+
+            </section>
+        </div>
+
+    </div>
+
+</main>
+
+
+{% include "part/footer.htm.twig" %}
+{% include "part/scripts.htm.twig" %}
+
+<!-- Time Counter -->
+<script type="text/javascript">
+    var countDownDate = new Date(2019, 1, 2, 10, 1, 0);
+
+    var x = setInterval(function () {
+        var now = new Date().getTime();
+        var distance = now - countDownDate;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("time-counter").innerHTML = days + "d " + hours + "h " +
+            minutes + "m " + seconds + "s ";
+    }, 500);
+
+</script>
+</body>
+
+</html>

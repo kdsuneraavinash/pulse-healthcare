@@ -1,0 +1,70 @@
+<!--suppress HtmlUnknownTarget -->
+<header>
+    <nav class="navbar navbar-dark fixed-top navbar-expand-lg unique-color-dark scrolling-navbar">
+        <div class="container">
+
+            <!-- Logo -->
+            <a class="navbar-brand pr-3" href="{{ site }}">
+                <strong>MediKit</strong>
+            </a>
+
+            <!-- Expander -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
+                    aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Links -->
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto">
+
+                    {% set nav_links = [[site, 'Home'], ['/profile', 'Profile'], ['#', 'About MediKit'], ['#', 'Services'], ['#', 'Contact']] %}
+
+                    {% for item in nav_links %}
+                        {% set href = item[0] %}
+                        {% set caption = item[1] %}
+
+                        {% if (caption == NAME) %}
+                            <li class="nav-item active px-1">
+                                <a class="nav-link text-white" href="{{ href }}"><b>{{ caption }}</b>
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item px-1">
+                                <a href="{{ href }}" class="nav-link text-white">{{ caption }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                {% if (user_id == null) %}
+                    <!-- Sign In Button -->
+                    <ul class="navbar-nav nav-flex-icons">
+                        <li class="nav-item">
+                            <a href="{{ site }}/login" class="nav-link btn btn-outline-white waves-effect">
+                                <i class="fas fa-user-circle"></i> &nbsp; Sign In</a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <!-- Sign Out Button -->
+                    <ul class="navbar-nav nav-flex-icons">
+                        <li class="nav-item">
+                            <form method="post" action="{{ site }}/logout">
+                                <button type="submit" class="nav-link btn btn-outline-yellow waves-effect">
+                                    <i class="fas fa-power-off"></i> &nbsp; Sign Out
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                {% endif %}
+
+
+            </div>
+
+        </div>
+    </nav>
+
+    <div style="height:50px;"></div>
+
+</header>

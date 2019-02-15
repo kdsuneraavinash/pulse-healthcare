@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "part/header.htm.twig" %}
+    {% include("part/nojs.htm.twig") %}
+    <title>MediKit</title>
+</head>
+
+<body>
+
+{% include "part/navbar.htm.twig" %}
+
+<main>
+    <div class="bg-dark bg-image"
+         style="background-image: url('https://www.planwallpaper.com/static/images/6984999-cool-lights_cJkYD47.jpg');filter: none; -webkit-filter: none;">
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center mt-5 pt-4">
+        <div class="text-center white-text mx-5 wow fadeIn">
+            <h1 class="display-4 mb-4">
+                <strong>Coming Soon!</strong>
+            </h1>
+
+            <p id="time-counter" class="my-4 display-3">
+                0d 0h 0m 0s
+            </p>
+
+            <br/>
+            <br/>
+            <br/>
+            <h4 class="mb-4">
+                <strong>We're working hard to finish the development of this site. </strong>
+            </h4>
+
+            <h4 class="mb-4 d-none d-md-block">
+                <strong>Until then have a look at our GitHub Repo</strong>
+            </h4>
+
+            <a target="_blank" href="https://github.com/kdsuneraavinash/pulse-healthcare" class="btn btn-white btn-lg">
+                <i class="fab fa-github"></i> &nbsp; GitHub Repo
+
+            </a>
+        </div>
+
+    </div>
+</main>
+
+
+{% include "part/footer.htm.twig" %}
+{% include "part/scripts.htm.twig" %}
+
+<!-- Time Counter -->
+<script type="text/javascript">
+    var countDownDate = new Date(2019, 1, 2, 10, 1, 0);
+
+    var x = setInterval(function () {
+        var now = new Date().getTime();
+        var distance = now - countDownDate;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("time-counter").innerHTML = days + "d " + hours + "h " +
+            minutes + "m " + seconds + "s ";
+    }, 500);
+
+</script>
+</body>
+
+</html>

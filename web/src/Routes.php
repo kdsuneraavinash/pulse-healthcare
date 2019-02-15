@@ -6,18 +6,27 @@ function getRoutes()
 {
     return [
         // ['METHOD', '/path, ['Pulse\Controllers\Controller', 'method']]
-        ['GET', '/test', ['Pulse\Controllers\Test', 'show']]
+        ['GET', '/', ['Pulse\Controllers\HomePageController', 'get']],
+        ['GET', '/profile', ['Pulse\Controllers\ProfilePageController', 'get']],
+
+        ['GET', '/test', ['Pulse\Controllers\Test\TestController', 'show']],
+        ['POST', '/test', ['Pulse\Controllers\Test\TestController', 'show']],
+
+        ['GET', '/login', ['Pulse\Controllers\LoginController', 'get']],
+        ['POST', '/login', ['Pulse\Controllers\LoginController', 'post']],
+
+        ['POST', '/logout', ['Pulse\Controllers\LogoutController', 'post']],
     ];
 }
 
 function getRouterErrorHandlers()
 {
     return [
-        [404, 'Error 404']
+        [404, '404']
     ];
 }
 
-function getRouterDefaultErrorHandler(int $code)
+function generateErrorPage(string $name)
 {
-    return 'Error ' . $code . ' Happened';
+    return file_get_contents('error/' . $name . '.html');
 }
