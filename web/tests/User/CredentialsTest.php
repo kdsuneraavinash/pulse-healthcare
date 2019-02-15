@@ -21,7 +21,7 @@ final class CredentialsTest extends TestCase
         Database::init();
         CredentialsTest::$userId = "pTest";
         CredentialsTest::$fakeId = "testUser123";
-        CredentialsTest::$userPassword = "113.59.194.60";
+        CredentialsTest::$userPassword = "password";
         CredentialsTest::$secondPassword = "233.34.56.788";
         CredentialsTest::$fakePassword = "113.34.56.788";
         CredentialsTest::deleteDatabaseEntries();

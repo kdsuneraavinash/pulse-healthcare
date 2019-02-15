@@ -23,6 +23,7 @@ class TestController extends BaseController
             'get' => $get_string,
             'post' => $post_string,
             'db' => $db_query,
+            'site' => "http://$_SERVER[HTTP_HOST]",
             'db_session' => $db_session_query
         ];
         $this->render('TestTemplate.html.twig', $data);

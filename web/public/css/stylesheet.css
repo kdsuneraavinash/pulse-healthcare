@@ -1,5 +1,6 @@
 html {
     overflow-x: unset;
+    overflow-y: scroll;
 }
 
 .bg-image {
@@ -38,7 +39,7 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: #BDBDBD;
+    background-color: #7f7f7f;
     outline: 1px solid #000
 }
 
@@ -59,5 +60,5 @@ footer {
 }
 
 main {
-    margin-bottom: 150px;
+    margin-bottom: 123px;
 }
