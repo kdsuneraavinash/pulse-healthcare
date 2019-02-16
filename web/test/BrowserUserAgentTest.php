@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Pulse\Database;
-use Pulse\Models\User\BrowserUserAgent;
+use Pulse\Models\AccountSession\BrowserAgent;
 
 final class BrowserUserAgentTest extends TestCase
 {
@@ -18,20 +18,20 @@ final class BrowserUserAgentTest extends TestCase
      */
     public function testCreateBrowserAgent()
     {
-        $agent = BrowserUserAgent::fromCurrentUserAgent();
-        $this->assertInstanceOf(BrowserUserAgent::class, $agent);
+        $agent = BrowserAgent::fromCurrentBrowserAgent();
+        $this->assertInstanceOf(BrowserAgent::class, $agent);
         return $agent;
     }
 
 
     /**
      * @depends testCreateBrowserAgent
-     * @param BrowserUserAgent $agent
+     * @param BrowserAgent $agent
      */
-    public function testDatabaseEntries(BrowserUserAgent $agent)
+    public function testDatabaseEntries(BrowserAgent $agent)
     {
         $hash = sha1((string)$agent);
-        $query = DB::query("SELECT * FROM user_agents WHERE user_agent=%s AND hash=%s", $agent, $hash);
+        $query = DB::query("SELECT * FROM browser_agents WHERE browser=%s AND hash=%s", $agent, $hash);
         $this->assertNotNull($query);
         $this->assertCount(1, $query);
     }

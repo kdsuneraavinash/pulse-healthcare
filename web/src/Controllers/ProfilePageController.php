@@ -11,12 +11,12 @@ class ProfilePageController extends BaseController
      */
     public function get()
     {
-        $userId = $this->getCurrentUserId();
-        if ($userId == null) {
+        $accountId = $this->getCurrentAccountId();
+        if ($accountId == null) {
             header("Location: http://$_SERVER[HTTP_HOST]");
             exit;
         } else {
-            $this->render('ProfilePage.html.twig', array(), $userId);
+            $this->render('ProfilePage.html.twig', array(), $accountId);
         }
     }
 }

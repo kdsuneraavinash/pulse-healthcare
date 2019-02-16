@@ -11,11 +11,11 @@ class MedicalCenterRegistrationController extends BaseController
      */
     public function get()
     {
-        $userId = $this->getCurrentUserId();
-        if ($userId == null) {
-            $this->render('MedicalCenterRegistration.html.twig', array(), $userId);
+        $accountId = $this->getCurrentAccountId();
+        if ($accountId == null) {
+            $this->render('MedicalCenterRegistration.html.twig', array(), $accountId);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig', array(), $userId);
+            $this->render('AlreadyLoggedIn.html.twig', array(), $accountId);
         }
     }
 }

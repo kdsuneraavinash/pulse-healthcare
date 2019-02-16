@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use Pulse\Models\User\Session;
+use Pulse\Models\AccountSession\Session;
 use PHPUnit\Framework\TestCase;
 
 final class SessionTest extends TestCase
@@ -24,7 +24,7 @@ final class SessionTest extends TestCase
         SessionTest::$customIP = "113.59.194.60";
         SessionTest::$customUserAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T)" .
             " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36";
-        DB::delete('sessions', "user = %s", SessionTest::$userId);
+        DB::delete('sessions', "account_id = %s", SessionTest::$userId);
     }
 
     public static function toSession($session): Session
@@ -33,7 +33,7 @@ final class SessionTest extends TestCase
     }
 
     /**
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testCreateSession()
     {
@@ -46,7 +46,7 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testCreateSession
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testResumeSession()
     {
@@ -59,7 +59,7 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testResumeSession
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testCreateAnotherSession()
     {
@@ -70,7 +70,7 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testCreateAnotherSession
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testCreateSessionFromAnotherIP()
     {
@@ -83,7 +83,7 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testCreateSessionFromAnotherIP
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testCreateSessionFromAnotherBrowser()
     {
@@ -95,7 +95,7 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testCreateSessionFromAnotherBrowser
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testCreateSessionAgainFromAnotherBrowser()
     {
@@ -127,7 +127,7 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testCloseFirstSession
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testAnotherSessionTriedToResumeSession()
     {
@@ -164,7 +164,7 @@ final class SessionTest extends TestCase
 
     private static function getSessionsOfUser($id)
     {
-        return DB::query("SELECT * FROM sessions WHERE user = '$id'");
+        return DB::query("SELECT * FROM sessions WHERE account_id = '$id'");
     }
 
     public static function getSession(): Session

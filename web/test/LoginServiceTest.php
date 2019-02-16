@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
 use Pulse\Exceptions\AlreadyLoggedInException;
-use Pulse\Exceptions\UserNotExistException;
-use Pulse\Models\LoginService;
+use Pulse\Exceptions\AccountNotExistException;
 use PHPUnit\Framework\TestCase;
+use Pulse\Models\AccountSession\LoginService;
 
 final class LoginServiceTest extends TestCase
 {
@@ -21,11 +21,11 @@ final class LoginServiceTest extends TestCase
         LoginServiceTest::$userId = "login_service_tester";
         LoginServiceTest::$password = "password";
         LoginServiceTest::$fakePassword = "fakePassword";
-        DB::delete('user_credentials', "user_id = %s", LoginServiceTest::$userId);
+        DB::delete('account_credentials', "account_id = %s", LoginServiceTest::$userId);
     }
 
     /**
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToContinueWithoutSigningUp()
     {
@@ -35,18 +35,18 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueWithoutSigningUp
-     * @throws UserNotExistException
+     * @throws AccountNotExistException
      */
     public function testTryToLogInWithoutSigningUp()
     {
-        $this->expectException(UserNotExistException::class);
+        $this->expectException(AccountNotExistException::class);
         LoginService::logInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
     }
 
     /**
      * @depends testTryToLogInWithoutSigningUp
-     * @throws \Pulse\Exceptions\UserNotExistException
-     * @throws \Pulse\Exceptions\UserAlreadyExistsException
+     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
      */
     public function testTryToSignUp()
@@ -57,7 +57,7 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToSignUp
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToContinueAfterSigningUp()
     {
@@ -68,8 +68,8 @@ final class LoginServiceTest extends TestCase
     /**
      * @depends testTryToContinueAfterSigningUp
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
-     * @throws \Pulse\Exceptions\UserAlreadyExistsException
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToSignUpAfterSigningUp()
     {
@@ -79,7 +79,7 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToSignUpAfterSigningUp
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToLogOutAfterSignUp()
     {
@@ -90,7 +90,7 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogOutAfterSignUp
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToLogInWithFakePassword()
     {
@@ -100,7 +100,7 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogInWithFakePassword
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToContinueAfterFakeLogIn()
     {
@@ -110,7 +110,7 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueAfterFakeLogIn
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToLogInWithCorrectPassword()
     {
@@ -120,7 +120,7 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogInWithCorrectPassword
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToContinueAfterCorrectLogIn()
     {
@@ -130,7 +130,7 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueAfterCorrectLogIn
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToLogOutAfterLogIn()
     {
@@ -141,7 +141,7 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogOutAfterLogIn
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public function testTryToLogOutAfterLogOut()
     {

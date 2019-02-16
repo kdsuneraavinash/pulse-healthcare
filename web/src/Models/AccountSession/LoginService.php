@@ -1,11 +1,10 @@
 <?php
 
-namespace Pulse\Models;
+namespace Pulse\Models\AccountSession;
 
 use DB;
 use Pulse\Exceptions\AlreadyLoggedInException;
-use Pulse\Models\User\Credentials;
-use Pulse\Models\User\Session;
+use Pulse\Models\BaseModel;
 
 define('SECONDS_PER_DAY', 86400);
 define('COOKIE_VALID_PERIOD_DAYS', 7);
@@ -18,7 +17,7 @@ class LoginService implements BaseModel
 
     /**
      * @return Session|null
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
     public static function continueSession(): ?Session
     {
@@ -42,51 +41,51 @@ class LoginService implements BaseModel
     }
 
     /**
-     * @param string $userId
+     * @param string $accountId
      * @param string $password
      * @return Session|null
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
-    public static function logInSession(string $userId, string $password): ?Session
+    public static function logInSession(string $accountId, string $password): ?Session
     {
         // Delete previous cookies
         LoginService::deleteSession();
 
         // Verify correct password and authenticate
-        $credentials = Credentials::fromExistingCredentials($userId, $password);
+        $credentials = Credentials::fromExistingCredentials($accountId, $password);
         if (!$credentials->authenticate()) {
             // Invalid credentials
             return null;
         }
 
-        $session = Session::createSession($userId);
+        $session = Session::createSession($accountId);
         LoginService::saveCookie($session);
         return $session;
     }
 
 
     /**
-     * @param string $userId
+     * @param string $accountId
      * @param string $password
      * @return Session
-     * @throws \Pulse\Exceptions\UserAlreadyExistsException
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws AlreadyLoggedInException
      */
-    public static function signInSession(string $userId, string $password): Session
+    public static function signInSession(string $accountId, string $password): Session
     {
         $currentSession = LoginService::continueSession();
         if ($currentSession != null) {
-            throw new AlreadyLoggedInException($userId);
+            throw new AlreadyLoggedInException($accountId);
         }
 
         // Delete previous cookies
         LoginService::deleteSession();
 
         // Verify correct password and authenticate
-        Credentials::fromNewCredentials($userId, $password);
+        Credentials::fromNewCredentials($accountId, $password);
 
-        $session = Session::createSession($userId);
+        $session = Session::createSession($accountId);
         LoginService::saveCookie($session);
         return $session;
     }
@@ -126,7 +125,7 @@ class LoginService implements BaseModel
      */
     private static function saveCookie(Session $session)
     {
-        LoginService::setCookie(SESSION_USER, $session->getSessionUserId());
+        LoginService::setCookie(SESSION_USER, $session->getSessionAccountId());
         LoginService::setCookie(SESSION_KEY, $session->getSessionKey());
     }
 
@@ -140,7 +139,7 @@ class LoginService implements BaseModel
 
     private static function deleteSession()
     {
-        DB::delete('sessions', 'user=%s', LoginService::getSessionUser());
+        DB::delete('sessions', 'account_id=%s', LoginService::getSessionUser());
         unset($_COOKIE[SESSION_KEY]);
         unset($_COOKIE[SESSION_USER]);
     }

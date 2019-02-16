@@ -2,8 +2,8 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\UserNotExistException;
-use Pulse\Models\LoginService;
+use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\AccountSession\LoginService;
 
 class LoginController extends BaseController
 {
@@ -11,18 +11,18 @@ class LoginController extends BaseController
      */
     public function post()
     {
-        $userId = $this->getRequest()->getBodyParameter('user');
+        $accountId = $this->getRequest()->getBodyParameter('account');
         $password = $this->getRequest()->getBodyParameter('password');
 
-        if ($userId == null || $password == null) {
+        if ($accountId == null || $password == null) {
             header("Location: http://$_SERVER[HTTP_HOST]/login");
             exit;
         }
 
         try {
-            $session = LoginService::logInSession($userId, $password);
-        } catch (UserNotExistException $ex) {
-            $message =  "User $userId Not Found";
+            $session = LoginService::logInSession($accountId, $password);
+        } catch (AccountNotExistException $ex) {
+            $message =  "Account $accountId Not Found";
             header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
             exit;
         }
@@ -44,12 +44,12 @@ class LoginController extends BaseController
      */
     public function get()
     {
-        $userId = $this->getCurrentUserId();
+        $accountId = $this->getCurrentAccountId();
 
-        if ($userId == null) {
-            $this->render('LoginPage.html.twig', array(), $userId);
+        if ($accountId == null) {
+            $this->render('LoginPage.html.twig', array(), $accountId);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig', array(), $userId);
+            $this->render('AlreadyLoggedIn.html.twig', array(), $accountId);
         }
     }
 }

@@ -7,13 +7,13 @@ class Doctor extends User
 {
     private $registrationNumber;
     private $medicalCenterList;
-    private $loginCredential;
+    private $fax;
     private $favouriteList;
 
     public function __construct($loginCredential, $registrationNumber, $firstName, $lastName, $age, $gender, $loginCredentials)
     {
         parent::__construct($firstName, $lastName, $age, $gender, $loginCredentials);
-        $this->loginCredential = $loginCredential;
+        $this->fax = $loginCredential;
         $this->registrationNumber = $registrationNumber;
         $this->medicalCenterList = Array();
         $this->favouriteList = Array();

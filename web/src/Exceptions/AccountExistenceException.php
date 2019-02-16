@@ -4,7 +4,7 @@ namespace Pulse\Exceptions;
 
 use Throwable;
 
-abstract class UserExistenceException extends \Exception
+abstract class AccountExistenceException extends \Exception
 {
     public function __construct(string $message, Throwable $previous = null)
     {

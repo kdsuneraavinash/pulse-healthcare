@@ -4,10 +4,10 @@ namespace Pulse\Exceptions;
 
 use Throwable;
 
-class AlreadyLoggedInException extends \Exception
+class AccountNotExistException extends AccountExistenceException
 {
     public function __construct(string $accountId, Throwable $previous = null)
     {
-        parent::__construct("User is already logged in as $accountId.", 1406, $previous);
+        parent::__construct("Account $accountId does not exist.", $previous);
     }
 }
