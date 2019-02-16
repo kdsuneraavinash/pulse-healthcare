@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
 use Pulse\Exceptions\AlreadyLoggedInException;
+use Pulse\Exceptions\UserNotExistException;
 use Pulse\Models\LoginService;
+use PHPUnit\Framework\TestCase;
 
 final class LoginServiceTest extends TestCase
 {
@@ -17,75 +18,70 @@ final class LoginServiceTest extends TestCase
     {
         \Pulse\Database::init();
         LoginService::setTestEnvironment();
-        LoginServiceTest::$userId = "pTest";
+        LoginServiceTest::$userId = "login_service_tester";
         LoginServiceTest::$password = "password";
         LoginServiceTest::$fakePassword = "fakePassword";
-        LoginServiceTest::deleteDatabaseEntries();
-    }
-
-    public static function deleteDatabaseEntries()
-    {
         DB::delete('user_credentials', "user_id = %s", LoginServiceTest::$userId);
     }
 
     /**
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testTryToContinueWithoutSigningIn()
+    public function testTryToContinueWithoutSigningUp()
     {
         $session = LoginService::continueSession();
         $this->assertNull($session);
     }
 
     /**
-     * @depends testTryToContinueWithoutSigningIn
-     * @throws \Pulse\Exceptions\UserNotExistException
+     * @depends testTryToContinueWithoutSigningUp
+     * @throws UserNotExistException
      */
-    public function testTryToLogInWithoutSigningIn()
+    public function testTryToLogInWithoutSigningUp()
     {
-        $this->expectException(\Pulse\Exceptions\UserNotExistException::class);
+        $this->expectException(UserNotExistException::class);
         LoginService::logInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
     }
 
     /**
-     * @depends testTryToLogInWithoutSigningIn
+     * @depends testTryToLogInWithoutSigningUp
      * @throws \Pulse\Exceptions\UserNotExistException
      * @throws \Pulse\Exceptions\UserAlreadyExistsException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
      */
-    public function testTryToSignIn()
+    public function testTryToSignUp()
     {
         $session = LoginService::signInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
         $this->assertNotNull($session);
     }
 
     /**
-     * @depends testTryToSignIn
+     * @depends testTryToSignUp
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testTryToContinueAfterSigningIn()
+    public function testTryToContinueAfterSigningUp()
     {
         $session = LoginService::continueSession();
         $this->assertNotNull($session);
     }
 
     /**
-     * @depends testTryToContinueAfterSigningIn
+     * @depends testTryToContinueAfterSigningUp
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws \Pulse\Exceptions\UserAlreadyExistsException
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testTryToSignInAfterSigningIn()
+    public function testTryToSignUpAfterSigningUp()
     {
         $this->expectException(AlreadyLoggedInException::class);
         LoginService::signInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
     }
 
     /**
-     * @depends testTryToSignInAfterSigningIn
+     * @depends testTryToSignUpAfterSigningUp
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testTryToSignOutAfterSignIn()
+    public function testTryToLogOutAfterSignUp()
     {
         LoginService::signOutSession();
         $session = LoginService::continueSession();
@@ -93,17 +89,17 @@ final class LoginServiceTest extends TestCase
     }
 
     /**
-     * @depends testTryToSignOutAfterSignIn
+     * @depends testTryToLogOutAfterSignUp
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testTryToLogInAfterSigningInWithFakePassword()
+    public function testTryToLogInWithFakePassword()
     {
         $session = LoginService::logInSession(LoginServiceTest::$userId, LoginServiceTest::$fakePassword);
         $this->assertNull($session);
     }
 
     /**
-     * @depends testTryToLogInAfterSigningInWithFakePassword
+     * @depends testTryToLogInWithFakePassword
      * @throws \Pulse\Exceptions\UserNotExistException
      */
     public function testTryToContinueAfterFakeLogIn()
@@ -116,14 +112,14 @@ final class LoginServiceTest extends TestCase
      * @depends testTryToContinueAfterFakeLogIn
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testTryToLogInAfterSigningInWithCorrectPassword()
+    public function testTryToLogInWithCorrectPassword()
     {
         $session = LoginService::logInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
         $this->assertNotNull($session);
     }
 
     /**
-     * @depends testTryToLogInAfterSigningInWithCorrectPassword
+     * @depends testTryToLogInWithCorrectPassword
      * @throws \Pulse\Exceptions\UserNotExistException
      */
     public function testTryToContinueAfterCorrectLogIn()
@@ -136,7 +132,7 @@ final class LoginServiceTest extends TestCase
      * @depends testTryToContinueAfterCorrectLogIn
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testTryToSignOutAfterLogIn()
+    public function testTryToLogOutAfterLogIn()
     {
         LoginService::signOutSession();
         $session = LoginService::continueSession();
@@ -144,10 +140,10 @@ final class LoginServiceTest extends TestCase
     }
 
     /**
-     * @depends testTryToSignOutAfterLogIn
+     * @depends testTryToLogOutAfterLogIn
      * @throws \Pulse\Exceptions\UserNotExistException
      */
-    public function testTryToSignOutAfterSignOut()
+    public function testTryToLogOutAfterLogOut()
     {
         LoginService::signOutSession();
         $session = LoginService::continueSession();

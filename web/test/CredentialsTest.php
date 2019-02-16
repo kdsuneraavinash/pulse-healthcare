@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
 use Pulse\Database;
 use Pulse\Exceptions;
 use Pulse\Models\User\Credentials;
+use PHPUnit\Framework\TestCase;
 
 final class CredentialsTest extends TestCase
 {
@@ -19,16 +19,11 @@ final class CredentialsTest extends TestCase
     public static function setSharedVariables()
     {
         Database::init();
-        CredentialsTest::$userId = "pTest";
-        CredentialsTest::$fakeId = "testUser123";
+        CredentialsTest::$userId = "credentials_tester";
+        CredentialsTest::$fakeId = "fakeTestUser123";
         CredentialsTest::$userPassword = "password";
         CredentialsTest::$secondPassword = "233.34.56.788";
         CredentialsTest::$fakePassword = "113.34.56.788";
-        CredentialsTest::deleteDatabaseEntries();
-    }
-
-    public static function deleteDatabaseEntries()
-    {
         DB::delete('user_credentials', "user_id = %s", CredentialsTest::$userId);
     }
 
