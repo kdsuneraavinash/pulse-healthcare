@@ -19,8 +19,8 @@ final class CredentialsTest extends TestCase
     public static function setSharedVariables()
     {
         Database::init();
-        CredentialsTest::$userId = "pTest";
-        CredentialsTest::$fakeId = "testUser123";
+        CredentialsTest::$userId = "credentials_tester";
+        CredentialsTest::$fakeId = "fakeTestUser123";
         CredentialsTest::$userPassword = "password";
         CredentialsTest::$secondPassword = "233.34.56.788";
         CredentialsTest::$fakePassword = "113.34.56.788";

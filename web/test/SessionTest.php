@@ -20,7 +20,7 @@ final class SessionTest extends TestCase
     public static function setSharedVariables()
     {
         \Pulse\Database::init();
-        SessionTest::$userId = "pTest";
+        SessionTest::$userId = "session_tester";
         SessionTest::$customIP = "113.59.194.60";
         SessionTest::$customUserAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T)" .
             " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36";

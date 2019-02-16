@@ -18,7 +18,7 @@ final class LoginServiceTest extends TestCase
     {
         \Pulse\Database::init();
         LoginService::setTestEnvironment();
-        LoginServiceTest::$userId = "pTest";
+        LoginServiceTest::$userId = "login_service_tester";
         LoginServiceTest::$password = "password";
         LoginServiceTest::$fakePassword = "fakePassword";
         DB::delete('user_credentials', "user_id = %s", LoginServiceTest::$userId);
