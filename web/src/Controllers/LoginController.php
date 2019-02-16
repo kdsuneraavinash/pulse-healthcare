@@ -22,13 +22,13 @@ class LoginController extends BaseController
         try {
             $session = LoginService::logInSession($accountId, $password);
         } catch (AccountNotExistException $ex) {
-            $message =  "Account $accountId Not Found";
+            $message = "Account $accountId Not Found";
             header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
             exit;
         }
 
         if ($session == null) {
-            $message =  "Invalid Username/Password";
+            $message = "Invalid Username/Password";
             header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
             exit;
         }

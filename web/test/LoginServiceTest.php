@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-use Pulse\Exceptions\AlreadyLoggedInException;
-use Pulse\Exceptions\AccountNotExistException;
 use PHPUnit\Framework\TestCase;
+use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\AlreadyLoggedInException;
 use Pulse\Models\AccountSession\LoginService;
 
 final class LoginServiceTest extends TestCase

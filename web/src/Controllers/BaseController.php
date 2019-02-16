@@ -75,7 +75,7 @@ abstract class BaseController
     /**
      * @return string|null |null
      */
-    protected function getCurrentAccountId() : ?string
+    protected function getCurrentAccountId(): ?string
     {
         try {
             $session = LoginService::continueSession();

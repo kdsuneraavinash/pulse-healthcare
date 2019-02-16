@@ -2,6 +2,7 @@
 
 namespace Pulse\Models;
 
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Interfaces\IFavouritable;
 
 class MedicalCenter extends Account implements IFavouritable
@@ -14,15 +15,28 @@ class MedicalCenter extends Account implements IFavouritable
     private $address;
     private $postalCode;
 
-
-    public function __construct($loginCredential, $location)
+    /**
+     * MedicalCenter constructor.
+     * @param $name
+     * @param $phsrc
+     * @param $email
+     * @param $fax
+     * @param $phoneNumber
+     * @param $address
+     * @param $postalCode
+     */
+    public function __construct($accountId, $name, $phsrc, $email, $fax, $phoneNumber, $address, $postalCode)
     {
-        parent::__construct($loginCredential);
-        $this->name = $location;
-        $this->phsrc = Array();
-        $this->email = Array();
-        $this->fax = Array();
+        parent::__construct($accountId);
+        $this->name = $name;
+        $this->phsrc = $phsrc;
+        $this->email = $email;
+        $this->fax = $fax;
+        $this->phoneNumber = $phoneNumber;
+        $this->address = $address;
+        $this->postalCode = $postalCode;
     }
+
 
     public function requestRegistration()
     {

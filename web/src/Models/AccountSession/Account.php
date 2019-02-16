@@ -8,7 +8,7 @@ abstract class Account
 {
     protected $accountId;
 
-    public function __construct(string $accountId)
+    protected function __construct(string $accountId)
     {
         $this->accountId = $accountId;
     }
@@ -19,7 +19,7 @@ abstract class Account
         return $query != null;
     }
 
-    public static function retrieveAccount(string $accountId):Account
+    public static function retrieveAccount(string $accountId): Account
     {
         return new TempAccount($accountId);
     }

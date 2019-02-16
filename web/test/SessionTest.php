@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use Pulse\Models\AccountSession\Session;
 use PHPUnit\Framework\TestCase;
+use Pulse\Models\AccountSession\Session;
 
 final class SessionTest extends TestCase
 {

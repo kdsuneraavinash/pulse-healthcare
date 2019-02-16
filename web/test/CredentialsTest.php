@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
+use PHPUnit\Framework\TestCase;
 use Pulse\Database;
 use Pulse\Exceptions;
 use Pulse\Models\AccountSession\Credentials;
-use PHPUnit\Framework\TestCase;
 
 final class CredentialsTest extends TestCase
 {

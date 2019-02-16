@@ -46,9 +46,9 @@
                         <p class="h4 mb-4 text-center">SIGN IN</p>
 
                         {% if (error != null) %}
-                        <div class="alert alert-danger text-center" role="alert">
-                            {{ error }}
-                        </div>
+                            <div class="alert alert-danger text-center" role="alert">
+                                {{ error }}
+                            </div>
                         {% endif %}
 
                         {{ form_fields.input('account', 'Account ID') }}
