@@ -1,0 +1,35 @@
+{% macro feature(icon, title, desc, dark) -%}
+    {% if (dark) %}
+        <div class="service col-md-3 d-flex align-self-stretch p-4 wow fadeInUp primary-color-dark text-white">
+    {% else %}
+        <div class="service col-md-3 d-flex align-self-stretch p-4 wow fadeInUp primary-color text-white">
+    {% endif %}
+
+    <div class="text-center">
+        <div class="d-flex justify-content-center align-items-center">
+            <span class="{{ icon }} fa-5x"></span>
+        </div>
+        <div class="p-2 mt-3">
+            <h3 class="heading">{{ title }}</h3>
+            <p>{{ desc }}</p>
+        </div>
+    </div>
+    {% if (dark) %}
+        </div>
+    {% else %}
+        </div>
+    {% endif %}
+{%- endmacro %}
+
+{% macro feature_2(icon, title, desc) -%}
+    <div class="col-lg-6">
+        <div class="d-flex">
+            <div class="mt-2 mr-3 blue-text">
+                <i class="border border-primary {{ icon }} fa-2x p-3"></i></div>
+            <div class="text">
+                <h3>{{ title }}</h3>
+                <p>{{ desc }}</p>
+            </div>
+        </div>
+    </div>
+{%- endmacro %}

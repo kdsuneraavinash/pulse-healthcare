@@ -26,6 +26,6 @@ class TestController extends BaseController
             'site' => "http://$_SERVER[HTTP_HOST]",
             'db_session' => $db_session_query
         ];
-        $this->render('TestTemplate.html.twig', $data);
+        $this->render('TestTemplate.html.twig', $data, null);
     }
 }

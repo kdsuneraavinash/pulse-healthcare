@@ -2,9 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\UserNotExistException;
-use Pulse\Models\LoginService;
-
 class ProfilePageController extends BaseController
 {
     /**
@@ -14,20 +11,12 @@ class ProfilePageController extends BaseController
      */
     public function get()
     {
-        try {
-            $session = LoginService::continueSession();
-            if ($session == null) {
-                header("Location: http://$_SERVER[HTTP_HOST]/");
-                exit;
-            }
-        } catch (UserNotExistException $e) {
+        $userId = $this->getCurrentUserId();
+        if ($userId == null) {
             header("Location: http://$_SERVER[HTTP_HOST]");
             exit;
+        } else {
+            $this->render('ProfilePage.html.twig', array(), $userId);
         }
-
-        $this->render('ProfilePage.html.twig', array(
-            "site" => "http://$_SERVER[HTTP_HOST]",
-            'user_id' => $session->getSessionUserId()
-        ));
     }
 }

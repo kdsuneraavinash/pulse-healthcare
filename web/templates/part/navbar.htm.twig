@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTarget -->
 <header>
-    <nav class="navbar navbar-dark fixed-top navbar-expand-lg unique-color-dark scrolling-navbar">
+    <nav class="navbar fixed-top navbar-expand-lg bg-white scrolling-navbar">
         <div class="container">
 
             <!-- Logo -->
@@ -26,13 +26,13 @@
 
                         {% if (caption == NAME) %}
                             <li class="nav-item active px-1">
-                                <a class="nav-link text-white" href="{{ href }}"><b>{{ caption }}</b>
+                                <a class="nav-link" href="{{ href }}"><b>{{ caption }}</b>
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                         {% else %}
                             <li class="nav-item px-1">
-                                <a href="{{ href }}" class="nav-link text-white">{{ caption }}</a>
+                                <a href="{{ href }}" class="nav-link text-dark">{{ caption }}</a>
                             </li>
                         {% endif %}
                     {% endfor %}
@@ -42,7 +42,7 @@
                     <!-- Sign In Button -->
                     <ul class="navbar-nav nav-flex-icons">
                         <li class="nav-item">
-                            <a href="{{ site }}/login" class="nav-link btn btn-outline-white waves-effect">
+                            <a href="{{ site }}/login" class="nav-link btn btn-outline-dark waves-effect">
                                 <i class="fas fa-user-circle"></i> &nbsp; Sign In</a>
                         </li>
                     </ul>
@@ -51,7 +51,7 @@
                     <ul class="navbar-nav nav-flex-icons">
                         <li class="nav-item">
                             <form method="post" action="{{ site }}/logout">
-                                <button type="submit" class="nav-link btn btn-outline-yellow waves-effect">
+                                <button type="submit" class="nav-link btn btn-outline-red waves-effect">
                                     <i class="fas fa-power-off"></i> &nbsp; Sign Out
                                 </button>
                             </form>

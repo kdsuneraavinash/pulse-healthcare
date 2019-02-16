@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/home_utils.htm.twig' as home_utils %}
+
+<head>
+    {% include "part/header.htm.twig" %}
+    {% include("part/nojs.htm.twig") %}
+    <link href="css/home.css" rel="stylesheet">
+    <title>MediKit</title>
+</head>
+
+<body>
+
+{% include "part/navbar.htm.twig" %}
+
+<main>
+    <section style="height: 100vh;">
+        <div class="flex-center text-center">
+            <div class="row mt-5 p-4" style="background-color: #ffffffAA">
+
+                <div class="col-md-12 col-xl-8 mx-auto wow fadeIn">
+                    <h1 class="display-3 font-weight-bold mb-2 wow fadeInDown indigo-text" data-wow-delay="0.3s">
+                        MediKit
+                    </h1>
+                    <h2 class="font-weight-bold wow fadeInDown mb-4" data-wow-delay="1s">
+                        Best & free platform to mange all your medical needs
+                    </h2>
+                    <div class="mb-2 wow fadeInDown" data-wow-delay="1.5s">
+                        <form method="get" action="{{ site }}/login">
+                            <button type="submit" class="btn btn-lg btn-blue waves-effect font-weight-bold">
+                                <i class="fas fa-user"></i> &nbsp; SIGN IN
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="card blue-gradient">
+            <div class="text-white text-center py-4 px-2 my-3">
+                <div>
+                    <h2 class="card-title h1-responsive pt-3 mb-3 font-bold">
+                        <strong>Want to register a Medical Center?</strong></h2>
+                    <p class="mx-3 mb-3">
+                        Your Health is Our Top Priority with Comprehensive, Affordable medical.
+                    </p>
+                    <a class="btn btn-outline-white btn-md"><i class="fas fa-user-plus left"></i> Register Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white" style="box-shadow: 0 16px 100px 16px #000;">
+        <div class="container p-5">
+            <div class="row">
+                {{ home_utils.feature("fas fa-user-md", "Qualitfied Doctors",
+                    "Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.", false) }}
+                {{ home_utils.feature("fas fa-ambulance", "Emergency Care",
+                    "Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.",true) }}
+                {{ home_utils.feature("fas fa-stethoscope", "Outdoor Checkup",
+                    "Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.", false) }}
+                {{ home_utils.feature("fas fa-user-nurse", "24 Hours Service",
+                    "Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic." ,true) }}
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white py-4">
+        <div class="container">
+            <div class="row">
+                <div id="doctor-image" class="col-md-5 p-md-5 mt-5 mt-md-0 wow fadeInUp">
+                </div>
+                <div class="col-md-7 py-4 py-md-5 wow fadeInUp">
+                    <div class="mb-5">
+                        <div class="pl-md-5 ml-md-5">
+                            <span>About Dr.care</span>
+                            <h2 class="mb-4" style="font-size: 28px;">Medical specialty concerned with the care of
+                                acutely ill hospitalized patients</h2>
+                        </div>
+                    </div>
+                    <div class="pl-md-5 ml-md-5 mb-5">
+                        <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it
+                            would have been rewritten a thousand times and everything that was left from its origin
+                            would be the word.</p>
+                        <div class="row mt-5 pt-2">
+
+                            {{ home_utils.feature_2("fas fa-medkit", "Primary Care",
+                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
+                            {{ home_utils.feature_2("fas fa-eye-dropper", "Lab Test",
+                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
+                            {{ home_utils.feature_2("fas fa-chart-area", "Symptom Check",
+                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
+                            {{ home_utils.feature_2("fas fa-heartbeat", "Heart Rate",
+                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+{% include "part/footer.htm.twig" %}
+{% include "part/scripts.htm.twig" %}
+</body>
+
+</html>

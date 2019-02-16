@@ -2,9 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\UserNotExistException;
-use Pulse\Models\LoginService;
-
 class HomePageController extends BaseController
 {
     /**
@@ -14,20 +11,7 @@ class HomePageController extends BaseController
      */
     public function get()
     {
-        try {
-            $session = LoginService::continueSession();
-            if ($session != null) {
-                $userId = $session->getSessionUserId();
-            } else {
-                $userId = null;
-            }
-        } catch (UserNotExistException $e) {
-            $userId = null;
-        }
-
-        $this->render('ComingSoon.html.twig', array(
-            "site" => "http://$_SERVER[HTTP_HOST]",
-            'user_id' => $userId
-        ));
+        $userId = $this->getCurrentUserId();
+        $this->render('HomePage.html.twig', array(), $userId);
     }
 }

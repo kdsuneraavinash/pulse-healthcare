@@ -1,0 +1,31 @@
+/*
+-----------------------------------------------
+Basic
+-----------------------------------------------
+ */
+
+body {
+    background-image: url("https://images.pexels.com/photos/1282308/pexels-photo-1282308.jpeg");
+    background-size: cover;
+}
+
+/*
+-----------------------------------------------
+Services
+-----------------------------------------------
+ */
+
+div.service {
+    box-shadow: inherit;
+}
+
+/*
+-----------------------------------------------
+Features
+-----------------------------------------------
+ */
+
+#doctor-image {
+    background-image: url(http://www.chapelhillfamilydoctors.com.au/images/doctor-img2.png);
+    background-size: cover;
+}

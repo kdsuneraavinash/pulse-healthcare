@@ -3,6 +3,8 @@
 namespace Pulse\Controllers;
 
 use Http;
+use Pulse\Exceptions\UserNotExistException;
+use Pulse\Models\LoginService;
 use Twig_Environment;
 
 abstract class BaseController
@@ -39,15 +41,17 @@ abstract class BaseController
     /**
      * @param string $template Template file name (without extension)
      * @param array $context Values to pass into file
+     * @param string|null $userId
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    protected function render(string $template, array $context)
+    protected function render(string $template, array $context, ?string $userId)
     {
+        $context['site'] = "http://$_SERVER[HTTP_HOST]";
+        $context['user_id'] = $userId;
         $rendered = $this->getRenderer()->render($template, $context);
         $this->getResponse()->setContent($rendered);
-
     }
 
     /**
@@ -64,5 +68,23 @@ abstract class BaseController
     protected function getResponse(): Http\HttpResponse
     {
         return $this->response;
+    }
+
+    /**
+     * @return string|null |null
+     */
+    protected function getCurrentUserId() : ?string
+    {
+        try {
+            $session = LoginService::continueSession();
+            if ($session != null) {
+                return $session->getSessionUserId();
+            } else {
+                return null;
+            }
+        } catch (UserNotExistException $e) {
+            LoginService::signOutSession();
+            return null;
+        }
     }
 }

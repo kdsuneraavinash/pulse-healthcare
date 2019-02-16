@@ -1,20 +1,26 @@
+/*
+-----------------------------------------------
+Basic
+-----------------------------------------------
+ */
+
 html {
-    overflow-x: unset;
+    overflow-x: hidden;
     overflow-y: scroll;
 }
 
-.bg-image {
-    background-image: url(https://stmed.net/sites/default/files/purple-white-wallpapers-25285-6626443.jpg);
+body {
+    background-image: url(http://getwallpapers.com/wallpaper/full/c/1/b/302104.jpg);
     background-size: cover;
     background-attachment: fixed;
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    width: 100%;
-    overflow: hidden;
 }
+
+
+/*
+-----------------------------------------------
+Theme Gradient
+-----------------------------------------------
+ */
 
 .bg-gradient {
     background: #0e244a; /* Old Browsers */
@@ -27,7 +33,9 @@ html {
 }
 
 /*
-Scroll Bar Theming
+-----------------------------------------------
+Scroll Bar
+-----------------------------------------------
  */
 
 body::-webkit-scrollbar {
@@ -44,21 +52,18 @@ body::-webkit-scrollbar-thumb {
 }
 
 /*
-Sticky Footer
- */
-
-html {
-    position: relative;
-    min-height: 100%;
-}
+-----------------------------------------------
+Footer
+-----------------------------------------------
+*/
 
 footer {
-    position: absolute;
-    bottom: 0;
+    position: relative;
     width: 100%;
-    height: 123px;
+    overflow-x: hidden;
+    display: block;
 }
 
 main {
-    margin-bottom: 123px;
+    min-height: 100vh;
 }

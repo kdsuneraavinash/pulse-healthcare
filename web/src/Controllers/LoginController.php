@@ -42,22 +42,13 @@ class LoginController extends BaseController
      */
     public function get()
     {
-        try {
-            $session = LoginService::continueSession();
-            if ($session != null) {
-                $this->render('AlreadyLoggedIn.html.twig', array(
-                    'user' => $session->getSessionUserId(),
-                    'redirect' => "http://$_SERVER[HTTP_HOST]/login",
-                    'site' => "http://$_SERVER[HTTP_HOST]",
-                    'user_id' => $session->getSessionUserId()
-                ));
-                return;
-            }
-        } catch (UserNotExistException $ex) {
-            LoginService::signOutSession();
+        $userId = $this->getCurrentUserId();
+
+        if ($userId == null) {
+            $this->render('LoginPage.html.twig', array(), $userId);
+        } else {
+            $this->render('AlreadyLoggedIn.html.twig',
+                array('redirect' => "http://$_SERVER[HTTP_HOST]/login"), $userId);
         }
-        $this->render('LoginPage.html.twig', array(
-            'site' => "http://$_SERVER[HTTP_HOST]"
-        ));
     }
 }
