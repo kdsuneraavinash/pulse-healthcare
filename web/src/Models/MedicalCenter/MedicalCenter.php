@@ -4,6 +4,7 @@ namespace Pulse\Models\MedicalCenter;
 
 use DB;
 use Pulse\Exceptions\AccountAlreadyExistsException;
+use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Interfaces\IFavouritable;
@@ -15,41 +16,60 @@ class MedicalCenter extends Account implements IFavouritable
     /**
      * MedicalCenter constructor.
      * @param string $accountId
-     * @param string $name
-     * @param string $phsrc
-     * @param string $email
-     * @param string $fax
-     * @param string $phoneNumber
-     * @param string $address
-     * @param string $postalCode
+     * @param MedicalCenterDetails $medicalCenterDetails
      */
-    protected function __construct(string $accountId, string $name, string $phsrc, string $email, string $fax,
-                                   string $phoneNumber, string $address, string $postalCode)
+    protected function __construct(string $accountId, MedicalCenterDetails $medicalCenterDetails)
     {
         parent::__construct($accountId);
-        $this->medicalCenterDetails = new MedicalCenterDetails(
-            $name, $phsrc, $email, $fax, $phoneNumber, $address, $postalCode
-        );
+        $this->medicalCenterDetails = $medicalCenterDetails;
     }
 
     /**
-     * @throws PHSRCAlreadyInUse
      * @throws AccountAlreadyExistsException
      */
-    private function saveInDatabase()
+    private function checkWhetherAccountIDExists()
     {
         $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
             $this->accountId);
         if ($existingAccount != null) {
             throw new AccountAlreadyExistsException($existingAccount['account_id']);
         }
+    }
 
+    /**
+     * @throws PHSRCAlreadyInUse
+     */
+    private function checkWhetherPHSRCExists()
+    {
         $existingMedicalCenter = DB::queryFirstRow("SELECT account_id from medical_center_details where phsrc=%s",
-            $this->accountId);
+            $this->medicalCenterDetails->getPhsrc());
         if ($existingMedicalCenter != null) {
             throw new PHSRCAlreadyInUse($existingMedicalCenter['account_id']);
         }
+    }
 
+    /**
+     * @throws AccountAlreadyExistsException
+     * @throws PHSRCAlreadyInUse
+     * @throws InvalidDataException
+     */
+    private function validateFields(){
+        $detailsValid = $this->medicalCenterDetails->validate();
+        if (!$detailsValid){
+            throw new InvalidDataException("Server side validation failed.");
+        }
+        $this->checkWhetherAccountIDExists();
+        $this->checkWhetherPHSRCExists();
+    }
+
+    /**
+     * @throws AccountAlreadyExistsException
+     * @throws InvalidDataException
+     * @throws PHSRCAlreadyInUse
+     */
+    private function saveInDatabase()
+    {
+        $this->validateFields();
         DB::insert('accounts', array(
             'account_id' => $this->accountId,
             'account_type' => "med_center"
@@ -72,49 +92,36 @@ class MedicalCenter extends Account implements IFavouritable
 
     /**
      * @param string $accountId
-     * @param string $name
-     * @param string $phsrc
-     * @param string $email
-     * @param string $fax
-     * @param string $phoneNumber
-     * @param string $address
-     * @param string $postalCode
+     * @param MedicalCenterDetails $medicalCenterDetails
      * @throws AccountAlreadyExistsException
+     * @throws InvalidDataException
      * @throws PHSRCAlreadyInUse
      */
-    public static function requestRegistration(string $accountId, string $name, string $phsrc, string $email, string $fax,
-                                               string $phoneNumber, string $address, string $postalCode)
+    public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails)
     {
-        $medicalCenter = new MedicalCenter($accountId, $name, $phsrc,
-            $email, $fax, $phoneNumber, $address, $postalCode);
+        $medicalCenter = new MedicalCenter($accountId, $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
+        // TODO: Add code to request verification
     }
 
     public function createPatientAccount()
     {
-        // implementation of createPatientAccount() function
+        // TODO: implementation of createPatientAccount() function
     }
 
     public function createDoctorAccount()
     {
-        // implementation of createDoctorAccount() function
+        // TODO: implementation of createDoctorAccount() function
     }
-
-    public function removeUser()
-    {
-        // implementation of removeUser() function
-    }
-
 
     public function searchDoctor()
     {
-        // implementation of searchDoctor() function
+        // TODO: implementation of searchDoctor() function
     }
 
     public function searchPatient()
     {
-        // implementation of searchPatient() function
-
+        // TODO: implementation of searchPatient() function
     }
 
     public function getMedicalCenterDetails(): MedicalCenterDetails
