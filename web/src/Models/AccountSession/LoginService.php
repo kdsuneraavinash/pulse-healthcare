@@ -72,7 +72,7 @@ class LoginService implements BaseModel
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws AlreadyLoggedInException
      */
-    public static function signInSession(string $accountId, string $password): Session
+    public static function signUpSession(string $accountId, string $password): Session
     {
         $currentSession = LoginService::continueSession();
         if ($currentSession != null) {

@@ -54,7 +54,7 @@ final class LoginServiceTest extends TestCase
      */
     public function testTryToSignUp()
     {
-        $session = LoginService::signInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
+        $session = LoginService::signUpSession(LoginServiceTest::$userId, LoginServiceTest::$password);
         $this->assertNotNull($session);
     }
 
@@ -77,7 +77,7 @@ final class LoginServiceTest extends TestCase
     public function testTryToSignUpAfterSigningUp()
     {
         $this->expectException(AlreadyLoggedInException::class);
-        LoginService::signInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
+        LoginService::signUpSession(LoginServiceTest::$userId, LoginServiceTest::$password);
     }
 
     /**

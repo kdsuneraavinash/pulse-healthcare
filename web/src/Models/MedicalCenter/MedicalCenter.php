@@ -7,6 +7,7 @@ use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\AccountSession\Account;
+use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Interfaces\IFavouritable;
 
 class MedicalCenter extends Account implements IFavouritable
@@ -25,41 +26,23 @@ class MedicalCenter extends Account implements IFavouritable
     }
 
     /**
+     * @param string $accountId
+     * @param MedicalCenterDetails $medicalCenterDetails
+     * @param string $password
      * @throws AccountAlreadyExistsException
-     */
-    private function checkWhetherAccountIDExists()
-    {
-        $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
-            $this->accountId);
-        if ($existingAccount != null) {
-            throw new AccountAlreadyExistsException($existingAccount['account_id']);
-        }
-    }
-
-    /**
-     * @throws PHSRCAlreadyInUse
-     */
-    private function checkWhetherPHSRCExists()
-    {
-        $existingMedicalCenter = DB::queryFirstRow("SELECT account_id from medical_center_details where phsrc=%s",
-            $this->medicalCenterDetails->getPhsrc());
-        if ($existingMedicalCenter != null) {
-            throw new PHSRCAlreadyInUse($existingMedicalCenter['account_id']);
-        }
-    }
-
-    /**
-     * @throws AccountAlreadyExistsException
-     * @throws PHSRCAlreadyInUse
      * @throws InvalidDataException
+     * @throws PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      */
-    private function validateFields(){
-        $detailsValid = $this->medicalCenterDetails->validate();
-        if (!$detailsValid){
-            throw new InvalidDataException("Server side validation failed.");
-        }
-        $this->checkWhetherAccountIDExists();
-        $this->checkWhetherPHSRCExists();
+    public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails,
+                                               string $password) : MedicalCenter
+    {
+        $medicalCenter = new MedicalCenter($accountId, $medicalCenterDetails);
+        $medicalCenter->saveInDatabase();
+        LoginService::signUpSession($accountId, $password);
+        // TODO: Add code to request verification
+        return $medicalCenter;
     }
 
     /**
@@ -91,17 +74,41 @@ class MedicalCenter extends Account implements IFavouritable
     }
 
     /**
-     * @param string $accountId
-     * @param MedicalCenterDetails $medicalCenterDetails
      * @throws AccountAlreadyExistsException
+     * @throws PHSRCAlreadyInUse
      * @throws InvalidDataException
+     */
+    private function validateFields(){
+        $detailsValid = $this->medicalCenterDetails->validate();
+        if (!$detailsValid){
+            throw new InvalidDataException("Server side validation failed.");
+        }
+        $this->checkWhetherAccountIDExists();
+        $this->checkWhetherPHSRCExists();
+    }
+
+    /**
+     * @throws AccountAlreadyExistsException
+     */
+    private function checkWhetherAccountIDExists()
+    {
+        $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
+            $this->accountId);
+        if ($existingAccount != null) {
+            throw new AccountAlreadyExistsException($existingAccount['account_id']);
+        }
+    }
+
+    /**
      * @throws PHSRCAlreadyInUse
      */
-    public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails)
+    private function checkWhetherPHSRCExists()
     {
-        $medicalCenter = new MedicalCenter($accountId, $medicalCenterDetails);
-        $medicalCenter->saveInDatabase();
-        // TODO: Add code to request verification
+        $existingMedicalCenter = DB::queryFirstRow("SELECT account_id from medical_center_details where phsrc=%s",
+            $this->medicalCenterDetails->getPhsrc());
+        if ($existingMedicalCenter != null) {
+            throw new PHSRCAlreadyInUse($existingMedicalCenter['account_id']);
+        }
     }
 
     public function createPatientAccount()

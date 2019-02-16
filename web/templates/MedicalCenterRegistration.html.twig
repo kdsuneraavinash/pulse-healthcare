@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="border border-light col-lg-8 p-0 m-0">
-                    <form action="" class="m-0 p-5 bg-white needs-validation" method="get" novalidate>
+                    <form action="{{ site }}/medi" class="m-0 p-5 bg-white needs-validation" method="post" novalidate>
                         <p class="text-center h4 mb-5">MEDICAL CENTER REGISTRATION</p>
 
                         {% if (error != null) %}
@@ -48,6 +48,13 @@
                             </div>
                         {% endif %}
 
+                        {{ form_fields.input_with_label('account', 'User Name', 'username', 'text',
+                            '8-20 characters long and can contain english letters or digits') }}
+                        {{ form_fields.input_with_label('password', 'Password', '', 'password',
+                            'Password with 8 or more characters is recommended') }}
+                        {{ form_fields.input_with_label('password_retype', 'Retype Password', '', 'password',
+                            'Retype previous password.') }}
+                        <hr/>
                         {{ form_fields.input_with_label('name', 'Name', 'Medical Center Name', 'text') }}
                         {{ form_fields.input_with_label('phsrc', 'Reg ID', 'PHSRC/SECTION/ID', 'text') }}
                         {{ form_fields.input_with_label('email', 'Email', 'email@website.com', 'email') }}
