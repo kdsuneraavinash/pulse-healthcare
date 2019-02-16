@@ -2,10 +2,12 @@
 
 namespace Pulse\Exceptions;
 
+use Throwable;
+
 class UserAlreadyExistsException extends UserExistenceException
 {
-    public function __toString()
+    public function __construct(string $userId, Throwable $previous = null)
     {
-        return "Error:: BaseUser '$this->userId' already exists";
+        parent::__construct("User $userId already exists.", $previous);
     }
 }

@@ -6,11 +6,8 @@ use Throwable;
 
 abstract class UserExistenceException extends \Exception
 {
-    protected $userId;
-
-    public function __construct(string $userId, Throwable $previous = null)
+    public function __construct(string $message, Throwable $previous = null)
     {
-        $this->userId = $userId;
-        parent::__construct("Error:: BaseUser '$this->userId' not found", 1404, $previous);
+        parent::__construct($message, 1404, $previous);
     }
 }

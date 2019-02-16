@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
 use Pulse\Models\User\Session;
+use PHPUnit\Framework\TestCase;
 
 final class SessionTest extends TestCase
 {
@@ -24,11 +24,6 @@ final class SessionTest extends TestCase
         SessionTest::$customIP = "113.59.194.60";
         SessionTest::$customUserAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T)" .
             " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36";
-        SessionTest::deleteDatabaseEntries();
-    }
-
-    public static function deleteDatabaseEntries()
-    {
         DB::delete('sessions', "user = %s", SessionTest::$userId);
     }
 

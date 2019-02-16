@@ -2,10 +2,12 @@
 
 namespace Pulse\Exceptions;
 
+use Throwable;
+
 class UserNotExistException extends UserExistenceException
 {
-    public function __toString()
+    public function __construct(string $userId, Throwable $previous = null)
     {
-        return "Error:: BaseUser '$this->userId' not found";
+        parent::__construct("User $userId does not exist.", $previous);
     }
 }
