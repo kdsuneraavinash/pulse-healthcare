@@ -5,6 +5,7 @@ namespace PulseTest;
 use DB;
 use PHPUnit\Framework\TestCase;
 use Pulse\Exceptions\AccountAlreadyExistsException;
+use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
@@ -39,6 +40,13 @@ class MedicalCenterTest extends TestCase
         MedicalCenterTest::$postalCode = "99999";
         MedicalCenterTest::$unusedAccountId = "unused_account_id";
 
+        MedicalCenterTest::restoreDetails();
+
+        DB::delete('accounts', "account_id = %s", MedicalCenterTest::$accountId);
+        DB::delete('accounts', "account_id = %s", MedicalCenterTest::$unusedAccountId);
+    }
+
+    private static function restoreDetails(){
         MedicalCenterTest::$medicalCenterDetails = new MedicalCenterDetails(
             MedicalCenterTest::$name,
             MedicalCenterTest::$phsrc,
@@ -48,9 +56,6 @@ class MedicalCenterTest extends TestCase
             MedicalCenterTest::$address,
             MedicalCenterTest::$postalCode
         );
-
-        DB::delete('accounts', "account_id = %s", MedicalCenterTest::$accountId);
-        DB::delete('accounts', "account_id = %s", MedicalCenterTest::$unusedAccountId);
     }
 
     /**
@@ -74,6 +79,7 @@ class MedicalCenterTest extends TestCase
     public function testRequestRegistrationWithUsedAccountName()
     {
         $this->expectException(AccountAlreadyExistsException::class);
+        MedicalCenterTest::restoreDetails();
         MedicalCenterTest::getMedicalCenterDetails()->setPhsrc("PHSRC/UNUSED/002");
         MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
     }
@@ -87,7 +93,7 @@ class MedicalCenterTest extends TestCase
     }
 
     /**
-     * @depends testRequestRegistrationWithUsedAccountName
+     * @depends testRequestRegistration
      * @throws \Pulse\Exceptions\AccountAlreadyExistsException
      * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\InvalidDataException
@@ -95,9 +101,147 @@ class MedicalCenterTest extends TestCase
     public function testRequestRegistrationWithUsedPHSRC()
     {
         $this->expectException(PHSRCAlreadyInUse::class);
-        MedicalCenterTest::getMedicalCenterDetails()->setPhsrc(MedicalCenterTest::$phsrc);
+        MedicalCenterTest::restoreDetails();
         MedicalCenter::requestRegistration(MedicalCenterTest::$unusedAccountId, MedicalCenterTest::$medicalCenterDetails);
     }
 
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfName()
+    {
+        $this->expectException(InvalidDataException::class);
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setName("");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
 
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfPHSRCEmpty()
+    {
+        $this->expectException(InvalidDataException::class);
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setPhsrc("");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
+
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfPHSRCRegex()
+    {
+        $this->expectException(InvalidDataException::class);
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setPhsrc("PHSRC/SD/SD");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
+
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfEmailEmpty()
+    {
+        $this->expectException(InvalidDataException::class);
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setEmail("");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
+
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfEmailRegex()
+    {
+        $this->expectException(InvalidDataException::class);
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setEmail("email.com");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
+
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfFaxEmpty()
+    {
+        $this->expectException(AccountAlreadyExistsException::class); // No InvalidDataException
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setFax("");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
+
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfFaxRegex()
+    {
+        $this->expectException(InvalidDataException::class);
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setFax("FGSAF");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
+
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfPhoneNumberEmpty()
+    {
+        $this->expectException(InvalidDataException::class);
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setPhoneNumber("");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
+
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfAddressEmpty()
+    {
+        $this->expectException(InvalidDataException::class);
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setAddress("");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
+
+    /**
+     * @depends testRequestRegistration
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\PHSRCAlreadyInUse
+     * @throws \Pulse\Exceptions\InvalidDataException
+     */
+    public function testDataInvalidationOfPostalCodeEmpty()
+    {
+        $this->expectException(InvalidDataException::class);
+        MedicalCenterTest::restoreDetails();
+        MedicalCenterTest::getMedicalCenterDetails()->setPostalCode("");
+        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails);
+    }
 }
