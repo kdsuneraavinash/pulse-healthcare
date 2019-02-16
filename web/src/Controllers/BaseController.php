@@ -51,6 +51,7 @@ abstract class BaseController
         $context['site'] = "http://$_SERVER[HTTP_HOST]";
         $context['user_id'] = $userId;
         $context['current_page'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $context['error'] = $this->getRequest()->getQueryParameter('error');
         $rendered = $this->getRenderer()->render($template, $context);
         $this->getResponse()->setContent($rendered);
     }

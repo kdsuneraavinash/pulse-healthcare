@@ -2,20 +2,18 @@
 <!--suppress HtmlUnknownTarget -->
 <html lang="en">
 
-{% set NAME = 'Home' %}
-
-
 {% import 'macro/form_fields.htm.twig' as form_fields %}
 
 <head>
-    {% include "part/header.htm.twig" %}
+    {% include("part/header.htm.twig") %}
+    {% include("part/nojs.htm.twig") %}
     <title>Medi Center Registration</title>
 </head>
 
 <body>
 <div class="bg-image"></div>
 
-{% include "part/navbar.htm.twig" %}
+{% include("part/navbar.htm.twig") %}
 
 <main class="mt-sm-5 pt-5">
     <div class="container">
@@ -42,7 +40,11 @@
 
                 <div class="border border-light col-lg-8 p-0 m-0">
                     <form action="" class="m-0 p-5 bg-white needs-validation" method="get" novalidate>
-                        <p class="text-center h4 mb-5">MEDICAL CENTER REGISTRATION</p>
+                        <p class="text-center h4 mb-4">MEDICAL CENTER REGISTRATION</p>
+
+                        <div class="alert alert-danger text-center mb-3" role="alert">
+                            Error Message Goes Here
+                        </div>
 
                         {{ form_fields.input_with_label('name', 'Name', 'Medical Center Name', 'text') }}
                         {{ form_fields.input_with_label('phsrc', 'Reg ID', 'PHSRC/SECTION/ID', 'text') }}

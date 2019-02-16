@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-    {% include "part/header.htm.twig" %}
+    {% include("part/header.htm.twig") %}
     {% include("part/nojs.htm.twig") %}
     <title>MediKit</title>
 </head>
 
 <body>
 
-{% include "part/navbar.htm.twig" %}
+{% include "part/navbar.htm.twig" with {"Page": "Profile"} %}
 
 <main>
     <div class="container-fluid white">

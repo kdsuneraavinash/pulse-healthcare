@@ -5,7 +5,7 @@
 {% import 'macro/form_fields.htm.twig' as form_fields %}
 
 <head>
-    {% include "part/header.htm.twig" %}
+    {% include("part/header.htm.twig") %}
     {% include("part/nojs.htm.twig") %}
     <title>MediKit</title>
 
@@ -16,7 +16,7 @@
 <body>
 <div class="bg-image"></div>
 
-{% include "part/navbar.htm.twig" %}
+{% include("part/navbar.htm.twig") %}
 
 <main class="mt-sm-2 pt-sm-5">
     <div class="container">
@@ -44,6 +44,12 @@
                 <div class="border col-lg-4 d-flex justify-content-center bg-white">
                     <form action="{{ site }}/login" class="needs-validation p-5" method="post" novalidate>
                         <p class="h4 mb-4 text-center">SIGN IN</p>
+
+                        {% if (error != null) %}
+                        <div class="alert alert-danger text-center" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endif %}
 
                         {{ form_fields.input('user', 'User ID') }}
                         {{ form_fields.input('password', 'Password', 'password') }}

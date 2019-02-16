@@ -5,7 +5,7 @@
 {% import 'macro/home_utils.htm.twig' as home_utils %}
 
 <head>
-    {% include "part/header.htm.twig" %}
+    {% include("part/header.htm.twig") %}
     {% include("part/nojs.htm.twig") %}
     <link href="css/home.css" rel="stylesheet">
     <title>MediKit</title>
@@ -13,7 +13,7 @@
 
 <body>
 
-{% include "part/navbar.htm.twig" %}
+{% include "part/navbar.htm.twig" with {"Page": "Home"} %}
 
 <main>
     <section style="height: 100vh;">

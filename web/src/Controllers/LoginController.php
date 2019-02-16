@@ -15,19 +15,21 @@ class LoginController extends BaseController
         $password = $this->getRequest()->getBodyParameter('password');
 
         if ($userId == null || $password == null) {
-            echo "POST Request required";
+            header("Location: http://$_SERVER[HTTP_HOST]/login");
             exit;
         }
 
         try {
             $session = LoginService::logInSession($userId, $password);
         } catch (UserNotExistException $ex) {
-            echo "User $userId Not Found";
+            $message =  "User $userId Not Found";
+            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
             exit;
         }
 
         if ($session == null) {
-            echo "Invalid Credentials $userId: $password";
+            $message =  "Invalid Username/Password";
+            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
             exit;
         }
 
