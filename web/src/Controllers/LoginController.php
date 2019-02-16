@@ -47,8 +47,7 @@ class LoginController extends BaseController
         if ($userId == null) {
             $this->render('LoginPage.html.twig', array(), $userId);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig',
-                array('redirect' => "http://$_SERVER[HTTP_HOST]/login"), $userId);
+            $this->render('AlreadyLoggedIn.html.twig', array(), $userId);
         }
     }
 }

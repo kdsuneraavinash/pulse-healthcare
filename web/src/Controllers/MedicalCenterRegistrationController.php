@@ -15,8 +15,7 @@ class MedicalCenterRegistrationController extends BaseController
         if ($userId == null) {
             $this->render('MedicalCenterRegistration.html.twig', array(), $userId);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig',
-                array('redirect' => "http://$_SERVER[HTTP_HOST]/medi"), $userId);
+            $this->render('AlreadyLoggedIn.html.twig', array(), $userId);
         }
     }
 }
