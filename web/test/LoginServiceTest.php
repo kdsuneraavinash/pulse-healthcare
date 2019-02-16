@@ -1,5 +1,8 @@
 <?php declare(strict_types=1);
 
+namespace PulseTest;
+
+use DB;
 use PHPUnit\Framework\TestCase;
 use Pulse\Exceptions\AccountNotExistException;
 use Pulse\Exceptions\AlreadyLoggedInException;
