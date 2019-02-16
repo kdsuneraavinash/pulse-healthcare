@@ -40,11 +40,13 @@
 
                 <div class="border border-light col-lg-8 p-0 m-0">
                     <form action="" class="m-0 p-5 bg-white needs-validation" method="get" novalidate>
-                        <p class="text-center h4 mb-4">MEDICAL CENTER REGISTRATION</p>
+                        <p class="text-center h4 mb-5">MEDICAL CENTER REGISTRATION</p>
 
-                        <div class="alert alert-danger text-center mb-3" role="alert">
-                            Error Message Goes Here
-                        </div>
+                        {% if (error != null) %}
+                            <div class="alert alert-danger text-center mb-3" role="alert">
+                                {{ error }}
+                            </div>
+                        {% endif %}
 
                         {{ form_fields.input_with_label('name', 'Name', 'Medical Center Name', 'text') }}
                         {{ form_fields.input_with_label('phsrc', 'Reg ID', 'PHSRC/SECTION/ID', 'text') }}
