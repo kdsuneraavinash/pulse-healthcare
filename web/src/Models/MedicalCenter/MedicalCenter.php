@@ -21,7 +21,7 @@ class MedicalCenter extends Account implements IFavouritable
      */
     protected function __construct(string $accountId, MedicalCenterDetails $medicalCenterDetails)
     {
-        parent::__construct($accountId);
+        parent::__construct($accountId, "med_center");
         $this->medicalCenterDetails = $medicalCenterDetails;
     }
 
@@ -51,27 +51,16 @@ class MedicalCenter extends Account implements IFavouritable
      * @throws InvalidDataException
      * @throws PHSRCAlreadyInUse
      */
-    private function saveInDatabase()
+    protected function saveInDatabase()
     {
         $this->validateFields();
-        DB::insert('accounts', array(
-            'account_id' => $this->accountId,
-            'account_type' => "med_center"
-        ));
+
+        parent::saveInDatabase();
         DB::insert('medical_centers', array(
             'account_id' => $this->accountId,
             'verified' => false
         ));
-        DB::insert('medical_center_details', array(
-            'account_id' => $this->accountId,
-            'name' => $this->medicalCenterDetails->getName(),
-            'phsrc' => $this->medicalCenterDetails->getPhsrc(),
-            'email' => $this->medicalCenterDetails->getEmail(),
-            'fax' => $this->medicalCenterDetails->getFax(),
-            'phone_number' => $this->medicalCenterDetails->getPhoneNumber(),
-            'address' => $this->medicalCenterDetails->getAddress(),
-            'postal_code' => $this->medicalCenterDetails->getPostalCode()
-        ));
+        $this->getMedicalCenterDetails()->saveInDatabase($this->accountId);
     }
 
     /**

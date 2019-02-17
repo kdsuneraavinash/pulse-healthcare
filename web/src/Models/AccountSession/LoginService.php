@@ -21,15 +21,15 @@ class LoginService implements BaseModel
      */
     public static function continueSession(): ?Session
     {
-        if (LoginService::sessionCookiesExist()) {
-            $sessionUser = LoginService::getSessionUser();
-            $sessionKey = LoginService::getSessionKey();
+        if (self::sessionCookiesExist()) {
+            $sessionUser = self::getSessionUser();
+            $sessionKey = self::getSessionKey();
 
             $session = Session::resumeSession($sessionUser, $sessionKey);
 
             if ($session == null) {
                 // Session key invalid: delete cookie
-                LoginService::deleteSession();
+                self::deleteSession();
                 return null;
             } else {
                 // Session key valid: LOGIN
@@ -49,7 +49,7 @@ class LoginService implements BaseModel
     public static function logInSession(string $accountId, string $password): ?Session
     {
         // Delete previous cookies
-        LoginService::deleteSession();
+        self::deleteSession();
 
         // Verify correct password and authenticate
         $credentials = Credentials::fromExistingCredentials($accountId, $password);
@@ -59,7 +59,7 @@ class LoginService implements BaseModel
         }
 
         $session = Session::createSession($accountId);
-        LoginService::saveCookie($session);
+        self::saveCookie($session);
         return $session;
     }
 
@@ -74,19 +74,19 @@ class LoginService implements BaseModel
      */
     public static function signUpSession(string $accountId, string $password): Session
     {
-        $currentSession = LoginService::continueSession();
+        $currentSession = self::continueSession();
         if ($currentSession != null) {
             throw new AlreadyLoggedInException($accountId);
         }
 
         // Delete previous cookies
-        LoginService::deleteSession();
+        self::deleteSession();
 
         // Verify correct password and authenticate
         Credentials::fromNewCredentials($accountId, $password);
 
         $session = Session::createSession($accountId);
-        LoginService::saveCookie($session);
+        self::saveCookie($session);
         return $session;
     }
 
@@ -95,7 +95,7 @@ class LoginService implements BaseModel
      */
     public static function signOutSession()
     {
-        LoginService::deleteSession();
+        self::deleteSession();
     }
 
     /**
@@ -125,8 +125,8 @@ class LoginService implements BaseModel
      */
     private static function saveCookie(Session $session)
     {
-        LoginService::setCookie(SESSION_USER, $session->getSessionAccountId());
-        LoginService::setCookie(SESSION_KEY, $session->getSessionKey());
+        self::setCookie(SESSION_USER, $session->getSessionAccountId());
+        self::setCookie(SESSION_KEY, $session->getSessionKey());
     }
 
     /**
@@ -139,9 +139,22 @@ class LoginService implements BaseModel
 
     private static function deleteSession()
     {
-        DB::delete('sessions', 'account_id=%s', LoginService::getSessionUser());
-        unset($_COOKIE[SESSION_KEY]);
-        unset($_COOKIE[SESSION_USER]);
+        DB::delete('sessions', 'account_id=%s', self::getSessionUser());
+        self::deleteCookie(SESSION_USER);
+        self::deleteCookie(SESSION_KEY);
+    }
+
+    /**
+     * @param string $name
+     */
+    private static function deleteCookie(string $name)
+    {
+        if (isset($_COOKIE[$name])) {
+            unset($_COOKIE[$name]);
+        }
+        if (!self::$testFlag) {
+            setcookie($name, '', time() - 3600, '/');
+        }
     }
 
     /**
@@ -150,7 +163,7 @@ class LoginService implements BaseModel
      */
     private static function setCookie(string $name, string $value)
     {
-        if (LoginService::$testFlag) {
+        if (self::$testFlag) {
             $_COOKIE[$name] = $value;
         } else {
             setcookie($name, $value, time() + (SECONDS_PER_DAY * COOKIE_VALID_PERIOD_DAYS), "/");
@@ -159,6 +172,6 @@ class LoginService implements BaseModel
 
     public static function setTestEnvironment()
     {
-        LoginService::$testFlag = true;
+        self::$testFlag = true;
     }
 }

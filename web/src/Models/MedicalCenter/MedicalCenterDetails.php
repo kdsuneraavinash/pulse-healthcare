@@ -2,6 +2,9 @@
 
 namespace Pulse\Models\MedicalCenter;
 
+use DB;
+use Pulse\Exceptions\AccountNotExistException;
+
 class MedicalCenterDetails
 {
     private $name;
@@ -47,6 +50,35 @@ class MedicalCenterDetails
         $postalValid = $this->postalCode != "";
         return $nameValid && $phsrcValid && $emailValid && $faxValid &&
             $phoneNumberValid && $addressValid && $postalValid;
+    }
+
+    /**
+     * @param string $accountId
+     * @return MedicalCenterDetails
+     * @throws AccountNotExistException
+     */
+    public static function readFromDatabase(string $accountId) : MedicalCenterDetails
+    {
+        $query = DB::queryFirstRow("SELECT * FROM medical_center_details WHERE account_id=%s", $accountId);
+        if ($query == null) {
+            throw new AccountNotExistException($accountId);
+        }
+        return new MedicalCenterDetails($query['name'], $query['phsrc'], $query['email'], $query['fax'],
+            $query['phone_number'], $query['address'], $query['postal_code']);
+    }
+
+    public function saveInDatabase(string $accountId)
+    {
+        DB::insert('medical_center_details', array(
+            'account_id' => $accountId,
+            'name' => $this->getName(),
+            'phsrc' => $this->getPhsrc(),
+            'email' => $this->getEmail(),
+            'fax' => $this->getFax(),
+            'phone_number' => $this->getPhoneNumber(),
+            'address' => $this->getAddress(),
+            'postal_code' => $this->getPostalCode()
+        ));
     }
 
     /**
