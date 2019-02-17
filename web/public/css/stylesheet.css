@@ -15,6 +15,35 @@ body {
     background-attachment: fixed;
 }
 
+/*
+-----------------------------------------------
+Preloader
+-----------------------------------------------
+ */
+
+#loader {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    display: block;
+    background-color: #ffffff;
+    z-index: 9999;
+    text-align: center;
+    opacity: 0.6;
+}
+
+#loader.loaded{
+    visibility: hidden;
+    display: none;
+}
+
+#loader > .spinner-grow{
+    margin-top: 48vh;
+    margin-left: 48vw;
+}
 
 /*
 -----------------------------------------------

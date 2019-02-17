@@ -37,7 +37,7 @@ CREATE TABLE `account_credentials` (
 
 LOCK TABLES `account_credentials` WRITE;
 /*!40000 ALTER TABLE `account_credentials` DISABLE KEYS */;
-INSERT INTO `account_credentials` (`account_id`, `password`, `salt`) VALUES ('credentials_tester','596256120150937a02ec125c17f9daa1481aff581ecb30e2087ce66b9f2884b4','}=ED$-s]/c/%6sA\'h}K^%[,Xna3AyFt[wzJ,;+iB'),('login_service_tester','01f0f1bc9aa52085d1161ee556caf841fb52cf9db1f0a783878b95349934129e','7H+{w-nfAS1n0<d|6DlK0T)~!PM@]a=\'t<mJNki?'),('pTest','c4dfdceb710452bda60e33a358ff9b3ede2224e1241debc0d42a5cc87ae9504f','6kE1%H5ja44Lna<0;tl)9*dxF9[79(RO:84sFV#C');
+INSERT INTO `account_credentials` (`account_id`, `password`, `salt`) VALUES ('credentials_tester','d526377bc66f53a09fdfcd78eabcbbccc4babfd8221170adfe693e511a2d38ba','T)t1@]F~Y)8_AJpi=.7G1XAL.nzcukS]W!2DS#90'),('login_service_tester','219d990f807f3979a23a323198827c60149c39fe963c60d20a17340e88c67f35','46#<2[9{36h{do6.X6/&t>RTAa|yTU{5iOU<P:Z3'),('medCenter','9bfc39e1f4a394156c274082a6682096f8b115d123548fa8a32c209994efab6b','a^UoD[;Pb;5|q(bsZz\"jludK}@=JvQ*:M]w\"9p&S'),('medical_center_tester','8d60e62fdcf81e7f88cc8fae83a1013c2576ff8a05a95ff6c6be4c6f0870b206','W9uj_t8@<XGr53O.|JW7}G$x$(Ie5ihE~!@M[`l*'),('pTest','c4dfdceb710452bda60e33a358ff9b3ede2224e1241debc0d42a5cc87ae9504f','6kE1%H5ja44Lna<0;tl)9*dxF9[79(RO:84sFV#C');
 /*!40000 ALTER TABLE `account_credentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`account_id`, `account_type`) VALUES ('medical_center_tester','med_center'),('pTest','patient'),('credentials_tester','tester'),('login_service_tester','tester'),('session_tester','tester');
+INSERT INTO `accounts` (`account_id`, `account_type`) VALUES ('medCenter','med_center'),('medical_center_tester','med_center'),('non_exisiting_user','med_center'),('pTest','patient'),('credentials_tester','tester'),('login_service_tester','tester'),('session_tester','tester');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +145,7 @@ CREATE TABLE `medical_center_details` (
 
 LOCK TABLES `medical_center_details` WRITE;
 /*!40000 ALTER TABLE `medical_center_details` DISABLE KEYS */;
-INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`) VALUES ('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999);
+INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`) VALUES ('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road',12000),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999),('non_exisiting_user','Medical Center Tester','PHSRC/INVALID/0111','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999);
 /*!40000 ALTER TABLE `medical_center_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +170,7 @@ CREATE TABLE `medical_centers` (
 
 LOCK TABLES `medical_centers` WRITE;
 /*!40000 ALTER TABLE `medical_centers` DISABLE KEYS */;
-INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('medical_center_tester',0);
+INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('medCenter',0),('medical_center_tester',0),('non_exisiting_user',0);
 /*!40000 ALTER TABLE `medical_centers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,6 +201,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+INSERT INTO `sessions` (`account_id`, `ip_address`, `browser_agent`, `created`, `expires`, `session_key`) VALUES ('medical_center_tester','UNKNOWN',9,'2019-02-17 05:54:27','2019-02-18 05:54:27','c73f577d2c2b723fddefa07c91ba2ccc890e40c7');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,4 +241,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-16 22:52:59
+-- Dump completed on 2019-02-17  5:58:52

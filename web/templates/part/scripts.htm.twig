@@ -15,3 +15,13 @@
     new WOW().init();
 </script>
 <script src="{{ site }}/js/main.js"></script>
+
+<script language="javascript" type="text/javascript">
+    $(window).on('load', function() {
+        let loader = $('#loader');
+        loader.fadeOut(1000, function () {
+            loader.addClass('loaded');
+        });
+
+    });
+</script>
