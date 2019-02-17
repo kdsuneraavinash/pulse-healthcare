@@ -29,7 +29,8 @@
     "patricklouys/http": "~1.4",
     "klein/klein": "^2.1",
     "twig/twig": "^2.0",
-    "sergeytsalkov/meekrodb": "^2.3"
+    "sergeytsalkov/meekrodb": "^2.3",
+    "monolog/monolog": "^1.24"
   },
   "autoload": {
     "psr-4": {

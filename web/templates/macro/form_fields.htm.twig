@@ -5,12 +5,22 @@
     </div>
 {%- endmacro %}
 
-{% macro input_with_label(name, label='', placeholder='', type='text', required='required') -%}
+{% macro input_with_label(name, label, placeholder, value, type, tooltip) -%}
     <div class="form-group row">
-        <label for="{{ name }}" class="col-lg-3 col-form-label">{{ label }}</label>
+        <label for="{{ name }}" class="col-lg-3 col-form-label">{{ label }}
+        </label>
         <div class="col-lg-9">
-            <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{ name }}"
-                   placeholder="{{ placeholder }}" {{ required }}>
+            {% if (value == '' or value == null) %}
+                <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{ name }}"
+                       placeholder="{{ placeholder }}" {{ required }} data-html="true" data-toggle="popover"
+                       data-trigger="focus"
+                       data-placement="right" title="{{ tooltip }}">
+            {% else %}
+                <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{ name }}"
+                       placeholder="{{ placeholder }}" {{ required }} data-html="true" data-toggle="popover"
+                       data-trigger="focus"
+                       data-placement="right" title="{{ tooltip }}" value="{{ value }}">
+            {% endif %}
         </div>
     </div>
 {%- endmacro %}

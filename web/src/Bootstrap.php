@@ -8,6 +8,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Http;
 use Klein;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Whoops;
@@ -89,6 +91,25 @@ $twig = new Twig_Environment($loader, [
     //    'cache' => __DIR__ . '/../cache',
 ]);
 
+
+/**
+ * ========================================================
+ * = Monolog Initialization
+ * ========================================================
+ * Logging Library
+ * --------------------------------------------------------
+ * DOCUMENTATION
+ * https://github.com/Seldaek/monolog
+ * ========================================================
+ */
+
+$log = new Logger('main');
+try {
+    $log->pushHandler(new StreamHandler('log/logs.log'));
+} catch (\Exception $e) {
+}
+
+StaticLogger::setLogger($log);
 
 /**
  * ========================================================

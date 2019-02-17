@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/form_fields.htm.twig' as form_fields %}
+
+<head>
+    {% include("part/header.htm.twig") %}
+    {% include("part/nojs.htm.twig") %}
+    <title>Medi Center Registration</title>
+</head>
+
+<body>
+<div class="bg-image"></div>
+
+{% include("part/navbar.htm.twig") %}
+
+<main class="mt-sm-5 py-5">
+    <div class="container">
+        <section class="wow fadeIn">
+            <div class="row z-depth-3">
+
+                <div class="border d-none d-lg-block col-lg-4 text-white text-center p-5 bg-gradient">
+                    <h1 class="mb-5">
+                        <strong>MediKit 0.0.1 alpha</strong>
+                    </h1>
+                    <h4 class="mb-5">
+                        <strong>Best & free platform to mange all your medical needs</strong>
+                    </h4>
+                    <p class="mb-5">
+                        Loved by over 500 doctors, 2000 patients & 100 medical centers.
+                    </p>
+                    <h3 class="mb-5">
+                        <strong>Already has an account?</strong>
+                    </h3>
+                    <a class="btn btn-outline-white btn-lg" href="{{ site }}/login">
+                        SIGN IN
+                    </a>
+                </div>
+
+                <div class="border border-light col-lg-8 p-0 m-0">
+                    <form action="{{ site }}/register/medi" class="m-0 p-5 bg-white needs-validation" method="post"
+                          novalidate>
+                        <p class="text-center h4 mb-5">MEDICAL CENTER REGISTRATION</p>
+
+                        {% if (error != null) %}
+                            <div class="alert alert-danger text-center mb-3" role="alert">
+                                {{ error }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_fields.input_with_label('account', 'User Name', 'username', username, 'text',
+                            '8-20 characters long and can contain english letters or digits') }}
+                        {{ form_fields.input_with_label('password', 'Password', 'password', null, 'password',
+                            'Password with 8 or more characters is recommended') }}
+                        {{ form_fields.input_with_label('password_retype', 'Retype Password','password', null, 'password',
+                            'Retype previous password.') }}
+                        <hr/>
+                        {{ form_fields.input_with_label('name', 'Name', 'Medical Center Name', name, 'text') }}
+                        {{ form_fields.input_with_label('phsrc', 'Reg ID', 'PHSRC/SECTION/ID', phsrc, 'text') }}
+                        {{ form_fields.input_with_label('email', 'Email', 'email@website.com', email, 'email') }}
+                        {{ form_fields.input_with_label('fax', 'Fax (Optional)', '+13235551234', fax, 'fax', '') }}
+                        {{ form_fields.input_with_label('phone_number', 'Phone', '0123366548', phone_number, 'tel') }}
+                        {{ form_fields.input_with_label('address', 'Address', 'Medical Center Address', address, 'text') }}
+                        {{ form_fields.input_with_label('postal', 'Postal Code', 'Postal Code', postal, 'text') }}
+
+                        <div class="text-right">
+                            <button class="btn btn-primary my-4" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+</main>
+
+{% include "part/footer.htm.twig" %}
+{% include "part/scripts.htm.twig" %}
+<script src="{{ site }}/js/register-medcenter.js"></script>
+
+</body>
+
+</html>

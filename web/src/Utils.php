@@ -38,7 +38,7 @@ class Utils
             return 'UNKNOWN';
     }
 
-    public static function getUserAgent()
+    public static function getBrowserAgent()
     {
         if (isset($_SERVER['HTTP_USER_AGENT']))
             return $_SERVER['HTTP_USER_AGENT'];

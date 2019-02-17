@@ -5,15 +5,15 @@
 {% import 'macro/home_utils.htm.twig' as home_utils %}
 
 <head>
-    {% include "part/header.htm.twig" %}
+    {% include("part/header.htm.twig") %}
     {% include("part/nojs.htm.twig") %}
-    <link href="css/home.css" rel="stylesheet">
+    <link href="{{ site }}/css/home.css" rel="stylesheet">
     <title>MediKit</title>
 </head>
 
 <body>
 
-{% include "part/navbar.htm.twig" %}
+{% include "part/navbar.htm.twig" with {"Page": "Home"} %}
 
 <main>
     <section style="height: 100vh;">
@@ -49,7 +49,9 @@
                     <p class="mx-3 mb-3">
                         Your Health is Our Top Priority with Comprehensive, Affordable medical.
                     </p>
-                    <a class="btn btn-outline-white btn-md"><i class="fas fa-user-plus left"></i> Register Now</a>
+                    <a class="btn btn-outline-white btn-md" href="{{ site }}/register/medi"><i
+                                class="fas fa-user-plus left"></i>
+                        Register Now</a>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@
 
 abstract class Account
 {
-    protected $loginCredential;
+    protected $fax;
 
     function __construct($loginCredential)
     {

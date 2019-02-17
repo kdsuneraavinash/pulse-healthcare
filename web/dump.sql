@@ -16,6 +16,165 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `account_credentials`
+--
+
+DROP TABLE IF EXISTS `account_credentials`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `account_credentials` (
+  `account_id` varchar(32) NOT NULL,
+  `password` char(64) NOT NULL,
+  `salt` char(40) NOT NULL,
+  PRIMARY KEY (`account_id`),
+  CONSTRAINT `account_credentials_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store user ids and passwords';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account_credentials`
+--
+
+LOCK TABLES `account_credentials` WRITE;
+/*!40000 ALTER TABLE `account_credentials` DISABLE KEYS */;
+INSERT INTO `account_credentials` (`account_id`, `password`, `salt`) VALUES ('credentials_tester','d526377bc66f53a09fdfcd78eabcbbccc4babfd8221170adfe693e511a2d38ba','T)t1@]F~Y)8_AJpi=.7G1XAL.nzcukS]W!2DS#90'),('login_service_tester','219d990f807f3979a23a323198827c60149c39fe963c60d20a17340e88c67f35','46#<2[9{36h{do6.X6/&t>RTAa|yTU{5iOU<P:Z3'),('medCenter','9bfc39e1f4a394156c274082a6682096f8b115d123548fa8a32c209994efab6b','a^UoD[;Pb;5|q(bsZz\"jludK}@=JvQ*:M]w\"9p&S'),('medical_center_tester','8d60e62fdcf81e7f88cc8fae83a1013c2576ff8a05a95ff6c6be4c6f0870b206','W9uj_t8@<XGr53O.|JW7}G$x$(Ie5ihE~!@M[`l*'),('pTest','c4dfdceb710452bda60e33a358ff9b3ede2224e1241debc0d42a5cc87ae9504f','6kE1%H5ja44Lna<0;tl)9*dxF9[79(RO:84sFV#C');
+/*!40000 ALTER TABLE `account_credentials` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `account_types`
+--
+
+DROP TABLE IF EXISTS `account_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `account_types` (
+  `id` varchar(10) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store User Types';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account_types`
+--
+
+LOCK TABLES `account_types` WRITE;
+/*!40000 ALTER TABLE `account_types` DISABLE KEYS */;
+INSERT INTO `account_types` (`id`, `description`) VALUES ('admin','Admin User'),('doctor','Doctor'),('med_center','Medical Center'),('patient','Patient'),('tester','Testing Agent');
+/*!40000 ALTER TABLE `account_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `accounts`
+--
+
+DROP TABLE IF EXISTS `accounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `accounts` (
+  `account_id` varchar(32) NOT NULL,
+  `account_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`account_id`),
+  KEY `users_user_types_id_fk` (`account_type`),
+  CONSTRAINT `users_user_types_id_fk` FOREIGN KEY (`account_type`) REFERENCES `account_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store all user details';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `accounts`
+--
+
+LOCK TABLES `accounts` WRITE;
+/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+INSERT INTO `accounts` (`account_id`, `account_type`) VALUES ('medCenter','med_center'),('medical_center_tester','med_center'),('non_exisiting_user','med_center'),('pTest','patient'),('credentials_tester','tester'),('login_service_tester','tester'),('session_tester','tester');
+/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `browser_agents`
+--
+
+DROP TABLE IF EXISTS `browser_agents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `browser_agents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `browser` text NOT NULL,
+  `hash` char(40) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_agents_hash_uindex` (`hash`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COMMENT='Table to save user agents';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `browser_agents`
+--
+
+LOCK TABLES `browser_agents` WRITE;
+/*!40000 ALTER TABLE `browser_agents` DISABLE KEYS */;
+INSERT INTO `browser_agents` (`id`, `browser`, `hash`) VALUES (9,'UNKNOWN','25ba44ec3b391ba4ce5fbbd2979635e254775e7d'),(11,'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36','2d13425a6c604c6a91f6ffedec343a81e891b535'),(12,'PostmanRuntime/7.6.0','7c437b88e1cb7d09660f2b2ace2f865fb3fd6fb6'),(13,'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36','064e005501a2a0d56363299e04b6b77a3ce5f7a5'),(14,'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36','1a9ef466e44b70dd24f39773687729521ea69bee'),(15,'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36','13330a7d3aaee1569dd7ceebc04360c8b673fb08'),(16,'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36','0441391429577f903a877c9f7e215b8406705076'),(17,'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36','c9ca92194d513cd22f74a1cbc83dcb520058797e');
+/*!40000 ALTER TABLE `browser_agents` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `medical_center_details`
+--
+
+DROP TABLE IF EXISTS `medical_center_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medical_center_details` (
+  `account_id` varchar(32) NOT NULL,
+  `name` text NOT NULL,
+  `phsrc` varchar(32) NOT NULL,
+  `email` varchar(320) DEFAULT NULL,
+  `fax` varchar(32) DEFAULT NULL,
+  `phone_number` varchar(32) DEFAULT NULL,
+  `address` text NOT NULL,
+  `postal_code` int(11) NOT NULL,
+  PRIMARY KEY (`account_id`),
+  UNIQUE KEY `medical_centers_phsrc_id_uindex` (`phsrc`),
+  CONSTRAINT `medical_center_details_medical_centers_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `medical_centers` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medical_center_details`
+--
+
+LOCK TABLES `medical_center_details` WRITE;
+/*!40000 ALTER TABLE `medical_center_details` DISABLE KEYS */;
+INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`) VALUES ('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road',12000),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999),('non_exisiting_user','Medical Center Tester','PHSRC/INVALID/0111','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999);
+/*!40000 ALTER TABLE `medical_center_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `medical_centers`
+--
+
+DROP TABLE IF EXISTS `medical_centers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medical_centers` (
+  `account_id` varchar(32) NOT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`account_id`),
+  CONSTRAINT `medical_centers_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medical_centers`
+--
+
+LOCK TABLES `medical_centers` WRITE;
+/*!40000 ALTER TABLE `medical_centers` DISABLE KEYS */;
+INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('medCenter',0),('medical_center_tester',0),('non_exisiting_user',0);
+/*!40000 ALTER TABLE `medical_centers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sessions`
 --
 
@@ -23,15 +182,16 @@ DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sessions` (
-  `user` varchar(32) NOT NULL,
+  `account_id` varchar(32) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `user_agent` int(11) NOT NULL,
+  `browser_agent` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `expires` datetime NOT NULL,
   `session_key` char(40) NOT NULL,
-  PRIMARY KEY (`user`,`ip_address`,`user_agent`),
-  KEY `sessions_user_agents_id_fk` (`user_agent`),
-  CONSTRAINT `sessions_user_agents_id_fk` FOREIGN KEY (`user_agent`) REFERENCES `user_agents` (`id`) ON DELETE CASCADE
+  PRIMARY KEY (`account_id`,`ip_address`,`browser_agent`),
+  KEY `sessions_user_agents_id_fk` (`browser_agent`),
+  CONSTRAINT `sessions_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sessions_user_agents_id_fk` FOREIGN KEY (`browser_agent`) REFERENCES `browser_agents` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store sessions of all users';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -41,6 +201,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+INSERT INTO `sessions` (`account_id`, `ip_address`, `browser_agent`, `created`, `expires`, `session_key`) VALUES ('medical_center_tester','UNKNOWN',9,'2019-02-17 05:54:27','2019-02-18 05:54:27','c73f577d2c2b723fddefa07c91ba2ccc890e40c7');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,107 +231,6 @@ LOCK TABLES `test` WRITE;
 INSERT INTO `test` (`ID`, `LastName`, `FirstName`, `Age`, `Password`) VALUES ('170074','Chamantha','Anju',22,'anju'),('170081','Chandrasiri','Sunera',22,'sunera'),('170109','Udayanga	','Lahiru',22,'lahiru'),('pTest','Doe','John',101,'password');
 /*!40000 ALTER TABLE `test` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `user_agents`
---
-
-DROP TABLE IF EXISTS `user_agents`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_agents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_agent` text NOT NULL,
-  `hash` char(40) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_agents_hash_uindex` (`hash`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 COMMENT='Table to save user agents';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_agents`
---
-
-LOCK TABLES `user_agents` WRITE;
-/*!40000 ALTER TABLE `user_agents` DISABLE KEYS */;
-INSERT INTO `user_agents` (`id`, `user_agent`, `hash`) VALUES (9,'UNKNOWN','25ba44ec3b391ba4ce5fbbd2979635e254775e7d'),(11,'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36','2d13425a6c604c6a91f6ffedec343a81e891b535'),(12,'PostmanRuntime/7.6.0','7c437b88e1cb7d09660f2b2ace2f865fb3fd6fb6'),(13,'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36','064e005501a2a0d56363299e04b6b77a3ce5f7a5'),(14,'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36','1a9ef466e44b70dd24f39773687729521ea69bee');
-/*!40000 ALTER TABLE `user_agents` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user_credentials`
---
-
-DROP TABLE IF EXISTS `user_credentials`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_credentials` (
-  `user_id` varchar(32) NOT NULL,
-  `password` char(64) NOT NULL,
-  `salt` char(40) NOT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store user ids and passwords';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_credentials`
---
-
-LOCK TABLES `user_credentials` WRITE;
-/*!40000 ALTER TABLE `user_credentials` DISABLE KEYS */;
-INSERT INTO `user_credentials` (`user_id`, `password`, `salt`) VALUES ('pTest','ea105ab7d916d160e651245d6f5cabb63ac6e5c5c1948b2c9bb5920d8e583c4e','\"kM05(jChwqbG_ulK:jgk)hnkO%14S!J9JKq[%-C');
-/*!40000 ALTER TABLE `user_credentials` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user_types`
---
-
-DROP TABLE IF EXISTS `user_types`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_types` (
-  `id` varchar(10) NOT NULL,
-  `description` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store User Types';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_types`
---
-
-LOCK TABLES `user_types` WRITE;
-/*!40000 ALTER TABLE `user_types` DISABLE KEYS */;
-INSERT INTO `user_types` (`id`, `description`) VALUES ('admin','Admin User'),('doctor','Doctor'),('med_center','Medical Center'),('patient','Patient');
-/*!40000 ALTER TABLE `user_types` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `users`
---
-
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
-  `user_id` varchar(32) NOT NULL,
-  `user_type` varchar(10) NOT NULL,
-  PRIMARY KEY (`user_id`),
-  KEY `users_user_types_id_fk` (`user_type`),
-  CONSTRAINT `users_user_types_id_fk` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store all user details';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`user_id`, `user_type`) VALUES ('pTest','patient');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -181,4 +241,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-15 18:13:29
+-- Dump completed on 2019-02-17  5:58:52

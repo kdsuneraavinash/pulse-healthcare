@@ -2,6 +2,9 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\StaticLogger;
+use Pulse\Utils;
+
 class ProfilePageController extends BaseController
 {
     /**
@@ -11,12 +14,14 @@ class ProfilePageController extends BaseController
      */
     public function get()
     {
-        $userId = $this->getCurrentUserId();
-        if ($userId == null) {
+        $accountId = $this->getCurrentAccountId();
+        if ($accountId == null) {
             header("Location: http://$_SERVER[HTTP_HOST]");
+            StaticLogger::loggerWarn("Unautherized user " . Utils::getClientIP() .
+                " tried to access Profile page.");
             exit;
         } else {
-            $this->render('ProfilePage.html.twig', array(), $userId);
+            $this->render('ProfilePage.html.twig', array(), $accountId);
         }
     }
 }

@@ -15,6 +15,9 @@ function getRoutes()
         ['GET', '/login', ['Pulse\Controllers\LoginController', 'get']],
         ['POST', '/login', ['Pulse\Controllers\LoginController', 'post']],
 
+        ['GET', '/register/medi', ['Pulse\Controllers\MedicalCenterRegistrationController', 'get']],
+        ['POST', '/register/medi', ['Pulse\Controllers\MedicalCenterRegistrationController', 'post']],
+
         ['POST', '/logout', ['Pulse\Controllers\LogoutController', 'post']],
     ];
 }

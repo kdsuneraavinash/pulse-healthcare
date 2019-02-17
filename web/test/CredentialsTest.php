@@ -1,9 +1,12 @@
 <?php declare(strict_types=1);
 
+namespace PulseTest;
+
+use DB;
 use PHPUnit\Framework\TestCase;
 use Pulse\Database;
 use Pulse\Exceptions;
-use Pulse\Models\User\Credentials;
+use Pulse\Models\AccountSession\Credentials;
 
 final class CredentialsTest extends TestCase
 {
@@ -19,22 +22,17 @@ final class CredentialsTest extends TestCase
     public static function setSharedVariables()
     {
         Database::init();
-        CredentialsTest::$userId = "pTest";
-        CredentialsTest::$fakeId = "testUser123";
+        CredentialsTest::$userId = "credentials_tester";
+        CredentialsTest::$fakeId = "fakeTestUser123";
         CredentialsTest::$userPassword = "password";
         CredentialsTest::$secondPassword = "233.34.56.788";
         CredentialsTest::$fakePassword = "113.34.56.788";
-        CredentialsTest::deleteDatabaseEntries();
-    }
-
-    public static function deleteDatabaseEntries()
-    {
-        DB::delete('user_credentials', "user_id = %s", CredentialsTest::$userId);
+        DB::delete('account_credentials', "account_id = %s", CredentialsTest::$userId);
     }
 
     /**
-     * @throws Exceptions\UserAlreadyExistsException
-     * @throws Exceptions\UserNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
      */
     public function testLoginFromNewAccount()
     {
@@ -45,7 +43,7 @@ final class CredentialsTest extends TestCase
 
     /**
      * @depends testLoginFromNewAccount
-     * @throws Exceptions\UserNotExistException
+     * @throws Exceptions\AccountNotExistException
      */
     public function testLoginFromExisitngAccount()
     {
@@ -56,7 +54,7 @@ final class CredentialsTest extends TestCase
 
     /**
      * @depends testLoginFromExisitngAccount
-     * @throws Exceptions\UserNotExistException
+     * @throws Exceptions\AccountNotExistException
      */
     public function testLoginFromFakePassword()
     {
@@ -67,22 +65,22 @@ final class CredentialsTest extends TestCase
 
     /**
      * @depends testLoginFromFakePassword
-     * @throws Exceptions\UserAlreadyExistsException
-     * @throws Exceptions\UserNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
      */
     public function testLoginFromNewAccountForExistingUser()
     {
-        $this->expectException(Exceptions\UserAlreadyExistsException::class);
+        $this->expectException(Exceptions\AccountAlreadyExistsException::class);
         Credentials::fromNewCredentials(CredentialsTest::$userId, CredentialsTest::$fakePassword);
     }
 
     /**
      * @depends testLoginFromFakePassword
-     * @throws Exceptions\UserNotExistException
+     * @throws Exceptions\AccountNotExistException
      */
     public function testLoginFromExistingAccountForNonExistingUser()
     {
-        $this->expectException(Exceptions\UserNotExistException::class);
+        $this->expectException(Exceptions\AccountNotExistException::class);
         Credentials::fromExistingCredentials(CredentialsTest::$fakeId, CredentialsTest::$userPassword);
     }
 

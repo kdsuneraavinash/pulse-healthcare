@@ -11,7 +11,7 @@ class HomePageController extends BaseController
      */
     public function get()
     {
-        $userId = $this->getCurrentUserId();
-        $this->render('HomePage.html.twig', array(), $userId);
+        $accountId = $this->getCurrentAccountId();
+        $this->render('HomePage.html.twig', array(), $accountId);
     }
 }
