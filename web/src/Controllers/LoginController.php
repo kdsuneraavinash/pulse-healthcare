@@ -4,6 +4,7 @@ namespace Pulse\Controllers;
 
 use Pulse\Exceptions\AccountNotExistException;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Utils;
 
 class LoginController extends BaseController
 {
@@ -15,6 +16,7 @@ class LoginController extends BaseController
         $password = $this->getRequest()->getBodyParameter('password');
 
         if ($accountId == null || $password == null) {
+            Utils::getLogger()->warn("AccountID or Password null when Login in a user by POST");
             header("Location: http://$_SERVER[HTTP_HOST]/login");
             exit;
         }

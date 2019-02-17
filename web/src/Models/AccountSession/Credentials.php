@@ -61,6 +61,7 @@ class Credentials implements BaseModel
         $salt = Utils::generateRandomString(CREDENTIALS_SALT_LENGTH);
         $credentials = new Credentials($accountId, $password, $salt);
         $credentials->createCredentials();
+
         return $credentials;
     }
 
@@ -93,6 +94,7 @@ class Credentials implements BaseModel
             'password' => $this->getHashedPassword(),
             'salt' => $this->salt
         ));
+        Utils::getLogger()->info("Credentials created for user $this->accountId");
     }
 
     /**
@@ -105,6 +107,7 @@ class Credentials implements BaseModel
         $accountId = $this->accountId;
 
         $query = DB::queryFirstRow("SELECT account_id from account_credentials WHERE account_id=%s AND password=%s", $accountId, $hashedPassword);
+
         if ($query == null) {
             /// Unauthenticated
             return false;

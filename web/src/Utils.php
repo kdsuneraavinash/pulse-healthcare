@@ -9,7 +9,7 @@ define('MAX_CHR_ASCII', 126);
 
 class Utils
 {
-    public static $logger;
+    private static $logger;
 
     /**
      * @return mixed
@@ -25,7 +25,6 @@ class Utils
     public static function setLogger(Logger $logger)
     {
         self::$logger = $logger;
-        self::getLogger()->info("Started Logging for user with IP " . self::getClientIP());
     }
 
     public static function generateRandomString($length)
