@@ -8,8 +8,8 @@ use Pulse\Models\BaseModel;
 
 define('SECONDS_PER_DAY', 86400);
 define('COOKIE_VALID_PERIOD_DAYS', 7);
-define('SESSION_USER', 'SESSION_USER');
-define('SESSION_KEY', 'SESSION_KEY');
+define('SESSION_USER', 'session_user');
+define('SESSION_KEY', 'session_key');
 
 class LoginService implements BaseModel
 {
