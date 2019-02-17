@@ -32,7 +32,7 @@ class MedicalCenterRegistrationController extends BaseController
         if ($password == $passwordRetype) {
 
             if (!($accountId == null || $password == null || $name == null ||
-                $phsrc == null || $email == null || $fax == null ||
+                $phsrc == null || $email == null ||
                 $phoneNumber == null || $address == null || $postalCode == null)) {
 
                 $medicalCenterDetails = new MedicalCenterDetails($name, $phsrc, $email, $fax, $phoneNumber,
@@ -67,7 +67,7 @@ class MedicalCenterRegistrationController extends BaseController
         } else {
             $error = 'Password and retype password mismatch.';
         }
-        header("Location: http://$_SERVER[HTTP_HOST]/medi?error=$error&name=$name" .
+        header("Location: http://$_SERVER[HTTP_HOST]/register/medi?error=$error&name=$name" .
             "&phsrc=$phsrc&email=$email&fax=$fax&phone_number=$phoneNumber&address=$address&postal=$postalCode");
         exit;
     }
