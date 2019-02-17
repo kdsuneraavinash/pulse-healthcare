@@ -48,7 +48,8 @@ class MedicalCenterTest extends TestCase
         DB::delete('accounts', "account_id = %s", MedicalCenterTest::$unusedAccountId);
     }
 
-    private static function restoreDetails(){
+    private static function restoreDetails()
+    {
         MedicalCenterTest::$medicalCenterDetails = new MedicalCenterDetails(
             MedicalCenterTest::$name,
             MedicalCenterTest::$phsrc,

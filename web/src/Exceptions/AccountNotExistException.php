@@ -2,7 +2,7 @@
 
 namespace Pulse\Exceptions;
 
-use Pulse\Utils;
+use Pulse\StaticLogger;
 use Throwable;
 
 class AccountNotExistException extends AccountExistenceException
@@ -10,6 +10,6 @@ class AccountNotExistException extends AccountExistenceException
     public function __construct(string $accountId, Throwable $previous = null)
     {
         parent::__construct("Account $accountId does not exist.", $previous);
-        Utils::getLogger()->error("Account $accountId does not exist.");
+        StaticLogger::loggerError("Account $accountId does not exist.");
     }
 }

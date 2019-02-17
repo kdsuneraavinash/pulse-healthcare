@@ -9,6 +9,7 @@ use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
+use Pulse\StaticLogger;
 use Pulse\Utils;
 
 class MedicalCenterRegistrationController extends BaseController
@@ -56,7 +57,7 @@ class MedicalCenterRegistrationController extends BaseController
                     exit;
                 }
             } else {
-                Utils::getLogger()->warn("A field was null when registering a medical center by POST: " .
+                StaticLogger::loggerWarn("A field was null when registering a medical center by POST: " .
                     "for Account $accountId and IP " . Utils::getClientIP());
 
                 $error = 'Some fields are empty.';

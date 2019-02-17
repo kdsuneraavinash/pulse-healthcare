@@ -2,31 +2,11 @@
 
 namespace Pulse;
 
-use Monolog\Logger;
-
 define('MIN_CHR_ASCII', 33);
 define('MAX_CHR_ASCII', 126);
 
 class Utils
 {
-    private static $logger;
-
-    /**
-     * @return mixed
-     */
-    public static function getLogger(): Logger
-    {
-        return self::$logger;
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function setLogger(Logger $logger)
-    {
-        self::$logger = $logger;
-    }
-
     public static function generateRandomString($length)
     {
         $random = '';

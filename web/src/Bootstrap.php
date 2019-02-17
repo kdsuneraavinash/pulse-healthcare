@@ -109,7 +109,7 @@ try {
 } catch (\Exception $e) {
 }
 
-Utils::setLogger($log);
+StaticLogger::setLogger($log);
 
 /**
  * ========================================================

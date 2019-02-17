@@ -5,6 +5,7 @@ namespace Pulse\Models\AccountSession;
 use DB;
 use Pulse\Exceptions;
 use Pulse\Models\BaseModel;
+use Pulse\StaticLogger;
 use Pulse\Utils;
 
 define('PEPPER', '14a5168782azxa5b4648de2chjufcb3afed6drt4');
@@ -94,7 +95,7 @@ class Credentials implements BaseModel
             'password' => $this->getHashedPassword(),
             'salt' => $this->salt
         ));
-        Utils::getLogger()->info("Credentials created for user $this->accountId");
+        StaticLogger::loggerInfo("Credentials created for user $this->accountId");
     }
 
     /**

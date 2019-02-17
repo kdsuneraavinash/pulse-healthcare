@@ -29,6 +29,7 @@ class MedicalCenter extends Account implements IFavouritable
      * @param string $accountId
      * @param MedicalCenterDetails $medicalCenterDetails
      * @param string $password
+     * @return MedicalCenter
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws PHSRCAlreadyInUse
@@ -36,7 +37,7 @@ class MedicalCenter extends Account implements IFavouritable
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
      */
     public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails,
-                                               string $password) : MedicalCenter
+                                               string $password): MedicalCenter
     {
         $medicalCenter = new MedicalCenter($accountId, $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
@@ -78,9 +79,10 @@ class MedicalCenter extends Account implements IFavouritable
      * @throws PHSRCAlreadyInUse
      * @throws InvalidDataException
      */
-    private function validateFields(){
+    private function validateFields()
+    {
         $detailsValid = $this->medicalCenterDetails->validate();
-        if (!$detailsValid){
+        if (!$detailsValid) {
             throw new InvalidDataException("Server side validation failed.");
         }
         $this->checkWhetherAccountIDExists();

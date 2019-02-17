@@ -11,10 +11,10 @@
         </label>
         <div class="col-lg-9">
             {% if (value == '' or value == null) %}
-            <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{ name }}"
-                   placeholder="{{ placeholder }}" {{ required }} data-html="true" data-toggle="popover"
-                   data-trigger="focus"
-                   data-placement="right" title="{{ tooltip }}">
+                <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{ name }}"
+                       placeholder="{{ placeholder }}" {{ required }} data-html="true" data-toggle="popover"
+                       data-trigger="focus"
+                       data-placement="right" title="{{ tooltip }}">
             {% else %}
                 <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{ name }}"
                        placeholder="{{ placeholder }}" {{ required }} data-html="true" data-toggle="popover"
