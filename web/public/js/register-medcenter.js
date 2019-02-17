@@ -33,7 +33,7 @@ $(document).ready(function () {
             let phsrc = $("#phsrc");
             let email = $("#email");
             let fax = $("#fax");
-            let phonenumber = $("#phonenumber");
+            let phonenumber = $("#phone_number");
             let address = $("#address");
             let postal = $("#postal");
 
