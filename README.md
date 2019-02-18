@@ -29,7 +29,16 @@
    mysql -u root -p
    ```
 
-5. Create the database and table. Refer to `web/dump.sql` for database dump.
+6. Create the database and user.
+   
+   ```sql
+    CREATE USER 'pulse_root'@'localhost' IDENTIFIED BY 'password';
+    CREATE DATABASE pulse;
+    USE pulse;
+    GRANT ALL PRIVILEGES ON pulse . * TO 'pulse_root'@'localhost';
+    ```
+   
+5. Create the tables. Refer to `web/dump.sql` for database dump.
 
 6. Run `web/public/` folder from `PHP`.
 
