@@ -154,7 +154,7 @@ $klein->onHttpError(function (int $code, Klein\Klein $router) {
             return;
         }
     }
-    $router->response()->body(generateErrorPage('other') . $code);
+    $router->response()->body(generateErrorPage('500'));
 });
 
 

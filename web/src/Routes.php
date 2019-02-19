@@ -25,11 +25,11 @@ function getRoutes()
 function getRouterErrorHandlers()
 {
     return [
-        [404, '404']
+        [404, '404'],
     ];
 }
 
 function generateErrorPage(string $name)
 {
-    return file_get_contents('error/' . $name . '.html');
+    return file_get_contents( $name . '.html');
 }
