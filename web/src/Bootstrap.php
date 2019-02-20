@@ -16,7 +16,7 @@ use Whoops;
 
 define('TEMPLATES', __DIR__ . '/../templates');
 define('CACHE', __DIR__ . '/../cache');
-
+define('MYSQLI_OPT_CONNECT_TIMEOUT', 1000);
 /**
  * ========================================================
  * = Whoops Initialization
