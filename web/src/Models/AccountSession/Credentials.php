@@ -113,6 +113,7 @@ class Credentials implements BaseModel
             /// Unauthenticated
             return false;
         }
+
         return true;
     }
 

@@ -12,6 +12,6 @@ class AdminDashboardController extends BaseController
     public function get()
     {
         $accountId = $this->getCurrentAccountId();
-        $this->render('admin/AdminPage.html.twig', array(), $accountId);
+        $this->render('AdminPage.html.twig', array(), $accountId);
     }
 }
