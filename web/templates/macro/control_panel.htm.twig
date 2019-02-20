@@ -1,0 +1,42 @@
+{% macro sidebar_start() -%}
+<div class="sidebar-fixed position-fixed border-right p-2 bg-white wow fadeInLeft">
+    <div class="text-center">
+        <a class="logo-wrapper waves-effect p-3">
+            <h1 class="font-weight-bold mb-2 wow fadeIn indigo-text" data-wow-delay="0.3s">
+                MediKit
+            </h1>
+        </a>
+    </div>
+
+    <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action waves-effect red-text" id="drawer-close">
+            <strong><i class="fas fa-times mr-3"></i>Close Drawer</strong>
+        </a>
+        {%- endmacro %}
+        {% macro sidebar_end() -%}
+    </div>
+
+</div>
+{%- endmacro %}
+
+{% macro sidebar_button(text, link, icon, active) -%}
+    {% if (active) %}
+        <a href="{{ link }}" class="list-group-item active waves-effect rounded mb-0 z-depth-2">
+            <i class="fas {{ icon }} mr-3"></i>{{ text }}
+        </a>
+    {% else %}
+        <a href="{{ link }}" class="list-group-item list-group-item-action waves-effect">
+            <i class="fas {{ icon }} mr-3"></i>{{ text }}</a>
+    {% endif %}
+{%- endmacro %}
+
+{% macro navbar(text) -%}
+    <nav class="navbar fixed-top primary-color">
+        <div class="px-3 row">
+            <div class="col-2">
+                <i class="fas fa-bars white-text fa-2x p-2 waves-effect" id="drawer-open"></i>
+            </div>
+            <span class="col-10 fa-2x text-white text-left">{{ text }}</span>
+        </div>
+    </nav>
+{%- endmacro %}

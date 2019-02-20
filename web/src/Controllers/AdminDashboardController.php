@@ -12,6 +12,16 @@ class AdminDashboardController extends BaseController
     public function get()
     {
         $accountId = $this->getCurrentAccountId();
-        $this->render('AdminPage.html.twig', array(), $accountId);
+        $this->render('ControlPanelPage.html.twig', array(), $accountId);
+    }
+
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function getAdminDashboardIframe(){
+        $accountId = $this->getCurrentAccountId();
+        $this->render('iframe/AdminDashboardIFrame.htm.twig', array(), $accountId);
     }
 }

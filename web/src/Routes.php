@@ -20,7 +20,8 @@ function getRoutes()
 
         ['POST', '/logout', ['Pulse\Controllers\LogoutController', 'post']],
 
-        ['GET', '/admin/dashboard', ['Pulse\Controllers\AdminDashboardController', 'get']],
+        ['GET', '/admin', ['Pulse\Controllers\AdminDashboardController', 'get']],
+        ['GET', '/admin/dashboard', ['Pulse\Controllers\AdminDashboardController', 'getAdminDashboardIframe']],
     ];
 }
 
