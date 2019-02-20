@@ -2,7 +2,7 @@
 
 namespace Pulse\Controllers;
 
-class AdminDashboardController extends BaseController
+class AdminControlPanelController extends BaseController
 {
     /**
      * @throws \Twig_Error_Loader
@@ -23,5 +23,15 @@ class AdminDashboardController extends BaseController
     public function getAdminDashboardIframe(){
         $accountId = $this->getCurrentAccountId();
         $this->render('iframe/AdminDashboardIFrame.htm.twig', array(), $accountId);
+    }
+
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function getAdminVerifyMedicalCentersIframe(){
+        $accountId = $this->getCurrentAccountId();
+        $this->render('iframe/AdminVerifyMedicalCentersIFrame.htm.twig', array(), $accountId);
     }
 }

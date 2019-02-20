@@ -2,41 +2,63 @@
 <!--suppress HtmlUnknownTarget -->
 <html lang="en">
 
-<head>
-    {% include("part/header.htm.twig") %}
-    <style>
-        body{
-            background-image: none;
-        }
-    </style>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <title>MediKit</title>
-</head>
+{% import 'macro/control_panel.htm.twig' as control_panel %}
 
-<body>
-<div class="bg-image"></div>
+{{ control_panel.iframe_start("Dashboard") }}
+<div class="row p-3">
+    <div class="col-md-6">
+        {{ control_panel.card_start("Medical Centers Registration") }}
+        <canvas id="medicalCentersGraph" style="width: 400px; height: 400px;"></canvas>
+        {{ control_panel.card_end() }}
+    </div>
+    <div class="col-md-6">
+        {{ control_panel.card_start("Registered Account Types") }}
+        <canvas id="accountTypesGraph" style="width: 400px; height: 400px;"></canvas>
+        {{ control_panel.card_end() }}
+    </div>
+</div>
 
-<main>
-    <div class="ct-chart ct-perfect-fourth"></div>
-</main>
+{{ control_panel.iframe_middle() }}
 
-{% include "part/scripts.htm.twig" %}
-<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 <script>
-    var data = {
-        // A labels array that can contain any sort of values
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-        // Our series array that contains series objects or in this case series data arrays
-        series: [
-            [5, 2, 4, 2, 0]
-        ]
-    };
+    let medicalCentersGraph = document.getElementById("medicalCentersGraph").getContext('2d');
+    new Chart(medicalCentersGraph, {
+        type: 'line',
+        data: {
+            labels: ["02/15", "02/16", "02/17", "02/18", "02/19", "02/20"],
+            datasets: [{
+                label: 'Registered Medical Centers',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: ['#1976D266'],
+                borderColor: ['#303F9F']
+            }, {
+                label: 'Verified Accounts',
+                data: [2, 3, 0, 1, 1, 2],
+                backgroundColor: ['#43A04766'],
+                borderColor: ['#00796B']
+            }, {
+                label: 'Declined Accounts',
+                data: [2, 0, 0, 0, 1, 4],
+                backgroundColor: ['#f4433666'],
+                borderColor: ['#d32f2f']
+            }]
+        }
+    });
 
-    // Create a new line chart object where as first parameter we pass in a selector
-    // that is resolving to our chart container element. The Second parameter
-    // is the actual data object.
-    new Chartist.Line('.ct-chart', data);
+    let accountTypesGraph = document.getElementById("accountTypesGraph").getContext('2d');
+    new Chart(accountTypesGraph, {
+        type: 'doughnut',
+        data: {
+            labels: ["Registered Medical Centers", "Registered Doctors", "Registered Patients"],
+            datasets: [{
+                data: [10, 20, 30],
+                borderColor: ['#FF6F00', '#004D40', '#1A237E'],
+                backgroundColor: ['#FF8F0066', '#4DB6AC66', '#29B6F666'],
+                hoverBackgroundColor: ['#FF6F0099', '#004D4099', '#1A237E99'],
+            }]
+        }
+    });
 </script>
-</body>
 
+{{ control_panel.iframe_end() }}
 </html>

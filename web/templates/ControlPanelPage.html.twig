@@ -13,17 +13,15 @@
 <body class="bg-white">
 <header>
     {{ control_panel.sidebar_start() }}
-    {{ control_panel.sidebar_button("Dashboard", "#", "fa-chart-pie", true) }}
-    {{ control_panel.sidebar_button("Verify Account", "#", "fa-check", false) }}
+    {{ control_panel.sidebar_button("Dashboard", "dashboard", "fa-chart-pie", true) }}
+    {{ control_panel.sidebar_button("Verify Account", "verify", "fa-check", false) }}
     {{ control_panel.sidebar_end() }}
-
-
 </header>
 
 <main>
     <div class="container-fluid p-0">
         {{ control_panel.navbar("Dashboard") }}
-        <iframe src="{{ site }}/admin/dashboard"  style="border:none; height: 100vh;" class="embed-responsive"></iframe>
+        <iframe src="{{ site }}/admin/dashboard"  style="border:none; min-height: 100vh;" class="embed-responsive" id="content-iframe"></iframe>
     </div>
 </main>
 

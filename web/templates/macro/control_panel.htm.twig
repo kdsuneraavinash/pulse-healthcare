@@ -1,3 +1,10 @@
+
+/*
+-----------------------------------------------
+Sidebar
+-----------------------------------------------
+*/
+
 {% macro sidebar_start() -%}
 <div class="sidebar-fixed position-fixed border-right p-2 bg-white wow fadeInLeft">
     <div class="text-center">
@@ -19,16 +26,26 @@
 </div>
 {%- endmacro %}
 
-{% macro sidebar_button(text, link, icon, active) -%}
+/*
+-----------------------------------------------
+Buttons in sidebar
+-----------------------------------------------
+*/
+
+{% macro sidebar_button(text, id, icon, active) -%}
     {% if (active) %}
-        <a href="{{ link }}" class="list-group-item active waves-effect rounded mb-0 z-depth-2">
-            <i class="fas {{ icon }} mr-3"></i>{{ text }}
-        </a>
-    {% else %}
-        <a href="{{ link }}" class="list-group-item list-group-item-action waves-effect">
-            <i class="fas {{ icon }} mr-3"></i>{{ text }}</a>
+        {% set additional_classes = "active rounded mb-0 z-depth-2" %}
     {% endif %}
+    <button id="{{ id }}"
+            class="list-group-item list-group-item-action waves-effect {{ additional_classes }} sidebar-button">
+        <i class="fas {{ icon }} mr-3"></i>{{ text }}</button>
 {%- endmacro %}
+
+/*
+-----------------------------------------------
+Navbar
+-----------------------------------------------
+*/
 
 {% macro navbar(text) -%}
     <nav class="navbar fixed-top primary-color">
@@ -39,4 +56,63 @@
             <span class="col-10 fa-2x text-white text-left">{{ text }}</span>
         </div>
     </nav>
+{%- endmacro %}
+
+/*
+-----------------------------------------------
+IFrame
+-----------------------------------------------
+*/
+
+{% macro iframe_start(page) -%}
+    <head>
+        {% include("part/header.htm.twig") %}
+        <style>
+            body {
+                background-image: none;
+            }
+        </style>
+        <title>MediKit</title>
+    </head>
+<body class="grey lighten-3">
+<div class="bg-image"></div>
+<main class="p-md-2">
+    <div class="container-fluid py-2">
+        <div id="title-card" class="card">
+            <div class="card-body d-sm-flex justify-content-between">
+                <h4 class="mb-2 mb-sm-0 pt-1">
+                    {{ page }}
+                </h4>
+            </div>
+        </div>
+    </div>
+    {%- endmacro %}
+
+    {% macro iframe_middle() -%}
+    <div class="d-md-block d-lg-none" style="height: 100px;">
+    </div>
+</main>
+{% include "part/scripts.htm.twig" %}
+{%- endmacro %}
+
+{% macro iframe_end() -%}
+</body>
+{%- endmacro %}
+
+/*
+-----------------------------------------------
+IFrameCards
+-----------------------------------------------
+*/
+
+{% macro card_start(title) -%}
+<div class="card">
+    <div class="card-header text-center">
+        {{ title }}
+    </div>
+    <div class="card-body">
+        {%- endmacro %}
+        {% macro card_end() -%}
+    </div>
+</div>
 {%- endmacro %}

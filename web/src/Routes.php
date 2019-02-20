@@ -20,8 +20,9 @@ function getRoutes()
 
         ['POST', '/logout', ['Pulse\Controllers\LogoutController', 'post']],
 
-        ['GET', '/admin', ['Pulse\Controllers\AdminDashboardController', 'get']],
-        ['GET', '/admin/dashboard', ['Pulse\Controllers\AdminDashboardController', 'getAdminDashboardIframe']],
+        ['GET', '/admin', ['Pulse\Controllers\AdminControlPanelController', 'get']],
+        ['GET', '/admin/dashboard', ['Pulse\Controllers\AdminControlPanelController', 'getAdminDashboardIframe']],
+        ['GET', '/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'getAdminVerifyMedicalCentersIframe']],
     ];
 }
 
