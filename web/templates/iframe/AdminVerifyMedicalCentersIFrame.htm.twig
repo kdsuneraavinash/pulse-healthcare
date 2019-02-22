@@ -4,55 +4,60 @@
 
 {% import 'macro/control_panel.htm.twig' as control_panel %}
 
-{{ control_panel.iframe_start("Verify", "fa-check") }}
+{{ control_panel.iframe_start("Admin/Verify", "fa-check") }}
 
 <div class="row p-3">
     {% for i in range(0, 10) %}
 
-    <div class="col-md-6 col-xl-4">
-        {{ control_panel.card_start("medCenter") }}
+        <div class="col-md-6 col-xl-4">
+            {{ control_panel.card_start("medCenter") }}
 
-        <h3 class="card-title"><strong>Medical Center 1</strong></h3>
-        <a href="http://www.phsrc.lk/pages_e.php?id=16" target="_blank"><h5 class="blue-text pb-2">
-                <strong>PHSRC/MED/001<i class="fas fa-link ml-2"></i></strong></h5></a>
-        <hr>
+            <h3 class="card-title"><strong>Medical Center 1</strong></h3>
+            <a href="http://www.phsrc.lk/pages_e.php?id=16" target="_blank"><h5 class="blue-text pb-2">
+                    <strong>PHSRC/MED/001<i class="fas fa-link ml-2"></i></strong></h5></a>
+            <hr>
 
-        <table class="table border">
-            <tbody>
-            <tr>
-                <td><strong>Address </strong></td>
-                <td>No 344/1, Moonamalgahawatta, Duwa Temple Road (12000)</td>
-            </tr>
-            <tr>
-                <td><strong>Telephone </strong></td>
-                <td>076-8336850</td>
-            </tr>
-            <tr>
-                <td><strong>Fax </strong></td>
-                <td>0768336850</td>
-            </tr>
-            <tr>
-                <td><strong>Email </strong></td>
-                <td>kdsuneraavinash@gmail.com</td>
-            </tr>
-            </tbody>
-        </table>
+            <div class="table-responsive">
+                <table class="table border">
+                    <tbody>
+                    <tr>
+                        <td><strong>Address </strong></td>
+                        <td>No 344/1, Moonamalgahawatta, Duwa Temple Road (12000)
+                            <br/>
+                            <a href="https://www.google.com/maps/search/?api=1&query=No+3441+Moonamalgahawatta+Duwa+Temple+Road+12000"
+                               target="_blank" class="btn btn-outline-dark btn-sm my-2"><i class="fas fa-map mr-2"></i>Google
+                                Maps</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Telephone </strong></td>
+                        <td>076-8336850</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fax </strong></td>
+                        <td>9955888668877</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email </strong></td>
+                        <td>
+                            <a href="mailto:kdsuneraavinash@gmail.com" target="_blank"
+                               class="btn btn-outline-dark btn-sm"><i class="fas fa-envelope mr-2"></i>kdsuneraavinash@gmail.com</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <a href="https://www.google.com/maps/search/?api=1&query=No+3441+Moonamalgahawatta+Duwa+Temple+Road+12000"
-           target="_blank" class="btn btn-outline-dark btn-block my-2"><i class="fas fa-map mr-2"></i>Google
-            Maps
-        </a>
-        <a href="mailto:kdsuneraavinash@gmail.com"
-           target="_blank" class="btn btn-outline-dark btn-block"><i class="fas fa-envelope mr-2"></i>Send Email</a>
+            <hr/>
 
-        <hr/>
-
-        <div class="text-right">
-            <button type="button" class="btn btn-danger"><i class="fas fa-times mr-2"></i>Reject</button>
-            <button type="button" class="btn btn-success"><i class="fas fa-check mr-2"></i>Verify</button>
+            <div class="text-right">
+                <button type="button" class="btn btn-outline-danger"><i class="fas fa-times pr-2"></i><span
+                            class="d-none d-md-inline">Reject</span></button>
+                <button type="button" class="btn btn-outline-success"><i class="fas fa-check pr-2"></i><span
+                            class="d-none d-md-inline">Verify</span></button>
+            </div>
+            {{ control_panel.card_end() }}
         </div>
-        {{ control_panel.card_end() }}
-    </div>
 
     {% endfor %}
 </div>

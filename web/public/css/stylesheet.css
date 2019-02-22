@@ -41,7 +41,7 @@ Preloader
     display: none;
 }
 
-#loader > .spinner-grow{
+#loader > .spinner-border{
     margin-top: 48vh;
     margin-left: 48vw;
 }

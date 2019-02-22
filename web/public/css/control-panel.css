@@ -3,7 +3,7 @@ body{
 }
 
 html {
-    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .sidebar-fixed {
@@ -22,7 +22,7 @@ html {
     }
 
     .sidebar-fixed{
-        margin-left: 0 !important;
+        margin-left: -5px !important;
     }
 
     .navbar, #drawer-close{

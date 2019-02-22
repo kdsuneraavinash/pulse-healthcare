@@ -6,10 +6,10 @@ Sidebar
 */
 
 {% macro sidebar_start() -%}
-<div class="sidebar-fixed position-fixed border-right p-2 bg-white wow fadeInLeft">
+<div class="sidebar-fixed position-fixed p-2 bg-dark">
     <div class="text-center">
         <a class="logo-wrapper waves-effect p-3">
-            <h1 class="font-weight-bold mb-2 wow fadeIn indigo-text" data-wow-delay="0.3s">
+            <h1 class="font-weight-bold mb-2 wow fadeIn white-text" data-wow-delay="0.3s">
                 MediKit
             </h1>
         </a>
@@ -74,11 +74,17 @@ IFrame
         </style>
         <title>MediKit</title>
     </head>
-<body class="grey lighten-3">
+<body class="bg-light">
+<div id="loader" class="d-flex content-justify-center" style="opacity: 0.8;">
+    <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+</div>
 <div class="bg-image"></div>
 <main class="p-md-2">
     <div class="container-fluid py-2">
-        <div id="title-card" class="card">
+        <div id="title-card" class="card  indigo text-white">
             <div class="card-body d-sm-flex justify-content-between">
                 <h4 class="mb-2 mb-sm-0 pt-1">
                     <i class="fas {{ icon }} mr-3"></i> {{ page }}
@@ -107,7 +113,7 @@ IFrameCards
 
 {% macro card_start(title) -%}
 <div class="card my-2">
-    <div class="card-header text-center">
+    <div class="card-header text-center bg-dark text-white">
         {{ title }}
     </div>
     <div class="card-body">
