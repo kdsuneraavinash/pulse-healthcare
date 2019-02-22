@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pulse\Models\MedicalCenter;
+namespace Pulse\Models\Doctor;
 
 use DB;
 use Pulse\Exceptions\AccountAlreadyExistsException;
@@ -95,7 +95,7 @@ class Doctor extends Account
     private function checkWhetherSLMCExists()
     {
         $existingDoctor = DB::queryFirstRow("SELECT account_id from doctor_details where slmc_ID=%s",
-            $this->doctorDetails->getSlmcID());
+            $this->doctorDetails->getSlmcId());
         if ($existingDoctor != null) {
             throw new SLMCAlreadyInUse($existingDoctor['account_id']);
         }

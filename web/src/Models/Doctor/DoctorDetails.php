@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pulse\Models\MedicalCenter;
+namespace Pulse\Models\Doctor;
 
 use DB;
 use Pulse\Exceptions\AccountNotExistException;
@@ -8,27 +8,27 @@ use Pulse\Exceptions\AccountNotExistException;
 class DoctorDetails
 {
     private $fullName;
-    private $name;
+    private $displayName;
     private $category;
-    private $slmcID;
+    private $slmcId;
     private $email;
     private $phoneNumber;
 
     /**
      * DoctorDetails constructor.
      * @param $fullName
-     * @param $name
+     * @param $displayName
      * @param $category
-     * @param $slmcID
+     * @param $slmcId
      * @param $email
      * @param $phoneNumber
      */
-    public function __construct($fullName, $name, $category, $slmcID, $email, $phoneNumber)
+    public function __construct($fullName, $displayName, $category, $slmcId, $email, $phoneNumber)
     {
         $this->fullName = $fullName;
-        $this->name = $name;
+        $this->displayName = $displayName;
         $this->category = $category;
-        $this->slmcID = $slmcID;
+        $this->$slmcId = $slmcId;
         $this->email = $email;
         $this->phoneNumber = $phoneNumber;
     }
@@ -37,14 +37,14 @@ class DoctorDetails
     public function validate()
     {
         $fullNameValid = $this->fullName != "";
-        $nameValid = $this->name != "";
+        $displayNameValid = $this->displayName != "";
         $categoryValid = $this->category != "";
-        $slmcIDValid = $this->slmcID != "" && preg_match('/[0-9]/', $this->slmcID);
+        $slmcIDValid = $this->slmcId != "" && preg_match('/[0-9]/', $this->slmcId); //TODO: Add real regex matching
         $emailValid = $this->email != "" && preg_match(' /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*' .
                 ')|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|' .
                 '(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $this->email);
         $phoneNumberValid = $this->phoneNumber != "";
-        return $fullNameValid && $nameValid && $categoryValid && $slmcIDValid && $emailValid &&
+        return $fullNameValid && $displayNameValid && $categoryValid && $slmcIDValid && $emailValid &&
             $phoneNumberValid;
     }
 
@@ -59,7 +59,7 @@ class DoctorDetails
         if ($query == null) {
             throw new AccountNotExistException($accountId);
         }
-        return new DoctorDetails($query['full_name'],$query['name'],$query['category'], $query['slmc_ID'], $query['email'],
+        return new DoctorDetails($query['full_name'],$query['name'],$query['category'], $query['slmc_id'], $query['email'],
             $query['phone_number']);
     }
 
@@ -68,9 +68,9 @@ class DoctorDetails
         DB::insert('doctor_details', array(
             'account_id' => $accountId,
             'full_name'=>$this->getFullName(),
-            'name' => $this->getName(),
+            'name' => $this->getDisplayName(),
             'category'=>$this->getCategory(),
-            'slmc_ID' => $this->getSlmcID(),
+            'slmc_id' => $this->getSlmcId(),
             'email' => $this->getEmail(),
             'phone_number' => $this->getPhoneNumber(),
         ));
@@ -85,27 +85,11 @@ class DoctorDetails
     }
 
     /**
-     * @param string $fullName
-     */
-    public function setFullName(string $fullName): void
-    {
-        $this->fullName = $fullName;
-    }
-
-    /**
      * @return string
      */
-    public function getName(): string
+    public function getDisplayName(): string
     {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
+        return $this->displayName;
     }
 
     /**
@@ -117,27 +101,11 @@ class DoctorDetails
     }
 
     /**
-     * @param string $category
-     */
-    public function setCategory(string $category): void
-    {
-        $this->category = $category;
-    }
-
-    /**
      * @return string
      */
-    public function getSlmcID(): string
+    public function getSlmcId(): string
     {
-        return $this->slmcID;
-    }
-
-    /**
-     * @param string $slmcID
-     */
-    public function setSlmcID(string $slmcID): void
-    {
-        $this->slmcID = $slmcID;
+        return $this->slmcId;
     }
 
     /**
@@ -148,13 +116,6 @@ class DoctorDetails
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
 
     /**
      * @return string
@@ -163,15 +124,6 @@ class DoctorDetails
     {
         return $this->phoneNumber;
     }
-
-    /**
-     * @param string $phoneNumber
-     */
-    public function setPhoneNumber(string $phoneNumber): void
-    {
-        $this->phoneNumber = $phoneNumber;
-    }
-
 
 
 }
