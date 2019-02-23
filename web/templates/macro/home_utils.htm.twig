@@ -1,9 +1,9 @@
 {% macro feature(icon, title, desc, dark) -%}
     {% if (dark) %}
         <!--suppress HtmlUnknownTarget -->
-        <div class="service col-md-3 d-flex align-self-stretch p-4 wow fadeInUp primary-color-dark text-white">
+        <div class="service col-md-3 d-flex align-self-stretch p-4 primary-color-dark text-white" data-aos="flip-left">
     {% else %}
-        <div class="service col-md-3 d-flex align-self-stretch p-4 wow fadeInUp primary-color text-white">
+        <div class="service col-md-3 d-flex align-self-stretch p-4 primary-color text-white" data-aos="flip-right">
     {% endif %}
 
     <div class="text-center">
@@ -43,7 +43,7 @@
 {%- endmacro %}
 
 {% macro feature_2(icon, title, desc) -%}
-    <div class="col-lg-6">
+    <div class="col-lg-6" data-aos="zoom-in-up" data-aos-delay="300">
         <div class="d-flex">
             <div class="mt-2 mr-3 blue-text">
                 <i class="border border-primary {{ icon }} fa-2x p-3"></i></div>
