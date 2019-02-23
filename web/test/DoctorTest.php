@@ -6,7 +6,6 @@ use DB;
 use PHPUnit\Framework\TestCase;
 use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\InvalidDataException;
-use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Exceptions\SLMCAlreadyInUse;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Doctor\Doctor;
@@ -74,7 +73,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws \Pulse\Exceptions\SLMCAlreadyInUse
      */
     public function testRegister()
@@ -83,7 +81,7 @@ class DoctorTest extends TestCase
         $query = DB::queryFirstRow("SELECT * FROM doctors WHERE account_id=%s", self::$nic);
         $this->assertNotNull($query);
         $query = DB::queryFirstRow("SELECT * FROM sessions WHERE account_id=%s", self::$nic);
-        $this->assertNotNull($query);
+        $this->assertNull($query);
     }
 
     /**
@@ -91,7 +89,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws \Pulse\Exceptions\SLMCAlreadyInUse
      */
     public function testRequestRegistrationWithUsedAccountName()
@@ -115,7 +112,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws \Pulse\Exceptions\SLMCAlreadyInUse
      */
     public function testRequestRegistrationWithUsedSLMC()
@@ -131,7 +127,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws SLMCAlreadyInUse
      */
     public function testDataInvalidationOfDisplayName()
@@ -147,7 +142,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws SLMCAlreadyInUse
      */
     public function testDataInvalidationOfCategory()
@@ -163,7 +157,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws SLMCAlreadyInUse
      */
     public function testDataInvalidationOfFullName()
@@ -179,7 +172,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws SLMCAlreadyInUse
      */
     public function testDataInvalidationOfPHSRCEmpty()
@@ -195,7 +187,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws SLMCAlreadyInUse
      */
     public function testDataInvalidationOfEmailEmpty()
@@ -211,7 +202,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws SLMCAlreadyInUse
      */
     public function testDataInvalidationOfEmailRegex()
@@ -227,7 +217,6 @@ class DoctorTest extends TestCase
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      * @throws SLMCAlreadyInUse
      */
     public function testDataInvalidationOfPhoneNumberEmpty()
