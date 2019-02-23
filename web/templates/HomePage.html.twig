@@ -16,7 +16,7 @@
 {% include "part/navbar.htm.twig" with {"Page": "Home"} %}
 
 <main>
-    <section style="height: 100vh; width: 100vw; margin-top: -45px;">
+    <section style="height: 100vh; width: 100vw; margin-top: -45px;" id="home">
         <div id="mainSectionCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000">
             <ol class="carousel-indicators">
                 <li data-target="#mainSectionCarousel" data-slide-to="0" class="active"></li>
@@ -31,7 +31,7 @@
                              alt="First slide">
                         <div class="mask rgba-black-light"></div>
                     </div>
-                    {{ home_utils.carousal_caption() }}
+                    {{ home_utils.carousal_caption(account_id) }}
                 </div>
                 <div class="carousel-item">
                     <div class="view">
@@ -39,7 +39,7 @@
                              alt="Second slide">
                         <div class="mask rgba-black-light"></div>
                     </div>
-                    {{ home_utils.carousal_caption() }}
+                    {{ home_utils.carousal_caption(account_id) }}
                 </div>
                 <div class="carousel-item">
                     <div class="view">
@@ -47,7 +47,7 @@
                              src="https://images.pexels.com/photos/1282308/pexels-photo-1282308.jpeg" alt="Third slide">
                         <div class="mask rgba-black-light"></div>
                     </div>
-                    {{ home_utils.carousal_caption() }}
+                    {{ home_utils.carousal_caption(account_id) }}
                 </div>
             </div>
             <a class="carousel-control-prev" href="#mainSectionCarousel" role="button" data-slide="prev">
@@ -61,22 +61,22 @@
         </div>
     </section>
 
-    <section>
-        <div class="card blue-gradient">
-            <div class="text-white text-center py-4 px-2 my-3">
-                <div data-aos="fade-in">
-                    <h2 class="card-title h1-responsive pt-3 mb-3 font-bold">
-                        <strong>Want to register a Medical Center?</strong></h2>
-                    <p class="mx-3 mb-3">
-                        Your Health is Our Top Priority with Comprehensive, Affordable medical.
-                    </p>
-                    <a class="btn btn-outline-white btn-md" href="{{ site }}/register/medi"><i
-                                class="fas fa-user-plus left"></i>
-                        Register Now</a>
-                </div>
+    {% if (account_id == null) %}
+    <section class="card blue-gradient">
+        <div class="text-white text-center py-4 px-2 my-3">
+            <div data-aos="fade-in">
+                <h2 class="card-title h1-responsive pt-3 mb-3 font-bold">
+                    <strong>Want to register a Medical Center?</strong></h2>
+                <p class="mx-3 mb-3">
+                    Your Health is Our Top Priority with Comprehensive, Affordable medical.
+                </p>
+                <a class="btn btn-outline-white btn-md" href="{{ site }}/register/medi"><i
+                            class="fas fa-user-plus left"></i>
+                    Register Now</a>
             </div>
         </div>
     </section>
+    {% endif %}
 
     <section class="bg-white" style="box-shadow: 0 16px 100px 16px #000;">
         <div class="container p-5">
@@ -93,7 +93,7 @@
         </div>
     </section>
 
-    <section class="bg-white py-4">
+    <section class="bg-white py-4 section" id="services">
         <div class="container">
             <div class="row">
                 <div id="doctor-image" class="col-md-5 p-md-5 mt-5 mt-md-0" data-aos="fade-in">
@@ -132,6 +132,21 @@
 
 {% include "part/footer.htm.twig" %}
 {% include "part/scripts.htm.twig" %}
+<script>
+    $('body').scrollspy({target: "#links", offset: 50});
+
+    $("#links a").on('click', function(event) {
+        if (this.hash !== "") {
+            event.preventDefault();
+            let hash = this.hash;
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top
+            }, 800, function(){
+                window.location.hash = hash;
+            });
+        }
+    });
+</script>
 </body>
 
 </html>

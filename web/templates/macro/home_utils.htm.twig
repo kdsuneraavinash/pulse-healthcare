@@ -22,7 +22,7 @@
     {% endif %}
 {%- endmacro %}
 
-{% macro carousal_caption() -%}
+{% macro carousal_caption(account_id) -%}
     <div class="carousel-caption mb-5">
         <div class="col-md-12 col-xl-8 mx-auto p-3 mb-3" style="background-color: #ffffffAA">
             <h1 class="h1-responsive font-weight-bold mb-2 indigo-text">
@@ -32,11 +32,21 @@
                 Best & free platform to mange all your medical needs
             </h2>
             <div class="mb-2">
-                <form method="get" action="{{ site }}/login">
-                    <button type="submit" class="btn btn-lg btn-blue waves-effect font-weight-bold">
-                        <i class="fas fa-user"></i> &nbsp; SIGN IN
-                    </button>
-                </form>
+
+                {% if (account_id == null) %}
+                    <form method="get" action="{{ site }}/login">
+                        <button type="submit" class="btn btn-lg btn-blue waves-effect font-weight-bold">
+                            <i class="fas fa-user"></i> &nbsp; SIGN IN
+                        </button>
+                    </form>
+                {% else %}
+                    <form method="get" action="{{ site }}/control/medi">
+                        <button type="submit" class="btn btn-lg btn-green waves-effect font-weight-bold">
+                            <i class="fas fa-cogs"></i> &nbsp; CONTROL PANEL
+                        </button>
+                    </form>
+                {% endif %}
+
             </div>
         </div>
     </div>
