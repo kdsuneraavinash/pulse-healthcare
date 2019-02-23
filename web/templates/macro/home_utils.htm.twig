@@ -1,5 +1,6 @@
 {% macro feature(icon, title, desc, dark) -%}
     {% if (dark) %}
+        <!--suppress HtmlUnknownTarget -->
         <div class="service col-md-3 d-flex align-self-stretch p-4 wow fadeInUp primary-color-dark text-white">
     {% else %}
         <div class="service col-md-3 d-flex align-self-stretch p-4 wow fadeInUp primary-color text-white">
@@ -19,6 +20,26 @@
     {% else %}
         </div>
     {% endif %}
+{%- endmacro %}
+
+{% macro carousal_caption() -%}
+    <div class="carousel-caption mb-5">
+        <div class="col-md-12 col-xl-8 mx-auto wow fadeIn">
+            <h1 class="display-3 font-weight-bold mb-2 wow fadeIn blue-text">
+                MediKit
+            </h1>
+            <h2 class="font-weight-bold wow fadeIn mb-4">
+                Best & free platform to mange all your medical needs
+            </h2>
+            <div class="mb-2 wow fadeIn">
+                <form method="get" action="{{ site }}/login">
+                    <button type="submit" class="btn btn-lg btn-blue waves-effect font-weight-bold">
+                        <i class="fas fa-user"></i> &nbsp; SIGN IN
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 {%- endmacro %}
 
 {% macro feature_2(icon, title, desc) -%}

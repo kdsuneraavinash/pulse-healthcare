@@ -16,27 +16,48 @@
 {% include "part/navbar.htm.twig" with {"Page": "Home"} %}
 
 <main>
-    <section style="height: 100vh; width: 100vw;">
-        <div class="container-fluid flex-center text-center">
-            <div class="row mt-5 p-4" style="background-color: #ffffffAA">
-
-                <div class="col-md-12 col-xl-8 mx-auto wow fadeIn">
-                    <h1 class="display-3 font-weight-bold mb-2 wow fadeInDown indigo-text" data-wow-delay="0.3s">
-                        MediKit
-                    </h1>
-                    <h2 class="font-weight-bold wow fadeInDown mb-4" data-wow-delay="1s">
-                        Best & free platform to mange all your medical needs
-                    </h2>
-                    <div class="mb-2 wow fadeInDown" data-wow-delay="1.5s">
-                        <form method="get" action="{{ site }}/login">
-                            <button type="submit" class="btn btn-lg btn-blue waves-effect font-weight-bold">
-                                <i class="fas fa-user"></i> &nbsp; SIGN IN
-                            </button>
-                        </form>
+    <section style="height: 100vh; width: 100vw; margin-top: -45px;">
+        <div id="mainSectionCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#mainSectionCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#mainSectionCarousel" data-slide-to="1"></li>
+                <li data-target="#mainSectionCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="view">
+                        <img class="d-block img-carousel"
+                             src="https://wallpaperplay.com/walls/full/0/4/3/13967.jpg"
+                             alt="First slide">
+                        <div class="mask rgba-black-strong"></div>
                     </div>
+                    {{ home_utils.carousal_caption() }}
                 </div>
-
+                <div class="carousel-item">
+                    <div class="view">
+                        <img class="d-block img-carousel" src="https://wallpapercave.com/wp/wp1848640.jpg"
+                             alt="Second slide">
+                        <div class="mask rgba-black-strong"></div>
+                    </div>
+                    {{ home_utils.carousal_caption() }}
+                </div>
+                <div class="carousel-item">
+                    <div class="view">
+                        <img class="d-block img-carousel"
+                             src="https://images.pexels.com/photos/1282308/pexels-photo-1282308.jpeg" alt="Third slide">
+                        <div class="mask rgba-black-strong"></div>
+                    </div>
+                    {{ home_utils.carousal_caption() }}
+                </div>
             </div>
+            <a class="carousel-control-prev" href="#mainSectionCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#mainSectionCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
     </section>
 
