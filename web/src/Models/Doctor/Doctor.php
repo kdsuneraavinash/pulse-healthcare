@@ -10,6 +10,7 @@ use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Interfaces\ICreatable;
+use Pulse\StaticLogger;
 use Pulse\Utils;
 
 class Doctor extends Account implements ICreatable
@@ -28,22 +29,21 @@ class Doctor extends Account implements ICreatable
 
     /**
      * @param $details
-     * @return Doctor
+     * @return string
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws SLMCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
      */
-    public static function register($details): Doctor
+    public static function register($details): string
     {
         $password = Utils::generateRandomString(8);
         //TODO: Show password to medical center
-        echo $password;
+        StaticLogger::loggerInfo("$password");
         $doctor = new Doctor($details);
         $doctor->saveInDatabase();
-        LoginService::signUpSession($doctor->getAccountId(), $password);
-        return $doctor;
+        LoginService::createNewCredentials($doctor->getAccountId(), $password);
+        return $password;
     }
 
     /**
@@ -57,7 +57,7 @@ class Doctor extends Account implements ICreatable
 
         parent::saveInDatabase();
         DB::insert('doctors', array(
-            'account_id' => $this->getAccountId()
+            'account_id' => parent::getAccountId()
         ));
         $this->getDoctorDetails()->saveInDatabase(parent::getAccountId());
     }

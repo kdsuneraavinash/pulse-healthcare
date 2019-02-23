@@ -83,11 +83,21 @@ class LoginService implements BaseModel
         self::deleteSession();
 
         // Verify correct password and authenticate
-        Credentials::fromNewCredentials($accountId, $password);
+        self::createNewCredentials($accountId, $password);
 
         $session = Session::createSession($accountId);
         self::saveCookie($session);
         return $session;
+    }
+
+    /**
+     * @param string $accountId
+     * @param string $password
+     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\AccountNotExistException
+     */
+    public static function createNewCredentials(string $accountId, string $password){
+        Credentials::fromNewCredentials($accountId, $password);
     }
 
 
@@ -125,7 +135,7 @@ class LoginService implements BaseModel
      */
     private static function saveCookie(Session $session)
     {
-        self::setCookie(SESSION_USER, $session->getSessionAccountId());
+        self::setCookie(SESSION_USER, $session->getSessionAccount()->getAccountId());
         self::setCookie(SESSION_KEY, $session->getSessionKey());
     }
 

@@ -8,6 +8,8 @@ use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Doctor\Doctor;
+use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Interfaces\IFavouritable;
 
@@ -96,9 +98,18 @@ class MedicalCenter extends Account implements IFavouritable
         // TODO: implementation of createPatientAccount() function
     }
 
-    public function createDoctorAccount()
+    /**
+     * @param DoctorDetails $doctorDetails
+     * @return string
+     * @throws AccountAlreadyExistsException
+     * @throws InvalidDataException
+     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\SLMCAlreadyInUse
+     */
+    public function createDoctorAccount(DoctorDetails $doctorDetails): string
     {
-        // TODO: implementation of createDoctorAccount() function
+        return Doctor::register($doctorDetails);
     }
 
     public function searchDoctor()

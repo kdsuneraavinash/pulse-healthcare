@@ -13,7 +13,7 @@ define('SESSION_SALT_LENGTH', 40);
 
 class Session implements BaseModel
 {
-    private $accountId;
+    private $account;
     private $sessionKey;
 
     /**
@@ -24,12 +24,10 @@ class Session implements BaseModel
      */
     private function __construct(string $accountId, string $sessionKey)
     {
-        $account = Account::retrieveAccount($accountId);
-        if (!$account->exists()) {
+        $this->account = Account::retrieveAccount($accountId);
+        if (! $this->account->exists()) {
             throw new AccountNotExistException($accountId);
         }
-
-        $this->accountId = $accountId;
         $this->sessionKey = $sessionKey;
     }
 
@@ -98,7 +96,7 @@ class Session implements BaseModel
      */
     public function closeSession()
     {
-        Session::closeSessionOfContext($this->getSessionAccountId(), $this->getSessionKey());
+        Session::closeSessionOfContext($this->getSessionAccount()->getAccountId(), $this->getSessionKey());
     }
 
     /**
@@ -133,10 +131,10 @@ class Session implements BaseModel
     }
 
     /**
-     * @return string
+     * @return Account
      */
-    public function getSessionAccountId(): string
+    public function getSessionAccount(): Account
     {
-        return $this->accountId;
+        return $this->account;
     }
 }

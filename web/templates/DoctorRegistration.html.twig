@@ -42,21 +42,26 @@
                     <form action="{{ site }}/register/doctor" class="m-0 p-5 bg-white needs-validation" method="post"
                           novalidate>
                         <p class="text-center h4 mb-5">DOCTOR REGISTRATION</p>
-                        {{ form_fields.input_with_label('fullName', 'Full Name', "Doctor's Full Name", '', 'text',
+
+                        {% if (error != null) %}
+                            <div class="alert alert-danger text-center mb-3" role="alert">
+                                {{ error }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_fields.input_with_label('full_name', 'Full Name', "Doctor's Full Name", '', 'text',
                             'Enter the full name of the doctor') }}
-                        {{ form_fields.input_with_label('Name', 'Name', 'Most Known Name', '', 'text',
+                        {{ form_fields.input_with_label('display_name', 'Name', 'Most Known Name', '', 'text',
                             'Enter the name which everyone calls the doctor') }}
                         {{ form_fields.input_with_label('category', 'Category', 'Specialized category', '', 'text',
                             'Eg: OPD, Rheumatologist etc.') }}
 
-                        {{ form_fields.input_with_label('slmcID', 'SLMC Reg ID', 'Doctor Registration ID in SLMC','', 'text') }}
+                        {{ form_fields.input_with_label('slmc_id', 'SLMC Reg ID', 'Doctor Registration ID in SLMC','', 'text') }}
                         {{ form_fields.input_with_label('email', 'Email', "Doctor's Email Address", '', 'email') }}
-                        {{ form_fields.input_with_label('phoneNumber', 'Phone', 'Mobile Number', '', 'tel') }}
+                        {{ form_fields.input_with_label('phone_number', 'Phone', 'Mobile Number', '', 'tel') }}
                         <hr>
-                        {{ form_fields.input_with_label('NIC', 'NIC', 'Doctor NIC', '', 'text',
-                            '8-20 characters long and can contain english letters or digits') }}
-                        {{ form_fields.input_with_label('password', 'Password', 'Account Password', 'regID#DocName', 'text',
-                            'Password with 8 or more characters is recommended') }}
+                        {{ form_fields.input_with_label('nic', 'NIC', 'Doctor NIC', '', 'text',
+                            'This will act as your username') }}
 
                         <div class="text-right">
                             <button class="btn btn-primary my-4" type="submit">Submit</button>
@@ -72,6 +77,7 @@
 
 {% include "part/footer.htm.twig" %}
 {% include "part/scripts.htm.twig" %}
+<script src="{{ site }}/js/register-doctor.js"></script>
 
 </body>
 
