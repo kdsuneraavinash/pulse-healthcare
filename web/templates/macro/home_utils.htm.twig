@@ -56,10 +56,36 @@
     <div class="col-lg-6" data-aos="zoom-in-up" data-aos-delay="300">
         <div class="d-flex">
             <div class="mt-2 mr-3 blue-text">
-                <i class="border border-primary {{ icon }} fa-2x p-3"></i></div>
+                <i class="border border-primary {{ icon }} fa-2x p-3"></i>
+            </div>
             <div class="text">
                 <h3>{{ title }}</h3>
                 <p>{{ desc }}</p>
+            </div>
+        </div>
+    </div>
+{%- endmacro %}
+
+{% macro about_us_card(image, title) -%}
+    <div class="col-md-6 col-lg-4 p-3">
+        <div class="card p-0" data-aos="flip-left">
+            <div style="background-image: url('{{ image }}'); background-size: cover; height: 300px"></div>
+            <div class="card-body">
+                <h4 class="card-title font-weight-light">{{ title }}</h4>
+                <small>
+                    Undergraduate, Department of Computer Science Engineering, University of Moratuwa
+                </small>
+                <hr/>
+                <div class="row">
+                    <a class="text-primary" href="javascript:void(0);" data-aos="zoom-in"><span
+                                class="fab fa-facebook fa-2x indigo-text waves-effect p-4"></span> </a>
+                    <a class="text-primary" href="javascript:void(0);" data-aos="zoom-in"><span
+                                class="fab fa-twitter fa-2x blue-text waves-effect p-4"></span> </a>
+                    <a class="text-primary" href="javascript:void(0);" data-aos="zoom-in"><span
+                                class="fab fa-linkedin fa-2x blue-text waves-effect p-4"></span> </a>
+                    <a class="text-primary" href="javascript:void(0);" data-aos="zoom-in"><span
+                                class="fab fa-google fa-2x red-text waves-effect p-4"></span> </a>
+                </div>
             </div>
         </div>
     </div>

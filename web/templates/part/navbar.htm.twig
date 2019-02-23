@@ -21,10 +21,12 @@
             </button>
 
             <!-- Links -->
+
+            {% if (page == "Home") %}
             <div class="collapse navbar-collapse" id="navbar-content">
                 <ul class="navbar-nav mr-auto" id="links">
 
-                    {% set nav_links = [["#home", 'Home'], ['#services', 'Services']] %}
+                    {% set nav_links = [["#home", 'Home'], ['#services', 'Services'], ['#team', 'Our Team']] %}
 
                     {% for item in nav_links %}
                         {% set href = item[0] %}
@@ -34,6 +36,7 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% endif %}
 
                 {% if (account_id == null) %}
                     <!-- Sign In Button -->
