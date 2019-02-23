@@ -1,5 +1,5 @@
 // Animations initialization
-new WOW().init();
+AOS.init();
 
 
 $(window).on('load', function () {

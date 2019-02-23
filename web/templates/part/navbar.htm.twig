@@ -21,28 +21,22 @@
             </button>
 
             <!-- Links -->
-            <div class="collapse navbar-collapse" id="navbar-content">
-                <ul class="navbar-nav mr-auto">
 
-                    {% set nav_links = [[site, 'Home'], ['/profile', 'Profile'], ['#', 'About MediKit'], ['#', 'Services'], ['#', 'Contact']] %}
+            {% if (page == "Home") %}
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto" id="links">
+
+                    {% set nav_links = [["#home", 'Home'], ['#services', 'Services'], ['#team', 'Our Team']] %}
 
                     {% for item in nav_links %}
                         {% set href = item[0] %}
                         {% set caption = item[1] %}
-
-                        {% if (caption == Page) %}
-                            <li class="nav-item active px-1">
-                                <a class="nav-link" href="{{ href }}"><b>{{ caption }}</b>
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item px-1">
-                                <a href="{{ href }}" class="nav-link text-dark">{{ caption }}</a>
-                            </li>
-                        {% endif %}
+                        <li class="nav-item px-1">
+                            <a href="{{ href }}" class="nav-link text-dark font-weight-bold">{{ caption }}</a>
+                        </li>
                     {% endfor %}
                 </ul>
+                {% endif %}
 
                 {% if (account_id == null) %}
                     <!-- Sign In Button -->

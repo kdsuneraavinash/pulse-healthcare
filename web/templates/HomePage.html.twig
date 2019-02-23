@@ -13,49 +13,70 @@
 
 <body>
 
-{% include "part/navbar.htm.twig" with {"Page": "Home"} %}
+{% include "part/navbar.htm.twig" with {"page": "Home"} %}
 
 <main>
-    <section style="height: 100vh; width: 100vw;">
-        <div class="container-fluid flex-center text-center">
-            <div class="row mt-5 p-4" style="background-color: #ffffffAA">
-
-                <div class="col-md-12 col-xl-8 mx-auto wow fadeIn">
-                    <h1 class="display-3 font-weight-bold mb-2 wow fadeInDown indigo-text" data-wow-delay="0.3s">
-                        MediKit
-                    </h1>
-                    <h2 class="font-weight-bold wow fadeInDown mb-4" data-wow-delay="1s">
-                        Best & free platform to mange all your medical needs
-                    </h2>
-                    <div class="mb-2 wow fadeInDown" data-wow-delay="1.5s">
-                        <form method="get" action="{{ site }}/login">
-                            <button type="submit" class="btn btn-lg btn-blue waves-effect font-weight-bold">
-                                <i class="fas fa-user"></i> &nbsp; SIGN IN
-                            </button>
-                        </form>
+    <section style="height: 100vh; width: 100vw; margin-top: -45px;" id="home">
+        <div id="mainSectionCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000">
+            <ol class="carousel-indicators">
+                <li data-target="#mainSectionCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#mainSectionCarousel" data-slide-to="1"></li>
+                <li data-target="#mainSectionCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="view">
+                        <img class="d-block img-carousel"
+                             src="https://wallpaperplay.com/walls/full/0/4/3/13967.jpg"
+                             alt="First slide">
+                        <div class="mask rgba-black-light"></div>
                     </div>
+                    {{ home_utils.carousal_caption(account_id) }}
                 </div>
-
+                <div class="carousel-item">
+                    <div class="view">
+                        <img class="d-block img-carousel" src="https://wallpapercave.com/wp/wp1848640.jpg"
+                             alt="Second slide">
+                        <div class="mask rgba-black-light"></div>
+                    </div>
+                    {{ home_utils.carousal_caption(account_id) }}
+                </div>
+                <div class="carousel-item">
+                    <div class="view">
+                        <img class="d-block img-carousel"
+                             src="https://images.pexels.com/photos/1282308/pexels-photo-1282308.jpeg" alt="Third slide">
+                        <div class="mask rgba-black-light"></div>
+                    </div>
+                    {{ home_utils.carousal_caption(account_id) }}
+                </div>
             </div>
+            <a class="carousel-control-prev" href="#mainSectionCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#mainSectionCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
     </section>
 
-    <section>
-        <div class="card blue-gradient">
+    {% if (account_id == null) %}
+        <section class="card blue-gradient">
             <div class="text-white text-center py-4 px-2 my-3">
-                <div>
+                <div data-aos="fade-in">
                     <h2 class="card-title h1-responsive pt-3 mb-3 font-bold">
                         <strong>Want to register a Medical Center?</strong></h2>
                     <p class="mx-3 mb-3">
                         Your Health is Our Top Priority with Comprehensive, Affordable medical.
                     </p>
-                    <a class="btn btn-outline-white btn-md" href="{{ site }}/register/medi"><i
+                    <a class="btn btn-outline-white btn-lg" href="{{ site }}/register/medi"><i
                                 class="fas fa-user-plus left"></i>
                         Register Now</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 
     <section class="bg-white" style="box-shadow: 0 16px 100px 16px #000;">
         <div class="container p-5">
@@ -72,20 +93,20 @@
         </div>
     </section>
 
-    <section class="bg-white py-4">
+    <section class="bg-white py-5 section" id="services">
         <div class="container">
             <div class="row">
-                <div id="doctor-image" class="col-md-5 p-md-5 mt-5 mt-md-0 wow fadeInUp">
+                <div id="doctor-image" class="col-md-5 p-md-5 mt-5 mt-md-0" data-aos="fade-in">
                 </div>
-                <div class="col-md-7 py-4 py-md-5 wow fadeInUp">
-                    <div class="mb-5">
+                <div class="col-md-7 py-4 py-md-5">
+                    <div class="mb-5" data-aos="fade-in" data-aos-delay="200">
                         <div class="pl-md-5 ml-md-5">
                             <span>About Dr.care</span>
                             <h2 class="mb-4" style="font-size: 28px;">Medical specialty concerned with the care of
                                 acutely ill hospitalized patients</h2>
                         </div>
                     </div>
-                    <div class="pl-md-5 ml-md-5 mb-5">
+                    <div class="pl-md-5 ml-md-5 mb-5" data-aos="fade-up" data-aos-delay="400">
                         <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it
                             would have been rewritten a thousand times and everything that was left from its origin
                             would be the word.</p>
@@ -107,10 +128,44 @@
         </div>
     </section>
 
+    <section class="section bg-white py-5" id="team">
+        <div class="container py-4">
+
+            <div class="row">
+                <div class="col-md-6 col-lg-12 d-flex justify-content-center p-4">
+                    <div class="col-md-8 text-center heading-section">
+                        <h2 class="mb-4 font-weight-bold">Our Team</h2>
+                        <div>Separated they live in. A small river named Duden flows by their place and supplies it with the
+                            necessary regelialia. It is a paradisematic country
+                        </div>
+                    </div>
+                </div>
+                {{ home_utils.about_us_card(site ~ "/images/sunera.jpg", "Sunera Avinash") }}
+                {{ home_utils.about_us_card(site ~ "/images/anju.jpg", "Anju Chamantha") }}
+                {{ home_utils.about_us_card(site ~ "/images/lahiru.jpg", "Lahiru Udayanga") }}
+            </div>
+        </div>
+    </section>
+
 </main>
 
 {% include "part/footer.htm.twig" %}
 {% include "part/scripts.htm.twig" %}
+<script>
+    $('body').scrollspy({target: "#links", offset: 50});
+
+    $("#links a").on('click', function (event) {
+        if (this.hash !== "") {
+            event.preventDefault();
+            let hash = this.hash;
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top
+            }, 800, function () {
+                window.location.hash = hash;
+            });
+        }
+    });
+</script>
 </body>
 
 </html>
