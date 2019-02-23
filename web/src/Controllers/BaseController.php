@@ -4,6 +4,7 @@ namespace Pulse\Controllers;
 
 use Http;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Twig_Environment;
@@ -12,23 +13,23 @@ abstract class BaseController
 {
     private $response;
     private $request;
-    private $rederer;
+    private $renderer;
 
     /**
      * Activates a Controller with HTTP objects and renderer.
      * @param BaseController $controller Controller
      * @param Http\HttpRequest $httpRequest HTTP Request Object
      * @param Http\HttpResponse $httpResponse HTTP Response Object
-     * @param Twig_Environment $rederer HTML Rendering Object
+     * @param Twig_Environment $renderer HTML Rendering Object
      */
     public static function activate(BaseController $controller,
                                     Http\HttpRequest $httpRequest,
                                     Http\HttpResponse $httpResponse,
-                                    Twig_Environment $rederer)
+                                    Twig_Environment $renderer)
     {
         $controller->response = $httpResponse;
         $controller->request = $httpRequest;
-        $controller->rederer = $rederer;
+        $controller->renderer = $renderer;
     }
 
     /**
@@ -62,7 +63,7 @@ abstract class BaseController
      */
     protected function getRenderer(): Twig_Environment
     {
-        return $this->rederer;
+        return $this->renderer;
     }
 
     /**
@@ -88,6 +89,9 @@ abstract class BaseController
         } catch (AccountNotExistException $e) {
             LoginService::signOutSession();
             return null;
+        } catch (InvalidDataException $e) {
+            LoginService::signOutSession();
+            return null;
         }
     }
 
@@ -96,6 +100,10 @@ abstract class BaseController
      */
     protected function getCurrentAccountId(): ?string
     {
-        return $this->getCurrentAccount()->getAccountId();
+        $currentAccount = $this->getCurrentAccount();
+        if ($currentAccount == null) {
+            return null;
+        }
+        return $currentAccount->getAccountId();
     }
 }

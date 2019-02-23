@@ -16,7 +16,7 @@ $(".sidebar-button").click(
 
         let newLoc = window.location.origin + window.location.pathname + '/' + $(this).attr('id');
 
-        if (iframe.attr("src") !== newLoc){
+        if (iframe.attr("src") !== newLoc) {
             buttons.removeClass("active");
             buttons.removeClass("rounded");
             buttons.removeClass("mb-0");

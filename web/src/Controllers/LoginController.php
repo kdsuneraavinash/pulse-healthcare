@@ -3,6 +3,7 @@
 namespace Pulse\Controllers;
 
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\StaticLogger;
 
@@ -25,6 +26,10 @@ class LoginController extends BaseController
             $session = LoginService::logInSession($accountId, $password);
         } catch (AccountNotExistException $ex) {
             $message = "Account $accountId Not Found";
+            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
+            exit;
+        } catch (InvalidDataException $e) {
+            $message = "Account $accountId login Error";
             header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
             exit;
         }

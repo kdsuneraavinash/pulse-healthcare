@@ -3,7 +3,7 @@
 /// Validate forms in the page
 (function () {
     window.addEventListener('load', function () {
-        var forms = $('.needs-validation');
+        let forms = $('.needs-validation');
         Array.prototype.filter.call(forms, function (form) {
             form.addEventListener('submit', function (event) {
                 if (form.checkValidity() === false) {

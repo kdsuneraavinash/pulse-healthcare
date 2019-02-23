@@ -4,7 +4,8 @@ namespace Pulse;
 
 use Monolog\Logger;
 
-class StaticLogger{
+class StaticLogger
+{
 
     private static $logger;
 
@@ -41,7 +42,7 @@ class StaticLogger{
     }
 
     /**
-     * @return mixed
+     * @param Logger $logger
      */
     public static function setLogger(Logger $logger)
     {

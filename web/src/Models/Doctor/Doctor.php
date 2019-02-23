@@ -10,40 +10,46 @@ use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Interfaces\ICreatable;
-use Pulse\StaticLogger;
 use Pulse\Utils;
 
 class Doctor extends Account implements ICreatable
 {
     private $doctorDetails;
+    private $defaultPassword;
 
     /**
      * MedicalCenter constructor.
      * @param DoctorDetails $doctorDetails
+     * @param string $defaultPassword
+     * @throws InvalidDataException
      */
-    protected function __construct(DoctorDetails $doctorDetails)
+    protected function __construct(DoctorDetails $doctorDetails, string $defaultPassword = null)
     {
         parent::__construct($doctorDetails->getNic(), AccountType::Doctor());
         $this->doctorDetails = $doctorDetails;
+        if ($defaultPassword == null) {
+            $query = DB::queryFirstRow('SELECT default_password FROM doctors WHERE account_id = $accountId');
+            if ($query == null) {
+                throw new InvalidDataException("Default password retrieval error.");
+            }
+            $defaultPassword = $query['default_password'];
+        }
+        $this->defaultPassword = $defaultPassword;
     }
 
     /**
      * @param $details
-     * @return string
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws SLMCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      */
-    public static function register($details): string
+    public static function register($details)
     {
-        $password = Utils::generateRandomString(8);
-        //TODO: Show password to medical center
-        StaticLogger::loggerInfo("$password");
-        $doctor = new Doctor($details);
+        $password = Utils::generateRandomReadableString(16);
+        $doctor = new Doctor($details, $password);
         $doctor->saveInDatabase();
         LoginService::createNewCredentials($doctor->getAccountId(), $password);
-        return $password;
     }
 
     /**
@@ -57,7 +63,8 @@ class Doctor extends Account implements ICreatable
 
         parent::saveInDatabase();
         DB::insert('doctors', array(
-            'account_id' => parent::getAccountId()
+            'account_id' => parent::getAccountId(),
+            'default_password' => $this->getDefaultPassword(),
         ));
         $this->getDoctorDetails()->saveInDatabase(parent::getAccountId());
     }
@@ -95,5 +102,13 @@ class Doctor extends Account implements ICreatable
     public function getDoctorDetails(): DoctorDetails
     {
         return $this->doctorDetails;
+    }
+
+    /**
+     * @return DoctorDetails
+     */
+    public function getDefaultPassword(): string
+    {
+        return $this->defaultPassword;
     }
 }

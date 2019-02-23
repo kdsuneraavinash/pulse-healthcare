@@ -145,7 +145,7 @@ foreach ($routes as $route) {
 /// and first = ERROR_CODE, second = response body
 ///
 /// getRouterDefaultErrorHandler($code) will have the
-/// default response (Unhandles error)
+/// default response (Unhandled error)
 $klein->onHttpError(function (int $code, Klein\Klein $router) {
     $router_err_handlers = getRouterErrorHandlers();
     foreach ($router_err_handlers as $handler) {

@@ -59,7 +59,7 @@ class Credentials implements BaseModel
             throw new Exceptions\AccountAlreadyExistsException($accountId);
         }
 
-        $salt = Utils::generateRandomString(CREDENTIALS_SALT_LENGTH);
+        $salt = Utils::generateRandomSaltyString(CREDENTIALS_SALT_LENGTH);
         $credentials = new Credentials($accountId, $password, $salt);
         $credentials->createCredentials();
 

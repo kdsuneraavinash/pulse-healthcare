@@ -11,28 +11,33 @@ class AccountType
         $this->type = $type;
     }
 
-    static function MedicalCenter(){
+    static function MedicalCenter()
+    {
         return new AccountType('med_center');
     }
 
-    static function Doctor(){
+    static function Doctor()
+    {
         return new AccountType('doctor');
     }
 
-    static function Patient(){
+    static function Patient()
+    {
         return new AccountType('patient');
     }
 
-    static function Tester(){
+    static function Tester()
+    {
         return new AccountType('tester');
     }
 
-    static function Admin(){
+    static function Admin()
+    {
         return new AccountType('admin');
     }
 
     public function __toString()
     {
-       return $this->type;
+        return $this->type;
     }
 }

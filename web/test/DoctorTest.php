@@ -179,7 +179,7 @@ class DoctorTest extends TestCase
         $this->expectException(InvalidDataException::class);
         self::restoreDetails();
         self::getDoctorDetails()->setSlmcId("");
-        Doctor::register( self::$doctorDetails);
+        Doctor::register(self::$doctorDetails);
     }
 
     /**

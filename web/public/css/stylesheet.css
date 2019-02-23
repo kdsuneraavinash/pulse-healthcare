@@ -33,16 +33,16 @@ Preloader
     z-index: 9999;
     text-align: center;
     opacity: 0.6;
-    pointer-events:none;
+    pointer-events: none;
 }
 
-#loader.loaded{
+#loader.loaded {
     visibility: hidden;
     display: none;
 }
 
 #loader > .spinner-border,
-#loader > .spinner-grow{
+#loader > .spinner-grow {
     margin-top: 48vh;
     margin-left: 48vw;
 }

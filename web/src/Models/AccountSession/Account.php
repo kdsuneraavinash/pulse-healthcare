@@ -40,6 +40,7 @@ abstract class Account
      * @param string $accountId
      * @return Account|null
      * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public static function retrieveAccount(string $accountId): ?Account
     {
@@ -48,11 +49,11 @@ abstract class Account
             throw new AccountNotExistException($accountId);
         }
         $parsedAccount = null;
-        if ($account['account_type'] == (string) AccountType::MedicalCenter()) {
+        if ($account['account_type'] == (string)AccountType::MedicalCenter()) {
             $parsedAccount = new MedicalCenter($accountId, MedicalCenterDetails::readFromDatabase($accountId));
-        } else if ($account['account_type'] ==  (string) AccountType::Tester()) {
+        } else if ($account['account_type'] == (string)AccountType::Tester()) {
             $parsedAccount = new TempAccount($accountId);
-        } else if ($account['account_type'] ==  (string) AccountType::Doctor()) {
+        } else if ($account['account_type'] == (string)AccountType::Doctor()) {
             $parsedAccount = new Doctor(DoctorDetails::readFromDatabase($accountId));
         }
 
@@ -66,7 +67,7 @@ abstract class Account
     {
         DB::insert('accounts', array(
             'account_id' => $this->getAccountId(),
-            'account_type' => (string) $this->getAccountType()
+            'account_type' => (string)$this->getAccountType()
         ));
     }
 

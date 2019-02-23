@@ -4,7 +4,6 @@ namespace Pulse\Controllers;
 
 use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AlreadyLoggedInException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\SLMCAlreadyInUse;
 use Pulse\Models\Doctor\DoctorDetails;
@@ -63,8 +62,6 @@ class DoctorRegistrationController extends BaseController
                     $error = "Server side validation failed.";
                 } catch (AccountNotExistException $e) {
                     $error = "Account $nic cannot be signed in!";
-                } catch (AlreadyLoggedInException $e) {
-                    $error = "Account $nic already logged in.";
                 } catch (SLMCAlreadyInUse $e) {
                     $error = "A doctor is already registered using the given SLMC id.";
                 }

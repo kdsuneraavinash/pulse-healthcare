@@ -18,6 +18,7 @@ class LoginService implements BaseModel
     /**
      * @return Session|null
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public static function continueSession(): ?Session
     {
@@ -45,6 +46,7 @@ class LoginService implements BaseModel
      * @param string $password
      * @return Session|null
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public static function logInSession(string $accountId, string $password): ?Session
     {
@@ -71,6 +73,7 @@ class LoginService implements BaseModel
      * @throws \Pulse\Exceptions\AccountAlreadyExistsException
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public static function signUpSession(string $accountId, string $password): Session
     {
@@ -96,7 +99,8 @@ class LoginService implements BaseModel
      * @throws \Pulse\Exceptions\AccountAlreadyExistsException
      * @throws \Pulse\Exceptions\AccountNotExistException
      */
-    public static function createNewCredentials(string $accountId, string $password){
+    public static function createNewCredentials(string $accountId, string $password)
+    {
         Credentials::fromNewCredentials($accountId, $password);
     }
 

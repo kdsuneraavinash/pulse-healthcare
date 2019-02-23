@@ -36,5 +36,5 @@ function getRouterErrorHandlers()
 
 function generateErrorPage(string $name)
 {
-    return file_get_contents( $name . '.html');
+    return file_get_contents($name . '.html');
 }

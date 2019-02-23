@@ -61,7 +61,7 @@ class MedicalCenterDetails implements IDetails
      * @return MedicalCenterDetails
      * @throws AccountNotExistException
      */
-    public static function readFromDatabase(string $accountId) : MedicalCenterDetails
+    public static function readFromDatabase(string $accountId): MedicalCenterDetails
     {
         $query = DB::queryFirstRow("SELECT * FROM medical_center_details WHERE account_id=%s", $accountId);
         if ($query == null) {

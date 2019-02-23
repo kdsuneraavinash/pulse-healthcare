@@ -17,7 +17,7 @@ class ProfilePageController extends BaseController
         $accountId = $this->getCurrentAccountId();
         if ($accountId == null) {
             header("Location: http://$_SERVER[HTTP_HOST]");
-            StaticLogger::loggerWarn("Unautherized user " . Utils::getClientIP() .
+            StaticLogger::loggerWarn("Unauthorized user " . Utils::getClientIP() .
                 " tried to access Profile page.");
             exit;
         } else {

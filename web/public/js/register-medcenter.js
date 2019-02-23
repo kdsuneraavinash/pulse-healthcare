@@ -16,41 +16,41 @@ $(document).ready(function () {
     let phsrc = $("#phsrc");
     let email = $("#email");
     let fax = $("#fax");
-    let phonenumber = $("#phone_number");
+    let phoneNumber = $("#phone_number");
     let address = $("#address");
     let postal = $("#postal");
 
     account.on("input", function () {
         validateNotEmptyAndRegex(account, accountRegex);
-    })
+    });
     password.on("input", function () {
         validateNotEmpty(password);
-    })
+    });
     passwordRetype.on("input", function () {
         validateNotEmpty(passwordRetype);
         checkField(passwordRetype, passwordRetype.val() === password.val())
-    })
+    });
     name.on("input", function () {
         validateNotEmpty(name);
-    })
+    });
     phsrc.on("input", function () {
         validateNotEmptyAndRegex(phsrc, phsrcRegex);
-    })
+    });
     email.on("input", function () {
         validateNotEmptyAndRegex(email, emailRegex);
-    })
+    });
     fax.on("input", function () {
         validateEmptyOrRegex(fax, faxRegex);
-    })
-    phonenumber.on("input", function () {
-        validateNotEmpty(phonenumber);
-    })
+    });
+    phoneNumber.on("input", function () {
+        validateNotEmpty(phoneNumber);
+    });
     address.on("input", function () {
         validateNotEmpty(address);
-    })
+    });
     postal.on("input", function () {
         validateNotEmpty(postal);
-    })
+    });
 
     Array.prototype.filter.call(forms, function (form) {
         form.addEventListener('submit', function () {
@@ -62,7 +62,7 @@ $(document).ready(function () {
                 validateNotEmptyAndRegex(phsrc, phsrcRegex) &&
                 validateNotEmptyAndRegex(email, emailRegex) &&
                 validateEmptyOrRegex(fax, faxRegex) &&
-                validateNotEmpty(phonenumber) &&
+                validateNotEmpty(phoneNumber) &&
                 validateNotEmpty(address) &&
                 validateNotEmpty(postal)) {
                 form.submit();
