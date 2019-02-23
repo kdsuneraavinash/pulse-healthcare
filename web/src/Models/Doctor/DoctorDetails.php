@@ -4,9 +4,11 @@ namespace Pulse\Models\Doctor;
 
 use DB;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\Interfaces\IDetails;
 
-class DoctorDetails
+class DoctorDetails implements IDetails
 {
+    private $nic;
     private $fullName;
     private $displayName;
     private $category;
@@ -16,15 +18,18 @@ class DoctorDetails
 
     /**
      * DoctorDetails constructor.
-     * @param $fullName
-     * @param $displayName
-     * @param $category
-     * @param $slmcId
-     * @param $email
-     * @param $phoneNumber
+     * @param string $nic
+     * @param string $fullName
+     * @param string $displayName
+     * @param string $category
+     * @param string $slmcId
+     * @param string $email
+     * @param string $phoneNumber
      */
-    public function __construct($fullName, $displayName, $category, $slmcId, $email, $phoneNumber)
+    public function __construct(string $nic, string $fullName, string $displayName, string $category, string $slmcId,
+                                string $email, string $phoneNumber)
     {
+        $this->nic = $nic;
         $this->fullName = $fullName;
         $this->displayName = $displayName;
         $this->category = $category;
@@ -34,8 +39,9 @@ class DoctorDetails
     }
 
 
-    public function validate()
+    public function validate(): bool
     {
+        $nicValid = $this->nic != "";
         $fullNameValid = $this->fullName != "";
         $displayNameValid = $this->displayName != "";
         $categoryValid = $this->category != "";
@@ -44,36 +50,58 @@ class DoctorDetails
                 ')|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|' .
                 '(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $this->email);
         $phoneNumberValid = $this->phoneNumber != "";
-        return $fullNameValid && $displayNameValid && $categoryValid && $slmcIDValid && $emailValid &&
+        return $nicValid && $fullNameValid && $displayNameValid && $categoryValid && $slmcIDValid && $emailValid &&
             $phoneNumberValid;
     }
 
     /**
-     * @param string $accountId
+     * @param string $nic
      * @return DoctorDetails
      * @throws AccountNotExistException
      */
-    public static function readFromDatabase(string $accountId) : DoctorDetails
+    public static function readFromDatabase(string $nic): DoctorDetails
     {
-        $query = DB::queryFirstRow("SELECT * FROM doctor_details WHERE account_id=%s", $accountId);
+        $query = DB::queryFirstRow("SELECT * FROM doctor_details WHERE account_id=%s", $nic);
         if ($query == null) {
-            throw new AccountNotExistException($accountId);
+            throw new AccountNotExistException($nic);
         }
-        return new DoctorDetails($query['full_name'],$query['name'],$query['category'], $query['slmc_id'], $query['email'],
-            $query['phone_number']);
+        return new DoctorDetails($nic, $query['full_name'], $query['display_name'], $query['category'],
+            $query['slmc_id'], $query['email'], $query['phone_number']);
     }
 
     public function saveInDatabase(string $accountId)
     {
         DB::insert('doctor_details', array(
             'account_id' => $accountId,
-            'full_name'=>$this->getFullName(),
+            'full_name' => $this->getFullName(),
             'name' => $this->getDisplayName(),
-            'category'=>$this->getCategory(),
+            'category' => $this->getCategory(),
             'slmc_id' => $this->getSlmcId(),
             'email' => $this->getEmail(),
             'phone_number' => $this->getPhoneNumber(),
         ));
+    }
+
+    /*
+    --------------------------------------------------------------------------------------------------------------------
+    Getters and Setters
+    --------------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @return string
+     */
+    public function getNic(): string
+    {
+        return $this->nic;
+    }
+
+    /**
+     * @param string $nic
+     */
+    public function setNic(string $nic): void
+    {
+        $this->nic = $nic;
     }
 
     /**
@@ -85,11 +113,27 @@ class DoctorDetails
     }
 
     /**
+     * @param string $fullName
+     */
+    public function setFullName(string $fullName): void
+    {
+        $this->fullName = $fullName;
+    }
+
+    /**
      * @return string
      */
     public function getDisplayName(): string
     {
         return $this->displayName;
+    }
+
+    /**
+     * @param string $displayName
+     */
+    public function setDisplayName(string $displayName): void
+    {
+        $this->displayName = $displayName;
     }
 
     /**
@@ -101,11 +145,27 @@ class DoctorDetails
     }
 
     /**
-     * @return string
+     * @param string $category
      */
-    public function getSlmcId(): string
+    public function setCategory(string $category): void
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlmcId()
     {
         return $this->slmcId;
+    }
+
+    /**
+     * @param mixed $slmcId
+     */
+    public function setSlmcId($slmcId): void
+    {
+        $this->slmcId = $slmcId;
     }
 
     /**
@@ -116,6 +176,13 @@ class DoctorDetails
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
 
     /**
      * @return string
@@ -125,5 +192,11 @@ class DoctorDetails
         return $this->phoneNumber;
     }
 
-
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber(string $phoneNumber): void
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
 }

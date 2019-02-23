@@ -54,10 +54,10 @@ class DoctorRegistrationController extends BaseController
                 $slmcId == null || $email == null ||
                 $phoneNumber == null || $nic == null || $password == null)) {
 
-                $doctorDetails = new DoctorDetails($fullName, $name, $category, $slmcId, $email, $phoneNumber);
+                $doctorDetails = new DoctorDetails($nic, $fullName, $name, $category, $slmcId, $email, $phoneNumber);
 
                 try {
-                    Doctor::requestRegistration($nic, $doctorDetails, $password);
+                    Doctor::register($nic, $doctorDetails, $password);
                 } catch (AccountAlreadyExistsException $e) {
                     $error = "Account $nic is already registered.";
                 } catch (InvalidDataException $e) {

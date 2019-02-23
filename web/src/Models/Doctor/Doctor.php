@@ -8,40 +8,41 @@ use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\SLMCAlreadyInUse;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Enums\AccountType;
+use Pulse\Models\Interfaces\ICreatable;
+use Pulse\Utils;
 
-class Doctor extends Account
+class Doctor extends Account implements ICreatable
 {
     private $doctorDetails;
 
     /**
      * MedicalCenter constructor.
-     * @param string $NIC
      * @param DoctorDetails $doctorDetails
      */
-    protected function __construct(string $NIC, DoctorDetails $doctorDetails)
+    protected function __construct(DoctorDetails $doctorDetails)
     {
-        parent::__construct($NIC, "doctor");
+        parent::__construct($doctorDetails->getNic(), AccountType::Doctor());
         $this->doctorDetails = $doctorDetails;
     }
 
     /**
-     * @param string $accountId
-     * @param DoctorDetails $doctorDetails
-     * @param string $password
+     * @param $details
      * @return Doctor
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
+     * @throws SLMCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
-     * @throws SLMCAlreadyInUse
      */
-    public static function requestRegistration(string $accountId, DoctorDetails $doctorDetails,
-                                               string $password): Doctor
+    public static function register($details): Doctor
     {
-        $doctor = new Doctor($accountId, $doctorDetails);
+        $password = Utils::generateRandomString(8);
+        //TODO: Show password to medical center
+        echo $password;
+        $doctor = new Doctor($details);
         $doctor->saveInDatabase();
-        LoginService::signUpSession($accountId, $password);
-        // TODO: Add code to request verification
+        LoginService::signUpSession($doctor->getAccountId(), $password);
         return $doctor;
     }
 
@@ -56,10 +57,9 @@ class Doctor extends Account
 
         parent::saveInDatabase();
         DB::insert('doctors', array(
-            'account_id' => $this->accountId,
-            'verified' => true
+            'account_id' => $this->getAccountId()
         ));
-        $this->getDoctorDetails()->saveInDatabase($this->accountId);
+        $this->getDoctorDetails()->saveInDatabase(parent::getAccountId());
     }
 
     /**
@@ -73,20 +73,8 @@ class Doctor extends Account
         if (!$detailsValid) {
             throw new InvalidDataException("Server side validation failed.");
         }
-        $this->checkWhetherAccountIDExists();
+        parent::checkWhetherAccountIDExists();
         $this->checkWhetherSLMCExists();
-    }
-
-    /**
-     * @throws AccountAlreadyExistsException
-     */
-    private function checkWhetherAccountIDExists()
-    {
-        $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
-            $this->accountId);
-        if ($existingAccount != null) {
-            throw new AccountAlreadyExistsException($existingAccount['account_id']);
-        }
     }
 
     /**
@@ -97,10 +85,13 @@ class Doctor extends Account
         $existingDoctor = DB::queryFirstRow("SELECT account_id from doctor_details where slmc_ID=%s",
             $this->doctorDetails->getSlmcId());
         if ($existingDoctor != null) {
-            throw new SLMCAlreadyInUse($existingDoctor['account_id']);
+            throw new SLMCAlreadyInUse($this->doctorDetails->getSlmcId());
         }
     }
 
+    /**
+     * @return DoctorDetails
+     */
     public function getDoctorDetails(): DoctorDetails
     {
         return $this->doctorDetails;

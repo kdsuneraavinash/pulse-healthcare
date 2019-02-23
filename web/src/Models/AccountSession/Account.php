@@ -3,7 +3,9 @@
 namespace Pulse\Models\AccountSession;
 
 use DB;
+use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\Enums\AccountType;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
 
@@ -15,9 +17,9 @@ abstract class Account
     /**
      * Account constructor.
      * @param string $accountId
-     * @param string $accountType
+     * @param AccountType $accountType
      */
-    protected function __construct(string $accountId, string $accountType)
+    protected function __construct(string $accountId, AccountType $accountType)
     {
         $this->accountId = $accountId;
         $this->accountType = $accountType;
@@ -44,9 +46,9 @@ abstract class Account
             throw new AccountNotExistException($accountId);
         }
         $parsedAccount = null;
-        if ($account['account_type'] == 'med_center') {
+        if ($account['account_type'] == (string) AccountType::MedicalCenter()) {
             $parsedAccount = new MedicalCenter($accountId, MedicalCenterDetails::readFromDatabase($accountId));
-        } else if ($account['account_type'] == 'tester') {
+        } else if ($account['account_type'] ==  (string) AccountType::Tester()) {
             $parsedAccount = new TempAccount($accountId);
         }
 
@@ -59,9 +61,37 @@ abstract class Account
     protected function saveInDatabase()
     {
         DB::insert('accounts', array(
-            'account_id' => $this->accountId,
-            'account_type' => $this->accountType
+            'account_id' => $this->getAccountId(),
+            'account_type' => (string) $this->getAccountType()
         ));
+    }
+
+    /**
+     * @throws AccountAlreadyExistsException
+     */
+    protected function checkWhetherAccountIDExists()
+    {
+        $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
+            $this->accountId);
+        if ($existingAccount != null) {
+            throw new AccountAlreadyExistsException($existingAccount['account_id']);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccountId(): string
+    {
+        return $this->accountId;
+    }
+
+    /**
+     * @return AccountType
+     */
+    public function getAccountType(): AccountType
+    {
+        return $this->accountType;
     }
 }
 
@@ -69,6 +99,6 @@ class TempAccount extends Account
 {
     public function __construct(string $accountId)
     {
-        parent::__construct($accountId, 'tester');
+        parent::__construct($accountId, AccountType::Tester());
     }
 }
