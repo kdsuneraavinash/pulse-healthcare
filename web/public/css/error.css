@@ -1,12 +1,6 @@
-body {
-    background: url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/0kjHIH6/cartoon-earth-saturn-mars-and-moon-in-space_eytcf3tje__F0000.png);
-    background-size: cover;
-    overflow: hidden;
-}
-
 .content {
     max-height: 400px;
-    max-width: 600px;
+    max-width: 700px;
 }
 
 table {
