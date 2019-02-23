@@ -6,3 +6,5 @@
 **/*__jb_*
 **/frontend/dist
 **/*.log
+
+**/composer.phar

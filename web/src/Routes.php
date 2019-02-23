@@ -14,11 +14,12 @@ function getRoutes()
 
         ['GET', '/login', ['Pulse\Controllers\LoginController', 'get']],
         ['POST', '/login', ['Pulse\Controllers\LoginController', 'post']],
+        ['POST', '/logout', ['Pulse\Controllers\LogoutController', 'post']],
 
         ['GET', '/register/medi', ['Pulse\Controllers\MedicalCenterRegistrationController', 'get']],
         ['POST', '/register/medi', ['Pulse\Controllers\MedicalCenterRegistrationController', 'post']],
-
-        ['POST', '/logout', ['Pulse\Controllers\LogoutController', 'post']],
+        ['GET', '/register/doctor', ['Pulse\Controllers\DoctorRegistrationController', 'get']],
+        ['POST', '/register/doctor', ['Pulse\Controllers\DoctorRegistrationController', 'post']],
 
         ['GET', '/admin', ['Pulse\Controllers\AdminControlPanelController', 'get']],
         ['GET', '/admin/dashboard', ['Pulse\Controllers\AdminControlPanelController', 'getAdminDashboardIframe']],

@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
+use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
 
@@ -31,33 +32,42 @@ class MedicalCenterTest extends TestCase
     public static function setSharedVariables()
     {
         \Pulse\Database::init();
-        MedicalCenterTest::$accountId = "medical_center_tester";
-        MedicalCenterTest::$name = "Medical Center Tester";
-        MedicalCenterTest::$phsrc = "PHSRC/TEST/001";
-        MedicalCenterTest::$email = "tester@medical.center";
-        MedicalCenterTest::$fax = "0102313546";
-        MedicalCenterTest::$phoneNumber = "07655667890";
-        MedicalCenterTest::$address = "Fake Number, Fake Street, Fake City, Fake Province.";
-        MedicalCenterTest::$postalCode = "99999";
-        MedicalCenterTest::$unusedAccountId = "unused_account_id";
-        MedicalCenterTest::$password = "password";
+        LoginService::setTestEnvironment();
+        self::$accountId = "medical_center_tester";
+        self::$name = "Medical Center Tester";
+        self::$phsrc = "PHSRC/TEST/001";
+        self::$email = "tester@medical.center";
+        self::$fax = "0102313546";
+        self::$phoneNumber = "07655667890";
+        self::$address = "Fake Number, Fake Street, Fake City, Fake Province.";
+        self::$postalCode = "99999";
+        self::$unusedAccountId = "unused_account_id";
+        self::$password = "password";
 
-        MedicalCenterTest::restoreDetails();
+        self::restoreDetails();
 
-        DB::delete('accounts', "account_id = %s", MedicalCenterTest::$accountId);
-        DB::delete('accounts', "account_id = %s", MedicalCenterTest::$unusedAccountId);
+        DB::delete('accounts', "account_id = %s", self::$accountId);
+        DB::delete('accounts', "account_id = %s", self::$unusedAccountId);
+    }
+
+    /**
+     * @afterClass
+     */
+    public static function deleteSessions()
+    {
+        LoginService::signOutSession();
     }
 
     private static function restoreDetails()
     {
-        MedicalCenterTest::$medicalCenterDetails = new MedicalCenterDetails(
-            MedicalCenterTest::$name,
-            MedicalCenterTest::$phsrc,
-            MedicalCenterTest::$email,
-            MedicalCenterTest::$fax,
-            MedicalCenterTest::$phoneNumber,
-            MedicalCenterTest::$address,
-            MedicalCenterTest::$postalCode
+        self::$medicalCenterDetails = new MedicalCenterDetails(
+            self::$name,
+            self::$phsrc,
+            self::$email,
+            self::$fax,
+            self::$phoneNumber,
+            self::$address,
+            self::$postalCode
         );
     }
 
@@ -70,12 +80,12 @@ class MedicalCenterTest extends TestCase
      */
     public function testRequestRegistration()
     {
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
-        $query = DB::queryFirstRow("SELECT * FROM medical_centers WHERE account_id=%s", MedicalCenterTest::$accountId);
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
+        $query = DB::queryFirstRow("SELECT * FROM medical_centers WHERE account_id=%s", self::$accountId);
         $this->assertNotNull($query);
         $this->assertEquals(0, $query['verified']);
-        $query = DB::queryFirstRow("SELECT * FROM sessions WHERE account_id=%s", MedicalCenterTest::$accountId);
+        $query = DB::queryFirstRow("SELECT * FROM sessions WHERE account_id=%s", self::$accountId);
         $this->assertNotNull($query);
     }
 
@@ -90,10 +100,10 @@ class MedicalCenterTest extends TestCase
     public function testRequestRegistrationWithUsedAccountName()
     {
         $this->expectException(AccountAlreadyExistsException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setPhsrc("PHSRC/UNUSED/002");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setPhsrc("PHSRC/UNUSED/002");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -115,9 +125,9 @@ class MedicalCenterTest extends TestCase
     public function testRequestRegistrationWithUsedPHSRC()
     {
         $this->expectException(PHSRCAlreadyInUse::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenter::requestRegistration(MedicalCenterTest::$unusedAccountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        MedicalCenter::requestRegistration(self::$unusedAccountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -131,10 +141,10 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfName()
     {
         $this->expectException(InvalidDataException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setName("");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setName("");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -148,10 +158,10 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfPHSRCEmpty()
     {
         $this->expectException(InvalidDataException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setPhsrc("");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setPhsrc("");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -165,10 +175,10 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfPHSRCRegex()
     {
         $this->expectException(InvalidDataException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setPhsrc("PHSRC/SD/SD");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setPhsrc("PHSRC/SD/SD");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -182,10 +192,10 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfEmailEmpty()
     {
         $this->expectException(InvalidDataException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setEmail("");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setEmail("");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -199,10 +209,10 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfEmailRegex()
     {
         $this->expectException(InvalidDataException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setEmail("email.com");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setEmail("email.com");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -216,10 +226,10 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfFaxEmpty()
     {
         $this->expectException(AccountAlreadyExistsException::class); // No InvalidDataException
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setFax("");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setFax("");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -233,10 +243,10 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfFaxRegex()
     {
         $this->expectException(InvalidDataException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setFax("FGSAF");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setFax("FGSAF");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -250,10 +260,10 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfPhoneNumberEmpty()
     {
         $this->expectException(InvalidDataException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setPhoneNumber("");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setPhoneNumber("");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -267,10 +277,10 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfAddressEmpty()
     {
         $this->expectException(InvalidDataException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setAddress("");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setAddress("");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 
     /**
@@ -284,9 +294,9 @@ class MedicalCenterTest extends TestCase
     public function testDataInvalidationOfPostalCodeEmpty()
     {
         $this->expectException(InvalidDataException::class);
-        MedicalCenterTest::restoreDetails();
-        MedicalCenterTest::getMedicalCenterDetails()->setPostalCode("");
-        MedicalCenter::requestRegistration(MedicalCenterTest::$accountId, MedicalCenterTest::$medicalCenterDetails,
-            MedicalCenterTest::$password);
+        self::restoreDetails();
+        self::getMedicalCenterDetails()->setPostalCode("");
+        MedicalCenter::requestRegistration(self::$accountId, self::$medicalCenterDetails,
+            self::$password);
     }
 }

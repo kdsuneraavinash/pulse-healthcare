@@ -4,6 +4,7 @@ namespace Pulse\Controllers;
 
 use Http;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Twig_Environment;
 
@@ -73,14 +74,14 @@ abstract class BaseController
     }
 
     /**
-     * @return string|null |null
+     * @return Account|null
      */
-    protected function getCurrentAccountId(): ?string
+    protected function getCurrentAccount(): ?Account
     {
         try {
             $session = LoginService::continueSession();
             if ($session != null) {
-                return $session->getSessionAccountId();
+                return $session->getSessionAccount();
             } else {
                 return null;
             }
@@ -88,5 +89,13 @@ abstract class BaseController
             LoginService::signOutSession();
             return null;
         }
+    }
+
+    /**
+     * @return string|null |null
+     */
+    protected function getCurrentAccountId(): ?string
+    {
+        return $this->getCurrentAccount()->getAccountId();
     }
 }

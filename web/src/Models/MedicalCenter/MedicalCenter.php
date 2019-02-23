@@ -8,6 +8,9 @@ use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Doctor\Doctor;
+use Pulse\Models\Doctor\DoctorDetails;
+use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Interfaces\IFavouritable;
 
 class MedicalCenter extends Account implements IFavouritable
@@ -21,7 +24,7 @@ class MedicalCenter extends Account implements IFavouritable
      */
     protected function __construct(string $accountId, MedicalCenterDetails $medicalCenterDetails)
     {
-        parent::__construct($accountId, "med_center");
+        parent::__construct($accountId, AccountType::MedicalCenter());
         $this->medicalCenterDetails = $medicalCenterDetails;
     }
 
@@ -57,10 +60,10 @@ class MedicalCenter extends Account implements IFavouritable
 
         parent::saveInDatabase();
         DB::insert('medical_centers', array(
-            'account_id' => $this->accountId,
+            'account_id' => parent::getAccountId(),
             'verified' => false
         ));
-        $this->getMedicalCenterDetails()->saveInDatabase($this->accountId);
+        $this->getMedicalCenterDetails()->saveInDatabase(parent::getAccountId());
     }
 
     /**
@@ -74,20 +77,8 @@ class MedicalCenter extends Account implements IFavouritable
         if (!$detailsValid) {
             throw new InvalidDataException("Server side validation failed.");
         }
-        $this->checkWhetherAccountIDExists();
+        parent::checkWhetherAccountIDExists();
         $this->checkWhetherPHSRCExists();
-    }
-
-    /**
-     * @throws AccountAlreadyExistsException
-     */
-    private function checkWhetherAccountIDExists()
-    {
-        $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
-            $this->accountId);
-        if ($existingAccount != null) {
-            throw new AccountAlreadyExistsException($existingAccount['account_id']);
-        }
     }
 
     /**
@@ -107,9 +98,18 @@ class MedicalCenter extends Account implements IFavouritable
         // TODO: implementation of createPatientAccount() function
     }
 
-    public function createDoctorAccount()
+    /**
+     * @param DoctorDetails $doctorDetails
+     * @return string
+     * @throws AccountAlreadyExistsException
+     * @throws InvalidDataException
+     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\SLMCAlreadyInUse
+     */
+    public function createDoctorAccount(DoctorDetails $doctorDetails): string
     {
-        // TODO: implementation of createDoctorAccount() function
+        return Doctor::register($doctorDetails);
     }
 
     public function searchDoctor()
@@ -122,6 +122,9 @@ class MedicalCenter extends Account implements IFavouritable
         // TODO: implementation of searchPatient() function
     }
 
+    /**
+     * @return MedicalCenterDetails
+     */
     public function getMedicalCenterDetails(): MedicalCenterDetails
     {
         return $this->medicalCenterDetails;
