@@ -9,6 +9,8 @@ use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Interfaces\IFavouritable;
+use Pulse\Models\Patient\Patient;
+use Pulse\Models\Patient\PatientDetails;
 
 class MedicalCenter extends Account implements IFavouritable
 {
@@ -74,17 +76,17 @@ class MedicalCenter extends Account implements IFavouritable
         if (!$detailsValid) {
             throw new InvalidDataException("Server side validation failed.");
         }
-        $this->checkWhetherAccountIDExists();
+        $this->checkWhetherAccountIDExists($this->accountId);
         $this->checkWhetherPHSRCExists();
     }
 
-    /**
+    /**@param string $accountId
      * @throws AccountAlreadyExistsException
      */
-    private function checkWhetherAccountIDExists()
+    private function checkWhetherAccountIDExists(string $accountId)
     {
         $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
-            $this->accountId);
+            $accountId);
         if ($existingAccount != null) {
             throw new AccountAlreadyExistsException($existingAccount['account_id']);
         }
@@ -102,9 +104,28 @@ class MedicalCenter extends Account implements IFavouritable
         }
     }
 
-    public function createPatientAccount()
+
+
+    /**
+     * @param Patient $patient
+     * @param string $password
+     * @throws AccountAlreadyExistsException
+     *
+     */
+
+    public function createPatientAccount(Patient $patient,string $password)
     {
-        // TODO: implementation of createPatientAccount() function
+
+        $patient->getPatientDetails()->validate();
+        $this->checkWhetherAccountIDExists($patient->accountId);
+        parent::saveInDatabase();
+        DB::insert('patients', array(
+            'account_id' => $patient->accountId,
+            'name' => $patient->getPatientDetails()->getName()
+        ));
+        $patient->getPatientDetails()->saveInDatabase($patient->accountId);
+
+
     }
 
     public function createDoctorAccount()
