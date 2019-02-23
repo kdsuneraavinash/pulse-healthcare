@@ -43,15 +43,22 @@ abstract class BaseController
     /**
      * @param string $template Template file name (without extension)
      * @param array $context Values to pass into file
-     * @param string|null $accountId
+     * @param Account|null $account
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    protected function render(string $template, array $context, ?string $accountId)
+    protected function render(string $template, array $context, ?Account $account)
     {
+        if ($account != null){
+            $context['account_id'] = $account->getAccountId();
+            $context['account_type'] = (string) $account->getAccountType();
+        }else{
+            $context['account_id'] = null;
+            $context['account_type'] = null;
+        }
+
         $context['site'] = "http://$_SERVER[HTTP_HOST]";
-        $context['account_id'] = $accountId;
         $context['current_page'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $context['error'] = $this->getRequest()->getQueryParameter('error');
         $rendered = $this->getRenderer()->render($template, $context);
@@ -93,17 +100,5 @@ abstract class BaseController
             LoginService::signOutSession();
             return null;
         }
-    }
-
-    /**
-     * @return string|null |null
-     */
-    protected function getCurrentAccountId(): ?string
-    {
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount == null) {
-            return null;
-        }
-        return $currentAccount->getAccountId();
     }
 }

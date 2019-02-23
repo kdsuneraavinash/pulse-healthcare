@@ -51,9 +51,9 @@
 
 ## User Management
 
-Current user = `pTest`
+Current user = `administrator`
 
-Current password = `password`
+Current password = `q34qrhKYLB8x4zx`
 
 ## Database Tables
 

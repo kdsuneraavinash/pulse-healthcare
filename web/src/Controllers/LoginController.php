@@ -51,12 +51,12 @@ class LoginController extends BaseController
      */
     public function get()
     {
-        $accountId = $this->getCurrentAccountId();
+        $account = $this->getCurrentAccount();
 
-        if ($accountId == null) {
-            $this->render('LoginPage.html.twig', array(), $accountId);
+        if ($account == null) {
+            $this->render('LoginPage.html.twig', array(), $account);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig', array(), $accountId);
+            $this->render('AlreadyLoggedIn.html.twig', array(), $account);
         }
     }
 }

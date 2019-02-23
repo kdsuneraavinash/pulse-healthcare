@@ -14,14 +14,14 @@ class ProfilePageController extends BaseController
      */
     public function get()
     {
-        $accountId = $this->getCurrentAccountId();
-        if ($accountId == null) {
+        $account = $this->getCurrentAccount();
+        if ($account == null) {
             header("Location: http://$_SERVER[HTTP_HOST]");
             StaticLogger::loggerWarn("Unauthorized user " . Utils::getClientIP() .
                 " tried to access Profile page.");
             exit;
         } else {
-            $this->render('ProfilePage.html.twig', array(), $accountId);
+            $this->render('ProfilePage.html.twig', array(), $account);
         }
     }
 }

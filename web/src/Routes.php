@@ -21,9 +21,9 @@ function getRoutes()
         ['GET', '/register/doctor', ['Pulse\Controllers\DoctorRegistrationController', 'get']],
         ['POST', '/register/doctor', ['Pulse\Controllers\DoctorRegistrationController', 'post']],
 
-        ['GET', '/admin', ['Pulse\Controllers\AdminControlPanelController', 'get']],
-        ['GET', '/admin/dashboard', ['Pulse\Controllers\AdminControlPanelController', 'getAdminDashboardIframe']],
-        ['GET', '/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'getAdminVerifyMedicalCentersIframe']],
+        ['GET', '/control/admin', ['Pulse\Controllers\AdminControlPanelController', 'get']],
+        ['GET', '/control/admin/dashboard', ['Pulse\Controllers\AdminControlPanelController', 'getAdminDashboardIframe']],
+        ['GET', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'getAdminVerifyMedicalCentersIframe']],
     ];
 }
 

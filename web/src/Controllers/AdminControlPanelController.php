@@ -11,8 +11,8 @@ class AdminControlPanelController extends BaseController
      */
     public function get()
     {
-        $accountId = $this->getCurrentAccountId();
-        $this->render('ControlPanelPage.html.twig', array(), $accountId);
+        $account = $this->getCurrentAccount();
+        $this->render('ControlPanelAdminPage.html.twig', array(), $account);
     }
 
     /**
@@ -22,8 +22,8 @@ class AdminControlPanelController extends BaseController
      */
     public function getAdminDashboardIframe()
     {
-        $accountId = $this->getCurrentAccountId();
-        $this->render('iframe/AdminDashboardIFrame.htm.twig', array(), $accountId);
+        $account = $this->getCurrentAccount();
+        $this->render('iframe/AdminDashboardIFrame.htm.twig', array(), $account);
     }
 
     /**
@@ -33,7 +33,7 @@ class AdminControlPanelController extends BaseController
      */
     public function getAdminVerifyMedicalCentersIframe()
     {
-        $accountId = $this->getCurrentAccountId();
-        $this->render('iframe/AdminVerifyMedicalCentersIFrame.htm.twig', array(), $accountId);
+        $account = $this->getCurrentAccount();
+        $this->render('iframe/AdminVerifyMedicalCentersIFrame.htm.twig', array(), $account);
     }
 }

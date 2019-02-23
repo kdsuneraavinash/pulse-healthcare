@@ -23,7 +23,7 @@ class DoctorRegistrationController extends BaseController
     {
         $currentAccount = $this->getCurrentAccount();
         if ($currentAccount instanceof MedicalCenter) {
-            $this->render('DoctorRegistration.html.twig', array(), $currentAccount->getAccountId());
+            $this->render('DoctorRegistration.html.twig', array(), $currentAccount);
         } else {
             header("Location: http://$_SERVER[HTTP_HOST]");
             exit;

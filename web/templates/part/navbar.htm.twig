@@ -45,25 +45,50 @@
                             <a href="{{ site }}/login" class="nav-link btn btn-outline-dark waves-effect">
                                 <i class="fas fa-user-circle"></i> &nbsp; Sign In</a>
                         </li>
-                        <ul class="navbar-nav nav-flex-icons">
-                            <li class="nav-item">
-                                <a href="{{ site }}/register/medi" class="nav-link btn btn-outline-dark waves-effect">
-                                    <i class="fas fa-hospital"></i> &nbsp; Register
-                                </a>
-                            </li>
-                        </ul>
+                        <li class="nav-item">
+                            <a href="{{ site }}/register/medi" class="nav-link btn btn-outline-dark waves-effect">
+                                <i class="fas fa-hospital"></i> &nbsp; Register
+                            </a>
+                        </li>
                     </ul>
                 {% else %}
 
+                    {% if (account_type == 'admin') %}
+                        {% set icon = 'user-cog' %}
+                    {% elseif (account_type == 'doctor') %}
+                        {% set icon = 'user-md' %}
+                    {% elseif (account_type == 'patient') %}
+                        {% set icon = 'user-tie' %}
+                    {% elseif (account_type == 'med_center') %}
+                        {% set icon = 'hospital' %}
+                    {% else %}
+                        {% set icon = 'user' %}
+                    {% endif %}
+
                     <!-- Sign Out Button -->
-                    <ul class="navbar-nav nav-flex-icons">
-                        <li class="nav-item">
-                            <form method="post" action="{{ site }}/logout">
-                                <button type="submit" class="nav-link btn btn-outline-red waves-effect">
-                                    <i class="fas fa-power-off"></i> &nbsp; Sign Out
-                                </button>
-                            </form>
+                    <ul class="navbar-nav ml-auto nav-flex-icons">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="profileNav" data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                <i class="fas fa-{{ icon }} mr-2"></i> {{ account_id }} </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                                 aria-labelledby="profileNav">
+                                <a onclick="post('{{ site }}/profile', null, 'get')" class="dropdown-item" href="#"><i
+                                            class="fas fa-user mr-2" style="width: 20px;"></i>My Account</a>
+                                <a onclick="post('{{ site }}/control/{{ account_type }}', null, 'get')" class="dropdown-item" href="#"><i
+                                            class="fas fa-cogs mr-2" style="width: 20px;"></i>Control Panel</a>
+                                <a onclick="post('{{ site }}/logout')" class="dropdown-item" href="#"><i
+                                            class="fas fa-power-off mr-2" style="width: 20px;"></i>Sign Out</a>
+                            </div>
                         </li>
+                        {#<li class="nav-item">#}
+                        {#<form method="post" action="{{ site }}/logout">#}
+                        {#<button type="submit" class="nav-link btn btn-outline-red waves-effect">#}
+                        {#<i class="fas fa-power-off"></i> &nbsp; Sign Out#}
+                        {#</button>#}
+                        {#</form>#}
+                        {#</li>#}
                     </ul>
                 {% endif %}
 
