@@ -33,7 +33,7 @@ class DoctorDetails implements IDetails
         $this->fullName = $fullName;
         $this->displayName = $displayName;
         $this->category = $category;
-        $this->$slmcId = $slmcId;
+        $this->slmcId = $slmcId;
         $this->email = $email;
         $this->phoneNumber = $phoneNumber;
     }
@@ -45,7 +45,7 @@ class DoctorDetails implements IDetails
         $fullNameValid = $this->fullName != "";
         $displayNameValid = $this->displayName != "";
         $categoryValid = $this->category != "";
-        $slmcIDValid = $this->slmcId != "" && preg_match('/[0-9]/', $this->slmcId); //TODO: Add real regex matching
+        $slmcIDValid = $this->slmcId != ""; //TODO: Add real regex matching
         $emailValid = $this->email != "" && preg_match(' /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*' .
                 ')|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|' .
                 '(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $this->email);
@@ -73,8 +73,9 @@ class DoctorDetails implements IDetails
     {
         DB::insert('doctor_details', array(
             'account_id' => $accountId,
+            'nic' => $this->getNic(),
             'full_name' => $this->getFullName(),
-            'name' => $this->getDisplayName(),
+            'display_name' => $this->getDisplayName(),
             'category' => $this->getCategory(),
             'slmc_id' => $this->getSlmcId(),
             'email' => $this->getEmail(),

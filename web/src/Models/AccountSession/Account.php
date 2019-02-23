@@ -5,6 +5,8 @@ namespace Pulse\Models\AccountSession;
 use DB;
 use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\Doctor\Doctor;
+use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
@@ -50,6 +52,8 @@ abstract class Account
             $parsedAccount = new MedicalCenter($accountId, MedicalCenterDetails::readFromDatabase($accountId));
         } else if ($account['account_type'] ==  (string) AccountType::Tester()) {
             $parsedAccount = new TempAccount($accountId);
+        } else if ($account['account_type'] ==  (string) AccountType::Doctor()) {
+            $parsedAccount = new Doctor(DoctorDetails::readFromDatabase($accountId));
         }
 
         if ($parsedAccount == null) {
