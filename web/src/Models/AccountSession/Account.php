@@ -39,11 +39,13 @@ abstract class Account
 
     /**
      * @param string $accountId
+     * @param bool $ignoreMedicalCenterVerificationError
      * @return Account|null
      * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      * @throws \Pulse\Exceptions\InvalidDataException
      */
-    public static function retrieveAccount(string $accountId): ?Account
+    public static function retrieveAccount(string $accountId, bool $ignoreMedicalCenterVerificationError = false): ?Account
     {
         $account = DB::queryFirstRow("SELECT * FROM accounts WHERE account_id=%s", $accountId);
         if ($account == null) {
@@ -51,7 +53,8 @@ abstract class Account
         }
         $parsedAccount = null;
         if ($account['account_type'] === (string)AccountType::MedicalCenter()) {
-            $parsedAccount = new MedicalCenter($accountId, null, MedicalCenterDetails::readFromDatabase($accountId));
+            $parsedAccount = new MedicalCenter($accountId, null,
+                MedicalCenterDetails::readFromDatabase($accountId), $ignoreMedicalCenterVerificationError);
         } else if ($account['account_type'] === (string)AccountType::Tester()) {
             $parsedAccount = new TempAccount($accountId);
         } else if ($account['account_type'] === (string)AccountType::Doctor()) {

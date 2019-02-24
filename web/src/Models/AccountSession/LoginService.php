@@ -19,6 +19,7 @@ class LoginService implements BaseModel
      * @return Session|null
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public static function continueSession(): ?Session
     {
@@ -47,6 +48,7 @@ class LoginService implements BaseModel
      * @return Session|null
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public static function logInSession(string $accountId, string $password): ?Session
     {
@@ -74,6 +76,7 @@ class LoginService implements BaseModel
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws AlreadyLoggedInException
      * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public static function signUpSession(string $accountId, string $password): Session
     {

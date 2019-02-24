@@ -1,0 +1,35 @@
+{% macro profile_button(account_id, account_type, site, control_panel) -%}
+
+    {% if (account_type == 'admin') %}
+        {% set account_icon = 'user-cog' %}
+    {% elseif (account_type == 'doctor') %}
+        {% set account_icon = 'user-md' %}
+    {% elseif (account_type == 'patient') %}
+        {% set account_icon = 'user-tie' %}
+    {% elseif (account_type == 'med_center') %}
+        {% set account_icon = 'hospital' %}
+    {% else %}
+        {% set account_icon = 'user' %}
+    {% endif %}
+
+    <ul class="navbar-nav ml-auto nav-flex-icons">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="profileNav" data-toggle="dropdown"
+               aria-haspopup="true"
+               aria-expanded="false">
+                <i class="fas fa-{{ account_icon }} mr-2"></i> {{ account_id }} </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                 aria-labelledby="profileNav">
+                <a onclick="post('{{ site }}/profile', null, 'get')" class="dropdown-item" href="#"><i
+                            class="fas fa-address-card mr-2" style="width: 20px;"></i>My Account</a>
+                {% if (control_panel == true) %}
+                <a onclick="post('{{ site }}/control/{{ account_type }}', null, 'get')"
+                   class="dropdown-item" href="#"><i
+                            class="fas fa-cogs mr-2" style="width: 20px;"></i>Control Panel</a>
+                {% endif %}
+                <a onclick="post('{{ site }}/logout')" class="dropdown-item" href="#"><i
+                            class="fas fa-power-off mr-2" style="width: 20px;"></i>Sign Out</a>
+            </div>
+        </li>
+    </ul>
+{%- endmacro %}

@@ -5,6 +5,7 @@ namespace Pulse\Models\MedicalCenter;
 use DB;
 use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\AccountRejectedException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\AccountSession\Account;
@@ -12,34 +13,40 @@ use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
+use Pulse\Models\Enums\VerificationState;
 use Pulse\Models\Interfaces\IFavouritable;
-use Pulse\StaticLogger;
 
 class MedicalCenter extends Account implements IFavouritable
 {
     private $medicalCenterDetails;
-    private $verified;
+    private $verificationState;
 
     /**
      * MedicalCenter constructor.
      * @param string $accountId
-     * @param bool $verified
+     * @param VerificationState|null $verificationState
      * @param MedicalCenterDetails $medicalCenterDetails
+     * @param bool $ignoreErrors
      * @throws AccountNotExistException
+     * @throws AccountRejectedException
      */
-    protected function __construct(string $accountId, ?bool $verified, MedicalCenterDetails $medicalCenterDetails)
+    protected function __construct(string $accountId, ?VerificationState $verificationState,
+                                   MedicalCenterDetails $medicalCenterDetails, bool $ignoreErrors = false)
     {
         parent::__construct($accountId, AccountType::MedicalCenter());
         $this->medicalCenterDetails = $medicalCenterDetails;
-        if ($verified === null){
+        if ($verificationState === null) {
             // Need to fetch from database
             $query = DB::queryFirstRow("SELECT verified FROM medical_centers WHERE account_id=%s", $accountId);
-            if ($query == null){
+            if ($query == null) {
                 throw new AccountNotExistException($accountId);
             }
-            $this->verified = $query['verified'] == 1;
-        }else{
-            $this->verified = $verified;
+            $this->verificationState = VerificationState::getStateOfInt((int)$query['verified']);
+            if (!$ignoreErrors && $this->getVerificationState()->getState() == 2) {
+                throw new AccountRejectedException($accountId);
+            }
+        } else {
+            $this->verificationState = $verificationState;
         }
     }
 
@@ -53,11 +60,12 @@ class MedicalCenter extends Account implements IFavouritable
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws AccountRejectedException
      */
     public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails,
                                                string $password): MedicalCenter
     {
-        $medicalCenter = new MedicalCenter($accountId, false, $medicalCenterDetails);
+        $medicalCenter = new MedicalCenter($accountId, VerificationState::Default(), $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
         LoginService::signUpSession($accountId, $password);
         // TODO: Add code to request verification
@@ -76,7 +84,7 @@ class MedicalCenter extends Account implements IFavouritable
         parent::saveInDatabase();
         DB::insert('medical_centers', array(
             'account_id' => parent::getAccountId(),
-            'verified' => $this->isVerified()
+            'verified' => $this->getVerificationState()->getState()
         ));
         $this->getMedicalCenterDetails()->saveInDatabase(parent::getAccountId());
     }
@@ -144,10 +152,10 @@ class MedicalCenter extends Account implements IFavouritable
     }
 
     /**
-     * @return bool
+     * @return VerificationState
      */
-    public function isVerified(): bool
+    public function getVerificationState(): VerificationState
     {
-        return $this->verified;
+        return $this->verificationState;
     }
 }

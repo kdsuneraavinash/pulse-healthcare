@@ -77,6 +77,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testRequestRegistration()
     {
@@ -96,6 +97,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testRequestRegistrationWithUsedAccountName()
     {
@@ -121,6 +123,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testRequestRegistrationWithUsedPHSRC()
     {
@@ -137,6 +140,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfName()
     {
@@ -154,6 +158,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfPHSRCEmpty()
     {
@@ -171,6 +176,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfPHSRCRegex()
     {
@@ -188,6 +194,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfEmailEmpty()
     {
@@ -205,6 +212,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfEmailRegex()
     {
@@ -222,6 +230,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfFaxEmpty()
     {
@@ -239,6 +248,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfFaxRegex()
     {
@@ -256,6 +266,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfPhoneNumberEmpty()
     {
@@ -273,6 +284,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfAddressEmpty()
     {
@@ -290,6 +302,7 @@ class MedicalCenterTest extends TestCase
      * @throws PHSRCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public function testDataInvalidationOfPostalCodeEmpty()
     {

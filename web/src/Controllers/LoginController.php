@@ -3,6 +3,7 @@
 namespace Pulse\Controllers;
 
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\AccountRejectedException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\StaticLogger;
@@ -30,6 +31,10 @@ class LoginController extends BaseController
             exit;
         } catch (InvalidDataException $e) {
             $message = "Account $accountId login Error";
+            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
+            exit;
+        } catch (AccountRejectedException $e) {
+            $message = "Your account $accountId was rejected. Please contact system administrators for further details.";
             header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
             exit;
         }

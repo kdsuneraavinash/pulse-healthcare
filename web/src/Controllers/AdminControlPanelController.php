@@ -2,6 +2,9 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\AccountRejectedException;
+use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
@@ -49,6 +52,7 @@ class AdminControlPanelController extends BaseController
     }
 
     /**
+     * @throws AccountRejectedException
      */
     public function postAdminVerifyMedicalCentersIframe()
     {
@@ -60,9 +64,12 @@ class AdminControlPanelController extends BaseController
             /// Current user must be ADMIN
             try {
                 /// Get target user object
-                $targetAccount = Account::retrieveAccount($targetAccountId);
-            } catch (\Exception $e) {
-                /// Exception: So METHOD NOT ALLOWED
+                $targetAccount = Account::retrieveAccount($targetAccountId, true);
+
+            } catch (AccountNotExistException $e) {
+                header("Location: http://$_SERVER[HTTP_HOST]/405");
+                exit;
+            } catch (InvalidDataException $e) {
                 header("Location: http://$_SERVER[HTTP_HOST]/405");
                 exit;
             }

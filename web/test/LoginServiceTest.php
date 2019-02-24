@@ -28,7 +28,9 @@ final class LoginServiceTest extends TestCase
     }
 
     /**
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToContinueWithoutSigningUp()
     {
@@ -39,6 +41,8 @@ final class LoginServiceTest extends TestCase
     /**
      * @depends testTryToContinueWithoutSigningUp
      * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToLogInWithoutSigningUp()
     {
@@ -48,9 +52,11 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogInWithoutSigningUp
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws AlreadyLoggedInException
      * @throws \Pulse\Exceptions\AccountAlreadyExistsException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToSignUp()
     {
@@ -60,7 +66,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToSignUp
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToContinueAfterSigningUp()
     {
@@ -70,9 +78,11 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueAfterSigningUp
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
+     * @throws AccountNotExistException
+     * @throws AlreadyLoggedInException
      * @throws \Pulse\Exceptions\AccountAlreadyExistsException
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToSignUpAfterSigningUp()
     {
@@ -82,7 +92,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToSignUpAfterSigningUp
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToLogOutAfterSignUp()
     {
@@ -93,7 +105,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogOutAfterSignUp
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToLogInWithFakePassword()
     {
@@ -103,7 +117,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogInWithFakePassword
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToContinueAfterFakeLogIn()
     {
@@ -113,7 +129,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueAfterFakeLogIn
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToLogInWithCorrectPassword()
     {
@@ -123,7 +141,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogInWithCorrectPassword
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToContinueAfterCorrectLogIn()
     {
@@ -133,7 +153,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueAfterCorrectLogIn
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToLogOutAfterLogIn()
     {
@@ -144,7 +166,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogOutAfterLogIn
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testTryToLogOutAfterLogOut()
     {

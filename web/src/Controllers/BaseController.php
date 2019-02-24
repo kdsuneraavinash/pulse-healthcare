@@ -4,6 +4,7 @@ namespace Pulse\Controllers;
 
 use Http;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\AccountRejectedException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
@@ -55,7 +56,7 @@ abstract class BaseController
             $context['account_id'] = $account->getAccountId();
             $context['account_type'] = (string)$account->getAccountType();
             if ($account instanceof MedicalCenter) {
-                $context['verified'] = $account->isVerified();
+                $context['verified'] = $account->getVerificationState()->getState();
             }
         } else {
             $context['account_id'] = null;
@@ -120,6 +121,9 @@ abstract class BaseController
             LoginService::signOutSession();
             return null;
         } catch (InvalidDataException $e) {
+            LoginService::signOutSession();
+            return null;
+        } catch (AccountRejectedException $e) {
             LoginService::signOutSession();
             return null;
         }

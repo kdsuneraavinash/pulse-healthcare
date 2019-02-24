@@ -4,7 +4,7 @@ Sidebar
 -----------------------------------------------
 */
 
-{% macro sidebar_start(site) -%}
+{% macro sidebar_start(account_id, account_type, site) -%}
     <!--suppress HtmlUnknownTarget, HtmlFormInputWithoutLabel -->
 <div class="sidebar-fixed position-fixed p-2 bg-dark">
     <div class="text-center">
@@ -13,6 +13,11 @@ Sidebar
                 MediKit
             </h1>
         </a>
+    </div>
+
+    <div class="bg-dark text-white text-center pb-4">
+        {% import 'macro/common.htm.twig' as common %}
+        {{ common.profile_button(account_id, account_type, site) }}
     </div>
 
     <div class="list-group list-group-flush">

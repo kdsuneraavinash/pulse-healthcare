@@ -22,6 +22,7 @@ class Session implements BaseModel
      * @param string $sessionKey Session key
      * @throws AccountNotExistException if account does not exist
      * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     private function __construct(string $accountId, string $sessionKey)
     {
@@ -38,6 +39,7 @@ class Session implements BaseModel
      * @return Session Created Session Object
      * @throws AccountNotExistException
      * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public static function createSession(string $accountId): Session
     {
@@ -75,6 +77,7 @@ class Session implements BaseModel
      * @return Session|null Created session(null if session key is invalid)
      * @throws AccountNotExistException
      * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public static function resumeSession(string $accountId, string $sessionKey): ?Session
     {

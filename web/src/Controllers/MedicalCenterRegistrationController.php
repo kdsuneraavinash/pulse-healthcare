@@ -4,6 +4,7 @@ namespace Pulse\Controllers;
 
 use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\AccountRejectedException;
 use Pulse\Exceptions\AlreadyLoggedInException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
@@ -50,6 +51,8 @@ class MedicalCenterRegistrationController extends BaseController
                     $error = "Server side validation failed.";
                 } catch (PHSRCAlreadyInUse $e) {
                     $error = "PHSRC already registered";
+                } catch (AccountRejectedException $e) {
+                    $error = "Server error. Please try again";
                 }
 
                 if (!isset($error)) {
