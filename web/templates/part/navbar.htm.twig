@@ -1,10 +1,10 @@
 <!--suppress HtmlUnknownTarget -->
 <div id="loader" class="d-flex content-justify-center">
-    <div class="spinner-grow text-primary" role="status">
+    <div class="spinner-border text-primary" role="status">
         <span class="sr-only">Loading...</span>
     </div>
-
 </div>
+
 <header>
     <nav class="navbar fixed-top navbar-expand-lg bg-white scrolling-navbar">
         <div class="container">
@@ -21,56 +21,39 @@
             </button>
 
             <!-- Links -->
+
             <div class="collapse navbar-collapse" id="navbar-content">
-                <ul class="navbar-nav mr-auto">
+                {% if (page == "Home") %}
+                    <ul class="navbar-nav mr-auto" id="links">
 
-                    {% set nav_links = [[site, 'Home'], ['/profile', 'Profile'], ['#', 'About MediKit'], ['#', 'Services'], ['#', 'Contact']] %}
+                        {% set nav_links = [["#home", 'Home'], ['#services', 'Services'], ['#team', 'Our Team']] %}
 
-                    {% for item in nav_links %}
-                        {% set href = item[0] %}
-                        {% set caption = item[1] %}
-
-                        {% if (caption == Page) %}
-                            <li class="nav-item active px-1">
-                                <a class="nav-link" href="{{ href }}"><b>{{ caption }}</b>
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                        {% else %}
+                        {% for item in nav_links %}
+                            {% set href = item[0] %}
+                            {% set caption = item[1] %}
                             <li class="nav-item px-1">
-                                <a href="{{ href }}" class="nav-link text-dark">{{ caption }}</a>
+                                <a href="{{ href }}" class="nav-link text-dark font-weight-bold">{{ caption }}</a>
                             </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
 
                 {% if (account_id == null) %}
                     <!-- Sign In Button -->
-                    <ul class="navbar-nav nav-flex-icons">
+                    <ul class="navbar-nav ml-auto nav-flex-icons">
                         <li class="nav-item">
                             <a href="{{ site }}/login" class="nav-link btn btn-outline-dark waves-effect">
                                 <i class="fas fa-user-circle"></i> &nbsp; Sign In</a>
                         </li>
-                        <ul class="navbar-nav nav-flex-icons">
-                            <li class="nav-item">
-                                <a href="{{ site }}/register/medi" class="nav-link btn btn-outline-dark waves-effect">
-                                    <i class="fas fa-hospital"></i> &nbsp; Register
-                                </a>
-                            </li>
-                        </ul>
-                    </ul>
-                {% else %}
-
-                    <!-- Sign Out Button -->
-                    <ul class="navbar-nav nav-flex-icons">
                         <li class="nav-item">
-                            <form method="post" action="{{ site }}/logout">
-                                <button type="submit" class="nav-link btn btn-outline-red waves-effect">
-                                    <i class="fas fa-power-off"></i> &nbsp; Sign Out
-                                </button>
-                            </form>
+                            <a href="{{ site }}/register/medi" class="nav-link btn btn-outline-dark waves-effect">
+                                <i class="fas fa-hospital"></i> &nbsp; Register
+                            </a>
                         </li>
                     </ul>
+                {% else %}
+                    {% import 'macro/common.htm.twig' as common %}
+                    {{ common.profile_button(account_id, account_type, site, true) }}
                 {% endif %}
 
 

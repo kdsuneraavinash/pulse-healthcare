@@ -13,7 +13,7 @@ define('SESSION_SALT_LENGTH', 40);
 
 class Session implements BaseModel
 {
-    private $accountId;
+    private $account;
     private $sessionKey;
 
     /**
@@ -21,15 +21,15 @@ class Session implements BaseModel
      * @param string $accountId id of the account
      * @param string $sessionKey Session key
      * @throws AccountNotExistException if account does not exist
+     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     private function __construct(string $accountId, string $sessionKey)
     {
-        $account = Account::retrieveAccount($accountId);
-        if (!$account->exists()) {
+        $this->account = Account::retrieveAccount($accountId);
+        if (!$this->account->exists()) {
             throw new AccountNotExistException($accountId);
         }
-
-        $this->accountId = $accountId;
         $this->sessionKey = $sessionKey;
     }
 
@@ -38,6 +38,8 @@ class Session implements BaseModel
      * @param string $accountId ID of the account to create session
      * @return Session Created Session Object
      * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public static function createSession(string $accountId): Session
     {
@@ -74,6 +76,8 @@ class Session implements BaseModel
      * @param string $sessionKey Session Key of the session to resume
      * @return Session|null Created session(null if session key is invalid)
      * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public static function resumeSession(string $accountId, string $sessionKey): ?Session
     {
@@ -98,7 +102,7 @@ class Session implements BaseModel
      */
     public function closeSession()
     {
-        Session::closeSessionOfContext($this->getSessionAccountId(), $this->getSessionKey());
+        Session::closeSessionOfContext($this->getSessionAccount()->getAccountId(), $this->getSessionKey());
     }
 
     /**
@@ -120,7 +124,7 @@ class Session implements BaseModel
      */
     private static function getEncryptedSessionKey(string $accountId, BrowserAgent $browserAgent, string $ip): string
     {
-        $salt = Utils::generateRandomString(SESSION_SALT_LENGTH);
+        $salt = Utils::generateRandomSaltyString(SESSION_SALT_LENGTH);
         return sha1($salt . time() . $accountId . $browserAgent . $ip);
     }
 
@@ -133,10 +137,10 @@ class Session implements BaseModel
     }
 
     /**
-     * @return string
+     * @return Account
      */
-    public function getSessionAccountId(): string
+    public function getSessionAccount(): Account
     {
-        return $this->accountId;
+        return $this->account;
     }
 }

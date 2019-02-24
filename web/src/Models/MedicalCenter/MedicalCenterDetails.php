@@ -4,8 +4,9 @@ namespace Pulse\Models\MedicalCenter;
 
 use DB;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\Interfaces\IDetails;
 
-class MedicalCenterDetails
+class MedicalCenterDetails implements IDetails
 {
     private $name;
     private $phsrc;
@@ -37,6 +38,9 @@ class MedicalCenterDetails
         $this->postalCode = $postalCode;
     }
 
+    /**
+     * @return bool
+     */
     public function validate()
     {
         $nameValid = $this->name != "";
@@ -57,7 +61,7 @@ class MedicalCenterDetails
      * @return MedicalCenterDetails
      * @throws AccountNotExistException
      */
-    public static function readFromDatabase(string $accountId) : MedicalCenterDetails
+    public static function readFromDatabase(string $accountId): MedicalCenterDetails
     {
         $query = DB::queryFirstRow("SELECT * FROM medical_center_details WHERE account_id=%s", $accountId);
         if ($query == null) {
@@ -67,6 +71,9 @@ class MedicalCenterDetails
             $query['phone_number'], $query['address'], $query['postal_code']);
     }
 
+    /**
+     * @param string $accountId
+     */
     public function saveInDatabase(string $accountId)
     {
         DB::insert('medical_center_details', array(
@@ -80,6 +87,13 @@ class MedicalCenterDetails
             'postal_code' => $this->getPostalCode()
         ));
     }
+
+
+    /*
+    --------------------------------------------------------------------------------------------------------------------
+    Getters and Setters
+    --------------------------------------------------------------------------------------------------------------------
+     */
 
     /**
      * @return string
@@ -192,6 +206,4 @@ class MedicalCenterDetails
     {
         $this->postalCode = $postalCode;
     }
-
-
 }

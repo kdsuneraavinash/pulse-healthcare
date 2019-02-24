@@ -37,6 +37,8 @@ final class SessionTest extends TestCase
 
     /**
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testCreateSession()
     {
@@ -50,6 +52,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testCreateSession
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testResumeSession()
     {
@@ -63,6 +67,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testResumeSession
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testCreateAnotherSession()
     {
@@ -74,6 +80,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testCreateAnotherSession
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testCreateSessionFromAnotherIP()
     {
@@ -87,6 +95,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testCreateSessionFromAnotherIP
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testCreateSessionFromAnotherBrowser()
     {
@@ -99,6 +109,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testCreateSessionFromAnotherBrowser
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testCreateSessionAgainFromAnotherBrowser()
     {
@@ -131,6 +143,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testCloseFirstSession
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testAnotherSessionTriedToResumeSession()
     {

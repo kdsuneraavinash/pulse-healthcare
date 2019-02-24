@@ -1,0 +1,38 @@
+<!doctype html>
+<!--suppress HtmlUnknownTarget -->
+
+{% import 'macro/control_panel.htm.twig' as control_panel %}
+
+<html lang="en">
+<head>
+    {% include("part/header.htm.twig") %}
+    {% include("part/nojs.htm.twig") %}
+    <link href="{{ site }}/css/control-panel.css" rel="stylesheet">
+    <style>
+        html {
+            overflow-y: hidden;
+        }
+    </style>
+    <title>Admin</title>
+</head>
+<body class="bg-light">
+<header>
+    {{ control_panel.sidebar_start(account_id, account_type, site) }}
+    {{ control_panel.sidebar_button("Dashboard", "dashboard", "fa-chart-pie", true) }}
+    {{ control_panel.sidebar_button("Verify Accounts", "verify", "fa-check", false) }}
+    {{ control_panel.sidebar_end() }}
+</header>
+
+<main>
+    <div class="container-fluid p-0">
+        {{ control_panel.navbar("Dashboard") }}
+        <iframe src="{{ site }}/control/admin/dashboard" style="border:none; min-height: 100vh;"
+                class="embed-responsive m-0 p-0" id="content-iframe"></iframe>
+    </div>
+</main>
+
+{% include "part/scripts.htm.twig" %}
+<script src="{{ site }}/js/control-panel.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+/*
+-----------------------------------------------
+Main
+-----------------------------------------------
+ */
+
+body {
+    background-image: none;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+/*
+-----------------------------------------------
+Sidebar
+-----------------------------------------------
+ */
+
+.sidebar-fixed {
+    height: 100vh;
+    width: 270px;
+    z-index: 1050;
+}
+
+.sidebar-fixed .logo-wrapper img {
+    max-height: 50px
+}
+
+
+/*
+-----------------------------------------------
+Media Queries
+-----------------------------------------------
+ */
+
+@media (min-width: 800px) {
+    footer, main {
+        padding-left: 270px;
+    }
+
+    .sidebar-fixed {
+        margin-left: -5px !important;
+    }
+
+    .navbar, #drawer-close {
+        display: none;
+    }
+
+    #title-card {
+        display: block;
+    }
+}
+
+@media (max-width: 800px) {
+    main {
+        padding-top: 80px;
+    }
+
+    .navbar, footer, main {
+        padding-left: 0;
+    }
+
+    .sidebar-fixed {
+        margin-left: -270px;
+    }
+
+    .navbar, #drawer-close {
+        display: block;
+    }
+
+    #title-card {
+        display: none;
+    }
+}
