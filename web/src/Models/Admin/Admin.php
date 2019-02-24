@@ -5,6 +5,11 @@ namespace Pulse\Models\Admin;
 use DB;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Enums\AccountType;
+use Pulse\Models\MedicalCenter\MedicalCenter;
+
+define('ACCOUNT_NORMAL', 0);
+define('ACCOUNT_VERIFIED', 1);
+define('ACCOUNT_REJECTED', 2);
 
 class Admin extends Account
 {
@@ -17,7 +22,8 @@ class Admin extends Account
         parent::__construct($accountId, AccountType::Admin());
     }
 
-    public function retrieveMedicalCentersList(){
+    public function retrieveMedicalCentersList()
+    {
         $query = DB::query(
             "SELECT DISTINCT *
                 FROM medical_centers
@@ -32,5 +38,31 @@ class Admin extends Account
             $query[$i]['parsed_address'] = $dots_removed;
         }
         return $query;
+    }
+
+    public function deleteMedicalCenter(MedicalCenter $account)
+    {
+        DB::delete('medical_centers', "account_id=%s", $account->getAccountId());
+    }
+
+    public function retractMedicalCenter(MedicalCenter $account)
+    {
+        DB::update('medical_centers', array(
+            'verified' => ACCOUNT_NORMAL
+        ), "account_id=%s", $account->getAccountId());
+    }
+
+    public function rejectMedicalCenter(MedicalCenter $account)
+    {
+        DB::update('medical_centers', array(
+            'verified' => ACCOUNT_REJECTED
+        ), "account_id=%s", $account->getAccountId());
+    }
+
+    public function verifyMedicalCenter(MedicalCenter $account)
+    {
+        DB::update('medical_centers', array(
+            'verified' => ACCOUNT_VERIFIED
+        ), "account_id=%s", $account->getAccountId());
     }
 }

@@ -33,42 +33,50 @@
 </div>
 {{ control_panel.iframe_middle() }}
 
-{{ control_panel.verification_modal('modelDeleteConfirm', 'danger', 'red', 'trash',
-    'Confirm Deletion', 'Do you really want to delete this account?', 'This action cannot be undone.', 'Delete') }}
+{{ control_panel.verification_modal( 'modelDeleteConfirm', 'danger', 'red', 'trash',
+    'Confirm Deletion', 'Do you really want to delete this account?', 'This action cannot be undone.', 'Delete', site) }}
 {{ control_panel.verification_modal('modelVerifyAccount', 'success', 'green', 'check',
-    'Confirm Verification', 'Are you sure you want to verify this account?', 'From now on this account will be granted all permissions.', 'Verify') }}
+    'Confirm Verification', 'Are you sure you want to verify this account?', 'From now on this account will be granted all permissions.', 'Verify', site) }}
 {{ control_panel.verification_modal('modelRejectConfirm', 'danger', 'red', 'user-times',
-    'Confirm Rejection', 'Do you really want to reject this request?', 'Account owner will be notified of this action.', 'Reject') }}
+    'Confirm Rejection', 'Do you really want to reject this request?', 'Account owner will be notified of this action.', 'Reject', site) }}
 {{ control_panel.verification_modal('modelRetractAccount', 'dark', 'black', 'redo-alt',
-    'Confirm Retraction', 'Are you sure you want to retract account state?', 'Account will return back to unverified state.', 'Retract') }}
+    'Confirm Retraction', 'Are you sure you want to retract account state?', 'Account will return back to unverified state.', 'Retract', site) }}
 
 <script>
     $(document).ready(function () {
         $(".owl-carousel").owlCarousel(
             {
-                URLhashListener:true,
-                loop:false,
+                URLhashListener: true,
+                loop: false,
                 startPosition: 'URLHash',
-                center:false,
+                center: false,
                 margin: 10,
                 dots: true,
-                nav:true,
-                responsiveClass:true,
-                responsive:{
-                    0:{
-                        items:1,
+                nav: true,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
                     },
-                    600:{
-                        items:2,
+                    600: {
+                        items: 2,
                     },
-                    1000:{
-                        items:3,
+                    1000: {
+                        items: 3,
                     }
                 }
             }
         );
 
     });
+
+    $('.account-modal').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget);
+        let account = button.data('account');
+        let modal = $(this);
+        let input = modal.find('.data-account');
+        input.val(account);
+    })
 </script>
 
 {{ control_panel.iframe_end() }}

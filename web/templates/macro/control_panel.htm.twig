@@ -5,6 +5,7 @@ Sidebar
 */
 
 {% macro sidebar_start(site) -%}
+    <!--suppress HtmlUnknownTarget, HtmlFormInputWithoutLabel -->
 <div class="sidebar-fixed position-fixed p-2 bg-dark">
     <div class="text-center">
         <a class="logo-wrapper waves-effect p-3" href='{{ site }}'>
@@ -168,37 +169,45 @@ IFrameCards
 
             <hr/>
 
+            {% set verify_btn_class = 'btn-outline-success' %}
+            {% set reject_btn_class = 'btn-outline-danger' %}
+            {% if (state == '1') %} {# Verified #}
+                {% set verify_btn_class = 'btn-success' %}
+            {% elseif (state == '2') %} {# Rejected #}
+                {% set reject_btn_class = 'btn-danger' %}
+            {% endif %}
             <div class="text-right">
-                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                <button type="button" class="btn {{ reject_btn_class }}" data-account="{{ account_id }}" data-toggle="modal"
                         data-target="#modelRejectConfirm"><i class="fas fa-times pr-2"></i><span
                             class="d-none d-md-inline">Reject</span></button>
-                <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                <button type="button" class="btn {{ verify_btn_class }}" data-account="{{ account_id }}"
+                        data-toggle="modal"
                         data-target="#modelVerifyAccount"><i class="fas fa-check pr-2"></i><span
                             class="d-none d-md-inline">Verify</span></button>
             </div>
             {{ this.card_end() }}
         </div>
         {% if (state == '1') %} {# Verified #}
-            <div class="mask flex-center  pattern-1 mt-2" style="background-color: #59FF6244;">>
-                <button type="button" class="btn btn-black" data-toggle="modal" data-target="#modelRetractAccount"><i
-                            class="fas fa-redo-alt pr-2"></i><span
+            <div class="mask flex-center rgba-black-strong mt-2">
+                <button type="button" class="btn btn-black" data-toggle="modal" data-account="{{ account_id }}"
+                        data-target="#modelRetractAccount"><i class="fas fa-redo-alt pr-2"></i><span
                             class="d-none d-md-inline">Retract</span></button>
             </div>
         {% elseif (state == '2') %} {# Rejected #}
-            <div class="mask flex-center pattern-1 mt-2" style="background-color: #FF596244;">>
-                <button type="button" class="btn btn-black" data-toggle="modal" data-target="#modelRetractAccount"><i
-                            class="fas fa-redo-alt pr-2"></i><span
+            <div class="mask flex-center rgba-black-strong mt-2" >
+                <button type="button" class="btn btn-black" data-toggle="modal" data-account="{{ account_id }}"
+                        data-target="#modelRetractAccount"><i class="fas fa-redo-alt pr-2"></i><span
                             class="d-none d-md-inline">Retract</span></button>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modelDeleteConfirm"><i
-                            class="fas fa-trash-alt pr-2"></i><span
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-account="{{ account_id }}"
+                        data-target="#modelDeleteConfirm"><i class="fas fa-trash-alt pr-2"></i><span
                             class="d-none d-md-inline">Delete</span></button>
             </div>
         {% endif %}
     </div>
 {%- endmacro %}
 
-{% macro verification_modal(model_id, theme, color, icon, title, message, bold, action) -%}
-    <div class="modal fade right" id="{{ model_id }}" tabindex="-1" role="dialog"
+{% macro verification_modal(model_id, theme, color, icon, title, message, bold, action, site) -%}
+    <div class="modal fade right account-modal" id="{{ model_id }}" tabindex="-1" role="dialog"
          aria-labelledby="ModalLabel"
          data-backdrop="true" aria-hidden="true" style="display: none;">
         <div class="modal-dialog show modal-side modal-top-right modal-notify modal-{{ theme }}" role="document">
@@ -226,9 +235,13 @@ IFrameCards
 
                         <hr/>
 
-                        <button type="button" class="btn btn-{{ theme }} waves-effect"
-                                onclick="window.location='{{ site }}/control/admin/verify'">{{ action }}
-                            <i class="fas fa-{{ icon }} ml-1"></i></button>
+                        <form method="post" action='{{ site }}/control/admin/verify' class="d-inline">
+                            <input name="account" class="data-account" hidden>
+                            <input name="action" value="{{ action|lower }}" hidden>
+                            <button type="submit" class="btn btn-{{ theme }} waves-effect"
+                                    onclick="window.location='{{ site }}/control/admin/verify'">{{ action }}
+                                <i class="fas fa-{{ icon }} ml-1"></i></button>
+                        </form>
                         <button type="button" class="btn btn-outline-{{ theme }} waves-effect waves-light"
                                 data-dismiss="modal">
                             Cancel

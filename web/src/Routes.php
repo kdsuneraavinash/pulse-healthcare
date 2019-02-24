@@ -30,6 +30,7 @@ function getRoutes()
         ['GET', '/control/admin', ['Pulse\Controllers\AdminControlPanelController', 'get']],
         ['GET', '/control/admin/dashboard', ['Pulse\Controllers\AdminControlPanelController', 'getAdminDashboardIframe']],
         ['GET', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'getAdminVerifyMedicalCentersIframe']],
+        ['POST', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'postAdminVerifyMedicalCentersIframe']],
 
         // Error Handlers
         ['GET', '/404', ['Pulse\Controllers\ErrorController', 'error404']],
