@@ -128,50 +128,117 @@ IFrameCards
 {%- endmacro %}
 
 
-{% macro account_verify_card(title) -%}
+{% macro account_verify_card(account_id, name, phsrc, email,
+    fax, phone_number, address, parsed_address, postal_code, state) -%}
     {% import _self as this %}
-    <div>
-        {{ this.card_start(title) }}
-        <h3 class="card-title"><strong>Medical Center 1</strong></h3>
-        <a href="http://www.phsrc.lk/pages_e.php?id=16" target="_blank"><h5 class="blue-text pb-2">
-                <strong>PHSRC/MED/001<i class="fas fa-link ml-2"></i></strong></h5></a>
-        <hr>
+    <div class="view" data-hash="{{ account_id }}">
+        <div>
+            {{ this.card_start(account_id) }}
+            <h3 class="card-title"><strong>{{ name }}</strong></h3>
+            <a href="http://www.phsrc.lk/pages_e.php?id=16" target="_blank"><h5 class="blue-text pb-2">
+                    <strong>{{ phsrc }}<i class="fas fa-link ml-2"></i></strong></h5></a>
+            <hr>
 
-        <div class="border">
-            <div class="row p-2">
-                <div class="col-sm-3"><strong>Address </strong></div>
-                <div class="col-sm-9">No 344/1, Moonamalgahawatta, Duwa Temple Road (12000)
-                    <br/>
-                    <a href="https://www.google.com/maps/search/?api=1&query=No+3441+Moonamalgahawatta+Duwa+Temple+Road+12000"
-                       target="_blank" class="btn btn-outline-dark btn-sm my-2"><i class="fas fa-map mr-2"></i>Google
-                        Maps</a>
+            <div class="border">
+                <div class="row p-2">
+                    <div class="col-sm-3"><strong>Address </strong></div>
+                    <div class="col-sm-9">{{ address }} ({{ postal_code }})
+                        <br/>
+                        <a href="https://www.google.com/maps/search/?api=1&query={{ parsed_address }}"
+                           target="_blank" class="btn btn-outline-dark btn-sm my-2"><i class="fas fa-map mr-2"></i>Google
+                            Maps</a>
+                    </div>
+                </div>
+                <div class="row p-2">
+                    <div class="col-sm-3"><strong>Telephone </strong></div>
+                    <div class="col-sm-9">{{ phone_number }}</div>
+                </div>
+                <div class="row p-2">
+                    <div class="col-sm-3"><strong>Fax </strong></div>
+                    <div class="col-sm-9">{{ fax }}</div>
+                </div>
+                <div class="row p-2">
+                    <div class="col-sm-3"><strong>Email </strong></div>
+                    <div class="col-sm-9">
+                        <a href="mailto:{{ email }}" target="_blank"
+                           class="btn btn-outline-dark btn-sm"><i class="fas fa-envelope mr-2"></i>{{ email }}</a>
+                    </div>
                 </div>
             </div>
-            <div class="row p-2">
-                <div class="col-sm-3"><strong>Telephone </strong></div>
-                <div class="col-sm-9">076-8336850</div>
-            </div>
-            <div class="row p-2">
-                <div class="col-sm-3"><strong>Fax </strong></div>
-                <div class="col-sm-9">9955888668877</div>
-            </div>
-            <div class="row p-2">
-                <div class="col-sm-3"><strong>Email </strong></div>
-                <div class="col-sm-9">
-                    <a href="mailto:kdsuneraavinash@gmail.com" target="_blank"
-                       class="btn btn-outline-dark btn-sm"><i class="fas fa-envelope mr-2"></i>kdsuneraavinash@gmail.com</a>
-                </div>
-            </div>
-        </div>
 
-        <hr/>
+            <hr/>
 
-        <div class="text-right">
-            <button type="button" class="btn btn-outline-danger"><i class="fas fa-times pr-2"></i><span
-                        class="d-none d-md-inline">Reject</span></button>
-            <button type="button" class="btn btn-outline-success"><i class="fas fa-check pr-2"></i><span
-                        class="d-none d-md-inline">Verify</span></button>
+            <div class="text-right">
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                        data-target="#modelRejectConfirm"><i class="fas fa-times pr-2"></i><span
+                            class="d-none d-md-inline">Reject</span></button>
+                <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                        data-target="#modelVerifyAccount"><i class="fas fa-check pr-2"></i><span
+                            class="d-none d-md-inline">Verify</span></button>
+            </div>
+            {{ this.card_end() }}
         </div>
-        {{ this.card_end() }}
+        {% if (state == '1') %} {# Verified #}
+            <div class="mask flex-center  pattern-1 mt-2" style="background-color: #59FF6244;">>
+                <button type="button" class="btn btn-black" data-toggle="modal" data-target="#modelRetractAccount"><i
+                            class="fas fa-redo-alt pr-2"></i><span
+                            class="d-none d-md-inline">Retract</span></button>
+            </div>
+        {% elseif (state == '2') %} {# Rejected #}
+            <div class="mask flex-center pattern-1 mt-2" style="background-color: #FF596244;">>
+                <button type="button" class="btn btn-black" data-toggle="modal" data-target="#modelRetractAccount"><i
+                            class="fas fa-redo-alt pr-2"></i><span
+                            class="d-none d-md-inline">Retract</span></button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modelDeleteConfirm"><i
+                            class="fas fa-trash-alt pr-2"></i><span
+                            class="d-none d-md-inline">Delete</span></button>
+            </div>
+        {% endif %}
     </div>
+{%- endmacro %}
+
+{% macro verification_modal(model_id, theme, color, icon, title, message, bold, action) -%}
+    <div class="modal fade right" id="{{ model_id }}" tabindex="-1" role="dialog"
+         aria-labelledby="ModalLabel"
+         data-backdrop="true" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog show modal-side modal-top-right modal-notify modal-{{ theme }}" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header {{ color }}">
+                    <p class="heading">{{ title }}</p>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+
+                        <div class="p-2 text-center justify-content-center">
+                            <i class="fas fa-{{ icon }} fa-5x"></i>
+                        </div>
+                        <div class="p-2">
+                            {{ message }}
+                            <br/>
+                            <strong>{{ bold }}</strong>
+                        </div>
+
+                        <hr/>
+
+                        <button type="button" class="btn btn-{{ theme }} waves-effect"
+                                onclick="window.location='{{ site }}/control/admin/verify'">{{ action }}
+                            <i class="fas fa-{{ icon }} ml-1"></i></button>
+                        <button type="button" class="btn btn-outline-{{ theme }} waves-effect waves-light"
+                                data-dismiss="modal">
+                            Cancel
+                            <i class="fas fa-times ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 {%- endmacro %}

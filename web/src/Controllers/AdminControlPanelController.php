@@ -35,7 +35,14 @@ class AdminControlPanelController extends BaseController
      */
     public function getAdminVerifyMedicalCentersIframe()
     {
-        parent::loadOnlyIfUserIsOfType(Admin::class,
-            'iframe/AdminVerifyMedicalCentersIFrame.htm.twig', "http://$_SERVER[HTTP_HOST]/404");
+        $currentAccount = $this->getCurrentAccount();
+        if ($currentAccount instanceof Admin) {
+            $this->render('iframe/AdminVerifyMedicalCentersIFrame.htm.twig', array(
+                'medical_centers' => $currentAccount->retrieveMedicalCentersList()
+            ), $currentAccount);
+        } else {
+            header("http://$_SERVER[HTTP_HOST]/404");
+            exit;
+        }
     }
 }
