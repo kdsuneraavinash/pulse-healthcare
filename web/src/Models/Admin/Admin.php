@@ -42,7 +42,7 @@ class Admin extends Account
 
     public function deleteMedicalCenter(MedicalCenter $account)
     {
-        DB::delete('medical_centers', "account_id=%s", $account->getAccountId());
+        DB::delete('accounts', "account_id=%s", $account->getAccountId());
     }
 
     public function retractMedicalCenter(MedicalCenter $account)
