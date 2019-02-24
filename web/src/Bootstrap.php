@@ -146,15 +146,16 @@ foreach ($routes as $route) {
 ///
 /// getRouterDefaultErrorHandler($code) will have the
 /// default response (Unhandled error)
-$klein->onHttpError(function (int $code, Klein\Klein $router) {
+$klein->onHttpError(function (int $code) {
     $router_err_handlers = getRouterErrorHandlers();
     foreach ($router_err_handlers as $handler) {
         if ($code == $handler[0]) {
-            $router->response()->body(generateErrorPage($handler[1]));
-            return;
+            header("Location: http://$_SERVER[HTTP_HOST]/$code");
+            exit;
         }
     }
-    $router->response()->body(generateErrorPage('500'));
+    header("Location: http://$_SERVER[HTTP_HOST]/undefined?code=$code");
+    exit;
 });
 
 

@@ -21,13 +21,8 @@ class DoctorRegistrationController extends BaseController
      */
     public function get()
     {
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount instanceof MedicalCenter) {
-            $this->render('DoctorRegistration.html.twig', array(), $currentAccount);
-        } else {
-            header("Location: http://$_SERVER[HTTP_HOST]");
-            exit;
-        }
+        parent::loadOnlyIfUserIsOfType(MedicalCenter::class,
+            'DoctorRegistration.html.twig', "http://$_SERVER[HTTP_HOST]");
     }
 
     /**

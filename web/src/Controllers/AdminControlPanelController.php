@@ -2,6 +2,8 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Models\Admin\Admin;
+
 class AdminControlPanelController extends BaseController
 {
     /**
@@ -11,8 +13,8 @@ class AdminControlPanelController extends BaseController
      */
     public function get()
     {
-        $account = $this->getCurrentAccount();
-        $this->render('ControlPanelAdminPage.html.twig', array(), $account);
+        parent::loadOnlyIfUserIsOfType(Admin::class,
+            'ControlPanelAdminPage.html.twig', "http://$_SERVER[HTTP_HOST]");
     }
 
     /**
@@ -22,8 +24,8 @@ class AdminControlPanelController extends BaseController
      */
     public function getAdminDashboardIframe()
     {
-        $account = $this->getCurrentAccount();
-        $this->render('iframe/AdminDashboardIFrame.htm.twig', array(), $account);
+        parent::loadOnlyIfUserIsOfType(Admin::class,
+            'iframe/AdminDashboardIFrame.htm.twig', "http://$_SERVER[HTTP_HOST]/404");
     }
 
     /**
@@ -33,7 +35,7 @@ class AdminControlPanelController extends BaseController
      */
     public function getAdminVerifyMedicalCentersIframe()
     {
-        $account = $this->getCurrentAccount();
-        $this->render('iframe/AdminVerifyMedicalCentersIFrame.htm.twig', array(), $account);
+        parent::loadOnlyIfUserIsOfType(Admin::class,
+            'iframe/AdminVerifyMedicalCentersIFrame.htm.twig', "http://$_SERVER[HTTP_HOST]/404");
     }
 }

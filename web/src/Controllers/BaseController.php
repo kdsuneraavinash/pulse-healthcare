@@ -51,13 +51,13 @@ abstract class BaseController
      */
     protected function render(string $template, array $context, ?Account $account)
     {
-        if ($account != null){
+        if ($account != null) {
             $context['account_id'] = $account->getAccountId();
-            $context['account_type'] = (string) $account->getAccountType();
-            if ($account instanceof MedicalCenter){
+            $context['account_type'] = (string)$account->getAccountType();
+            if ($account instanceof MedicalCenter) {
                 $context['verified'] = $account->isVerified();
             }
-        }else{
+        } else {
             $context['account_id'] = null;
             $context['account_type'] = null;
         }
@@ -67,6 +67,25 @@ abstract class BaseController
         $context['error'] = $this->getRequest()->getQueryParameter('error');
         $rendered = $this->getRenderer()->render($template, $context);
         $this->getResponse()->setContent($rendered);
+    }
+
+    /**
+     * @param string $className
+     * @param string $page
+     * @param string $redirect
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    protected function loadOnlyIfUserIsOfType(string $className, string $page, string $redirect)
+    {
+        $currentAccount = $this->getCurrentAccount();
+        if ($currentAccount instanceof $className) {
+            $this->render($page, array(), $currentAccount);
+        } else {
+            header("Location: $redirect");
+            exit;
+        }
     }
 
     /**

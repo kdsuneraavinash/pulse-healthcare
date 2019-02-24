@@ -2,8 +2,7 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\StaticLogger;
-use Pulse\Utils;
+use Pulse\Models\AccountSession\Account;
 
 class ProfilePageController extends BaseController
 {
@@ -14,14 +13,7 @@ class ProfilePageController extends BaseController
      */
     public function get()
     {
-        $account = $this->getCurrentAccount();
-        if ($account == null) {
-            header("Location: http://$_SERVER[HTTP_HOST]");
-            StaticLogger::loggerWarn("Unauthorized user " . Utils::getClientIP() .
-                " tried to access Profile page.");
-            exit;
-        } else {
-            $this->render('ProfilePage.html.twig', array(), $account);
-        }
+        parent::loadOnlyIfUserIsOfType(Account::class,
+            'ProfilePage.html.twig', "http://$_SERVER[HTTP_HOST]");
     }
 }

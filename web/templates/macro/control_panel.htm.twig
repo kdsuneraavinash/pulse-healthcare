@@ -66,6 +66,10 @@ IFrame
 {% macro iframe_start(page, icon) -%}
     <head>
         {% include("part/header.htm.twig") %}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+              rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+              rel="stylesheet">
         <style>
             body {
                 background-image: none;
@@ -98,6 +102,7 @@ IFrame
     </div>
 </main>
 {% include "part/scripts.htm.twig" %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 {%- endmacro %}
 
 {% macro iframe_end() -%}
@@ -120,4 +125,53 @@ IFrameCards
         {% macro card_end() -%}
     </div>
 </div>
+{%- endmacro %}
+
+
+{% macro account_verify_card(title) -%}
+    {% import _self as this %}
+    <div>
+        {{ this.card_start("medCenter") }}
+        <h3 class="card-title"><strong>Medical Center 1</strong></h3>
+        <a href="http://www.phsrc.lk/pages_e.php?id=16" target="_blank"><h5 class="blue-text pb-2">
+                <strong>PHSRC/MED/001<i class="fas fa-link ml-2"></i></strong></h5></a>
+        <hr>
+
+        <div class="border">
+            <div class="row p-2">
+                <div class="col-sm-3"><strong>Address </strong></div>
+                <div class="col-sm-9">No 344/1, Moonamalgahawatta, Duwa Temple Road (12000)
+                    <br/>
+                    <a href="https://www.google.com/maps/search/?api=1&query=No+3441+Moonamalgahawatta+Duwa+Temple+Road+12000"
+                       target="_blank" class="btn btn-outline-dark btn-sm my-2"><i class="fas fa-map mr-2"></i>Google
+                        Maps</a>
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col-sm-3"><strong>Telephone </strong></div>
+                <div class="col-sm-9">076-8336850</div>
+            </div>
+            <div class="row p-2">
+                <div class="col-sm-3"><strong>Fax </strong></div>
+                <div class="col-sm-9">9955888668877</div>
+            </div>
+            <div class="row p-2">
+                <div class="col-sm-3"><strong>Email </strong></div>
+                <div class="col-sm-9">
+                    <a href="mailto:kdsuneraavinash@gmail.com" target="_blank"
+                       class="btn btn-outline-dark btn-sm"><i class="fas fa-envelope mr-2"></i>kdsuneraavinash@gmail.com</a>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="text-right">
+            <button type="button" class="btn btn-outline-danger"><i class="fas fa-times pr-2"></i><span
+                        class="d-none d-md-inline">Reject</span></button>
+            <button type="button" class="btn btn-outline-success"><i class="fas fa-check pr-2"></i><span
+                        class="d-none d-md-inline">Verify</span></button>
+        </div>
+        {{ this.card_end() }}
+    </div>
 {%- endmacro %}

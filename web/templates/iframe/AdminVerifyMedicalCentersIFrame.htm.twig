@@ -8,78 +8,48 @@
 
 <div class="p-3">
     <div class="row justify-content-center">
-        {{ control_panel.card_start("medCenter") }}
-
-        <h3 class="card-title"><strong>Medical Center 1</strong></h3>
-        <a href="http://www.phsrc.lk/pages_e.php?id=16" target="_blank"><h5 class="blue-text pb-2">
-                <strong>PHSRC/MED/001<i class="fas fa-link ml-2"></i></strong></h5></a>
-        <hr>
-
-        <div class="table-responsive">
-            <table class="table border">
-                <tbody>
-                <tr>
-                    <td><strong>Address </strong></td>
-                    <td>No 344/1, Moonamalgahawatta, Duwa Temple Road (12000)
-                        <br/>
-                        <a href="https://www.google.com/maps/search/?api=1&query=No+3441+Moonamalgahawatta+Duwa+Temple+Road+12000"
-                           target="_blank" class="btn btn-outline-dark btn-sm my-2"><i class="fas fa-map mr-2"></i>Google
-                            Maps</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Telephone </strong></td>
-                    <td>076-8336850</td>
-                </tr>
-                <tr>
-                    <td><strong>Fax </strong></td>
-                    <td>9955888668877</td>
-                </tr>
-                <tr>
-                    <td><strong>Email </strong></td>
-                    <td>
-                        <a href="mailto:kdsuneraavinash@gmail.com" target="_blank"
-                           class="btn btn-outline-dark btn-sm"><i class="fas fa-envelope mr-2"></i>kdsuneraavinash@gmail.com</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="owl-carousel owl-theme">
+            {{ control_panel.account_verify_card("medCenter1") }}
+            {{ control_panel.account_verify_card("medCenter2") }}
+            {{ control_panel.account_verify_card("medCenter3") }}
+            {{ control_panel.account_verify_card("medCenter4") }}
+            {{ control_panel.account_verify_card("medCenter5") }}
+            {{ control_panel.account_verify_card("medCenter6") }}
+            {{ control_panel.account_verify_card("medCenter7") }}
         </div>
-
-        <hr/>
-
-        <div class="text-right">
-            <button type="button" class="btn btn-outline-danger"><i class="fas fa-times pr-2"></i><span
-                        class="d-none d-md-inline">Reject</span></button>
-            <button type="button" class="btn btn-outline-success"><i class="fas fa-check pr-2"></i><span
-                        class="d-none d-md-inline">Verify</span></button>
-        </div>
-        {{ control_panel.card_end() }}
-    </div>
-
-    <div class="row justify-content-center mt-4">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination pg-blue">
-                <li class="page-item disabled">
-                    <a class="page-link" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link">1</a></li>
-                <li class="page-item active">
-                    <a class="page-link">2 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="page-item"><a class="page-link">3</a></li>
-                <li class="page-item">
-                    <a class="page-link">Next</a>
-                </li>
-            </ul>
-        </nav>
     </div>
 
 </div>
 {{ control_panel.iframe_middle() }}
 
 <script>
+    $(document).ready(function () {
+        $(".owl-carousel").owlCarousel(
+            {
+                loop:true,
+                margin: 10,
+                dots: true,
+                nav:true,
+                responsiveClass:true,
+                responsive:{
+                    0:{
+                        items:1,
+                        nav:true
+                    },
+                    600:{
+                        items:2,
+                        nav:false
+                    },
+                    1000:{
+                        items:3,
+                        nav:true,
+                        loop:false
+                    }
+                }
+            }
+        );
 
+    });
 </script>
 
 {{ control_panel.iframe_end() }}
