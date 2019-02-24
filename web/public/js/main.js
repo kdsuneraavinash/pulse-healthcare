@@ -1,6 +1,9 @@
 // Animations initialization
 AOS.init();
 
+$(function () {
+    $('[data-toggle="popover"]').popover()
+});
 
 $(window).on('load', function () {
     let loader = $('#loader');

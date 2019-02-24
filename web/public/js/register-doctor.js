@@ -75,6 +75,3 @@ function validateNotEmptyAndRegex(field, regex) {
         regex.test(field.val()));
 }
 
-$(function () {
-    $('[data-toggle="popover"]').popover()
-});

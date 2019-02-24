@@ -99,7 +99,3 @@ function validateEmptyOrRegex(field, regex) {
     return checkField(field, field.val() === "" ||
         regex.test(field.val()));
 }
-
-$(function () {
-    $('[data-toggle="popover"]').popover()
-});

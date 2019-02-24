@@ -7,6 +7,7 @@ use Pulse\Exceptions\AccountNotExistException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\MedicalCenter\MedicalCenter;
 use Twig_Environment;
 
 abstract class BaseController
@@ -53,6 +54,9 @@ abstract class BaseController
         if ($account != null){
             $context['account_id'] = $account->getAccountId();
             $context['account_type'] = (string) $account->getAccountType();
+            if ($account instanceof MedicalCenter){
+                $context['verified'] = $account->isVerified();
+            }
         }else{
             $context['account_id'] = null;
             $context['account_type'] = null;

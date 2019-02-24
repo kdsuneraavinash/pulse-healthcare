@@ -1,0 +1,54 @@
+{% if (account_type == 'med_center') %}
+
+    {% if (verified == false) %}
+
+        <div class="modal fade right" id="modelUnverifiedAccount" tabindex="-1" role="dialog"
+             aria-labelledby="ModalLabel"
+             data-backdrop="false" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-danger" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <p class="heading">Unverified Account</p>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="white-text">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="">
+
+                            <div class="p-2 text-center justify-content-center">
+                                <i class="fas fa-user-lock fa-5x"></i>
+                            </div>
+                            <div class="p-2">
+                                Your medical center account has not been verified yet.
+                                You will be locked out of most features until your account is verified.
+                                <br/>
+                                <b>If you want faster access please contact us.</b>
+                            </div>
+
+                            <a type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal">Close
+                                <i class="fas fa-times ml-1"></i>
+                            </a>
+                            <a type="button" class="btn btn-outline-danger waves-effect" href="mailto:info@gmail.com">Contact
+                                Us
+                                <i class="far fa-envelope ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            $(window).on('load', function () {
+                setTimeout(function () {
+                    $("#modelUnverifiedAccount").modal('show');
+                }, 5000);
+            })
+        </script>
+    {% endif %}
+
+{% endif %}

@@ -51,7 +51,7 @@ abstract class Account
         }
         $parsedAccount = null;
         if ($account['account_type'] === (string)AccountType::MedicalCenter()) {
-            $parsedAccount = new MedicalCenter($accountId, MedicalCenterDetails::readFromDatabase($accountId));
+            $parsedAccount = new MedicalCenter($accountId, null, MedicalCenterDetails::readFromDatabase($accountId));
         } else if ($account['account_type'] === (string)AccountType::Tester()) {
             $parsedAccount = new TempAccount($accountId);
         } else if ($account['account_type'] === (string)AccountType::Doctor()) {
