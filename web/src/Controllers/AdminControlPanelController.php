@@ -19,7 +19,7 @@ class AdminControlPanelController extends BaseController
     public function get()
     {
         parent::loadOnlyIfUserIsOfType(Admin::class,
-            'ControlPanelAdminPage.html.twig', "http://$_SERVER[HTTP_HOST]");
+            'ControlPanelAdminPage.html.twig', "http://$_SERVER[HTTP_HOST]/405");
     }
 
     /**
