@@ -20,9 +20,9 @@ abstract class Account
     /**
      * Account constructor.
      * @param string $accountId
-     * @param AccountType $accountType
+     * @param string $accountType
      */
-    protected function __construct(string $accountId, AccountType $accountType)
+    protected function __construct(string $accountId, string $accountType)
     {
         $this->accountId = $accountId;
         $this->accountType = $accountType;
@@ -52,14 +52,14 @@ abstract class Account
             throw new AccountNotExistException($accountId);
         }
         $parsedAccount = null;
-        if ($account['account_type'] === (string)AccountType::MedicalCenter()) {
+        if ($account['account_type'] === (string)AccountType::MedicalCenter) {
             $parsedAccount = new MedicalCenter($accountId, null,
                 MedicalCenterDetails::readFromDatabase($accountId), $ignoreMedicalCenterVerificationError);
-        } else if ($account['account_type'] === (string)AccountType::Tester()) {
+        } else if ($account['account_type'] === (string)AccountType::Tester) {
             $parsedAccount = new TempAccount($accountId);
-        } else if ($account['account_type'] === (string)AccountType::Doctor()) {
+        } else if ($account['account_type'] === (string)AccountType::Doctor) {
             $parsedAccount = new Doctor(DoctorDetails::readFromDatabase($accountId));
-        } else if ($account['account_type'] === (string)AccountType::Admin()) {
+        } else if ($account['account_type'] === (string)AccountType::Admin) {
             $parsedAccount = new Admin($accountId);
         }else{
             throw new AccountNotExistException($accountId);
@@ -72,7 +72,7 @@ abstract class Account
     {
         DB::insert('accounts', array(
             'account_id' => $this->getAccountId(),
-            'account_type' => (string)$this->getAccountType()
+            'account_type' => $this->getAccountType()
         ));
     }
 
@@ -99,7 +99,7 @@ abstract class Account
     /**
      * @return AccountType
      */
-    public function getAccountType(): AccountType
+    public function getAccountType(): string
     {
         return $this->accountType;
     }
@@ -109,6 +109,6 @@ class TempAccount extends Account
 {
     public function __construct(string $accountId)
     {
-        parent::__construct($accountId, AccountType::Tester());
+        parent::__construct($accountId, AccountType::Tester);
     }
 }

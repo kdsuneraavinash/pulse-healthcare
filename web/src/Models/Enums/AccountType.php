@@ -4,40 +4,16 @@ namespace Pulse\Models\Enums;
 
 class AccountType
 {
-    private $type;
+    const MedicalCenter = 'med_center';
+    const Doctor = 'doctor';
+    const Patient = 'doctor';
+    const Tester = 'tester';
+    const Admin = 'admin';
 
-    private function __construct(string $type)
-    {
-        $this->type = $type;
-    }
+    const Values = array(AccountType::MedicalCenter, AccountType::Doctor,
+        AccountType::Patient, AccountType::Tester, AccountType::Admin);
 
-    static function MedicalCenter()
-    {
-        return new AccountType('med_center');
-    }
-
-    static function Doctor()
-    {
-        return new AccountType('doctor');
-    }
-
-    static function Patient()
-    {
-        return new AccountType('patient');
-    }
-
-    static function Tester()
-    {
-        return new AccountType('tester');
-    }
-
-    static function Admin()
-    {
-        return new AccountType('admin');
-    }
-
-    public function __toString()
-    {
-        return $this->type;
+    public static  function isValid(string $type):bool{
+        return array_key_exists($type, AccountType::Values);
     }
 }

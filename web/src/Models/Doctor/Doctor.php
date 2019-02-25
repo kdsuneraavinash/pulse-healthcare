@@ -25,7 +25,7 @@ class Doctor extends Account implements ICreatable
      */
     protected function __construct(DoctorDetails $doctorDetails, string $defaultPassword = null)
     {
-        parent::__construct($doctorDetails->getNic(), AccountType::Doctor());
+        parent::__construct($doctorDetails->getNic(), AccountType::Doctor);
         $this->doctorDetails = $doctorDetails;
         if ($defaultPassword == null) {
             $query = DB::queryFirstRow('SELECT default_password FROM doctors WHERE account_id = %s', $this->accountId);

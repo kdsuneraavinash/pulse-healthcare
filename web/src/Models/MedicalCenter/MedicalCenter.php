@@ -33,7 +33,7 @@ class MedicalCenter extends Account implements IFavouritable
     protected function __construct(string $accountId, ?VerificationState $verificationState,
                                    MedicalCenterDetails $medicalCenterDetails, bool $ignoreErrors = false)
     {
-        parent::__construct($accountId, AccountType::MedicalCenter());
+        parent::__construct($accountId, AccountType::MedicalCenter);
         $this->medicalCenterDetails = $medicalCenterDetails;
         if ($verificationState === null) {
             // Need to fetch from database

@@ -19,7 +19,7 @@ class Admin extends Account
      */
     protected function __construct(string $accountId)
     {
-        parent::__construct($accountId, AccountType::Admin());
+        parent::__construct($accountId, AccountType::Admin);
     }
 
     public function retrieveMedicalCentersList()

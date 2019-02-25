@@ -30,7 +30,7 @@ class AdminControlPanelController extends BaseController
     public function getAdminDashboardIframe()
     {
         parent::loadOnlyIfUserIsOfType(Admin::class,
-            'iframe/AdminDashboardIFrame.htm.twig', "http://$_SERVER[HTTP_HOST]/404");
+            'iframe/AdminDashboardIFrame.htm.twig', "http://$_SERVER[HTTP_HOST]/405");
     }
 
     /**
@@ -46,7 +46,7 @@ class AdminControlPanelController extends BaseController
                 'medical_centers' => $currentAccount->retrieveMedicalCentersList()
             ), $currentAccount);
         } else {
-            header("http://$_SERVER[HTTP_HOST]/404");
+            header("Location: http://$_SERVER[HTTP_HOST]/405");
             exit;
         }
     }
@@ -99,8 +99,8 @@ class AdminControlPanelController extends BaseController
             header("Location: http://$_SERVER[HTTP_HOST]/control/admin/verify#$targetAccountId");
             exit;
         } else {
-            /// Current use is not ADMIN
-            header("Location: http://$_SERVER[HTTP_HOST]/404");
+            /// Current user is not ADMIN
+            header("Location: http://$_SERVER[HTTP_HOST]/405");
             exit;
         }
     }
