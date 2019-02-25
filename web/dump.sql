@@ -37,7 +37,7 @@ CREATE TABLE `account_credentials` (
 
 LOCK TABLES `account_credentials` WRITE;
 /*!40000 ALTER TABLE `account_credentials` DISABLE KEYS */;
-INSERT INTO `account_credentials` (`account_id`, `password`, `salt`) VALUES ('652566699V','d3ff17724caf43e4ce0c65cf9b0b1f08ff117e62f36963c75f902f320e6b8b9c','g~`jBa}7Ji~L.4`t%P+%q=v07#IHypf,7U.0HT5H'),('administrator','c5e5453bb50d0673615b206fabd904fa6c47a5881857b83512b0cfa74fdc402c','.3.$)8Gj]aB<AS!#*)T4\'}wwTu,i.#ETF;17QB&h'),('credentials_tester','f6be14397ba3cbd16ccaabdc5f7f8d5599a97a9a9e8872ef180fb953caa0ea1f','JGBYBU;vB+KqKs}7PRR8aCgkj1I||x0Hgg:3/Uy&'),('login_service_tester','61ebf2d0bbf3aea542e24346763ae70683a9013585560ef69ad9f6ce27a6c382','1HARW\'LL{m,q*.$+jABr:B]6UA{D\\co+vC*3;L{v'),('medCenter','9bfc39e1f4a394156c274082a6682096f8b115d123548fa8a32c209994efab6b','a^UoD[;Pb;5|q(bsZz\"jludK}@=JvQ*:M]w\"9p&S'),('medCenter2','055f20a6f3310aa925987c53f14b1db168ba59b7b1cfb7e4b4259ba99941507d','RykV$%2Y]0:fm6U6VjN#6!6J[`H\\o9VgIm/:I~^4'),('medical_center_tester','72faadc045023b6dc3ddd1e2cd9e71b98fb3fc4add360830ebe638fea08eed5d',']07D_e~6_EMS+U8Cz(/3#<(M3)\'p87cu;qV^qU(T'),('pTest','c4dfdceb710452bda60e33a358ff9b3ede2224e1241debc0d42a5cc87ae9504f','6kE1%H5ja44Lna<0;tl)9*dxF9[79(RO:84sFV#C');
+INSERT INTO `account_credentials` (`account_id`, `password`, `salt`) VALUES ('652566699V','1c23f2ef1abdae6340bc39934aca90c6b9ad7f9ea7e9ddbd6564126fea803c6a','NSnYJ!eLW\"5,0h/d/2q+uY6,G|7L\'pb8@@*y|qrU'),('administrator','c5e5453bb50d0673615b206fabd904fa6c47a5881857b83512b0cfa74fdc402c','.3.$)8Gj]aB<AS!#*)T4\'}wwTu,i.#ETF;17QB&h'),('credentials_tester','885605b2a8931c47893d7f56741c11815b3ee0895aadf89eb3214977c232e675','TJiYj7^9%=+WE`!Yz-*sRq=:c:vl#~%U,un?9&1j'),('login_service_tester','69a2c411d5026d68326c0878f955fb17426d3be3a64eef01fa4996cd2b85aecd','Jpx3hY{hr:C@/C+&tJR_YmbBMqNhRU;/g&H>n~{8'),('medCenter','9bfc39e1f4a394156c274082a6682096f8b115d123548fa8a32c209994efab6b','a^UoD[;Pb;5|q(bsZz\"jludK}@=JvQ*:M]w\"9p&S'),('medical_center_tester','dbeee500569b3834643be15081f43a241ae18027b404dfcf13c9f2ed6d21598c','yCIg&@Ac8DAWID+-RnXwG62;8ZC2[)X\"YQP1Dk^4'),('pTest','c4dfdceb710452bda60e33a358ff9b3ede2224e1241debc0d42a5cc87ae9504f','6kE1%H5ja44Lna<0;tl)9*dxF9[79(RO:84sFV#C');
 /*!40000 ALTER TABLE `account_credentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,34 +87,8 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`account_id`, `account_type`) VALUES ('administrator','admin'),('652566699V','doctor'),('medCenter','med_center'),('medCenter2','med_center'),('medical_center_tester','med_center'),('non_exisiting_user','med_center'),('credentials_tester','tester'),('login_service_tester','tester'),('pTest','tester'),('session_tester','tester');
+INSERT INTO `accounts` (`account_id`, `account_type`) VALUES ('administrator','admin'),('652566699V','doctor'),('medCenter','med_center'),('medical_center_tester','med_center'),('credentials_tester','tester'),('login_service_tester','tester'),('pTest','tester'),('session_tester','tester');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `browser_agents`
---
-
-DROP TABLE IF EXISTS `browser_agents`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `browser_agents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `browser` text NOT NULL,
-  `hash` char(40) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_agents_hash_uindex` (`hash`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1 COMMENT='Table to save user agents';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `browser_agents`
---
-
-LOCK TABLES `browser_agents` WRITE;
-/*!40000 ALTER TABLE `browser_agents` DISABLE KEYS */;
-INSERT INTO `browser_agents` (`id`, `browser`, `hash`) VALUES (9,'UNKNOWN','25ba44ec3b391ba4ce5fbbd2979635e254775e7d'),(11,'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36','2d13425a6c604c6a91f6ffedec343a81e891b535'),(12,'PostmanRuntime/7.6.0','7c437b88e1cb7d09660f2b2ace2f865fb3fd6fb6'),(13,'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36','064e005501a2a0d56363299e04b6b77a3ce5f7a5'),(14,'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36','1a9ef466e44b70dd24f39773687729521ea69bee'),(15,'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36','13330a7d3aaee1569dd7ceebc04360c8b673fb08'),(16,'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36','0441391429577f903a877c9f7e215b8406705076'),(17,'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36','c9ca92194d513cd22f74a1cbc83dcb520058797e'),(18,'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1','7dcbae1a808f5601d4739f363f6008bc7140ca72'),(19,'Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1','aeaff6a1fa9f5f34bf37ab8808b0768d4ce43171'),(20,'Mozilla/5.0 (Linux; Android 8.1.0; SM-G610F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.105 Mobile Safari/537.36','0db45c9000667a146c934f16ad4b1775c4d708fe'),(21,'Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36','2a0761fbb154bfe6054883f3b2f445c1f52621ce');
-/*!40000 ALTER TABLE `browser_agents` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -171,7 +145,7 @@ CREATE TABLE `doctors` (
 
 LOCK TABLES `doctors` WRITE;
 /*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
-INSERT INTO `doctors` (`account_id`, `default_password`) VALUES ('652566699V','zwkichmyxgvhfgvu');
+INSERT INTO `doctors` (`account_id`, `default_password`) VALUES ('652566699V','jxypfwcaxrejroon');
 /*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +178,7 @@ CREATE TABLE `medical_center_details` (
 
 LOCK TABLES `medical_center_details` WRITE;
 /*!40000 ALTER TABLE `medical_center_details` DISABLE KEYS */;
-INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`, `creation_date`) VALUES ('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road',12000,'2019-02-24 11:50:14'),('medCenter2','My Medical Center 2','PHSRC/DEMO/002','kdsuneraavinash@gmail.com','','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road',12000,'2019-02-24 11:50:14'),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999,'2019-02-24 17:41:55'),('non_exisiting_user','Medical Center Tester','PHSRC/INVALID/0111','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999,'2019-02-24 11:50:14');
+INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`, `creation_date`) VALUES ('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road',12000,'2019-02-24 11:50:14'),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999,'2019-02-25 21:47:19');
 /*!40000 ALTER TABLE `medical_center_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,7 +229,7 @@ CREATE TABLE `medical_centers` (
 
 LOCK TABLES `medical_centers` WRITE;
 /*!40000 ALTER TABLE `medical_centers` DISABLE KEYS */;
-INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('medCenter',0),('medical_center_tester',0),('medCenter2',2),('non_exisiting_user',2);
+INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('medCenter',0),('medical_center_tester',0);
 /*!40000 ALTER TABLE `medical_centers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,14 +243,10 @@ DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `account_id` varchar(32) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `browser_agent` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `expires` datetime NOT NULL,
   `session_key` char(40) NOT NULL,
-  PRIMARY KEY (`account_id`,`ip_address`,`browser_agent`),
-  KEY `sessions_user_agents_id_fk` (`browser_agent`),
-  CONSTRAINT `sessions_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `sessions_user_agents_id_fk` FOREIGN KEY (`browser_agent`) REFERENCES `browser_agents` (`id`) ON DELETE CASCADE
+  PRIMARY KEY (`account_id`,`ip_address`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store sessions of all users';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -286,7 +256,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` (`account_id`, `ip_address`, `browser_agent`, `created`, `expires`, `session_key`) VALUES ('medCenter','127.0.0.1',15,'2019-02-24 17:50:16','2019-02-25 17:50:16','6a60540899c4ae0a79dbb855537dbcba10db7a32'),('medCenter2','127.0.0.1',15,'2019-02-24 16:41:05','2019-02-25 16:41:05','321ff335f4bb84f27c90f739450076f67dc49638');
+INSERT INTO `sessions` (`account_id`, `ip_address`, `created`, `expires`, `session_key`) VALUES ('medCenter','127.0.0.1','2019-02-25 21:48:06','2019-02-26 21:48:06','3d610a5d46e2ba9f7aa89c4a20face9891549994');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -326,4 +296,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-24 17:53:57
+-- Dump completed on 2019-02-25 21:51:39
