@@ -6,7 +6,7 @@ Sidebar
 
 {% macro sidebar_start(account_id, account_type, site) -%}
     <!--suppress HtmlUnknownTarget, HtmlFormInputWithoutLabel -->
-<div class="sidebar-fixed position-fixed p-2 bg-dark">
+<div class="sidebar-fixed position-fixed p-2" style="background-image: url('https://wallpaperaccess.com/full/20593.jpg')">
     <div class="text-center">
         <a class="logo-wrapper waves-effect p-3" href='{{ site }}'>
             <h1 class="font-weight-bold mb-2 wow fadeIn white-text" data-wow-delay="0.3s">
@@ -15,7 +15,7 @@ Sidebar
         </a>
     </div>
 
-    <div class="bg-dark text-white text-center pb-4">
+    <div class="text-white text-center pb-4">
         {% import 'macro/common.htm.twig' as common %}
         {{ common.profile_button(account_id, account_type, site) }}
     </div>
@@ -76,7 +76,7 @@ IFrame
               rel="stylesheet">
         <style>
             body {
-                background-image: url('https://wallpaperaccess.com/full/20593.jpg');
+                background-image: url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/itCjTBE/medical-abstract-background-with-health-icons-video-animation-hd-1920x1080_v81imnt8e__F0014.png');
                 background-size: cover;
             }
         </style>
@@ -113,8 +113,8 @@ IFrameCards
 */
 
 {% macro card_start(title) -%}
-<div class="card my-2">
-    <div class="card-header text-center amber">
+<div class="card my-2 border border-dark">
+    <div class="card-header text-center primary-color-dark text-white">
         {{ title }}
     </div>
     <div class="card-body">
@@ -142,7 +142,7 @@ IFrame Control Page
         </style>
         <title>{{ title }}</title>
     </head>
-<body class="bg-dark">
+<body class="bg-light">
 {%- endmacro %}
 {% macro page_end(site) -%}
 {% include "part/scripts.htm.twig" %}
