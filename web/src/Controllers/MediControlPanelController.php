@@ -2,11 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AccountRejectedException;
-use Pulse\Exceptions\InvalidDataException;
-use Pulse\Models\AccountSession\Account;
-use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 
 class MediControlPanelController extends BaseController
