@@ -47,10 +47,6 @@ Media Queries
     .navbar, #drawer-close {
         display: none;
     }
-
-    #title-card {
-        display: block;
-    }
 }
 
 @media (max-width: 800px) {
@@ -68,9 +64,5 @@ Media Queries
 
     .navbar, #drawer-close {
         display: block;
-    }
-
-    #title-card {
-        display: none;
     }
 }

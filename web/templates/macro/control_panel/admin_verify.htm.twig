@@ -1,0 +1,112 @@
+{% macro account_verify_card(account_id, name, phsrc, email,
+    fax, phone_number, address, parsed_address, postal_code, state) -%}
+    {% import  'macro/control_panel/common.htm.twig' as control_panel %}
+    <!--suppress HtmlFormInputWithoutLabel, HtmlUnknownTarget -->
+    <div data-hash="{{ account_id }}">
+        {{ control_panel.card_start(account_id) }}
+        <h3 class="card-title"><strong>{{ name }}</strong></h3>
+        <a href="http://www.phsrc.lk/pages_e.php?id=16" target="_blank"><h5 class="blue-text pb-2">
+                <strong>{{ phsrc }}<i class="fas fa-link ml-2"></i></strong></h5></a>
+
+        <div class="py-2">
+            <div class="row p-2">
+                <div class="col-sm-3"><strong>Address </strong></div>
+                <div class="col-sm-9">{{ address }} ({{ postal_code }})
+                    (<a href="https://www.google.com/maps/search/?api=1&query={{ parsed_address }}" target="_blank">Google
+                        Maps</a>)
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col-sm-3"><strong>Telephone </strong></div>
+                <div class="col-sm-9">{{ phone_number }}</div>
+            </div>
+            <div class="row p-2">
+                <div class="col-sm-3"><strong>Fax </strong></div>
+                <div class="col-sm-9">{{ fax }}</div>
+            </div>
+            <div class="row p-2">
+                <div class="col-sm-3"><strong>Email </strong></div>
+                <div class="col-sm-9">
+                    <a href="mailto:{{ email }}" target="_blank">{{ email }}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right">
+            {% if (state == '1') %} {# Verified #}
+                <button type="button" class="btn btn-success" disabled>Verified</button>
+                <button type="button" class="btn btn-outline-black" data-toggle="modal" data-account="{{ account_id }}"
+                        data-target="#modelRetractAccount">Retract
+                </button>
+            {% elseif (state == '2') %} {# Rejected #}
+                <button type="button" class="btn btn-danger" disabled>Rejected</button>
+                <button type="button" class="btn btn-outline-black" data-toggle="modal" data-account="{{ account_id }}"
+                        data-target="#modelRetractAccount">Retract
+                </button>
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-account="{{ account_id }}"
+                        data-target="#modelDeleteConfirm">Delete
+                </button>
+            {% elseif (state == '0') %} {# Normal #}
+                <button type="button" class="btn btn-outline-danger" data-account="{{ account_id }}"
+                        data-toggle="modal"
+                        data-target="#modelRejectConfirm">Reject
+                </button>
+                <button type="button" class="btn btn-outline-success" data-account="{{ account_id }}"
+                        data-toggle="modal"
+                        data-target="#modelVerifyAccount">Verify
+                </button>
+            {% endif %}
+        </div>
+        {{ control_panel.card_end() }}
+    </div>
+{%- endmacro %}
+
+{% macro verification_modal(model_id, theme, color, icon, title, message, bold, action, site) -%}
+    <div class="modal fade right account-modal" id="{{ model_id }}" tabindex="-1" role="dialog"
+         aria-labelledby="ModalLabel"
+         data-backdrop="true" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog show modal-side modal-top-right modal-notify modal-{{ theme }}" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header {{ color }}">
+                    <p class="heading">{{ title }}</p>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+
+                        <div class="p-2 text-center justify-content-center">
+                            <i class="fas fa-{{ icon }} fa-5x"></i>
+                        </div>
+                        <div class="p-2">
+                            {{ message }}
+                            <br/>
+                            <strong>{{ bold }}</strong>
+                        </div>
+
+                        <hr/>
+
+                        <form method="post" action='{{ site }}/control/admin/verify' class="d-inline">
+                            <input name="account" class="data-account" hidden>
+                            <input name="action" value="{{ action|lower }}" hidden>
+                            <button type="submit" class="btn btn-{{ theme }} waves-effect"
+                                    onclick="window.location='{{ site }}/control/admin/verify'">{{ action }}
+                                <i class="fas fa-{{ icon }} ml-1"></i></button>
+                        </form>
+                        <button type="button" class="btn btn-outline-{{ theme }} waves-effect waves-light"
+                                data-dismiss="modal">
+                            Cancel
+                            <i class="fas fa-times ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{%- endmacro %}
