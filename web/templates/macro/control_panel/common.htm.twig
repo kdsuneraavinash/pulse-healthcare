@@ -1,0 +1,151 @@
+/*
+-----------------------------------------------
+Sidebar
+-----------------------------------------------
+*/
+
+{% macro sidebar_start(account_id, account_type, site) -%}
+    <!--suppress HtmlUnknownTarget, HtmlFormInputWithoutLabel -->
+<div class="sidebar-fixed position-fixed p-2 bg-dark">
+    <div class="text-center">
+        <a class="logo-wrapper waves-effect p-3" href='{{ site }}'>
+            <h1 class="font-weight-bold mb-2 wow fadeIn white-text" data-wow-delay="0.3s">
+                MediKit
+            </h1>
+        </a>
+    </div>
+
+    <div class="bg-dark text-white text-center pb-4">
+        {% import 'macro/common.htm.twig' as common %}
+        {{ common.profile_button(account_id, account_type, site) }}
+    </div>
+
+    <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action waves-effect red-text" id="drawer-close">
+            <strong><i class="fas fa-times mr-3"></i>Close Drawer</strong>
+        </a>
+        {%- endmacro %}
+        {% macro sidebar_end() -%}
+    </div>
+
+</div>
+{%- endmacro %}
+
+/*
+-----------------------------------------------
+Buttons in sidebar
+-----------------------------------------------
+*/
+
+{% macro sidebar_button(text, id, icon, active) -%}
+    {% if (active) %}
+        {% set additional_classes = "active rounded mb-0 z-depth-2" %}
+    {% endif %}
+    <button id="{{ id }}"
+            class="list-group-item list-group-item-action waves-effect {{ additional_classes }} sidebar-button">
+        <i class="fas {{ icon }} mr-3"></i>{{ text }}</button>
+{%- endmacro %}
+
+/*
+-----------------------------------------------
+Navbar
+-----------------------------------------------
+*/
+
+{% macro navbar() -%}
+    <nav class="navbar navbar-dark fixed-top bg-dark">
+        <div class="px-3 row navbar-brand p-2 ">
+            <i class="fas fa-bars fa-2x px-3" id="drawer-open"></i>
+            <span class="fa-2x font-weight-bold">Control Panel</span>
+        </div>
+    </nav>
+{%- endmacro %}
+
+/*
+-----------------------------------------------
+IFrame
+-----------------------------------------------
+*/
+
+{% macro iframe_start() -%}
+    <head>
+        {% include("part/header.htm.twig") %}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+              rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+              rel="stylesheet">
+        <style>
+            body {
+                background-image: url('https://wallpaperaccess.com/full/20593.jpg');
+                background-size: cover;
+            }
+        </style>
+        <title>MediKit IFrame</title>
+    </head>
+<body>
+
+<div id="loader" class="d-flex content-justify-center" style="opacity: 0.8;">
+    <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<main class="p-md-2">
+    {%- endmacro %}
+
+    {% macro iframe_middle() -%}
+    <div class="d-md-block d-lg-none" style="height: 100px;">
+    </div>
+</main>
+
+{% include "part/scripts.htm.twig" %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+{%- endmacro %}
+
+{% macro iframe_end() -%}
+</body>
+{%- endmacro %}
+
+/*
+-----------------------------------------------
+IFrameCards
+-----------------------------------------------
+*/
+
+{% macro card_start(title) -%}
+<div class="card my-2">
+    <div class="card-header text-center amber">
+        {{ title }}
+    </div>
+    <div class="card-body">
+        {%- endmacro %}
+        {% macro card_end() -%}
+    </div>
+</div>
+{%- endmacro %}
+
+/*
+-----------------------------------------------
+IFrame Control Page
+-----------------------------------------------
+*/
+
+{% macro page_start(title, site) -%}
+    <head>
+        {% include("part/header.htm.twig") %}
+        {% include("part/nojs.htm.twig") %}
+        <link href="{{ site }}/css/control-panel.css" rel="stylesheet">
+        <style>
+            html {
+                overflow-y: hidden;
+            }
+        </style>
+        <title>{{ title }}</title>
+    </head>
+<body class="bg-dark">
+{%- endmacro %}
+{% macro page_end(site) -%}
+{% include "part/scripts.htm.twig" %}
+<script src="{{ site }}/js/control-panel.js"></script>
+</body>
+{%- endmacro %}

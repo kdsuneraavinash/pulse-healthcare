@@ -2,44 +2,39 @@
 <!--suppress HtmlUnknownTarget -->
 <html lang="en">
 
-{% import 'macro/control_panel.htm.twig' as control_panel %}
+{% import 'macro/control_panel/common.htm.twig' as control_panel %}
+{% import 'macro/control_panel/admin_verify.htm.twig' as admin_verify %}
 
-{{ control_panel.iframe_start("Admin/Verify", "fa-check") }}
+{{ control_panel.iframe_start() }}
 
-<div class="p-3">
-    <div class="row justify-content-center">
-        <div class="owl-carousel owl-theme">
-            <div class="text-center p-1 mt-5 pt-5">
-                <h1 class="display-3">SLIDE TO VIEW PROFILES</h1>
-                <i class="fas fa-arrow-left fa-5x p-3"></i>
-            </div>
-            {% for item in medical_centers %}
-                {{ control_panel.account_verify_card(
-                    item['account_id'],
-                    item['name'],
-                    item['phsrc'],
-                    item['email'],
-                    item['fax'],
-                    item['phone_number'],
-                    item['address'],
-                    item['parsed_address'],
-                    item['postal_code'],
-                    item['verified']
-                ) }}
-            {% endfor %}
-        </div>
+<div class="row p-4">
+    <div class="owl-carousel owl-theme">
+        {% for item in medical_centers %}
+            {{ admin_verify.account_verify_card(
+                item['account_id'],
+                item['name'],
+                item['phsrc'],
+                item['email'],
+                item['fax'],
+                item['phone_number'],
+                item['address'],
+                item['parsed_address'],
+                item['postal_code'],
+                item['verified']
+            ) }}
+        {% endfor %}
     </div>
 
 </div>
 {{ control_panel.iframe_middle() }}
 
-{{ control_panel.verification_modal( 'modelDeleteConfirm', 'danger', 'red', 'trash',
+{{ admin_verify.verification_modal( 'modelDeleteConfirm', 'danger', 'red', 'trash',
     'Confirm Deletion', 'Do you really want to delete this account?', 'This action cannot be undone.', 'Delete', site) }}
-{{ control_panel.verification_modal('modelVerifyAccount', 'success', 'green', 'check',
+{{ admin_verify.verification_modal('modelVerifyAccount', 'success', 'green', 'check',
     'Confirm Verification', 'Are you sure you want to verify this account?', 'From now on this account will be granted all permissions.', 'Verify', site) }}
-{{ control_panel.verification_modal('modelRejectConfirm', 'danger', 'red', 'user-times',
+{{ admin_verify.verification_modal('modelRejectConfirm', 'danger', 'red', 'user-times',
     'Confirm Rejection', 'Do you really want to reject this request?', 'Account owner will be notified of this action.', 'Reject', site) }}
-{{ control_panel.verification_modal('modelRetractAccount', 'dark', 'black', 'redo-alt',
+{{ admin_verify.verification_modal('modelRetractAccount', 'dark', 'black', 'redo-alt',
     'Confirm Retraction', 'Are you sure you want to retract account state?', 'Account will return back to unverified state.', 'Retract', site) }}
 
 <script>
@@ -61,7 +56,7 @@
                     600: {
                         items: 2,
                     },
-                    1000: {
+                    1200: {
                         items: 3,
                     }
                 }
