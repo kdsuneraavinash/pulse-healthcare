@@ -23,8 +23,6 @@ function getRoutes()
         // Registering Pages
         ['GET', '/register/medi', ['Pulse\Controllers\MedicalCenterRegistrationController', 'get']],
         ['POST', '/register/medi', ['Pulse\Controllers\MedicalCenterRegistrationController', 'post']],
-        ['GET', '/register/doctor', ['Pulse\Controllers\DoctorRegistrationController', 'get']],
-        ['POST', '/register/doctor', ['Pulse\Controllers\DoctorRegistrationController', 'post']],
 
         // Control Panel - Admin
         ['GET', '/control/admin', ['Pulse\Controllers\AdminControlPanelController', 'get']],
@@ -32,8 +30,11 @@ function getRoutes()
         ['GET', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'getAdminVerifyMedicalCentersIframe']],
         ['POST', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'postAdminVerifyMedicalCentersIframe']],
 
-        // Control Panel - Admin
+        // Control Panel - Medical Center
         ['GET', '/control/med_center', ['Pulse\Controllers\MediControlPanelController', 'get']],
+        ['GET', '/control/med_center/dashboard', ['Pulse\Controllers\MediControlPanelController', 'getMediDashboardIframe']],
+        ['GET', '/control/med_center/register/doctor', ['Pulse\Controllers\MediControlPanelController', 'getMediRegisterDoctorIframe']],
+        ['POST', '/control/med_center/register/doctor', ['Pulse\Controllers\MediControlPanelController', 'postMediRegisterDoctorIframe']],
 
         // Error Handlers
         ['GET', '/404', ['Pulse\Controllers\ErrorController', 'error404']],

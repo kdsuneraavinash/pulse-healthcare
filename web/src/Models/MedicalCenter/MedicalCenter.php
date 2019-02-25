@@ -123,14 +123,15 @@ class MedicalCenter extends Account implements IFavouritable
 
     /**
      * @param DoctorDetails $doctorDetails
+     * @return string
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\SLMCAlreadyInUse
      */
-    public function createDoctorAccount(DoctorDetails $doctorDetails)
+    public function createDoctorAccount(DoctorDetails $doctorDetails): string
     {
-        Doctor::register($doctorDetails);
+        return Doctor::register($doctorDetails);
     }
 
     public function searchDoctor()
