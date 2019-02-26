@@ -8,7 +8,7 @@ use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\ICreatable;
-use Pulse\Utils;
+use Pulse\Components\Utils;
 
 class Doctor extends Account implements ICreatable
 {

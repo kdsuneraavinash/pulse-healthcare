@@ -1,6 +1,6 @@
 <?php
 
-namespace Pulse;
+namespace Pulse\Components;
 
 class Logger
 {

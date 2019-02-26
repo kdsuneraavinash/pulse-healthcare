@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pulse;
+namespace Pulse\Components;
 
 use DB;
 
@@ -16,6 +16,5 @@ class Database
         DB::$host = 'localhost';
         DB::$port = '3306';
         DB::$encoding = 'latin1';
-        Logger::log('Database connected', Logger::INFO, 'Database');
     }
 }

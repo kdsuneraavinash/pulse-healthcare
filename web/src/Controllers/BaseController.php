@@ -2,11 +2,12 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\HttpHandler;
+use Pulse\Components\HttpHandler;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\MedicalCenter\MedicalCenter;
+use Pulse\Models\Exceptions;
 use Twig_Environment;
 
 abstract class BaseController
@@ -100,10 +101,10 @@ abstract class BaseController
         } catch (AccountNotExistException $e) {
             LoginService::signOutSession();
             return null;
-        } catch (InvalidDataException $e) {
+        } catch (Exceptions\InvalidDataException $e) {
             LoginService::signOutSession();
             return null;
-        } catch (AccountRejectedException $e) {
+        } catch (Exceptions\AccountRejectedException $e) {
             LoginService::signOutSession();
             return null;
         }

@@ -4,7 +4,6 @@ namespace PulseTest;
 
 use DB;
 use PHPUnit\Framework\TestCase;
-use Pulse\Database;
 use Pulse\Models\AccountSession\Credentials;
 use Pulse\Models\Exceptions;
 
@@ -22,8 +21,7 @@ final class CredentialsTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        Database::init();
-
+        \Pulse\Components\Database::init();
         CredentialsTest::$userId = "credentials_tester";
         CredentialsTest::$fakeId = "fakeTestUser123";
         CredentialsTest::$userPassword = "password";

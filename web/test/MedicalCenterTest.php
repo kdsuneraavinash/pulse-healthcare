@@ -30,7 +30,7 @@ final class MedicalCenterTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        \Pulse\Database::init();
+        \Pulse\Components\Database::init();
         LoginService::setTestEnvironment();
         self::$accountId = "medical_center_tester";
         self::$name = "Medical Center Tester";

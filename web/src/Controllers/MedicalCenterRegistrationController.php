@@ -4,6 +4,7 @@ namespace Pulse\Controllers;
 
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
+use Pulse\Models\Exceptions;
 
 class MedicalCenterRegistrationController extends BaseController
 {
@@ -35,17 +36,17 @@ class MedicalCenterRegistrationController extends BaseController
                 try {
                     MedicalCenter::requestRegistration($accountId, $medicalCenterDetails, $password);
                     $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/profile");
-                } catch (AccountAlreadyExistsException $e) {
+                } catch (Exceptions\AccountAlreadyExistsException $e) {
                     $error = "Account name $accountId already taken.";
-                } catch (AccountNotExistException $e) {
+                } catch (Exceptions\AccountNotExistException $e) {
                     $error = "Account name $accountId cannot be signed in!";
-                } catch (AlreadyLoggedInException $e) {
+                } catch (Exceptions\AlreadyLoggedInException $e) {
                     $error = "Account name $accountId already logged in.";
-                } catch (InvalidDataException $e) {
+                } catch (Exceptions\InvalidDataException $e) {
                     $error = "Server side validation failed.";
-                } catch (PHSRCAlreadyInUse $e) {
+                } catch (Exceptions\PHSRCAlreadyInUse $e) {
                     $error = "PHSRC already registered";
-                } catch (AccountRejectedException $e) {
+                } catch (Exceptions\AccountRejectedException $e) {
                     $error = "Server error. Please try again";
                 }
             } else {

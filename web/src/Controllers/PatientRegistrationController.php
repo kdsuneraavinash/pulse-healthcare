@@ -4,6 +4,7 @@ namespace Pulse\Controllers;
 
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Patient\PatientDetails;
+use Pulse\Models\Exceptions;
 
 class PatientRegistrationController extends BaseController
 {
@@ -37,11 +38,11 @@ class PatientRegistrationController extends BaseController
                         'account_password' => $password
                     ), $currentAccount);
                     return;
-                } catch (AccountAlreadyExistsException $e) {
+                } catch (Exceptions\AccountAlreadyExistsException $e) {
                     $error = "Account $nic is already registered.";
-                } catch (InvalidDataException $e) {
+                } catch (Exceptions\InvalidDataException $e) {
                     $error = "Server side validation failed.";
-                } catch (AccountNotExistException $e) {
+                } catch (Exceptions\AccountNotExistException $e) {
                     $error = "Account $nic cannot be signed in!";
                 }
             } else {

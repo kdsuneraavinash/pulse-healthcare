@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Pulse;
+namespace Pulse\Components;
 
 define('MIN_CHR_ASCII', 33);
 define('MAX_CHR_ASCII', 126);

@@ -5,6 +5,7 @@ namespace Pulse\Controllers;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
+use Pulse\Models\Exceptions;
 
 class LoginController extends BaseController
 {
@@ -25,11 +26,11 @@ class LoginController extends BaseController
             if ($session == null) {
                 $message = "Invalid Username/Password";
             }
-        } catch (AccountNotExistException $ex) {
+        } catch (Exceptions\AccountNotExistException $ex) {
             $message = "Account $accountId Not Found";
-        } catch (InvalidDataException $e) {
+        } catch (Exceptions\InvalidDataException $e) {
             $message = "Account $accountId login Error";
-        } catch (AccountRejectedException $e) {
+        } catch (Exceptions\AccountRejectedException $e) {
             $message = "Your account $accountId was rejected. Please contact system administrators for further details.";
         }
 

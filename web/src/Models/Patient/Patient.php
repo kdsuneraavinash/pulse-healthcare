@@ -7,7 +7,7 @@ use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Exceptions;
-use Pulse\Utils;
+use Pulse\Components\Utils;
 
 
 class Patient extends Account

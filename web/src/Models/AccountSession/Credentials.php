@@ -6,7 +6,7 @@ use DB;
 use Pulse\Definitions;
 use Pulse\Models\BaseModel;
 use Pulse\Models\Exceptions;
-use Pulse\Utils;
+use Pulse\Components\Utils;
 
 
 /**

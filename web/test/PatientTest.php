@@ -28,7 +28,7 @@ final class PatientTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        \Pulse\Database::init();
+        \Pulse\Components\Database::init();
         LoginService::setTestEnvironment();
         self::$nic = "978978877V";
         self::$name = "Patient Tester";

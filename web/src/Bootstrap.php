@@ -10,6 +10,7 @@ use Klein;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Whoops;
+use Pulse\Components;
 
 /**
  * ========================================================
@@ -17,7 +18,8 @@ use Whoops;
  * ========================================================
  */
 
-HttpHandler::init($_GET, $_POST);
+/// Initialize Http Handler
+Components\HttpHandler::init($_GET, $_POST);
 
 /**
  * ========================================================
@@ -40,7 +42,8 @@ if ($environment !== 'production') {
     $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler);
 } else {
     $whoops->pushHandler(function (\Exception $e) {
-        // TODO: Log error or send an email to dev
+        /// Log error in production
+        Components\Logger::log($e->getMessage(), Components\Logger::ERROR, $e->getFile());
     });
 }
 
@@ -57,7 +60,7 @@ $whoops->register();
  * ========================================================
  */
 
-Database::init();
+Components\Database::init();
 
 
 /**
@@ -88,19 +91,20 @@ $twig = new Twig_Environment($loader, [
  * ========================================================
  */
 
-require __DIR__ . '/Routes.php';
-require __DIR__ . '/Controllers/BaseController.php';
 
 $klein = new Klein\Klein();
 
 /// Get routes has 2D arrays where each row is a route
 /// and first = TYPE, second = /path, third = function response()
-$routes = getRoutes();
+$routes = Components\Routes::getRoutes();
 foreach ($routes as $route) {
+    // Get type (POST/GET) and path (/login)
     $type = $route[0];
     $route_path = $route[1];
 
+    // Call controller and get reference
     $controller = new $route[2][0]();
+
     Controllers\BaseController::activate($controller, $twig);
     $method = $route[2][1];
     $callback = [$controller, $method];
@@ -113,13 +117,13 @@ foreach ($routes as $route) {
 /// getRouterDefaultErrorHandler($code) will have the
 /// default response (Unhandled error)
 $klein->onHttpError(function (int $code) {
-    $router_err_handlers = getRouterErrorHandlers();
+    $router_err_handlers = Components\Routes::getRouterErrorHandlers();
     foreach ($router_err_handlers as $handler) {
         if ($code == $handler[0]) {
-            HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/$code");
+            Components\HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/$code");
         }
     }
-    HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/undefined?code=$code");
+    Components\HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/undefined?code=$code");
 });
 
 $klein->dispatch();
@@ -130,4 +134,4 @@ $klein->dispatch();
  * ========================================================
  */
 
-HttpHandler::getInstance()->echoContent();
+Components\HttpHandler::getInstance()->echoContent();

@@ -19,7 +19,7 @@ final class LoginServiceTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        \Pulse\Database::init();
+        \Pulse\Components\Database::init();
         LoginService::setTestEnvironment();
         LoginServiceTest::$userId = "login_service_tester";
         LoginServiceTest::$password = "password";
