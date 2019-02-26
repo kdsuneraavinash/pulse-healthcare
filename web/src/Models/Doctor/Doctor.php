@@ -39,17 +39,19 @@ class Doctor extends Account implements ICreatable
 
     /**
      * @param $details
+     * @return string
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws SLMCAlreadyInUse
      * @throws \Pulse\Exceptions\AccountNotExistException
      */
-    public static function register($details)
+    public static function register($details): string
     {
         $password = Utils::generateRandomReadableString(16);
         $doctor = new Doctor($details, $password);
         $doctor->saveInDatabase();
         LoginService::createNewCredentials($doctor->getAccountId(), $password);
+        return $password;
     }
 
     /**

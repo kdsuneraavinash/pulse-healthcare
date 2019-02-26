@@ -26,13 +26,13 @@ class MedicalCenter extends Account implements IFavouritable
     /**
      * MedicalCenter constructor.
      * @param string $accountId
-     * @param VerificationState|null $verificationState
+     * @param int|null $verificationState
      * @param MedicalCenterDetails $medicalCenterDetails
      * @param bool $ignoreErrors
      * @throws AccountNotExistException
      * @throws AccountRejectedException
      */
-    protected function __construct(string $accountId, ?VerificationState $verificationState,
+    protected function __construct(string $accountId, ?int $verificationState,
                                    MedicalCenterDetails $medicalCenterDetails, bool $ignoreErrors = false)
     {
         parent::__construct($accountId, AccountType::MedicalCenter);
@@ -43,8 +43,8 @@ class MedicalCenter extends Account implements IFavouritable
             if ($query == null) {
                 throw new AccountNotExistException($accountId);
             }
-            $this->verificationState = VerificationState::getStateOfInt((int)$query['verified']);
-            if (!$ignoreErrors && $this->getVerificationState()->getState() == 2) {
+            $this->verificationState = (int)$query['verified'];
+            if (!$ignoreErrors && $this->getVerificationState() == VerificationState::Rejected) {
                 throw new AccountRejectedException($accountId);
             }
         } else {
@@ -67,7 +67,7 @@ class MedicalCenter extends Account implements IFavouritable
     public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails,
                                                string $password): MedicalCenter
     {
-        $medicalCenter = new MedicalCenter($accountId, VerificationState::Default(), $medicalCenterDetails);
+        $medicalCenter = new MedicalCenter($accountId, VerificationState::Default, $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
         LoginService::signUpSession($accountId, $password);
         // TODO: Add code to request verification
@@ -86,7 +86,7 @@ class MedicalCenter extends Account implements IFavouritable
         parent::saveInDatabase();
         DB::insert('medical_centers', array(
             'account_id' => parent::getAccountId(),
-            'verified' => $this->getVerificationState()->getState()
+            'verified' => (string)$this->getVerificationState()
         ));
         $this->getMedicalCenterDetails()->saveInDatabase(parent::getAccountId());
     }
@@ -132,14 +132,15 @@ class MedicalCenter extends Account implements IFavouritable
 
     /**
      * @param DoctorDetails $doctorDetails
+     * @return string
      * @throws AccountAlreadyExistsException
      * @throws InvalidDataException
      * @throws \Pulse\Exceptions\AccountNotExistException
      * @throws \Pulse\Exceptions\SLMCAlreadyInUse
      */
-    public function createDoctorAccount(DoctorDetails $doctorDetails)
+    public function createDoctorAccount(DoctorDetails $doctorDetails): string
     {
-        Doctor::register($doctorDetails);
+        return Doctor::register($doctorDetails);
     }
 
     public function searchDoctor()
@@ -161,9 +162,9 @@ class MedicalCenter extends Account implements IFavouritable
     }
 
     /**
-     * @return VerificationState
+     * @return int
      */
-    public function getVerificationState(): VerificationState
+    public function getVerificationState(): int
     {
         return $this->verificationState;
     }
