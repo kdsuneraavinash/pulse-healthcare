@@ -2,10 +2,10 @@
 
 namespace Pulse\Controllers;
 
-use Http;
 use Pulse\Exceptions\AccountNotExistException;
 use Pulse\Exceptions\AccountRejectedException;
 use Pulse\Exceptions\InvalidDataException;
+use Pulse\HttpHandler;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\MedicalCenter\MedicalCenter;
@@ -13,33 +13,25 @@ use Twig_Environment;
 
 abstract class BaseController
 {
-    private $response;
-    private $request;
     private $renderer;
 
     /**
      * Activates a Controller with HTTP objects and renderer.
      * @param BaseController $controller Controller
-     * @param Http\HttpRequest $httpRequest HTTP Request Object
-     * @param Http\HttpResponse $httpResponse HTTP Response Object
      * @param Twig_Environment $renderer HTML Rendering Object
      */
     public static function activate(BaseController $controller,
-                                    Http\HttpRequest $httpRequest,
-                                    Http\HttpResponse $httpResponse,
                                     Twig_Environment $renderer)
     {
-        $controller->response = $httpResponse;
-        $controller->request = $httpRequest;
         $controller->renderer = $renderer;
     }
 
     /**
-     * @return Http\HttpRequest request object
+     * @return HttpHandler request object
      */
-    protected function getRequest(): Http\HttpRequest
+    protected function getRequest(): HttpHandler
     {
-        return $this->request;
+        return HttpHandler::getInstance();
     }
 
     /**
@@ -67,7 +59,7 @@ abstract class BaseController
         $context['current_page'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $context['error'] = $this->getRequest()->getQueryParameter('error');
         $rendered = $this->getRenderer()->render($template, $context);
-        $this->getResponse()->setContent($rendered);
+        $this->getRequest()->setContent($rendered);
     }
 
     /**
@@ -95,14 +87,6 @@ abstract class BaseController
     protected function getRenderer(): Twig_Environment
     {
         return $this->renderer;
-    }
-
-    /**
-     * @return Http\HttpResponse response object
-     */
-    protected function getResponse(): Http\HttpResponse
-    {
-        return $this->response;
     }
 
     /**

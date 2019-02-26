@@ -6,7 +6,6 @@ namespace Pulse;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Http;
 use Klein;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -51,14 +50,11 @@ $whoops->register();
  * ========================================================
  * HTTP Component Handler
  * --------------------------------------------------------
- * DOCUMENTATION
- * https://github.com/PatrickLouys/http
+ * Self created simple component
  * ========================================================
  */
 
-$httpRequest = new Http\HttpRequest($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
-$httpResponse = new Http\HttpResponse;
-
+HttpHandler::init($_GET, $_POST);
 
 /**
  * ========================================================
@@ -135,7 +131,7 @@ foreach ($routes as $route) {
     $route_path = $route[1];
 
     $controller = new $route[2][0]();
-    Controllers\BaseController::activate($controller, $httpRequest, $httpResponse, $twig);
+    Controllers\BaseController::activate($controller, $twig);
     $method = $route[2][1];
     $callback = [$controller, $method];
     $klein->respond($type, $route_path, $callback);
@@ -168,8 +164,4 @@ $klein->dispatch();
  * ========================================================
  */
 
-foreach ($httpResponse->getHeaders() as $header) {
-    header($header, false);
-}
-
-echo $httpResponse->getContent();
+HttpHandler::getInstance()->echoContent();

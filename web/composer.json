@@ -9,24 +9,20 @@
   "authors": [
     {
       "name": "K. D. Sunera Avinash Chandrasiri",
-      "email": "suneraavinash.17@cse.mrt.ac.lk",
-      "role": "Main Developer"
+      "email": "suneraavinash.17@cse.mrt.ac.lk"
     },
     {
       "name": "T. Anju Chamantha",
-      "email": "anjuchamantha.17@cse.mrt.ac.lk",
-      "role": "Frontend Developer"
+      "email": "anjuchamantha.17@cse.mrt.ac.lk"
     },
     {
       "name": "Lahiru Udayanga de Silva",
-      "email": "lahirudesilva.17@cse.mrt.ac.lk",
-      "role": "Backend Developer"
+      "email": "lahirudesilva.17@cse.mrt.ac.lk"
     }
   ],
   "require": {
     "php": ">=7.1.0",
     "filp/whoops": "~2.3",
-    "patricklouys/http": "~1.4",
     "klein/klein": "^2.1",
     "twig/twig": "^2.0",
     "sergeytsalkov/meekrodb": "^2.3",
