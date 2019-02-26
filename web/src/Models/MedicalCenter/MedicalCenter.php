@@ -119,25 +119,15 @@ class MedicalCenter extends Account implements IFavouritable
     }
 
     /**
-     * @param Patient $patient
-     * @param string $password
+     * @param PatientDetails $patientDetails
      * @throws AccountAlreadyExistsException
-     *
+     * @throws AccountNotExistException
+     * @throws InvalidDataException
      */
 
-    public function createPatientAccount(Patient $patient,string $password)
+    public function createPatientAccount(PatientDetails $patientDetails)
     {
-
-        $patient->getPatientDetails()->validate();
-        if ($patient->exists()){
-            throw new AccountAlreadyExistsException($patient->getAccountId());
-        }
-        parent::saveInDatabase();
-        DB::insert('patients', array(
-            'account_id' => $patient->accountId,
-            'name' => $patient->getPatientDetails()->getName()
-        ));
-        $patient->getPatientDetails()->saveInDatabase($patient->accountId);
+        Patient::register($patientDetails);
     }
 
     /**

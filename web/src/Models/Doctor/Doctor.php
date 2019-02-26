@@ -76,7 +76,7 @@ class Doctor extends Account implements ICreatable
      */
     private function validateFields()
     {
-        $detailsValid = $this->doctorDetails->validate();
+        $detailsValid = $this->getDoctorDetails()->validate();
         if (!$detailsValid) {
             throw new InvalidDataException("Server side validation failed.");
         }

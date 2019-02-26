@@ -7,27 +7,29 @@
  */
 
 namespace Pulse\Models\Patient;
+
 use DB;
 use Pulse\Exceptions\AccountNotExistException;
 
-class PatientDetails{
+class PatientDetails
+{
     private $name;
     private $nic;
     private $email;
     private $phoneNumber;
     private $address;
-    private $postalId;
+    private $postalCode;
 
     /**
      * PatientDetails constructor.
-     * @param $name
-     * @param $nic
-     * @param $email
-     * @param $phoneNumber
-     * @param $address
-     * @param $postalCode
+     * @param string $name
+     * @param string $nic
+     * @param string $email
+     * @param string $phoneNumber
+     * @param string $address
+     * @param string $postalCode
      */
-    public function __construct($name, $nic, $email, $phoneNumber, $address, $postalCode)
+    function __construct(string $name, string $nic, string $email, string $phoneNumber, string $address, string $postalCode)
     {
         $this->name = $name;
         $this->nic = $nic;
@@ -37,13 +39,14 @@ class PatientDetails{
         $this->postalCode = $postalCode;
     }
 
-    public function validate(){
-        $nameValid = $this->name != '' && (preg_match("/^([a-zA-Z' ]+)$/",$this->name));
-        $nicValid = $this->nic != '' && ((preg_match('~^[A-Z]\d{9}$~', $this->nic)) || strlen((string)$this->nic)==12);
+    public function validate()
+    {
+        $nameValid = $this->name != '';
+        $nicValid = $this->nic != '';
         $emailValid = $this->email != "" && preg_match(' /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*' .
                 ')|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|' .
                 '(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $this->email);
-        $phoneNumberValid = $this->phoneNumber != "" && (strlen((string)$this->phoneNumber)==10);
+        $phoneNumberValid = $this->phoneNumber != "";
         $addressValid = $this->address != "";
         $postalValid = $this->postalCode != "";
         return $nameValid && $nicValid && $emailValid && $phoneNumberValid && $addressValid && $postalValid;
@@ -55,7 +58,7 @@ class PatientDetails{
      * @return PatientDetails
      * @throws AccountNotExistException
      */
-    public static function readFromDatabse(string $accountId):PatientDetails
+    public static function readFromDatabase(string $accountId): PatientDetails
     {
         $query = DB::queryFirstRow("SELECT * FROM patient_details WHERE account_id=%s", $accountId);
         if ($query == null) {
@@ -63,7 +66,6 @@ class PatientDetails{
         }
         return new PatientDetails($query['name'], $query['nic'], $query['email'], $query['phone_number'],
             $query['address'], $query['postal_code']);
-
     }
 
 
@@ -74,7 +76,6 @@ class PatientDetails{
             'name' => $this->getName(),
             'nic' => $this->getNic(),
             'email' => $this->getEmail(),
-
             'phone_number' => $this->getPhoneNumber(),
             'address' => $this->getAddress(),
             'postal_code' => $this->getPostalCode()
@@ -170,11 +171,11 @@ class PatientDetails{
     }
 
     /**
-     * @param mixed $postalId
+     * @param $postalCode
      */
     public function setPostalCode($postalCode): void
     {
-        $this->postalId = $postalCode;
+        $this->postalCode = $postalCode;
     }
 
 

@@ -1,90 +1,88 @@
 <?php declare(strict_types=1);
 
 namespace Pulse\Models\Patient;
+
+use DB;
+use Pulse\Exceptions\AccountAlreadyExistsException;
+use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\Account;
+use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Enums\AccountType;
+use Pulse\Utils;
 
 
 class Patient extends Account
 {
     private $patientDetails;
+    private $defaultPassword;
     private $reportList;
     private $prescriptionList;
     private $reminderList;
 
-    public function __construct(string $accountId,PatientDetails $patientDetails)
+    /**
+     * Patient constructor.
+     * @param PatientDetails $patientDetails
+     * @param string|null $defaultPassword
+     * @throws InvalidDataException
+     */
+    public function __construct(PatientDetails $patientDetails, string $defaultPassword = null)
     {
-        parent::__construct($accountId,"patient");
+        parent::__construct($patientDetails->getNic(), AccountType::Patient);
+        if ($defaultPassword == null) {
+            $query = DB::queryFirstRow('SELECT default_password FROM doctors WHERE account_id = %s', $this->accountId);
+            if ($query == null) {
+                throw new InvalidDataException("Default password retrieval error.");
+            }
+            $defaultPassword = $query['default_password'];
+        }
+        $this->defaultPassword = $defaultPassword;
+        $this->patientDetails = $patientDetails;
         $this->reportList = Array();
         $this->prescriptionList = Array();
         $this->reminderList = Array();
-        $this->patientDetails=$patientDetails;
     }
 
     /**
-     * @return PatientDetails
+     * @param $details
+     * @throws InvalidDataException
+     * @throws AccountAlreadyExistsException
+     * @throws \Pulse\Exceptions\AccountNotExistException
      */
-    public function getPatientDetails(): PatientDetails
+    public static function register($details)
     {
-        return $this->patientDetails;
+        $password = Utils::generateRandomReadableString(16);
+        $patient = new Patient($details, $password);
+        $patient->saveInDatabase();
+        LoginService::createNewCredentials($patient->getAccountId(), $password);
     }
 
     /**
-     * @param PatientDetails $patientDetails
+     * @throws AccountAlreadyExistsException
+     * @throws InvalidDataException
      */
-    public function setPatientDetails(PatientDetails $patientDetails): void
+    protected function saveInDatabase()
     {
-        $this->patientDetails = $patientDetails;
+        $this->validateFields();
+        parent::saveInDatabase();
+        DB::insert('patients', array(
+            'account_id' => $this->getAccountId(),
+            'default_password' => $this->getDefaultPassword()
+        ));
+        $this->getPatientDetails()->saveInDatabase($this->getAccountId());
     }
 
     /**
-     * @return array
+     * @throws AccountAlreadyExistsException
+     * @throws InvalidDataException
      */
-    public function getReportList(): array
+    private function validateFields()
     {
-        return $this->reportList;
+        $detailsValid = $this->getPatientDetails()->validate();
+        if (!$detailsValid) {
+            throw new InvalidDataException("Server side validation failed.");
+        }
+        parent::checkWhetherAccountIDExists();
     }
-
-    /**
-     * @param array $reportList
-     */
-    public function setReportList(array $reportList): void
-    {
-        $this->reportList = $reportList;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPrescriptionList(): array
-    {
-        return $this->prescriptionList;
-    }
-
-    /**
-     * @param array $prescriptionList
-     */
-    public function setPrescriptionList(array $prescriptionList): void
-    {
-        $this->prescriptionList = $prescriptionList;
-    }
-
-    /**
-     * @return array
-     */
-    public function getReminderList(): array
-    {
-        return $this->reminderList;
-    }
-
-    /**
-     * @param array $reminderList
-     */
-    public function setReminderList(array $reminderList): void
-    {
-        $this->reminderList = $reminderList;
-    }
-
-
 
     private function viewTimeline()
     {
@@ -110,4 +108,52 @@ class Patient extends Account
     {
         // implementation of editNotifications() function
     }
+
+    /*
+    --------------------------------------------------------------------------------------------------------------------
+    Getters and Setters
+    --------------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * @return PatientDetails
+     */
+    public function getPatientDetails(): PatientDetails
+    {
+        return $this->patientDetails;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReportList(): array
+    {
+        return $this->reportList;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPrescriptionList(): array
+    {
+        return $this->prescriptionList;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReminderList(): array
+    {
+        return $this->reminderList;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDefaultPassword(): ?string
+    {
+        return $this->defaultPassword;
+    }
+
+
 }
