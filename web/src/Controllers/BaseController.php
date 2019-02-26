@@ -2,44 +2,35 @@
 
 namespace Pulse\Controllers;
 
-use Http;
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AccountRejectedException;
-use Pulse\Exceptions\InvalidDataException;
+use Pulse\Components\HttpHandler;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\MedicalCenter\MedicalCenter;
+use Pulse\Models\Exceptions;
 use Twig_Environment;
 
 abstract class BaseController
 {
-    private $response;
-    private $request;
     private $renderer;
 
     /**
      * Activates a Controller with HTTP objects and renderer.
      * @param BaseController $controller Controller
-     * @param Http\HttpRequest $httpRequest HTTP Request Object
-     * @param Http\HttpResponse $httpResponse HTTP Response Object
      * @param Twig_Environment $renderer HTML Rendering Object
      */
     public static function activate(BaseController $controller,
-                                    Http\HttpRequest $httpRequest,
-                                    Http\HttpResponse $httpResponse,
                                     Twig_Environment $renderer)
     {
-        $controller->response = $httpResponse;
-        $controller->request = $httpRequest;
         $controller->renderer = $renderer;
     }
 
     /**
-     * @return Http\HttpRequest request object
+     * @return HttpHandler request object
      */
-    protected function getRequest(): Http\HttpRequest
+    protected function httpHandler(): HttpHandler
     {
-        return $this->request;
+        return HttpHandler::getInstance();
     }
 
     /**
@@ -56,7 +47,7 @@ abstract class BaseController
             $context['account_id'] = $account->getAccountId();
             $context['account_type'] = (string)$account->getAccountType();
             if ($account instanceof MedicalCenter) {
-                $context['verified'] = $account->getVerificationState()->getState();
+                $context['verified'] = $account->getVerificationState();
             }
         } else {
             $context['account_id'] = null;
@@ -65,27 +56,25 @@ abstract class BaseController
 
         $context['site'] = "http://$_SERVER[HTTP_HOST]";
         $context['current_page'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $context['error'] = $this->getRequest()->getQueryParameter('error');
+        $context['error'] = $this->httpHandler()->getParameter('error');
         $rendered = $this->getRenderer()->render($template, $context);
-        $this->getResponse()->setContent($rendered);
+        $this->httpHandler()->setContent($rendered);
     }
 
     /**
      * @param string $className
      * @param string $page
-     * @param string $redirect
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    protected function loadOnlyIfUserIsOfType(string $className, string $page, string $redirect)
+    protected function loadOnlyIfUserIsOfType(string $className, string $page)
     {
         $currentAccount = $this->getCurrentAccount();
         if ($currentAccount instanceof $className) {
             $this->render($page, array(), $currentAccount);
         } else {
-            header("Location: $redirect");
-            exit;
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 
@@ -95,14 +84,6 @@ abstract class BaseController
     protected function getRenderer(): Twig_Environment
     {
         return $this->renderer;
-    }
-
-    /**
-     * @return Http\HttpResponse response object
-     */
-    protected function getResponse(): Http\HttpResponse
-    {
-        return $this->response;
     }
 
     /**
@@ -120,10 +101,10 @@ abstract class BaseController
         } catch (AccountNotExistException $e) {
             LoginService::signOutSession();
             return null;
-        } catch (InvalidDataException $e) {
+        } catch (Exceptions\InvalidDataException $e) {
             LoginService::signOutSession();
             return null;
-        } catch (AccountRejectedException $e) {
+        } catch (Exceptions\AccountRejectedException $e) {
             LoginService::signOutSession();
             return null;
         }

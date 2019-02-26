@@ -23,9 +23,9 @@
                 <a onclick="post('{{ site }}/profile', null, 'get')" class="dropdown-item" href="#"><i
                             class="fas fa-address-card mr-2" style="width: 20px;"></i>My Account</a>
                 {% if (control_panel == true) %}
-                <a onclick="post('{{ site }}/control/{{ account_type }}', null, 'get')"
-                   class="dropdown-item" href="#"><i
-                            class="fas fa-cogs mr-2" style="width: 20px;"></i>Control Panel</a>
+                    <a onclick="post('{{ site }}/control/{{ account_type }}', null, 'get')"
+                       class="dropdown-item" href="#"><i
+                                class="fas fa-cogs mr-2" style="width: 20px;"></i>Control Panel</a>
                 {% endif %}
                 <a onclick="post('{{ site }}/logout')" class="dropdown-item" href="#"><i
                             class="fas fa-power-off mr-2" style="width: 20px;"></i>Sign Out</a>

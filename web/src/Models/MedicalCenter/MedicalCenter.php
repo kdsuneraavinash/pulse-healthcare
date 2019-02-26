@@ -3,18 +3,16 @@
 namespace Pulse\Models\MedicalCenter;
 
 use DB;
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AccountRejectedException;
-use Pulse\Exceptions\InvalidDataException;
-use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Enums\VerificationState;
+use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\IFavouritable;
+use Pulse\Models\Patient\Patient;
+use Pulse\Models\Patient\PatientDetails;
 
 class MedicalCenter extends Account implements IFavouritable
 {
@@ -24,13 +22,13 @@ class MedicalCenter extends Account implements IFavouritable
     /**
      * MedicalCenter constructor.
      * @param string $accountId
-     * @param VerificationState|null $verificationState
+     * @param int|null $verificationState
      * @param MedicalCenterDetails $medicalCenterDetails
      * @param bool $ignoreErrors
-     * @throws AccountNotExistException
-     * @throws AccountRejectedException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
      */
-    protected function __construct(string $accountId, ?VerificationState $verificationState,
+    protected function __construct(string $accountId, ?int $verificationState,
                                    MedicalCenterDetails $medicalCenterDetails, bool $ignoreErrors = false)
     {
         parent::__construct($accountId, AccountType::MedicalCenter);
@@ -39,11 +37,11 @@ class MedicalCenter extends Account implements IFavouritable
             // Need to fetch from database
             $query = DB::queryFirstRow("SELECT verified FROM medical_centers WHERE account_id=%s", $accountId);
             if ($query == null) {
-                throw new AccountNotExistException($accountId);
+                throw new Exceptions\AccountNotExistException($accountId);
             }
-            $this->verificationState = VerificationState::getStateOfInt((int)$query['verified']);
-            if (!$ignoreErrors && $this->getVerificationState()->getState() == 2) {
-                throw new AccountRejectedException($accountId);
+            $this->verificationState = (int)$query['verified'];
+            if (!$ignoreErrors && $this->getVerificationState() == VerificationState::Rejected) {
+                throw new Exceptions\AccountRejectedException($accountId);
             }
         } else {
             $this->verificationState = $verificationState;
@@ -55,17 +53,17 @@ class MedicalCenter extends Account implements IFavouritable
      * @param MedicalCenterDetails $medicalCenterDetails
      * @param string $password
      * @return MedicalCenter
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws PHSRCAlreadyInUse
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AlreadyLoggedInException
-     * @throws AccountRejectedException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\AlreadyLoggedInException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\PHSRCAlreadyInUse
      */
     public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails,
                                                string $password): MedicalCenter
     {
-        $medicalCenter = new MedicalCenter($accountId, VerificationState::Default(), $medicalCenterDetails);
+        $medicalCenter = new MedicalCenter($accountId, VerificationState::Default, $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
         LoginService::signUpSession($accountId, $password);
         // TODO: Add code to request verification
@@ -73,9 +71,9 @@ class MedicalCenter extends Account implements IFavouritable
     }
 
     /**
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws PHSRCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\PHSRCAlreadyInUse
      */
     protected function saveInDatabase()
     {
@@ -84,53 +82,62 @@ class MedicalCenter extends Account implements IFavouritable
         parent::saveInDatabase();
         DB::insert('medical_centers', array(
             'account_id' => parent::getAccountId(),
-            'verified' => $this->getVerificationState()->getState()
+            'verified' => (string)$this->getVerificationState()
         ));
         $this->getMedicalCenterDetails()->saveInDatabase(parent::getAccountId());
     }
 
     /**
-     * @throws AccountAlreadyExistsException
-     * @throws PHSRCAlreadyInUse
-     * @throws InvalidDataException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\PHSRCAlreadyInUse
      */
     private function validateFields()
     {
         $detailsValid = $this->medicalCenterDetails->validate();
         if (!$detailsValid) {
-            throw new InvalidDataException("Server side validation failed.");
+            throw new Exceptions\InvalidDataException("Server side validation failed.");
         }
         parent::checkWhetherAccountIDExists();
         $this->checkWhetherPHSRCExists();
     }
 
     /**
-     * @throws PHSRCAlreadyInUse
+     * @throws Exceptions\PHSRCAlreadyInUse
      */
     private function checkWhetherPHSRCExists()
     {
         $existingMedicalCenter = DB::queryFirstRow("SELECT account_id from medical_center_details where phsrc=%s",
             $this->medicalCenterDetails->getPhsrc());
         if ($existingMedicalCenter != null) {
-            throw new PHSRCAlreadyInUse($existingMedicalCenter['account_id']);
+            throw new Exceptions\PHSRCAlreadyInUse($existingMedicalCenter['account_id']);
         }
     }
 
-    public function createPatientAccount()
+    /**
+     * @param PatientDetails $patientDetails
+     * @return string
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     */
+
+    public function createPatientAccount(PatientDetails $patientDetails): string
     {
-        // TODO: implementation of createPatientAccount() function
+        return Patient::register($patientDetails);
     }
 
     /**
      * @param DoctorDetails $doctorDetails
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\SLMCAlreadyInUse
+     * @return string
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
-    public function createDoctorAccount(DoctorDetails $doctorDetails)
+    public function createDoctorAccount(DoctorDetails $doctorDetails): string
     {
-        Doctor::register($doctorDetails);
+        return Doctor::register($doctorDetails);
     }
 
     public function searchDoctor()
@@ -152,9 +159,9 @@ class MedicalCenter extends Account implements IFavouritable
     }
 
     /**
-     * @return VerificationState
+     * @return int
      */
-    public function getVerificationState(): VerificationState
+    public function getVerificationState(): int
     {
         return $this->verificationState;
     }

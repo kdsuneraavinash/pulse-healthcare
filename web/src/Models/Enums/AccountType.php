@@ -6,14 +6,15 @@ class AccountType
 {
     const MedicalCenter = 'med_center';
     const Doctor = 'doctor';
-    const Patient = 'doctor';
+    const Patient = 'patient';
     const Tester = 'tester';
     const Admin = 'admin';
 
     const Values = array(AccountType::MedicalCenter, AccountType::Doctor,
         AccountType::Patient, AccountType::Tester, AccountType::Admin);
 
-    public static  function isValid(string $type):bool{
+    public static function isValid(string $type): bool
+    {
         return array_key_exists($type, AccountType::Values);
     }
 }
