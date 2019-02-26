@@ -56,7 +56,7 @@ abstract class BaseController
             $context['account_id'] = $account->getAccountId();
             $context['account_type'] = (string)$account->getAccountType();
             if ($account instanceof MedicalCenter) {
-                $context['verified'] = $account->getVerificationState()->getState();
+                $context['verified'] = $account->getVerificationState();
             }
         } else {
             $context['account_id'] = null;

@@ -6,6 +6,8 @@ use Pulse\Exceptions\AccountNotExistException;
 use Pulse\Exceptions\AccountRejectedException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Admin\Admin;
+use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\StaticLogger;
 
 class LoginController extends BaseController
@@ -45,8 +47,18 @@ class LoginController extends BaseController
             exit;
         }
 
-        header("Location: http://$_SERVER[HTTP_HOST]/profile");
-        exit;
+        /// Redirect to correct location
+        $currentAccount = $session->getSessionAccount();
+        if ($currentAccount instanceof Admin){
+            header("Location: http://$_SERVER[HTTP_HOST]/control/admin");
+            exit;
+        }else if ($currentAccount instanceof MedicalCenter){
+            header("Location: http://$_SERVER[HTTP_HOST]/control/med_center");
+            exit;
+        }else{
+            header("Location: http://$_SERVER[HTTP_HOST]/profile");
+            exit;
+        }
     }
 
     /**
