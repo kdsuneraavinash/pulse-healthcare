@@ -2,13 +2,10 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AccountRejectedException;
-use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
-use Pulse\StaticLogger;
+use Pulse\Models\Exceptions;
 
 class LoginController extends BaseController
 {
@@ -16,48 +13,39 @@ class LoginController extends BaseController
      */
     public function post()
     {
-        $accountId = $this->getRequest()->getBodyParameter('account');
-        $password = $this->getRequest()->getBodyParameter('password');
+        $accountId = $this->httpHandler()->postParameter('account');
+        $password = $this->httpHandler()->postParameter('password');
 
         if ($accountId == null || $password == null) {
-            StaticLogger::loggerWarn("AccountID or Password null when Login in a user by POST");
-            header("Location: http://$_SERVER[HTTP_HOST]/login");
-            exit;
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/login");
         }
 
+        $session = null;
         try {
             $session = LoginService::logInSession($accountId, $password);
-        } catch (AccountNotExistException $ex) {
+            if ($session == null) {
+                $message = "Invalid Username/Password";
+            }
+        } catch (Exceptions\AccountNotExistException $ex) {
             $message = "Account $accountId Not Found";
-            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
-            exit;
-        } catch (InvalidDataException $e) {
+        } catch (Exceptions\InvalidDataException $e) {
             $message = "Account $accountId login Error";
-            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
-            exit;
-        } catch (AccountRejectedException $e) {
+        } catch (Exceptions\AccountRejectedException $e) {
             $message = "Your account $accountId was rejected. Please contact system administrators for further details.";
-            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
-            exit;
         }
 
-        if ($session == null) {
-            $message = "Invalid Username/Password";
-            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
-            exit;
+        if (isset($message)) {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/login?error=$message");
         }
 
         /// Redirect to correct location
         $currentAccount = $session->getSessionAccount();
-        if ($currentAccount instanceof Admin){
-            header("Location: http://$_SERVER[HTTP_HOST]/control/admin");
-            exit;
-        }else if ($currentAccount instanceof MedicalCenter){
-            header("Location: http://$_SERVER[HTTP_HOST]/control/med_center");
-            exit;
-        }else{
-            header("Location: http://$_SERVER[HTTP_HOST]/profile");
-            exit;
+        if ($currentAccount instanceof Admin) {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/admin");
+        } else if ($currentAccount instanceof MedicalCenter) {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/med_center");
+        } else {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/profile");
         }
     }
 

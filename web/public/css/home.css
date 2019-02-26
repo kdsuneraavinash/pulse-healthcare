@@ -9,18 +9,18 @@ body {
     background-image: none;
 }
 
-.img-carousel{
+.img-carousel {
     height: 100vh;
     width: 100vw;
     object-fit: cover;
 
 }
 
-a.active{
+a.active {
     color: #2d9daa !important;
 }
 
-.section{
+.section {
     min-height: 100vh;
     width: 100vw;
 

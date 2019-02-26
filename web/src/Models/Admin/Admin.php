@@ -5,11 +5,9 @@ namespace Pulse\Models\Admin;
 use DB;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Enums\AccountType;
+use Pulse\Models\Enums\VerificationState;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 
-define('ACCOUNT_NORMAL', 0);
-define('ACCOUNT_VERIFIED', 1);
-define('ACCOUNT_REJECTED', 2);
 
 class Admin extends Account
 {
@@ -48,21 +46,21 @@ class Admin extends Account
     public function retractMedicalCenter(MedicalCenter $account)
     {
         DB::update('medical_centers', array(
-            'verified' => ACCOUNT_NORMAL
+            'verified' => VerificationState::Default
         ), "account_id=%s", $account->getAccountId());
     }
 
     public function rejectMedicalCenter(MedicalCenter $account)
     {
         DB::update('medical_centers', array(
-            'verified' => ACCOUNT_REJECTED
+            'verified' => VerificationState::Rejected
         ), "account_id=%s", $account->getAccountId());
     }
 
     public function verifyMedicalCenter(MedicalCenter $account)
     {
         DB::update('medical_centers', array(
-            'verified' => ACCOUNT_VERIFIED
+            'verified' => VerificationState::Verified
         ), "account_id=%s", $account->getAccountId());
     }
 }

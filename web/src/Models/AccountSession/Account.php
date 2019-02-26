@@ -3,12 +3,11 @@
 namespace Pulse\Models\AccountSession;
 
 use DB;
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\AccountNotExistException;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
+use Pulse\Models\Exceptions;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
 
@@ -41,15 +40,15 @@ abstract class Account
      * @param string $accountId
      * @param bool $ignoreMedicalCenterVerificationError
      * @return Account|null
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public static function retrieveAccount(string $accountId, bool $ignoreMedicalCenterVerificationError = false): ?Account
     {
         $account = DB::queryFirstRow("SELECT * FROM accounts WHERE account_id=%s", $accountId);
         if ($account == null) {
-            throw new AccountNotExistException($accountId);
+            throw new Exceptions\AccountNotExistException($accountId);
         }
         $parsedAccount = null;
         if ($account['account_type'] === (string)AccountType::MedicalCenter) {
@@ -61,8 +60,8 @@ abstract class Account
             $parsedAccount = new Doctor(DoctorDetails::readFromDatabase($accountId));
         } else if ($account['account_type'] === (string)AccountType::Admin) {
             $parsedAccount = new Admin($accountId);
-        }else{
-            throw new AccountNotExistException($accountId);
+        } else {
+            throw new Exceptions\AccountNotExistException($accountId);
         }
 
         return $parsedAccount;
@@ -77,14 +76,14 @@ abstract class Account
     }
 
     /**
-     * @throws AccountAlreadyExistsException
+     * @throws Exceptions\AccountAlreadyExistsException
      */
     protected function checkWhetherAccountIDExists()
     {
         $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
             $this->accountId);
         if ($existingAccount != null) {
-            throw new AccountAlreadyExistsException($existingAccount['account_id']);
+            throw new Exceptions\AccountAlreadyExistsException($existingAccount['account_id']);
         }
     }
 

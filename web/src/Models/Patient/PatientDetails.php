@@ -9,7 +9,7 @@
 namespace Pulse\Models\Patient;
 
 use DB;
-use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\Exceptions;
 
 class PatientDetails
 {
@@ -56,13 +56,13 @@ class PatientDetails
     /**
      * @param string $accountId
      * @return PatientDetails
-     * @throws AccountNotExistException
+     * @throws Exceptions\AccountNotExistException
      */
     public static function readFromDatabase(string $accountId): PatientDetails
     {
         $query = DB::queryFirstRow("SELECT * FROM patient_details WHERE account_id=%s", $accountId);
         if ($query == null) {
-            throw new AccountNotExistException($accountId);
+            throw new Exceptions\AccountNotExistException($accountId);
         }
         return new PatientDetails($query['name'], $query['nic'], $query['email'], $query['phone_number'],
             $query['address'], $query['postal_code']);

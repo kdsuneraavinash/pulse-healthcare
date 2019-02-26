@@ -2,14 +2,9 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\InvalidDataException;
-use Pulse\Exceptions\SLMCAlreadyInUse;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\MedicalCenter\MedicalCenter;
-use Pulse\StaticLogger;
-use Pulse\Utils;
+use Pulse\Models\Exceptions;
 
 class DoctorRegistrationController extends BaseController
 {
@@ -23,13 +18,13 @@ class DoctorRegistrationController extends BaseController
         $currentAccount = $this->getCurrentAccount();
 
         if ($currentAccount instanceof MedicalCenter) {
-            $fullName = $this->getRequest()->getBodyParameter('full_name');
-            $displayName = $this->getRequest()->getBodyParameter('display_name');
-            $category = $this->getRequest()->getBodyParameter('category');
-            $slmcId = $this->getRequest()->getBodyParameter('slmc_id');
-            $email = $this->getRequest()->getBodyParameter('email');
-            $phoneNumber = $this->getRequest()->getBodyParameter('phone_number');
-            $nic = $this->getRequest()->getBodyParameter('nic');
+            $fullName = $this->httpHandler()->postParameter('full_name');
+            $displayName = $this->httpHandler()->postParameter('display_name');
+            $category = $this->httpHandler()->postParameter('category');
+            $slmcId = $this->httpHandler()->postParameter('slmc_id');
+            $email = $this->httpHandler()->postParameter('email');
+            $phoneNumber = $this->httpHandler()->postParameter('phone_number');
+            $nic = $this->httpHandler()->postParameter('nic');
 
             if (!($fullName == null || $displayName == null || $category == null ||
                 $slmcId == null || $email == null ||
@@ -45,25 +40,21 @@ class DoctorRegistrationController extends BaseController
                         'account_password' => $password
                     ), $currentAccount);
                     return;
-                } catch (AccountAlreadyExistsException $e) {
+                } catch (Exceptions\AccountAlreadyExistsException $e) {
                     $error = "Account $nic is already registered.";
-                } catch (InvalidDataException $e) {
+                } catch (Exceptions\InvalidDataException $e) {
                     $error = "Server side validation failed.";
-                } catch (AccountNotExistException $e) {
+                } catch (Exceptions\AccountNotExistException $e) {
                     $error = "Account $nic cannot be signed in!";
-                } catch (SLMCAlreadyInUse $e) {
+                } catch (Exceptions\SLMCAlreadyInUse $e) {
                     $error = "A doctor is already registered using the given SLMC id.";
                 }
             } else {
-                StaticLogger::loggerWarn("A field was null when registering a doctor by POST: " .
-                    "for Account $nic and IP " . Utils::getClientIP());
                 $error = 'Some fields are empty.';
             }
-            header("Location: http://$_SERVER[HTTP_HOST]/control/med_center/register/doctor?error=$error");
-            exit;
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/med_center/register/doctor?error=$error");
         } else {
-            header("Location: http://$_SERVER[HTTP_HOST]/405");
-            exit;
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 }

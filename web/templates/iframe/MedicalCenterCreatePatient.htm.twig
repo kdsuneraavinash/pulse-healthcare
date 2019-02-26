@@ -40,7 +40,7 @@
 
 <script src="{{ site }}/js/register-patient.js"></script>
 {% if (account_password != null) %}
-{% include 'modals/created_account.htm.twig' %}
+    {% include 'modals/created_account.htm.twig' %}
 {% endif %}
 
 {{ control_panel.iframe_end() }}

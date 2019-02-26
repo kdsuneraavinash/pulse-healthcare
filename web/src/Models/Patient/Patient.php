@@ -3,12 +3,11 @@
 namespace Pulse\Models\Patient;
 
 use DB;
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
-use Pulse\Utils;
+use Pulse\Models\Exceptions;
+use Pulse\Components\Utils;
 
 
 class Patient extends Account
@@ -23,7 +22,7 @@ class Patient extends Account
      * Patient constructor.
      * @param PatientDetails $patientDetails
      * @param string|null $defaultPassword
-     * @throws InvalidDataException
+     * @throws Exceptions\InvalidDataException
      */
     public function __construct(PatientDetails $patientDetails, string $defaultPassword = null)
     {
@@ -31,7 +30,7 @@ class Patient extends Account
         if ($defaultPassword == null) {
             $query = DB::queryFirstRow('SELECT default_password FROM doctors WHERE account_id = %s', $this->accountId);
             if ($query == null) {
-                throw new InvalidDataException("Default password retrieval error.");
+                throw new Exceptions\InvalidDataException("Default password retrieval error.");
             }
             $defaultPassword = $query['default_password'];
         }
@@ -45,9 +44,9 @@ class Patient extends Account
     /**
      * @param $details
      * @return string
-     * @throws InvalidDataException
-     * @throws AccountAlreadyExistsException
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
      */
     public static function register($details)
     {
@@ -59,8 +58,8 @@ class Patient extends Account
     }
 
     /**
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\InvalidDataException
      */
     protected function saveInDatabase()
     {
@@ -74,41 +73,41 @@ class Patient extends Account
     }
 
     /**
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\InvalidDataException
      */
     private function validateFields()
     {
         $detailsValid = $this->getPatientDetails()->validate();
         if (!$detailsValid) {
-            throw new InvalidDataException("Server side validation failed.");
+            throw new Exceptions\InvalidDataException("Server side validation failed.");
         }
         parent::checkWhetherAccountIDExists();
     }
 
-    private function viewTimeline()
+    public function viewTimeline()
     {
-        // implementation of viewTimeline() function
+        //TODO: implementation of viewTimeline() function
     }
 
-    private function setReminder($reminderDetails)
+    public function setReminder($reminderDetails)
     {
-        // implementation of setReminder() function
+        //TODO: implementation of setReminder() function
     }
 
-    private function viewMedicineInformation($medicine)
+    public function viewMedicineInformation($medicine)
     {
-        // implementation of viewMedicineInformation() function
+        //TODO: implementation of viewMedicineInformation() function
     }
 
-    private function setReminderNextDate()
+    public function setReminderNextDate()
     {
-        // implementation of setReminderNextDate() function
+        //TODO: implementation of setReminderNextDate() function
     }
 
-    private function editNotifications()
+    public function editNotifications()
     {
-        // implementation of editNotifications() function
+        //TODO: implementation of editNotifications() function
     }
 
     /*

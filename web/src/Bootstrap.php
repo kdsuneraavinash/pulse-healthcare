@@ -7,14 +7,17 @@ namespace Pulse;
 require __DIR__ . '/../vendor/autoload.php';
 
 use Klein;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Pulse\Components;
 use Whoops;
 
-define('TEMPLATES', __DIR__ . '/../templates');
-define('CACHE', __DIR__ . '/../cache');
+/**
+ * ========================================================
+ * = BEFORE
+ * ========================================================
+ */
+
+/// Initialize Http Handler
+Components\HttpHandler::init($_GET, $_POST);
 
 /**
  * ========================================================
@@ -37,24 +40,12 @@ if ($environment !== 'production') {
     $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler);
 } else {
     $whoops->pushHandler(function (\Exception $e) {
-        // TODO: Log error or send an email to dev
+        /// Log error in production
+        Components\Logger::log($e->getMessage(), Components\Logger::ERROR, $e->getFile());
     });
 }
 
 $whoops->register();
-
-
-/**
- * ========================================================
- * = HTTP Initialization
- * ========================================================
- * HTTP Component Handler
- * --------------------------------------------------------
- * Self created simple component
- * ========================================================
- */
-
-HttpHandler::init($_GET, $_POST);
 
 /**
  * ========================================================
@@ -67,7 +58,7 @@ HttpHandler::init($_GET, $_POST);
  * ========================================================
  */
 
-Database::init();
+Components\Database::init();
 
 
 /**
@@ -81,31 +72,8 @@ Database::init();
  * ========================================================
  */
 
-$loader = new Twig_Loader_Filesystem(TEMPLATES);
-$twig = new Twig_Environment($loader, [
-    // TODO: Uncomment to cache and speedup process of templating
-    //    'cache' => __DIR__ . '/../cache',
-]);
+Components\TwigHandler::init();
 
-
-/**
- * ========================================================
- * = Monolog Initialization
- * ========================================================
- * Logging Library
- * --------------------------------------------------------
- * DOCUMENTATION
- * https://github.com/Seldaek/monolog
- * ========================================================
- */
-
-$log = new Logger('main');
-try {
-    $log->pushHandler(new StreamHandler('log/logs.log'));
-} catch (\Exception $e) {
-}
-
-StaticLogger::setLogger($log);
 
 /**
  * ========================================================
@@ -118,50 +86,48 @@ StaticLogger::setLogger($log);
  * ========================================================
  */
 
-require __DIR__ . '/Routes.php';
-require __DIR__ . '/Controllers/BaseController.php';
-
 $klein = new Klein\Klein();
 
 /// Get routes has 2D arrays where each row is a route
 /// and first = TYPE, second = /path, third = function response()
-$routes = getRoutes();
+$routes = Components\Routes::getRoutes();
 foreach ($routes as $route) {
+    // Get type (POST/GET) and path (/login)
     $type = $route[0];
     $route_path = $route[1];
 
+    // Get controller class method reference
     $controller = new $route[2][0]();
-    Controllers\BaseController::activate($controller, $twig);
     $method = $route[2][1];
     $callback = [$controller, $method];
+
+    // Pass reference to Klein
     $klein->respond($type, $route_path, $callback);
 }
 
-/// getRouterErrorHandlers() has 2D arrays where each row is a handler
-/// and first = ERROR_CODE, second = response body
+/// getRouterErrorHandlers() has dictionary like array where each key is a handler
 ///
 /// getRouterDefaultErrorHandler($code) will have the
 /// default response (Unhandled error)
 $klein->onHttpError(function (int $code) {
-    $router_err_handlers = getRouterErrorHandlers();
-    foreach ($router_err_handlers as $handler) {
-        if ($code == $handler[0]) {
-            header("Location: http://$_SERVER[HTTP_HOST]/$code");
-            exit;
-        }
+    $router_err_handlers = Components\Routes::getRouterErrorHandlers();
+    // If handler is supported
+    if (array_key_exists($code, $router_err_handlers)) {
+        Components\HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/$code");
+    } else {
+        // Default handler
+        Components\HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/undefined?code=$code");
     }
-    header("Location: http://$_SERVER[HTTP_HOST]/undefined?code=$code");
-    exit;
 });
-
 
 $klein->dispatch();
 
 
 /**
  * ========================================================
- * = HTTP sending response
+ * = AFTER
  * ========================================================
  */
 
-HttpHandler::getInstance()->echoContent();
+// Echo result of page
+Components\HttpHandler::getInstance()->echoContent();

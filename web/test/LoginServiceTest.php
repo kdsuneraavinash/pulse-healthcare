@@ -4,9 +4,9 @@ namespace PulseTest;
 
 use DB;
 use PHPUnit\Framework\TestCase;
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AlreadyLoggedInException;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Exceptions;
+
 
 final class LoginServiceTest extends TestCase
 {
@@ -19,7 +19,7 @@ final class LoginServiceTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        \Pulse\Database::init();
+        \Pulse\Components\Database::init();
         LoginService::setTestEnvironment();
         LoginServiceTest::$userId = "login_service_tester";
         LoginServiceTest::$password = "password";
@@ -28,9 +28,9 @@ final class LoginServiceTest extends TestCase
     }
 
     /**
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToContinueWithoutSigningUp()
     {
@@ -40,23 +40,23 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueWithoutSigningUp
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToLogInWithoutSigningUp()
     {
-        $this->expectException(AccountNotExistException::class);
+        $this->expectException(Exceptions\AccountNotExistException::class);
         LoginService::logInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
     }
 
     /**
      * @depends testTryToLogInWithoutSigningUp
-     * @throws AccountNotExistException
-     * @throws AlreadyLoggedInException
-     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\AlreadyLoggedInException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToSignUp()
     {
@@ -66,9 +66,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToSignUp
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToContinueAfterSigningUp()
     {
@@ -78,23 +78,23 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueAfterSigningUp
-     * @throws AccountNotExistException
-     * @throws AlreadyLoggedInException
-     * @throws \Pulse\Exceptions\AccountAlreadyExistsException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\AlreadyLoggedInException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToSignUpAfterSigningUp()
     {
-        $this->expectException(AlreadyLoggedInException::class);
+        $this->expectException(Exceptions\AlreadyLoggedInException::class);
         LoginService::signUpSession(LoginServiceTest::$userId, LoginServiceTest::$password);
     }
 
     /**
      * @depends testTryToSignUpAfterSigningUp
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToLogOutAfterSignUp()
     {
@@ -105,9 +105,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogOutAfterSignUp
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToLogInWithFakePassword()
     {
@@ -117,9 +117,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogInWithFakePassword
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToContinueAfterFakeLogIn()
     {
@@ -129,9 +129,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueAfterFakeLogIn
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToLogInWithCorrectPassword()
     {
@@ -141,9 +141,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogInWithCorrectPassword
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToContinueAfterCorrectLogIn()
     {
@@ -153,9 +153,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToContinueAfterCorrectLogIn
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToLogOutAfterLogIn()
     {
@@ -166,9 +166,9 @@ final class LoginServiceTest extends TestCase
 
     /**
      * @depends testTryToLogOutAfterLogIn
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testTryToLogOutAfterLogOut()
     {

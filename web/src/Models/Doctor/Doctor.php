@@ -3,14 +3,12 @@
 namespace Pulse\Models\Doctor;
 
 use DB;
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\InvalidDataException;
-use Pulse\Exceptions\SLMCAlreadyInUse;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
+use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\ICreatable;
-use Pulse\Utils;
+use Pulse\Components\Utils;
 
 class Doctor extends Account implements ICreatable
 {
@@ -21,7 +19,7 @@ class Doctor extends Account implements ICreatable
      * MedicalCenter constructor.
      * @param DoctorDetails $doctorDetails
      * @param string $defaultPassword
-     * @throws InvalidDataException
+     * @throws Exceptions\InvalidDataException
      */
     protected function __construct(DoctorDetails $doctorDetails, string $defaultPassword = null)
     {
@@ -30,7 +28,7 @@ class Doctor extends Account implements ICreatable
         if ($defaultPassword == null) {
             $query = DB::queryFirstRow('SELECT default_password FROM doctors WHERE account_id = %s', $this->accountId);
             if ($query == null) {
-                throw new InvalidDataException("Default password retrieval error.");
+                throw new Exceptions\InvalidDataException("Default password retrieval error.");
             }
             $defaultPassword = $query['default_password'];
         }
@@ -40,10 +38,10 @@ class Doctor extends Account implements ICreatable
     /**
      * @param $details
      * @return string
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws SLMCAlreadyInUse
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public static function register($details): string
     {
@@ -55,9 +53,9 @@ class Doctor extends Account implements ICreatable
     }
 
     /**
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     protected function saveInDatabase()
     {
@@ -72,29 +70,29 @@ class Doctor extends Account implements ICreatable
     }
 
     /**
-     * @throws AccountAlreadyExistsException
-     * @throws SLMCAlreadyInUse
-     * @throws InvalidDataException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     private function validateFields()
     {
         $detailsValid = $this->getDoctorDetails()->validate();
         if (!$detailsValid) {
-            throw new InvalidDataException("Server side validation failed.");
+            throw new Exceptions\InvalidDataException("Server side validation failed.");
         }
         parent::checkWhetherAccountIDExists();
         $this->checkWhetherSLMCExists();
     }
 
     /**
-     * @throws SLMCAlreadyInUse
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     private function checkWhetherSLMCExists()
     {
         $existingDoctor = DB::queryFirstRow("SELECT account_id from doctor_details where slmc_ID=%s",
             $this->doctorDetails->getSlmcId());
         if ($existingDoctor != null) {
-            throw new SLMCAlreadyInUse($this->doctorDetails->getSlmcId());
+            throw new Exceptions\SLMCAlreadyInUse($this->doctorDetails->getSlmcId());
         }
     }
 

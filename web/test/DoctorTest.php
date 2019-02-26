@@ -4,14 +4,13 @@ namespace PulseTest;
 
 use DB;
 use PHPUnit\Framework\TestCase;
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\InvalidDataException;
-use Pulse\Exceptions\SLMCAlreadyInUse;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
+use Pulse\Models\Exceptions;
 
-class DoctorTest extends TestCase
+
+final class DoctorTest extends TestCase
 {
     private static $nic;
     private static $fullName;
@@ -30,7 +29,7 @@ class DoctorTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        \Pulse\Database::init();
+        \Pulse\Components\Database::init();
         LoginService::setTestEnvironment();
         self::$nic = "652566699V";
         self::$fullName = "Medical Center Tester";
@@ -70,10 +69,10 @@ class DoctorTest extends TestCase
     }
 
     /**
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testRegister()
     {
@@ -86,14 +85,14 @@ class DoctorTest extends TestCase
 
     /**
      * @depends testRegister
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testRequestRegistrationWithUsedAccountName()
     {
-        $this->expectException(AccountAlreadyExistsException::class);
+        $this->expectException(Exceptions\AccountAlreadyExistsException::class);
         self::restoreDetails();
         self::getDoctorDetails()->setSlmcId("0002");
         Doctor::register(self::$doctorDetails);
@@ -109,14 +108,14 @@ class DoctorTest extends TestCase
 
     /**
      * @depends testRegister
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testRequestRegistrationWithUsedSLMC()
     {
-        $this->expectException(SLMCAlreadyInUse::class);
+        $this->expectException(Exceptions\SLMCAlreadyInUse::class);
         self::restoreDetails();
         self::getDoctorDetails()->setNic(self::$unusedNic);
         Doctor::register(self::$doctorDetails);
@@ -124,14 +123,14 @@ class DoctorTest extends TestCase
 
     /**
      * @depends testRegister
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testDataInvalidationOfDisplayName()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getDoctorDetails()->setDisplayName("");
         Doctor::register(self::$doctorDetails);
@@ -139,14 +138,14 @@ class DoctorTest extends TestCase
 
     /**
      * @depends testRegister
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testDataInvalidationOfCategory()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getDoctorDetails()->setCategory("");
         Doctor::register(self::$doctorDetails);
@@ -154,14 +153,14 @@ class DoctorTest extends TestCase
 
     /**
      * @depends testRegister
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testDataInvalidationOfFullName()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getDoctorDetails()->setFullName("");
         Doctor::register(self::$doctorDetails);
@@ -169,14 +168,14 @@ class DoctorTest extends TestCase
 
     /**
      * @depends testRegister
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testDataInvalidationOfPHSRCEmpty()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getDoctorDetails()->setSlmcId("");
         Doctor::register(self::$doctorDetails);
@@ -184,14 +183,14 @@ class DoctorTest extends TestCase
 
     /**
      * @depends testRegister
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testDataInvalidationOfEmailEmpty()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getDoctorDetails()->setEmail("");
         Doctor::register(self::$doctorDetails);
@@ -199,14 +198,14 @@ class DoctorTest extends TestCase
 
     /**
      * @depends testRegister
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testDataInvalidationOfEmailRegex()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getDoctorDetails()->setEmail("email.com");
         Doctor::register(self::$doctorDetails);
@@ -214,14 +213,14 @@ class DoctorTest extends TestCase
 
     /**
      * @depends testRegister
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws SLMCAlreadyInUse
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\SLMCAlreadyInUse
      */
     public function testDataInvalidationOfPhoneNumberEmpty()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getDoctorDetails()->setPhoneNumber("");
         Doctor::register(self::$doctorDetails);

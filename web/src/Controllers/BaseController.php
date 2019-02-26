@@ -2,34 +2,21 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AccountRejectedException;
-use Pulse\Exceptions\InvalidDataException;
-use Pulse\HttpHandler;
+use Pulse\Components\HttpHandler;
+use Pulse\Components\TwigHandler;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\MedicalCenter\MedicalCenter;
+use Pulse\Models\Exceptions;
 use Twig_Environment;
 
 abstract class BaseController
 {
-    private $renderer;
-
-    /**
-     * Activates a Controller with HTTP objects and renderer.
-     * @param BaseController $controller Controller
-     * @param Twig_Environment $renderer HTML Rendering Object
-     */
-    public static function activate(BaseController $controller,
-                                    Twig_Environment $renderer)
-    {
-        $controller->renderer = $renderer;
-    }
-
     /**
      * @return HttpHandler request object
      */
-    protected function getRequest(): HttpHandler
+    protected function httpHandler(): HttpHandler
     {
         return HttpHandler::getInstance();
     }
@@ -57,27 +44,25 @@ abstract class BaseController
 
         $context['site'] = "http://$_SERVER[HTTP_HOST]";
         $context['current_page'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $context['error'] = $this->getRequest()->getQueryParameter('error');
+        $context['error'] = $this->httpHandler()->getParameter('error');
         $rendered = $this->getRenderer()->render($template, $context);
-        $this->getRequest()->setContent($rendered);
+        $this->httpHandler()->setContent($rendered);
     }
 
     /**
      * @param string $className
      * @param string $page
-     * @param string $redirect
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    protected function loadOnlyIfUserIsOfType(string $className, string $page, string $redirect)
+    protected function loadOnlyIfUserIsOfType(string $className, string $page)
     {
         $currentAccount = $this->getCurrentAccount();
         if ($currentAccount instanceof $className) {
             $this->render($page, array(), $currentAccount);
         } else {
-            header("Location: $redirect");
-            exit;
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 
@@ -86,7 +71,7 @@ abstract class BaseController
      */
     protected function getRenderer(): Twig_Environment
     {
-        return $this->renderer;
+        return TwigHandler::getInstance();
     }
 
     /**
@@ -104,10 +89,10 @@ abstract class BaseController
         } catch (AccountNotExistException $e) {
             LoginService::signOutSession();
             return null;
-        } catch (InvalidDataException $e) {
+        } catch (Exceptions\InvalidDataException $e) {
             LoginService::signOutSession();
             return null;
-        } catch (AccountRejectedException $e) {
+        } catch (Exceptions\AccountRejectedException $e) {
             LoginService::signOutSession();
             return null;
         }

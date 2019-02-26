@@ -14,8 +14,8 @@ class TestController extends BaseController
      */
     public function show()
     {
-        $get_string = $this->getRequest()->getQueryParameter('key');
-        $post_string = $this->getRequest()->getBodyParameter('key');
+        $get_string = $this->httpHandler()->getParameter('key');
+        $post_string = $this->httpHandler()->postParameter('key');
         $db_query = DB::query("SELECT * FROM test;");
         $db_session_query = DB::query("SELECT * FROM sessions;");
 
