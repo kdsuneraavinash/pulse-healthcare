@@ -15,6 +15,8 @@ use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Enums\VerificationState;
 use Pulse\Models\Interfaces\IFavouritable;
+use Pulse\Models\Patient\Patient;
+use Pulse\Models\Patient\PatientDetails;
 
 class MedicalCenter extends Account implements IFavouritable
 {
@@ -116,9 +118,17 @@ class MedicalCenter extends Account implements IFavouritable
         }
     }
 
-    public function createPatientAccount()
+    /**
+     * @param PatientDetails $patientDetails
+     * @return string
+     * @throws AccountAlreadyExistsException
+     * @throws AccountNotExistException
+     * @throws InvalidDataException
+     */
+
+    public function createPatientAccount(PatientDetails $patientDetails): string
     {
-        // TODO: implementation of createPatientAccount() function
+        return Patient::register($patientDetails);
     }
 
     /**
