@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="border border-light col-lg-8 p-0 m-0">
-                    <form action="{{ site }}/register/medi" class="m-0 p-5 bg-white needs-validation" method="post"
+                    <form action="{{ site }}/search/doctor" class="m-0 p-5 bg-white needs-validation" method="post"
                           novalidate>
                         <p class="text-center h4 mb-5">SEARCH DOCTOR</p>
 
@@ -53,8 +53,7 @@
                             '8-20 characters long and can contain english letters or digits') }}
                         {{ form_fields.input_with_label('slmc_id', 'SLMC Reg ID', 'Doctor Registration ID in SLMC','', 'text') }}
                         {{ form_fields.input_with_label('email', 'Email', 'email@website.com', email, 'email') }}
-                        {{ form_fields.input_with_label('nic', 'NIC', 'Doctor NIC', '', 'text',
-                            'This will act as your username') }}
+                        {{ form_fields.input_with_label('nic', 'NIC', 'Doctor NIC', '', 'text') }}
                         {{ form_fields.input_with_label('region', 'Region', 'Region', region, 'text',
                             '8-30 characters long and can contain english letters or digits') }}
 
@@ -81,7 +80,6 @@
 
 {% include "part/footer.htm.twig" %}
 {% include "part/scripts.htm.twig" %}
-<script src="{{ site }}/js/register-medcenter.js"></script>
 
 </body>
 

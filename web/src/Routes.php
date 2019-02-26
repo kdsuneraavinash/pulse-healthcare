@@ -35,6 +35,12 @@ function getRoutes()
         // Control Panel - Admin
         ['GET', '/control/med_center', ['Pulse\Controllers\MediControlPanelController', 'get']],
 
+        //Search pages
+        ['GET','/search/doctor',['Pulse\Controllers\SearchDoctorController','show']],
+        ['GET','/search/doctor',['Pulse\Controllers\SearchDoctorController','get']],
+        ['POST','/search/doctor',['Pulse\Controllers\SearchDoctorController','post']],
+
+
         // Error Handlers
         ['GET', '/404', ['Pulse\Controllers\ErrorController', 'error404']],
         ['POST', '/404', ['Pulse\Controllers\ErrorController', 'error404']],
