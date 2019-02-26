@@ -3,12 +3,11 @@
 namespace Pulse\Models\AccountSession;
 
 use DB;
-use Pulse\Exceptions;
+use Pulse\Definitions;
+use Pulse\Models\Exceptions;
 use Pulse\Models\BaseModel;
 use Pulse\Utils;
 
-define('PEPPER', '14a5168782azxa5b4648de2chjufcb3afed6drt4');
-define('CREDENTIALS_SALT_LENGTH', 40);
 
 /**
  * Secured account who will implement 'account_credentials' table
@@ -58,7 +57,7 @@ class Credentials implements BaseModel
             throw new Exceptions\AccountAlreadyExistsException($accountId);
         }
 
-        $salt = Utils::generateRandomSaltyString(CREDENTIALS_SALT_LENGTH);
+        $salt = Utils::generateRandomSaltyString(Definitions::CREDENTIALS_SALT_LENGTH);
         $credentials = new Credentials($accountId, $password, $salt);
         $credentials->createCredentials();
 
@@ -121,6 +120,6 @@ class Credentials implements BaseModel
      */
     private function getHashedPassword(): string
     {
-        return hash('sha256', $this->accountId . PEPPER . $this->password . $this->salt);
+        return hash('sha256', $this->accountId . Definitions::PEPPER . $this->password . $this->salt);
     }
 }

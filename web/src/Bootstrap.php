@@ -17,8 +17,7 @@ use Whoops;
  * ========================================================
  */
 
-define('TEMPLATES', __DIR__ . '/../templates');
-define('CACHE', __DIR__ . '/../cache');
+include "Definitions.php";
 HttpHandler::init($_GET, $_POST);
 
 /**
@@ -73,7 +72,7 @@ Database::init();
  * ========================================================
  */
 
-$loader = new Twig_Loader_Filesystem(TEMPLATES);
+$loader = new Twig_Loader_Filesystem(Definitions::TEMPLATES);
 $twig = new Twig_Environment($loader, [
     // TODO: Uncomment to cache and speedup process of templating
     //    'cache' => __DIR__ . '/../cache',

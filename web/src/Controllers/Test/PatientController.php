@@ -13,7 +13,7 @@ class PatientController extends BaseController
      */
     public function get()
     {
-        $accountId = $this->getCurrentAccountId();
+        $accountId = $this->getCurrentAccount();
         $this->render('PatientController.html.twig', array(), $accountId);
     }
 }

@@ -3,7 +3,7 @@
 namespace Pulse\Models\Doctor;
 
 use DB;
-use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\IDetails;
 
 class DoctorDetails implements IDetails
@@ -57,13 +57,13 @@ class DoctorDetails implements IDetails
     /**
      * @param string $nic
      * @return DoctorDetails
-     * @throws AccountNotExistException
+     * @throws Exceptions\AccountNotExistException
      */
     public static function readFromDatabase(string $nic): DoctorDetails
     {
         $query = DB::queryFirstRow("SELECT * FROM doctor_details WHERE account_id=%s", $nic);
         if ($query == null) {
-            throw new AccountNotExistException($nic);
+            throw new Exceptions\AccountNotExistException($nic);
         }
         return new DoctorDetails($nic, $query['full_name'], $query['display_name'], $query['category'],
             $query['slmc_id'], $query['email'], $query['phone_number']);

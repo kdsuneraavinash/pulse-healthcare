@@ -3,7 +3,7 @@
 namespace Pulse\Models\MedicalCenter;
 
 use DB;
-use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\IDetails;
 
 class MedicalCenterDetails implements IDetails
@@ -59,13 +59,13 @@ class MedicalCenterDetails implements IDetails
     /**
      * @param string $accountId
      * @return MedicalCenterDetails
-     * @throws AccountNotExistException
+     * @throws Exceptions\AccountNotExistException
      */
     public static function readFromDatabase(string $accountId): MedicalCenterDetails
     {
         $query = DB::queryFirstRow("SELECT * FROM medical_center_details WHERE account_id=%s", $accountId);
         if ($query == null) {
-            throw new AccountNotExistException($accountId);
+            throw new Exceptions\AccountNotExistException($accountId);
         }
         return new MedicalCenterDetails($query['name'], $query['phsrc'], $query['email'], $query['fax'],
             $query['phone_number'], $query['address'], $query['postal_code']);

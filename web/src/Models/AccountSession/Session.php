@@ -3,13 +3,10 @@
 namespace Pulse\Models\AccountSession;
 
 use DB;
-use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Definitions;
+use Pulse\Models\Exceptions;
 use Pulse\Models\BaseModel;
 use Pulse\Utils;
-
-define('USER_EXPIRATION_DAYS', 1);
-define('SESSION_SALT_LENGTH', 40);
-
 
 class Session implements BaseModel
 {
@@ -20,15 +17,15 @@ class Session implements BaseModel
      * Session constructor.
      * @param string $accountId id of the account
      * @param string $sessionKey Session key
-     * @throws AccountNotExistException if account does not exist
-     * @throws \Pulse\Exceptions\InvalidDataException
-     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     private function __construct(string $accountId, string $sessionKey)
     {
         $this->account = Account::retrieveAccount($accountId);
         if (!$this->account->exists()) {
-            throw new AccountNotExistException($accountId);
+            throw new Exceptions\AccountNotExistException($accountId);
         }
         $this->sessionKey = $sessionKey;
     }
@@ -37,9 +34,9 @@ class Session implements BaseModel
      * Create a new account session
      * @param string $accountId ID of the account to create session
      * @return Session Created Session Object
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\InvalidDataException
-     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public static function createSession(string $accountId): Session
     {
@@ -51,7 +48,7 @@ class Session implements BaseModel
             'ip_address' => $ipAddress);
         $record = array(
             'created' => DB::sqleval("NOW()"),
-            'expires' => DB::sqleval("ADDDATE(NOW(), " . USER_EXPIRATION_DAYS . ")"),
+            'expires' => DB::sqleval("ADDDATE(NOW(), " . Definitions::USER_EXPIRATION_DAYS . ")"),
             'session_key' => $sessionKey
         );
 
@@ -73,9 +70,9 @@ class Session implements BaseModel
      * @param string $accountId BaseAccount Id to resume session
      * @param string $sessionKey Session Key of the session to resume
      * @return Session|null Created session(null if session key is invalid)
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\InvalidDataException
-     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public static function resumeSession(string $accountId, string $sessionKey): ?Session
     {
@@ -120,7 +117,7 @@ class Session implements BaseModel
      */
     private static function getEncryptedSessionKey(string $accountId, string $ip): string
     {
-        $salt = Utils::generateRandomSaltyString(SESSION_SALT_LENGTH);
+        $salt = Utils::generateRandomSaltyString(Definitions::SESSION_SALT_LENGTH);
         return sha1($salt . time() . $accountId . $ip);
     }
 

@@ -2,12 +2,7 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AccountRejectedException;
-use Pulse\Exceptions\AlreadyLoggedInException;
-use Pulse\Exceptions\InvalidDataException;
-use Pulse\Exceptions\PHSRCAlreadyInUse;
+use Pulse\Models\Exceptions;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
 

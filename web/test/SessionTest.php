@@ -5,6 +5,8 @@ namespace PulseTest;
 use DB;
 use PHPUnit\Framework\TestCase;
 use Pulse\Models\AccountSession\Session;
+use Pulse\Models\Exceptions;
+
 
 final class SessionTest extends TestCase
 {
@@ -36,9 +38,9 @@ final class SessionTest extends TestCase
     }
 
     /**
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testCreateSession()
     {
@@ -51,9 +53,9 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testCreateSession
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testResumeSession()
     {
@@ -66,9 +68,9 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testResumeSession
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testCreateAnotherSession()
     {
@@ -79,9 +81,9 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testCreateAnotherSession
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testCreateSessionFromAnotherIP()
     {
@@ -104,9 +106,9 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testCloseFirstSession
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testAnotherSessionTriedToResumeSession()
     {

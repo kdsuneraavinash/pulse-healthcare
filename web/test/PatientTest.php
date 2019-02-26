@@ -4,13 +4,13 @@ namespace PulseTest;
 
 use DB;
 use PHPUnit\Framework\TestCase;
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Exceptions;
 use Pulse\Models\Patient\Patient;
 use Pulse\Models\Patient\PatientDetails;
 
-class PatientTest extends TestCase
+
+final class PatientTest extends TestCase
 {
     private static $nic;
     private static $name;
@@ -66,9 +66,9 @@ class PatientTest extends TestCase
     }
 
     /**
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
      */
     public function testRequestRegistration()
     {
@@ -90,13 +90,13 @@ class PatientTest extends TestCase
 
     /**
      * @depends testRequestRegistration
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
      */
     public function testDataInvalidationOfName()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getPatientDetails()->setName("");
         Patient::register(self::$patientDetails);
@@ -104,13 +104,13 @@ class PatientTest extends TestCase
 
     /**
      * @depends testRequestRegistration
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
      */
     public function testDataInvalidationOfEmailEmpty()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getPatientDetails()->setEmail("");
         Patient::register(self::$patientDetails);
@@ -118,13 +118,13 @@ class PatientTest extends TestCase
 
     /**
      * @depends testRequestRegistration
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
      */
     public function testDataInvalidationOfEmailRegex()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getPatientDetails()->setEmail("email.com");
         Patient::register(self::$patientDetails);
@@ -132,13 +132,13 @@ class PatientTest extends TestCase
 
     /**
      * @depends testRequestRegistration
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
      */
     public function testDataInvalidationOfPhoneNumberEmpty()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getPatientDetails()->setPhoneNumber("");
         Patient::register(self::$patientDetails);
@@ -146,13 +146,13 @@ class PatientTest extends TestCase
 
     /**
      * @depends testRequestRegistration
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
      */
     public function testDataInvalidationOfAddressEmpty()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getPatientDetails()->setAddress("");
         Patient::register(self::$patientDetails);
@@ -160,13 +160,13 @@ class PatientTest extends TestCase
 
     /**
      * @depends testRequestRegistration
-     * @throws AccountAlreadyExistsException
-     * @throws InvalidDataException
-     * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\InvalidDataException
      */
     public function testDataInvalidationOfPostalCodeEmpty()
     {
-        $this->expectException(InvalidDataException::class);
+        $this->expectException(Exceptions\InvalidDataException::class);
         self::restoreDetails();
         self::getPatientDetails()->setPostalCode("");
         Patient::register(self::$patientDetails);
