@@ -39,6 +39,11 @@ final class Routes{
             ['GET', '/control/med_center/register/patient', ['Pulse\Controllers\MediControlPanelController', 'getMediRegisterPatientIframe']],
             ['POST', '/control/med_center/register/patient', ['Pulse\Controllers\PatientRegistrationController', 'post']],
 
+            //Search pages
+            ['GET','/search/doctor',['Pulse\Controllers\SearchDoctorController','show']],
+            ['GET','/search/doctor',['Pulse\Controllers\SearchDoctorController','get']],
+            ['POST','/search/doctor',['Pulse\Controllers\SearchDoctorController','post']],
+
             // Error Handlers
             ['GET', '/404', ['Pulse\Controllers\ErrorController', 'error404']],
             ['POST', '/404', ['Pulse\Controllers\ErrorController', 'error404']],
