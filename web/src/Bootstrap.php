@@ -7,14 +7,19 @@ namespace Pulse;
 require __DIR__ . '/../vendor/autoload.php';
 
 use Klein;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Whoops;
 
+/**
+ * ========================================================
+ * = BEFORE
+ * ========================================================
+ */
+
 define('TEMPLATES', __DIR__ . '/../templates');
 define('CACHE', __DIR__ . '/../cache');
+HttpHandler::init($_GET, $_POST);
 
 /**
  * ========================================================
@@ -42,19 +47,6 @@ if ($environment !== 'production') {
 }
 
 $whoops->register();
-
-
-/**
- * ========================================================
- * = HTTP Initialization
- * ========================================================
- * HTTP Component Handler
- * --------------------------------------------------------
- * Self created simple component
- * ========================================================
- */
-
-HttpHandler::init($_GET, $_POST);
 
 /**
  * ========================================================
@@ -86,26 +78,6 @@ $twig = new Twig_Environment($loader, [
     // TODO: Uncomment to cache and speedup process of templating
     //    'cache' => __DIR__ . '/../cache',
 ]);
-
-
-/**
- * ========================================================
- * = Monolog Initialization
- * ========================================================
- * Logging Library
- * --------------------------------------------------------
- * DOCUMENTATION
- * https://github.com/Seldaek/monolog
- * ========================================================
- */
-
-$log = new Logger('main');
-try {
-    $log->pushHandler(new StreamHandler('log/logs.log'));
-} catch (\Exception $e) {
-}
-
-StaticLogger::setLogger($log);
 
 /**
  * ========================================================
@@ -154,13 +126,11 @@ $klein->onHttpError(function (int $code) {
     exit;
 });
 
-
 $klein->dispatch();
-
 
 /**
  * ========================================================
- * = HTTP sending response
+ * = AFTER
  * ========================================================
  */
 

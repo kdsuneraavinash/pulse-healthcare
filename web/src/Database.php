@@ -16,5 +16,6 @@ class Database
         DB::$host = 'localhost';
         DB::$port = '3306';
         DB::$encoding = 'latin1';
+        Logger::log('Database connected', Logger::INFO, 'Database');
     }
 }

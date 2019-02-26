@@ -7,8 +7,6 @@ use Pulse\Exceptions\AccountNotExistException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Patient\PatientDetails;
-use Pulse\StaticLogger;
-use Pulse\Utils;
 
 class PatientRegistrationController extends BaseController
 {
@@ -50,8 +48,6 @@ class PatientRegistrationController extends BaseController
                     $error = "Account $nic cannot be signed in!";
                 }
             } else {
-                StaticLogger::loggerWarn("A field was null when registering a patient by POST: " .
-                    "for Account $nic and IP " . Utils::getClientIP());
                 $error = 'Some fields are empty.';
             }
 

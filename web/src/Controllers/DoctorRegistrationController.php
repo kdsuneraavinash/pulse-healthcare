@@ -8,8 +8,6 @@ use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\SLMCAlreadyInUse;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\MedicalCenter\MedicalCenter;
-use Pulse\StaticLogger;
-use Pulse\Utils;
 
 class DoctorRegistrationController extends BaseController
 {
@@ -55,8 +53,6 @@ class DoctorRegistrationController extends BaseController
                     $error = "A doctor is already registered using the given SLMC id.";
                 }
             } else {
-                StaticLogger::loggerWarn("A field was null when registering a doctor by POST: " .
-                    "for Account $nic and IP " . Utils::getClientIP());
                 $error = 'Some fields are empty.';
             }
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/med_center/register/doctor?error=$error");

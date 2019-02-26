@@ -86,29 +86,29 @@ class Patient extends Account
         parent::checkWhetherAccountIDExists();
     }
 
-    private function viewTimeline()
+    public function viewTimeline()
     {
-        // implementation of viewTimeline() function
+        //TODO: implementation of viewTimeline() function
     }
 
-    private function setReminder($reminderDetails)
+    public function setReminder($reminderDetails)
     {
-        // implementation of setReminder() function
+        //TODO: implementation of setReminder() function
     }
 
-    private function viewMedicineInformation($medicine)
+    public function viewMedicineInformation($medicine)
     {
-        // implementation of viewMedicineInformation() function
+        //TODO: implementation of viewMedicineInformation() function
     }
 
-    private function setReminderNextDate()
+    public function setReminderNextDate()
     {
-        // implementation of setReminderNextDate() function
+        //TODO: implementation of setReminderNextDate() function
     }
 
-    private function editNotifications()
+    public function editNotifications()
     {
-        // implementation of editNotifications() function
+        //TODO: implementation of editNotifications() function
     }
 
     /*

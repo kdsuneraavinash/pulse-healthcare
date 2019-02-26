@@ -8,7 +8,6 @@ use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
-use Pulse\StaticLogger;
 
 class LoginController extends BaseController
 {
@@ -20,7 +19,6 @@ class LoginController extends BaseController
         $password = $this->httpHandler()->postParameter('password');
 
         if ($accountId == null || $password == null) {
-            StaticLogger::loggerWarn("AccountID or Password null when Login in a user by POST");
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/login");
         }
 
