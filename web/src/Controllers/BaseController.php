@@ -3,6 +3,7 @@
 namespace Pulse\Controllers;
 
 use Pulse\Components\HttpHandler;
+use Pulse\Components\TwigHandler;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Exceptions\AccountNotExistException;
@@ -12,19 +13,6 @@ use Twig_Environment;
 
 abstract class BaseController
 {
-    private $renderer;
-
-    /**
-     * Activates a Controller with HTTP objects and renderer.
-     * @param BaseController $controller Controller
-     * @param Twig_Environment $renderer HTML Rendering Object
-     */
-    public static function activate(BaseController $controller,
-                                    Twig_Environment $renderer)
-    {
-        $controller->renderer = $renderer;
-    }
-
     /**
      * @return HttpHandler request object
      */
@@ -83,7 +71,7 @@ abstract class BaseController
      */
     protected function getRenderer(): Twig_Environment
     {
-        return $this->renderer;
+        return TwigHandler::getInstance();
     }
 
     /**

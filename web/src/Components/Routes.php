@@ -2,7 +2,8 @@
 
 namespace Pulse\Components;
 
-final class Routes{
+final class Routes
+{
     public static function getRoutes()
     {
         return [
@@ -40,9 +41,9 @@ final class Routes{
             ['POST', '/control/med_center/register/patient', ['Pulse\Controllers\PatientRegistrationController', 'post']],
 
             //Search pages
-            ['GET','/search/doctor',['Pulse\Controllers\SearchDoctorController','show']],
-            ['GET','/search/doctor',['Pulse\Controllers\SearchDoctorController','get']],
-            ['POST','/search/doctor',['Pulse\Controllers\SearchDoctorController','post']],
+            ['GET', '/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'show']],
+            ['GET', '/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'get']],
+            ['POST', '/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'post']],
 
             // Error Handlers
             ['GET', '/404', ['Pulse\Controllers\ErrorController', 'error404']],
@@ -57,12 +58,12 @@ final class Routes{
         ];
     }
 
-    public static function getRouterErrorHandlers()
+    public static function getRouterErrorHandlers(): array
     {
-        return [
-            [404, '404'],
-            [405, '405'],
-            [500, '500'],
-        ];
+        return array(
+            404 => '404',
+            405 => '405',
+            500 => '500'
+        );
     }
 }

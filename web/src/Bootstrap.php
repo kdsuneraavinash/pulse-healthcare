@@ -7,10 +7,8 @@ namespace Pulse;
 require __DIR__ . '/../vendor/autoload.php';
 
 use Klein;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
-use Whoops;
 use Pulse\Components;
+use Whoops;
 
 /**
  * ========================================================
@@ -74,11 +72,8 @@ Components\Database::init();
  * ========================================================
  */
 
-$loader = new Twig_Loader_Filesystem(Definitions::TEMPLATES);
-$twig = new Twig_Environment($loader, [
-    // TODO: Uncomment to cache and speedup process of templating
-    //    'cache' => __DIR__ . '/../cache',
-]);
+Components\TwigHandler::init();
+
 
 /**
  * ========================================================
@@ -91,7 +86,6 @@ $twig = new Twig_Environment($loader, [
  * ========================================================
  */
 
-
 $klein = new Klein\Klein();
 
 /// Get routes has 2D arrays where each row is a route
@@ -102,31 +96,32 @@ foreach ($routes as $route) {
     $type = $route[0];
     $route_path = $route[1];
 
-    // Call controller and get reference
+    // Get controller class method reference
     $controller = new $route[2][0]();
-
-    Controllers\BaseController::activate($controller, $twig);
     $method = $route[2][1];
     $callback = [$controller, $method];
+
+    // Pass reference to Klein
     $klein->respond($type, $route_path, $callback);
 }
 
-/// getRouterErrorHandlers() has 2D arrays where each row is a handler
-/// and first = ERROR_CODE, second = response body
+/// getRouterErrorHandlers() has dictionary like array where each key is a handler
 ///
 /// getRouterDefaultErrorHandler($code) will have the
 /// default response (Unhandled error)
 $klein->onHttpError(function (int $code) {
     $router_err_handlers = Components\Routes::getRouterErrorHandlers();
-    foreach ($router_err_handlers as $handler) {
-        if ($code == $handler[0]) {
-            Components\HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/$code");
-        }
+    // If handler is supported
+    if (array_key_exists($code, $router_err_handlers)) {
+        Components\HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/$code");
+    } else {
+        // Default handler
+        Components\HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/undefined?code=$code");
     }
-    Components\HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/undefined?code=$code");
 });
 
 $klein->dispatch();
+
 
 /**
  * ========================================================
@@ -134,4 +129,5 @@ $klein->dispatch();
  * ========================================================
  */
 
+// Echo result of page
 Components\HttpHandler::getInstance()->echoContent();
