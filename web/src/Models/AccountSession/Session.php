@@ -13,7 +13,7 @@ define('SESSION_SALT_LENGTH', 40);
 
 class Session implements BaseModel
 {
-    private $accountId;
+    private $account;
     private $sessionKey;
 
     /**
@@ -21,15 +21,15 @@ class Session implements BaseModel
      * @param string $accountId id of the account
      * @param string $sessionKey Session key
      * @throws AccountNotExistException if account does not exist
+     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     private function __construct(string $accountId, string $sessionKey)
     {
-        $account = Account::retrieveAccount($accountId);
-        if (!$account->exists()) {
+        $this->account = Account::retrieveAccount($accountId);
+        if (!$this->account->exists()) {
             throw new AccountNotExistException($accountId);
         }
-
-        $this->accountId = $accountId;
         $this->sessionKey = $sessionKey;
     }
 
@@ -38,25 +38,25 @@ class Session implements BaseModel
      * @param string $accountId ID of the account to create session
      * @return Session Created Session Object
      * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public static function createSession(string $accountId): Session
     {
         $ipAddress = Utils::getClientIP();
-        $browserAgent = BrowserAgent::fromCurrentBrowserAgent();
-        $sessionKey = Session::getEncryptedSessionKey($accountId, $browserAgent, $ipAddress);
+        $sessionKey = Session::getEncryptedSessionKey($accountId, $ipAddress);
 
         $primaryKey = array(
             'account_id' => $accountId,
-            'ip_address' => $ipAddress,
-            'browser_agent' => $browserAgent->getId());
+            'ip_address' => $ipAddress);
         $record = array(
             'created' => DB::sqleval("NOW()"),
             'expires' => DB::sqleval("ADDDATE(NOW(), " . USER_EXPIRATION_DAYS . ")"),
             'session_key' => $sessionKey
         );
 
-        $query = DB::queryFirstRow('SELECT session_key FROM sessions WHERE account_id=%s AND ip_address=%s AND browser_agent=%i',
-            $accountId, $ipAddress, $browserAgent->getId());
+        $query = DB::queryFirstRow('SELECT session_key FROM sessions WHERE account_id=%s AND ip_address=%s',
+            $accountId, $ipAddress);
         if ($query != null) {
             // Exists: Get existing data - Must Not Update since old session keys will become invalid
             $sessionKey = $query['session_key'];
@@ -74,16 +74,17 @@ class Session implements BaseModel
      * @param string $sessionKey Session Key of the session to resume
      * @return Session|null Created session(null if session key is invalid)
      * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws \Pulse\Exceptions\AccountRejectedException
      */
     public static function resumeSession(string $accountId, string $sessionKey): ?Session
     {
         $ipAddress = Utils::getClientIP();
-        $browserAgent = BrowserAgent::fromCurrentBrowserAgent();
 
         $query = DB::queryFirstRow('SELECT session_key FROM sessions ' .
-            'WHERE account_id = %s AND ip_address = %s AND browser_agent = %i AND ' .
+            'WHERE account_id = %s AND ip_address = %s AND ' .
             'session_key = %s AND expires > NOW() ',
-            $accountId, $ipAddress, $browserAgent->getId(), $sessionKey);
+            $accountId, $ipAddress, $sessionKey);
 
         // Return null if session didn't exist
         if ($query == null) {
@@ -98,7 +99,7 @@ class Session implements BaseModel
      */
     public function closeSession()
     {
-        Session::closeSessionOfContext($this->getSessionAccountId(), $this->getSessionKey());
+        Session::closeSessionOfContext($this->getSessionAccount()->getAccountId(), $this->getSessionKey());
     }
 
     /**
@@ -114,14 +115,13 @@ class Session implements BaseModel
     /**
      * Generate a session key using a account-defined salt
      * @param string $accountId BaseAccount id of the account to generate session key
-     * @param BrowserAgent $browserAgent
      * @param string $ip IP of the session
      * @return string Generated session key
      */
-    private static function getEncryptedSessionKey(string $accountId, BrowserAgent $browserAgent, string $ip): string
+    private static function getEncryptedSessionKey(string $accountId, string $ip): string
     {
-        $salt = Utils::generateRandomString(SESSION_SALT_LENGTH);
-        return sha1($salt . time() . $accountId . $browserAgent . $ip);
+        $salt = Utils::generateRandomSaltyString(SESSION_SALT_LENGTH);
+        return sha1($salt . time() . $accountId . $ip);
     }
 
     /**
@@ -133,10 +133,10 @@ class Session implements BaseModel
     }
 
     /**
-     * @return string
+     * @return Account
      */
-    public function getSessionAccountId(): string
+    public function getSessionAccount(): Account
     {
-        return $this->accountId;
+        return $this->account;
     }
 }

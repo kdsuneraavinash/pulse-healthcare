@@ -3,6 +3,8 @@
 namespace Pulse\Controllers;
 
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\AccountRejectedException;
+use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\StaticLogger;
 
@@ -27,6 +29,14 @@ class LoginController extends BaseController
             $message = "Account $accountId Not Found";
             header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
             exit;
+        } catch (InvalidDataException $e) {
+            $message = "Account $accountId login Error";
+            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
+            exit;
+        } catch (AccountRejectedException $e) {
+            $message = "Your account $accountId was rejected. Please contact system administrators for further details.";
+            header("Location: http://$_SERVER[HTTP_HOST]/login?error=$message");
+            exit;
         }
 
         if ($session == null) {
@@ -46,12 +56,12 @@ class LoginController extends BaseController
      */
     public function get()
     {
-        $accountId = $this->getCurrentAccountId();
+        $account = $this->getCurrentAccount();
 
-        if ($accountId == null) {
-            $this->render('LoginPage.html.twig', array(), $accountId);
+        if ($account == null) {
+            $this->render('LoginPage.html.twig', array(), $account);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig', array(), $accountId);
+            $this->render('AlreadyLoggedIn.html.twig', array(), $account);
         }
     }
 }

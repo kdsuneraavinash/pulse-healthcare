@@ -3,7 +3,12 @@
 namespace Pulse\Models\AccountSession;
 
 use DB;
+use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Models\Admin\Admin;
+use Pulse\Models\Doctor\Doctor;
+use Pulse\Models\Doctor\DoctorDetails;
+use Pulse\Models\Enums\AccountType;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
 
@@ -34,34 +39,69 @@ abstract class Account
 
     /**
      * @param string $accountId
+     * @param bool $ignoreMedicalCenterVerificationError
      * @return Account|null
      * @throws AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
-    public static function retrieveAccount(string $accountId): ?Account
+    public static function retrieveAccount(string $accountId, bool $ignoreMedicalCenterVerificationError = false): ?Account
     {
         $account = DB::queryFirstRow("SELECT * FROM accounts WHERE account_id=%s", $accountId);
         if ($account == null) {
             throw new AccountNotExistException($accountId);
         }
         $parsedAccount = null;
-        if ($account['account_type'] == 'med_center') {
-            $parsedAccount = new MedicalCenter($accountId, MedicalCenterDetails::readFromDatabase($accountId));
-        } else if ($account['account_type'] == 'tester') {
+        if ($account['account_type'] === (string)AccountType::MedicalCenter) {
+            $parsedAccount = new MedicalCenter($accountId, null,
+                MedicalCenterDetails::readFromDatabase($accountId), $ignoreMedicalCenterVerificationError);
+        } else if ($account['account_type'] === (string)AccountType::Tester) {
             $parsedAccount = new TempAccount($accountId);
-        }
-
-        if ($parsedAccount == null) {
+        } else if ($account['account_type'] === (string)AccountType::Doctor) {
+            $parsedAccount = new Doctor(DoctorDetails::readFromDatabase($accountId));
+        } else if ($account['account_type'] === (string)AccountType::Admin) {
+            $parsedAccount = new Admin($accountId);
+        }else{
             throw new AccountNotExistException($accountId);
         }
+
         return $parsedAccount;
     }
 
     protected function saveInDatabase()
     {
         DB::insert('accounts', array(
-            'account_id' => $this->accountId,
-            'account_type' => $this->accountType
+            'account_id' => $this->getAccountId(),
+            'account_type' => $this->getAccountType()
         ));
+    }
+
+    /**
+     * @throws AccountAlreadyExistsException
+     */
+    protected function checkWhetherAccountIDExists()
+    {
+        $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
+            $this->accountId);
+        if ($existingAccount != null) {
+            throw new AccountAlreadyExistsException($existingAccount['account_id']);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccountId(): string
+    {
+        return $this->accountId;
+    }
+
+    /**
+     * @return AccountType
+     */
+    public function getAccountType(): string
+    {
+        return $this->accountType;
     }
 }
 
@@ -69,6 +109,6 @@ class TempAccount extends Account
 {
     public function __construct(string $accountId)
     {
-        parent::__construct($accountId, 'tester');
+        parent::__construct($accountId, AccountType::Tester);
     }
 }

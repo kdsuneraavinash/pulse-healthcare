@@ -1,8 +1,9 @@
 {% macro feature(icon, title, desc, dark) -%}
     {% if (dark) %}
-        <div class="service col-md-3 d-flex align-self-stretch p-4 wow fadeInUp primary-color-dark text-white">
+        <!--suppress HtmlUnknownTarget -->
+        <div class="service col-md-3 d-flex align-self-stretch p-4 primary-color-dark text-white" data-aos="flip-left">
     {% else %}
-        <div class="service col-md-3 d-flex align-self-stretch p-4 wow fadeInUp primary-color text-white">
+        <div class="service col-md-3 d-flex align-self-stretch p-4 primary-color text-white" data-aos="flip-right">
     {% endif %}
 
     <div class="text-center">
@@ -21,14 +22,70 @@
     {% endif %}
 {%- endmacro %}
 
+{% macro carousal_caption(account_id, account_type) -%}
+    <div class="carousel-caption mb-5">
+        <div class="col-md-12 col-xl-8 mx-auto p-3 mb-3" style="background-color: #ffffffAA">
+            <h1 class="h1-responsive font-weight-bold mb-2 indigo-text">
+                MediKit
+            </h1>
+            <h2 class="h2-responsive mb-4 black-text">
+                Best & free platform to mange all your medical needs
+            </h2>
+            <div class="mb-2">
+
+                {% if (account_id == null) %}
+                    <form method="get" action="{{ site }}/login">
+                        <button type="submit" class="btn btn-lg btn-blue waves-effect font-weight-bold">
+                            <i class="fas fa-user"></i> &nbsp; SIGN IN
+                        </button>
+                    </form>
+                {% else %}
+                    <form method="get" action="{{ site }}/control/{{ account_type }}">
+                        <button type="submit" class="btn btn-lg btn-green waves-effect font-weight-bold">
+                            <i class="fas fa-cogs"></i> &nbsp; CONTROL PANEL
+                        </button>
+                    </form>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{%- endmacro %}
+
 {% macro feature_2(icon, title, desc) -%}
-    <div class="col-lg-6">
+    <div class="col-lg-6" data-aos="zoom-in-up" data-aos-delay="300">
         <div class="d-flex">
             <div class="mt-2 mr-3 blue-text">
-                <i class="border border-primary {{ icon }} fa-2x p-3"></i></div>
+                <i class="border border-primary {{ icon }} fa-2x p-3"></i>
+            </div>
             <div class="text">
                 <h3>{{ title }}</h3>
                 <p>{{ desc }}</p>
+            </div>
+        </div>
+    </div>
+{%- endmacro %}
+
+{% macro about_us_card(image, title) -%}
+    <div class="col-md-6 col-lg-4 p-3">
+        <div class="card p-0" data-aos="flip-left">
+            <div style="background-image: url('{{ image }}'); background-size: cover; height: 300px"></div>
+            <div class="card-body">
+                <h4 class="card-title font-weight-light">{{ title }}</h4>
+                <small>
+                    Undergraduate, Department of Computer Science Engineering, University of Moratuwa
+                </small>
+                <hr/>
+                <div class="row">
+                    <a class="text-primary" href="javascript:void(0);" data-aos="zoom-in"><span
+                                class="fab fa-facebook fa-2x indigo-text waves-effect p-4"></span> </a>
+                    <a class="text-primary" href="javascript:void(0);" data-aos="zoom-in"><span
+                                class="fab fa-twitter fa-2x blue-text waves-effect p-4"></span> </a>
+                    <a class="text-primary" href="javascript:void(0);" data-aos="zoom-in"><span
+                                class="fab fa-linkedin fa-2x blue-text waves-effect p-4"></span> </a>
+                    <a class="text-primary" href="javascript:void(0);" data-aos="zoom-in"><span
+                                class="fab fa-google fa-2x red-text waves-effect p-4"></span> </a>
+                </div>
             </div>
         </div>
     </div>

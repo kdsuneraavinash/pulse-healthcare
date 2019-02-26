@@ -37,6 +37,8 @@ final class SessionTest extends TestCase
 
     /**
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testCreateSession()
     {
@@ -50,6 +52,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testCreateSession
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testResumeSession()
     {
@@ -63,6 +67,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testResumeSession
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testCreateAnotherSession()
     {
@@ -74,6 +80,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testCreateAnotherSession
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testCreateSessionFromAnotherIP()
     {
@@ -86,40 +94,6 @@ final class SessionTest extends TestCase
 
     /**
      * @depends testCreateSessionFromAnotherIP
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     */
-    public function testCreateSessionFromAnotherBrowser()
-    {
-        $_SERVER['HTTP_USER_AGENT'] = SessionTest::$customUserAgent;
-        SessionTest::$session_browser = Session::createSession(SessionTest::$userId);
-        $query = SessionTest::getSessions();
-        $this->assertCount(3, $query);
-    }
-
-    /**
-     * @depends testCreateSessionFromAnotherBrowser
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     */
-    public function testCreateSessionAgainFromAnotherBrowser()
-    {
-        Session::createSession(SessionTest::$userId);
-        $query = SessionTest::getSessions();
-        $this->assertCount(3, $query);
-    }
-
-    /**
-     * @depends testCreateSessionAgainFromAnotherBrowser
-     */
-    public function testBrowserSessionOfOtherBrowserClosed()
-    {
-        SessionTest::getSessionBrowser()->closeSession();
-        $query = SessionTest::getSessions();
-        $this->assertCount(2, $query);
-        unset($_SERVER['HTTP_USER_AGENT']);
-    }
-
-    /**
-     * @depends testBrowserSessionOfOtherBrowserClosed
      */
     public function testCloseFirstSession()
     {
@@ -131,6 +105,8 @@ final class SessionTest extends TestCase
     /**
      * @depends testCloseFirstSession
      * @throws \Pulse\Exceptions\AccountNotExistException
+     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws \Pulse\Exceptions\InvalidDataException
      */
     public function testAnotherSessionTriedToResumeSession()
     {

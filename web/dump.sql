@@ -37,7 +37,7 @@ CREATE TABLE `account_credentials` (
 
 LOCK TABLES `account_credentials` WRITE;
 /*!40000 ALTER TABLE `account_credentials` DISABLE KEYS */;
-INSERT INTO `account_credentials` (`account_id`, `password`, `salt`) VALUES ('credentials_tester','d526377bc66f53a09fdfcd78eabcbbccc4babfd8221170adfe693e511a2d38ba','T)t1@]F~Y)8_AJpi=.7G1XAL.nzcukS]W!2DS#90'),('login_service_tester','219d990f807f3979a23a323198827c60149c39fe963c60d20a17340e88c67f35','46#<2[9{36h{do6.X6/&t>RTAa|yTU{5iOU<P:Z3'),('medCenter','9bfc39e1f4a394156c274082a6682096f8b115d123548fa8a32c209994efab6b','a^UoD[;Pb;5|q(bsZz\"jludK}@=JvQ*:M]w\"9p&S'),('medical_center_tester','8d60e62fdcf81e7f88cc8fae83a1013c2576ff8a05a95ff6c6be4c6f0870b206','W9uj_t8@<XGr53O.|JW7}G$x$(Ie5ihE~!@M[`l*'),('pTest','c4dfdceb710452bda60e33a358ff9b3ede2224e1241debc0d42a5cc87ae9504f','6kE1%H5ja44Lna<0;tl)9*dxF9[79(RO:84sFV#C');
+INSERT INTO `account_credentials` (`account_id`, `password`, `salt`) VALUES ('652566699V','1c23f2ef1abdae6340bc39934aca90c6b9ad7f9ea7e9ddbd6564126fea803c6a','NSnYJ!eLW\"5,0h/d/2q+uY6,G|7L\'pb8@@*y|qrU'),('administrator','c5e5453bb50d0673615b206fabd904fa6c47a5881857b83512b0cfa74fdc402c','.3.$)8Gj]aB<AS!#*)T4\'}wwTu,i.#ETF;17QB&h'),('credentials_tester','885605b2a8931c47893d7f56741c11815b3ee0895aadf89eb3214977c232e675','TJiYj7^9%=+WE`!Yz-*sRq=:c:vl#~%U,un?9&1j'),('login_service_tester','69a2c411d5026d68326c0878f955fb17426d3be3a64eef01fa4996cd2b85aecd','Jpx3hY{hr:C@/C+&tJR_YmbBMqNhRU;/g&H>n~{8'),('medCenter','9bfc39e1f4a394156c274082a6682096f8b115d123548fa8a32c209994efab6b','a^UoD[;Pb;5|q(bsZz\"jludK}@=JvQ*:M]w\"9p&S'),('medical_center_tester','dbeee500569b3834643be15081f43a241ae18027b404dfcf13c9f2ed6d21598c','yCIg&@Ac8DAWID+-RnXwG62;8ZC2[)X\"YQP1Dk^4'),('pTest','c4dfdceb710452bda60e33a358ff9b3ede2224e1241debc0d42a5cc87ae9504f','6kE1%H5ja44Lna<0;tl)9*dxF9[79(RO:84sFV#C');
 /*!40000 ALTER TABLE `account_credentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,34 +87,66 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`account_id`, `account_type`) VALUES ('medCenter','med_center'),('medical_center_tester','med_center'),('non_exisiting_user','med_center'),('pTest','patient'),('credentials_tester','tester'),('login_service_tester','tester'),('session_tester','tester');
+INSERT INTO `accounts` (`account_id`, `account_type`) VALUES ('administrator','admin'),('652566699V','doctor'),('medCenter','med_center'),('medical_center_tester','med_center'),('credentials_tester','tester'),('login_service_tester','tester'),('pTest','tester'),('session_tester','tester');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `browser_agents`
+-- Table structure for table `doctor_details`
 --
 
-DROP TABLE IF EXISTS `browser_agents`;
+DROP TABLE IF EXISTS `doctor_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `browser_agents` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `browser` text NOT NULL,
-  `hash` char(40) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_agents_hash_uindex` (`hash`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COMMENT='Table to save user agents';
+CREATE TABLE `doctor_details` (
+  `account_id` varchar(32) NOT NULL,
+  `nic` varchar(16) NOT NULL,
+  `full_name` text NOT NULL,
+  `display_name` text NOT NULL,
+  `category` varchar(10) DEFAULT NULL,
+  `slmc_id` varchar(16) NOT NULL,
+  `email` varchar(320) NOT NULL,
+  `phone_number` varchar(32) NOT NULL,
+  PRIMARY KEY (`account_id`),
+  UNIQUE KEY `doctor_details_slmc_id_uindex` (`slmc_id`),
+  UNIQUE KEY `doctor_details_nic_uindex` (`nic`),
+  CONSTRAINT `doctor_details_doctors_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `doctors` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store doctor account details';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `browser_agents`
+-- Dumping data for table `doctor_details`
 --
 
-LOCK TABLES `browser_agents` WRITE;
-/*!40000 ALTER TABLE `browser_agents` DISABLE KEYS */;
-INSERT INTO `browser_agents` (`id`, `browser`, `hash`) VALUES (9,'UNKNOWN','25ba44ec3b391ba4ce5fbbd2979635e254775e7d'),(11,'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36','2d13425a6c604c6a91f6ffedec343a81e891b535'),(12,'PostmanRuntime/7.6.0','7c437b88e1cb7d09660f2b2ace2f865fb3fd6fb6'),(13,'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36','064e005501a2a0d56363299e04b6b77a3ce5f7a5'),(14,'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36','1a9ef466e44b70dd24f39773687729521ea69bee'),(15,'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36','13330a7d3aaee1569dd7ceebc04360c8b673fb08'),(16,'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36','0441391429577f903a877c9f7e215b8406705076'),(17,'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36','c9ca92194d513cd22f74a1cbc83dcb520058797e');
-/*!40000 ALTER TABLE `browser_agents` ENABLE KEYS */;
+LOCK TABLES `doctor_details` WRITE;
+/*!40000 ALTER TABLE `doctor_details` DISABLE KEYS */;
+INSERT INTO `doctor_details` (`account_id`, `nic`, `full_name`, `display_name`, `category`, `slmc_id`, `email`, `phone_number`) VALUES ('652566699V','652566699V','Medical Center Tester','Tester','opd','1023136','tester@doctor.org','0342225658');
+/*!40000 ALTER TABLE `doctor_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `doctors`
+--
+
+DROP TABLE IF EXISTS `doctors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `doctors` (
+  `account_id` varchar(32) NOT NULL,
+  `default_password` varchar(16) NOT NULL,
+  PRIMARY KEY (`account_id`),
+  CONSTRAINT `doctors_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Rable to store all doctors';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `doctors`
+--
+
+LOCK TABLES `doctors` WRITE;
+/*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
+INSERT INTO `doctors` (`account_id`, `default_password`) VALUES ('652566699V','jxypfwcaxrejroon');
+/*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -133,6 +165,7 @@ CREATE TABLE `medical_center_details` (
   `phone_number` varchar(32) DEFAULT NULL,
   `address` text NOT NULL,
   `postal_code` int(11) NOT NULL,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`account_id`),
   UNIQUE KEY `medical_centers_phsrc_id_uindex` (`phsrc`),
   CONSTRAINT `medical_center_details_medical_centers_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `medical_centers` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -145,8 +178,32 @@ CREATE TABLE `medical_center_details` (
 
 LOCK TABLES `medical_center_details` WRITE;
 /*!40000 ALTER TABLE `medical_center_details` DISABLE KEYS */;
-INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`) VALUES ('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road',12000),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999),('non_exisiting_user','Medical Center Tester','PHSRC/INVALID/0111','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999);
+INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`, `creation_date`) VALUES ('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road',12000,'2019-02-24 11:50:14'),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999,'2019-02-25 21:47:19');
 /*!40000 ALTER TABLE `medical_center_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `medical_center_verification`
+--
+
+DROP TABLE IF EXISTS `medical_center_verification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medical_center_verification` (
+  `id` tinyint(1) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store medical center verification states';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medical_center_verification`
+--
+
+LOCK TABLES `medical_center_verification` WRITE;
+/*!40000 ALTER TABLE `medical_center_verification` DISABLE KEYS */;
+INSERT INTO `medical_center_verification` (`id`, `description`) VALUES (0,'Default'),(1,'Verified'),(2,'Rejected');
+/*!40000 ALTER TABLE `medical_center_verification` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -160,7 +217,9 @@ CREATE TABLE `medical_centers` (
   `account_id` varchar(32) NOT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`),
-  CONSTRAINT `medical_centers_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `medical_centers_medical_center_verification_id_fk` (`verified`),
+  CONSTRAINT `medical_centers_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `medical_centers_medical_center_verification_id_fk` FOREIGN KEY (`verified`) REFERENCES `medical_center_verification` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -170,7 +229,7 @@ CREATE TABLE `medical_centers` (
 
 LOCK TABLES `medical_centers` WRITE;
 /*!40000 ALTER TABLE `medical_centers` DISABLE KEYS */;
-INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('medCenter',0),('medical_center_tester',0),('non_exisiting_user',0);
+INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('medCenter',0),('medical_center_tester',0);
 /*!40000 ALTER TABLE `medical_centers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,14 +243,10 @@ DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `account_id` varchar(32) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `browser_agent` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `expires` datetime NOT NULL,
   `session_key` char(40) NOT NULL,
-  PRIMARY KEY (`account_id`,`ip_address`,`browser_agent`),
-  KEY `sessions_user_agents_id_fk` (`browser_agent`),
-  CONSTRAINT `sessions_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `sessions_user_agents_id_fk` FOREIGN KEY (`browser_agent`) REFERENCES `browser_agents` (`id`) ON DELETE CASCADE
+  PRIMARY KEY (`account_id`,`ip_address`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store sessions of all users';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -201,7 +256,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` (`account_id`, `ip_address`, `browser_agent`, `created`, `expires`, `session_key`) VALUES ('medical_center_tester','UNKNOWN',9,'2019-02-17 05:54:27','2019-02-18 05:54:27','c73f577d2c2b723fddefa07c91ba2ccc890e40c7');
+INSERT INTO `sessions` (`account_id`, `ip_address`, `created`, `expires`, `session_key`) VALUES ('medCenter','127.0.0.1','2019-02-25 21:48:06','2019-02-26 21:48:06','3d610a5d46e2ba9f7aa89c4a20face9891549994');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,4 +296,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-17  5:58:52
+-- Dump completed on 2019-02-25 21:51:39

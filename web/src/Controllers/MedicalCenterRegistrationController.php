@@ -4,6 +4,7 @@ namespace Pulse\Controllers;
 
 use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Exceptions\AccountRejectedException;
 use Pulse\Exceptions\AlreadyLoggedInException;
 use Pulse\Exceptions\InvalidDataException;
 use Pulse\Exceptions\PHSRCAlreadyInUse;
@@ -50,6 +51,8 @@ class MedicalCenterRegistrationController extends BaseController
                     $error = "Server side validation failed.";
                 } catch (PHSRCAlreadyInUse $e) {
                     $error = "PHSRC already registered";
+                } catch (AccountRejectedException $e) {
+                    $error = "Server error. Please try again";
                 }
 
                 if (!isset($error)) {
@@ -80,8 +83,8 @@ class MedicalCenterRegistrationController extends BaseController
      */
     public function get()
     {
-        $accountId = $this->getCurrentAccountId();
-        if ($accountId == null) {
+        $account = $this->getCurrentAccount();
+        if ($account == null) {
             $this->render('MedicalCenterRegistration.html.twig', array(
                 'name' => $this->getRequest()->getQueryParameter('name'),
                 'phsrc' => $this->getRequest()->getQueryParameter('phsrc'),
@@ -90,9 +93,9 @@ class MedicalCenterRegistrationController extends BaseController
                 'phone_number' => $this->getRequest()->getQueryParameter('phone_number'),
                 'address' => $this->getRequest()->getQueryParameter('address'),
                 'postal' => $this->getRequest()->getQueryParameter('postal')
-            ), $accountId);
+            ), $account);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig', array(), $accountId);
+            $this->render('AlreadyLoggedIn.html.twig', array(), $account);
         }
     }
 }

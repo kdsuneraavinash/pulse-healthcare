@@ -4,20 +4,38 @@ namespace Pulse;
 
 define('MIN_CHR_ASCII', 33);
 define('MAX_CHR_ASCII', 126);
+define('MIN_LETTER_ASCII', 97);
+define('MAX_LETTER_ASCII', 122);
 
 class Utils
 {
-    public static function generateRandomString($length)
+    /**
+     * @param int $length
+     * @param int $lowerLimit
+     * @param int $upperLimit
+     * @return string
+     */
+    private static function generateRandomString(int $length, int $lowerLimit, int $upperLimit)
     {
         $random = '';
         for ($i = 0; $i < $length; $i++) {
             try {
-                $random .= chr(random_int(MIN_CHR_ASCII, MAX_CHR_ASCII));
+                $random .= chr(random_int($lowerLimit, $upperLimit));
             } catch (\Exception $e) {
-                $random = chr(mt_rand(MIN_CHR_ASCII, MAX_CHR_ASCII));
+                $random = chr(mt_rand($lowerLimit, $upperLimit));
             }
         }
         return $random;
+    }
+
+    public static function generateRandomSaltyString($length)
+    {
+        return Utils::generateRandomString($length, MIN_CHR_ASCII, MAX_CHR_ASCII);
+    }
+
+    public static function generateRandomReadableString($length)
+    {
+        return Utils::generateRandomString($length, MIN_LETTER_ASCII, MAX_LETTER_ASCII);
     }
 
     public static function getClientIP()
@@ -34,14 +52,6 @@ class Utils
             return $_SERVER['HTTP_FORWARDED'];
         else if (isset($_SERVER['REMOTE_ADDR']))
             return $_SERVER['REMOTE_ADDR'];
-        else
-            return 'UNKNOWN';
-    }
-
-    public static function getBrowserAgent()
-    {
-        if (isset($_SERVER['HTTP_USER_AGENT']))
-            return $_SERVER['HTTP_USER_AGENT'];
         else
             return 'UNKNOWN';
     }
