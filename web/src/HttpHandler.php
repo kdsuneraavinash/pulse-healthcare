@@ -3,29 +3,12 @@
 namespace Pulse;
 
 
-class HttpHandler{
+class HttpHandler
+{
+    private static $instance;
     private $getParameters;
     private $postParameters;
     private $content;
-
-    private static $instance;
-
-    /**
-     * @param array $get
-     * @param array $post
-     */
-    public static function init(array $get, array $post){
-        if (self::$instance == null){
-            self::$instance = new HttpHandler($get, $post);
-        }
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function getInstance(){
-        return self::$instance;
-    }
 
     /**
      * HttpHandler constructor.
@@ -39,11 +22,31 @@ class HttpHandler{
     }
 
     /**
+     * @param array $get
+     * @param array $post
+     */
+    public static function init(array $get, array $post)
+    {
+        if (self::$instance == null) {
+            self::$instance = new HttpHandler($get, $post);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getInstance()
+    {
+        return self::$instance;
+    }
+
+    /**
      * @param string $key
      * @param string|null $defaultValue
      * @return string|null
      */
-    public function getParameter(string $key, ?string $defaultValue = null){
+    public function getParameter(string $key, ?string $defaultValue = null)
+    {
         if (array_key_exists($key, $this->getParameters)) {
             return $this->getParameters[$key];
         }
@@ -55,7 +58,8 @@ class HttpHandler{
      * @param string|null $defaultValue
      * @return string|null
      */
-    public function postParameter(string $key, ?string $defaultValue = null){
+    public function postParameter(string $key, ?string $defaultValue = null)
+    {
         if (array_key_exists($key, $this->postParameters)) {
             return $this->postParameters[$key];
         }
@@ -67,7 +71,8 @@ class HttpHandler{
      * @param string|null $defaultValue
      * @return string|null
      */
-    public function anyParameter(string $key, ?string $defaultValue = null){
+    public function anyParameter(string $key, ?string $defaultValue = null)
+    {
         if (array_key_exists($key, $this->postParameters)) {
             return $this->postParameters[$key];
         }
@@ -80,16 +85,19 @@ class HttpHandler{
     /**
      * @param string $url
      */
-    public function redirect(string $url){
+    public function redirect(string $url)
+    {
         header("Location: $url");
         exit();
     }
 
-    public function setContent(string $content){
+    public function setContent(string $content)
+    {
         $this->content = $content;
     }
 
-    public function echoContent(){
+    public function echoContent()
+    {
         echo $this->content;
     }
 }

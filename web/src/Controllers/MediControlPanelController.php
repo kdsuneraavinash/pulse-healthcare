@@ -2,14 +2,7 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\InvalidDataException;
-use Pulse\Exceptions\SLMCAlreadyInUse;
-use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\MedicalCenter\MedicalCenter;
-use Pulse\StaticLogger;
-use Pulse\Utils;
 
 class MediControlPanelController extends BaseController
 {
@@ -20,8 +13,7 @@ class MediControlPanelController extends BaseController
      */
     public function get()
     {
-        parent::loadOnlyIfUserIsOfType(MedicalCenter::class,
-            'ControlPanelMediPage.htm.twig', "http://$_SERVER[HTTP_HOST]/405");
+        parent::loadOnlyIfUserIsOfType(MedicalCenter::class, 'ControlPanelMediPage.htm.twig');
     }
 
     /**
@@ -31,8 +23,7 @@ class MediControlPanelController extends BaseController
      */
     public function getMediDashboardIframe()
     {
-        parent::loadOnlyIfUserIsOfType(MedicalCenter::class,
-            'iframe/AdminDashboardIFrame.htm.twig', "http://$_SERVER[HTTP_HOST]/405");
+        parent::loadOnlyIfUserIsOfType(MedicalCenter::class, 'iframe/AdminDashboardIFrame.htm.twig');
     }
 
     /**
@@ -42,8 +33,7 @@ class MediControlPanelController extends BaseController
      */
     public function getMediRegisterDoctorIframe()
     {
-        parent::loadOnlyIfUserIsOfType(MedicalCenter::class,
-            'iframe/MedicalCenterCreateDoctor.htm.twig', "http://$_SERVER[HTTP_HOST]/405");
+        parent::loadOnlyIfUserIsOfType(MedicalCenter::class, 'iframe/MedicalCenterCreateDoctor.htm.twig');
     }
 
     /**
@@ -53,7 +43,6 @@ class MediControlPanelController extends BaseController
      */
     public function getMediRegisterPatientIframe()
     {
-        parent::loadOnlyIfUserIsOfType(MedicalCenter::class,
-            'iframe/MedicalCenterCreatePatient.htm.twig', "http://$_SERVER[HTTP_HOST]/405");
+        parent::loadOnlyIfUserIsOfType(MedicalCenter::class, 'iframe/MedicalCenterCreatePatient.htm.twig');
     }
 }

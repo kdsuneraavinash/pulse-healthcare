@@ -65,18 +65,17 @@ abstract class BaseController
     /**
      * @param string $className
      * @param string $page
-     * @param string $redirect
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    protected function loadOnlyIfUserIsOfType(string $className, string $page, string $redirect)
+    protected function loadOnlyIfUserIsOfType(string $className, string $page)
     {
         $currentAccount = $this->getCurrentAccount();
         if ($currentAccount instanceof $className) {
             $this->render($page, array(), $currentAccount);
         } else {
-            $this->httpHandler()->redirect($redirect);
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 

@@ -18,8 +18,7 @@ class AdminControlPanelController extends BaseController
      */
     public function get()
     {
-        parent::loadOnlyIfUserIsOfType(Admin::class,
-            'ControlPanelAdminPage.html.twig', "http://$_SERVER[HTTP_HOST]/405");
+        parent::loadOnlyIfUserIsOfType(Admin::class, 'ControlPanelAdminPage.html.twig');
     }
 
     /**
@@ -29,8 +28,7 @@ class AdminControlPanelController extends BaseController
      */
     public function getAdminDashboardIframe()
     {
-        parent::loadOnlyIfUserIsOfType(Admin::class,
-            'iframe/AdminDashboardIFrame.htm.twig', "http://$_SERVER[HTTP_HOST]/405");
+        parent::loadOnlyIfUserIsOfType(Admin::class, 'iframe/AdminDashboardIFrame.htm.twig');
     }
 
     /**

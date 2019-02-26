@@ -13,7 +13,6 @@ class ProfilePageController extends BaseController
      */
     public function get()
     {
-        parent::loadOnlyIfUserIsOfType(Account::class,
-            'ProfilePage.html.twig', "http://$_SERVER[HTTP_HOST]");
+        parent::loadOnlyIfUserIsOfType(Account::class, 'ProfilePage.html.twig');
     }
 }
