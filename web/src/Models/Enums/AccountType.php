@@ -6,7 +6,7 @@ class AccountType
 {
     const MedicalCenter = 'med_center';
     const Doctor = 'doctor';
-    const Patient = 'doctor';
+    const Patient = 'patient';
     const Tester = 'tester';
     const Admin = 'admin';
 

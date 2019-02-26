@@ -45,4 +45,15 @@ class MediControlPanelController extends BaseController
         parent::loadOnlyIfUserIsOfType(MedicalCenter::class,
             'iframe/MedicalCenterCreateDoctor.htm.twig', "http://$_SERVER[HTTP_HOST]/405");
     }
+
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function getMediRegisterPatientIframe()
+    {
+        parent::loadOnlyIfUserIsOfType(MedicalCenter::class,
+            'iframe/MedicalCenterCreatePatient.htm.twig', "http://$_SERVER[HTTP_HOST]/405");
+    }
 }

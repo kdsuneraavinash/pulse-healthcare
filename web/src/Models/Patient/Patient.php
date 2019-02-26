@@ -44,6 +44,7 @@ class Patient extends Account
 
     /**
      * @param $details
+     * @return string
      * @throws InvalidDataException
      * @throws AccountAlreadyExistsException
      * @throws \Pulse\Exceptions\AccountNotExistException
@@ -54,6 +55,7 @@ class Patient extends Account
         $patient = new Patient($details, $password);
         $patient->saveInDatabase();
         LoginService::createNewCredentials($patient->getAccountId(), $password);
+        return $password;
     }
 
     /**

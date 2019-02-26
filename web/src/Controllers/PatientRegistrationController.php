@@ -5,13 +5,12 @@ namespace Pulse\Controllers;
 use Pulse\Exceptions\AccountAlreadyExistsException;
 use Pulse\Exceptions\AccountNotExistException;
 use Pulse\Exceptions\InvalidDataException;
-use Pulse\Exceptions\SLMCAlreadyInUse;
-use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\MedicalCenter\MedicalCenter;
+use Pulse\Models\Patient\PatientDetails;
 use Pulse\StaticLogger;
 use Pulse\Utils;
 
-class DoctorRegistrationController extends BaseController
+class PatientRegistrationController extends BaseController
 {
     /**
      * @throws \Twig_Error_Loader
@@ -23,24 +22,23 @@ class DoctorRegistrationController extends BaseController
         $currentAccount = $this->getCurrentAccount();
 
         if ($currentAccount instanceof MedicalCenter) {
-            $fullName = $this->getRequest()->getBodyParameter('full_name');
-            $displayName = $this->getRequest()->getBodyParameter('display_name');
-            $category = $this->getRequest()->getBodyParameter('category');
-            $slmcId = $this->getRequest()->getBodyParameter('slmc_id');
+            $name = $this->getRequest()->getBodyParameter('name');
             $email = $this->getRequest()->getBodyParameter('email');
             $phoneNumber = $this->getRequest()->getBodyParameter('phone_number');
             $nic = $this->getRequest()->getBodyParameter('nic');
+            $address = $this->getRequest()->getBodyParameter('address');
+            $postalCode = $this->getRequest()->getBodyParameter('postal');
 
-            if (!($fullName == null || $displayName == null || $category == null ||
-                $slmcId == null || $email == null ||
+            if (!($name == null || $address == null || $postalCode == null ||
+                $email == null ||
                 $phoneNumber == null || $nic == null)) {
 
-                $doctorDetails = new DoctorDetails($nic, $fullName, $displayName, $category, $slmcId, $email, $phoneNumber);
+                $patientDetails = new PatientDetails($name, $nic, $email, $phoneNumber, $address, $postalCode);
 
                 try {
-                    $password = $currentAccount->createDoctorAccount($doctorDetails);
+                    $password = $currentAccount->createPatientAccount($patientDetails);
 
-                    $this->render('iframe/MedicalCenterCreateDoctor.htm.twig', array(
+                    $this->render('iframe/MedicalCenterCreatePatient.htm.twig', array(
                         'requested_account_id' => $nic,
                         'account_password' => $password
                     ), $currentAccount);
@@ -51,15 +49,13 @@ class DoctorRegistrationController extends BaseController
                     $error = "Server side validation failed.";
                 } catch (AccountNotExistException $e) {
                     $error = "Account $nic cannot be signed in!";
-                } catch (SLMCAlreadyInUse $e) {
-                    $error = "A doctor is already registered using the given SLMC id.";
                 }
             } else {
-                StaticLogger::loggerWarn("A field was null when registering a doctor by POST: " .
+                StaticLogger::loggerWarn("A field was null when registering a patient by POST: " .
                     "for Account $nic and IP " . Utils::getClientIP());
                 $error = 'Some fields are empty.';
             }
-            header("Location: http://$_SERVER[HTTP_HOST]/control/med_center/register/doctor?error=$error");
+            header("Location: http://$_SERVER[HTTP_HOST]/control/med_center/register/patient?error=$error");
             exit;
         } else {
             header("Location: http://$_SERVER[HTTP_HOST]/405");
