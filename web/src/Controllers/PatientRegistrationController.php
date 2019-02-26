@@ -22,12 +22,12 @@ class PatientRegistrationController extends BaseController
         $currentAccount = $this->getCurrentAccount();
 
         if ($currentAccount instanceof MedicalCenter) {
-            $name = $this->getRequest()->getBodyParameter('name');
-            $email = $this->getRequest()->getBodyParameter('email');
-            $phoneNumber = $this->getRequest()->getBodyParameter('phone_number');
-            $nic = $this->getRequest()->getBodyParameter('nic');
-            $address = $this->getRequest()->getBodyParameter('address');
-            $postalCode = $this->getRequest()->getBodyParameter('postal');
+            $name = $this->httpHandler()->postParameter('name');
+            $email = $this->httpHandler()->postParameter('email');
+            $phoneNumber = $this->httpHandler()->postParameter('phone_number');
+            $nic = $this->httpHandler()->postParameter('nic');
+            $address = $this->httpHandler()->postParameter('address');
+            $postalCode = $this->httpHandler()->postParameter('postal');
 
             if (!($name == null || $address == null || $postalCode == null ||
                 $email == null ||
@@ -37,7 +37,6 @@ class PatientRegistrationController extends BaseController
 
                 try {
                     $password = $currentAccount->createPatientAccount($patientDetails);
-
                     $this->render('iframe/MedicalCenterCreatePatient.htm.twig', array(
                         'requested_account_id' => $nic,
                         'account_password' => $password
@@ -55,11 +54,10 @@ class PatientRegistrationController extends BaseController
                     "for Account $nic and IP " . Utils::getClientIP());
                 $error = 'Some fields are empty.';
             }
-            header("Location: http://$_SERVER[HTTP_HOST]/control/med_center/register/patient?error=$error");
-            exit;
+
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/med_center/register/patient?error=$error");
         } else {
-            header("Location: http://$_SERVER[HTTP_HOST]/405");
-            exit;
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 }

@@ -8,12 +8,11 @@ class LogoutController extends BaseController
 {
     public function post()
     {
-        $redirect = $this->getRequest()->getBodyParameter('redirect');
+        $redirect = $this->httpHandler()->postParameter('redirect');
         if ($redirect == null) {
             $redirect = "http://$_SERVER[HTTP_HOST]";
         }
         LoginService::signOutSession();
-        header("Location: $redirect");
-        exit();
+        $this->httpHandler()->redirect($redirect);
     }
 }

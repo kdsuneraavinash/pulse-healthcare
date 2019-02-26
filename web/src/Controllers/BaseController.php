@@ -29,7 +29,7 @@ abstract class BaseController
     /**
      * @return HttpHandler request object
      */
-    protected function getRequest(): HttpHandler
+    protected function httpHandler(): HttpHandler
     {
         return HttpHandler::getInstance();
     }
@@ -57,9 +57,9 @@ abstract class BaseController
 
         $context['site'] = "http://$_SERVER[HTTP_HOST]";
         $context['current_page'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $context['error'] = $this->getRequest()->getQueryParameter('error');
+        $context['error'] = $this->httpHandler()->getParameter('error');
         $rendered = $this->getRenderer()->render($template, $context);
-        $this->getRequest()->setContent($rendered);
+        $this->httpHandler()->setContent($rendered);
     }
 
     /**
@@ -76,8 +76,7 @@ abstract class BaseController
         if ($currentAccount instanceof $className) {
             $this->render($page, array(), $currentAccount);
         } else {
-            header("Location: $redirect");
-            exit;
+            $this->httpHandler()->redirect($redirect);
         }
     }
 

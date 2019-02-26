@@ -43,31 +43,31 @@ class HttpHandler{
      * @param string|null $defaultValue
      * @return string|null
      */
-    public function getQueryParameter(string $key, ?string $defaultValue = null){
-        if (array_key_exists($key, $this->getParameters)) {
-            return $this->getParameters[$key];
-        }
-        return $defaultValue;
-    }
-
-    /**
-     * @param string $key
-     * @param string|null $defaultValue
-     * @return string|null
-     */
-    public function getBodyParameter(string $key, ?string $defaultValue = null){
-        if (array_key_exists($key, $this->postParameters)) {
-            return $this->postParameters[$key];
-        }
-        return $defaultValue;
-    }
-
-    /**
-     * @param string $key
-     * @param string|null $defaultValue
-     * @return string|null
-     */
     public function getParameter(string $key, ?string $defaultValue = null){
+        if (array_key_exists($key, $this->getParameters)) {
+            return $this->getParameters[$key];
+        }
+        return $defaultValue;
+    }
+
+    /**
+     * @param string $key
+     * @param string|null $defaultValue
+     * @return string|null
+     */
+    public function postParameter(string $key, ?string $defaultValue = null){
+        if (array_key_exists($key, $this->postParameters)) {
+            return $this->postParameters[$key];
+        }
+        return $defaultValue;
+    }
+
+    /**
+     * @param string $key
+     * @param string|null $defaultValue
+     * @return string|null
+     */
+    public function anyParameter(string $key, ?string $defaultValue = null){
         if (array_key_exists($key, $this->postParameters)) {
             return $this->postParameters[$key];
         }
@@ -75,6 +75,14 @@ class HttpHandler{
             return $this->getParameters[$key];
         }
         return $defaultValue;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function redirect(string $url){
+        header("Location: $url");
+        exit();
     }
 
     public function setContent(string $content){
