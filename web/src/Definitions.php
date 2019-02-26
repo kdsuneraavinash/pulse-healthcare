@@ -2,8 +2,9 @@
 
 namespace Pulse;
 
-class Definitions{
-    const TEMPLATES =  __DIR__ . '/../templates';
+class Definitions
+{
+    const TEMPLATES = __DIR__ . '/../templates';
     const CACHE = __DIR__ . '/../cache';
 
     const PEPPER = '14a5168782azxa5b4648de2chjufcb3afed6drt4';

@@ -10,7 +10,8 @@ class VerificationState
 
     const Values = array(VerificationState::Verified, VerificationState::Rejected, VerificationState::Default);
 
-    public static  function isValid(string $type):bool{
+    public static function isValid(string $type): bool
+    {
         return array_key_exists($type, AccountType::Values);
     }
 }

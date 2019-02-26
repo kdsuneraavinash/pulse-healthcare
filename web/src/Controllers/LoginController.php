@@ -2,7 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Models\Exceptions;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
@@ -34,17 +33,17 @@ class LoginController extends BaseController
             $message = "Your account $accountId was rejected. Please contact system administrators for further details.";
         }
 
-        if (isset($message)){
+        if (isset($message)) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/login?error=$message");
         }
 
         /// Redirect to correct location
         $currentAccount = $session->getSessionAccount();
-        if ($currentAccount instanceof Admin){
+        if ($currentAccount instanceof Admin) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/admin");
-        }else if ($currentAccount instanceof MedicalCenter){
+        } else if ($currentAccount instanceof MedicalCenter) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/med_center");
-        }else{
+        } else {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/profile");
         }
     }

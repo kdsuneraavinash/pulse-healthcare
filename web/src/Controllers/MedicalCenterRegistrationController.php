@@ -2,7 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Models\Exceptions;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
 
@@ -56,7 +55,7 @@ class MedicalCenterRegistrationController extends BaseController
         } else {
             $error = 'Password and retype password mismatch.';
         }
-        $this->httpHandler()->redirect( "http://$_SERVER[HTTP_HOST]/register/medi?error=$error&name=$name" .
+        $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/register/medi?error=$error&name=$name" .
             "&phsrc=$phsrc&email=$email&fax=$fax&phone_number=$phoneNumber&address=$address&postal=$postalCode");
     }
 

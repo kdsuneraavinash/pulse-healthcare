@@ -33,9 +33,9 @@ class HttpHandler
     }
 
     /**
-     * @return mixed
+     * @return HttpHandler
      */
-    public static function getInstance()
+    public static function getInstance(): HttpHandler
     {
         return self::$instance;
     }

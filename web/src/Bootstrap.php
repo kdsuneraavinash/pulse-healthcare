@@ -17,7 +17,6 @@ use Whoops;
  * ========================================================
  */
 
-include "Definitions.php";
 HttpHandler::init($_GET, $_POST);
 
 /**
@@ -117,12 +116,10 @@ $klein->onHttpError(function (int $code) {
     $router_err_handlers = getRouterErrorHandlers();
     foreach ($router_err_handlers as $handler) {
         if ($code == $handler[0]) {
-            header("Location: http://$_SERVER[HTTP_HOST]/$code");
-            exit;
+            HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/$code");
         }
     }
-    header("Location: http://$_SERVER[HTTP_HOST]/undefined?code=$code");
-    exit;
+    HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/undefined?code=$code");
 });
 
 $klein->dispatch();

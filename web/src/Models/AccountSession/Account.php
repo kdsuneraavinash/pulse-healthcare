@@ -3,11 +3,11 @@
 namespace Pulse\Models\AccountSession;
 
 use DB;
-use Pulse\Models\Exceptions;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
+use Pulse\Models\Exceptions;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
 
@@ -60,7 +60,7 @@ abstract class Account
             $parsedAccount = new Doctor(DoctorDetails::readFromDatabase($accountId));
         } else if ($account['account_type'] === (string)AccountType::Admin) {
             $parsedAccount = new Admin($accountId);
-        }else{
+        } else {
             throw new Exceptions\AccountNotExistException($accountId);
         }
 

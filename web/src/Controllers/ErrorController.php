@@ -13,6 +13,7 @@ class ErrorController extends BaseController
     {
         $this->render('errors/404.html.twig', array(), null);
     }
+
     /**
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime

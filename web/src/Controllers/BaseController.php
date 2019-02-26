@@ -2,10 +2,10 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\HttpHandler;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Twig_Environment;
 

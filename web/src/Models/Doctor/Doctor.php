@@ -3,10 +3,10 @@
 namespace Pulse\Models\Doctor;
 
 use DB;
-use Pulse\Models\Exceptions;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
+use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\ICreatable;
 use Pulse\Utils;
 

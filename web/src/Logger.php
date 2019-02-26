@@ -14,9 +14,9 @@ class Logger
         $today = date("F j, Y, g:i a");
         $log = "$today ---- Module[$module] ---- $type : $message" . PHP_EOL;
 
-        try{
-            file_put_contents('./log/'. date("j.n.Y").'.log', $log, FILE_APPEND);
-        }catch (\Exception $e){
+        try {
+            file_put_contents('./log/' . date("j.n.Y") . '.log', $log, FILE_APPEND);
+        } catch (\Exception $e) {
         }
     }
 }

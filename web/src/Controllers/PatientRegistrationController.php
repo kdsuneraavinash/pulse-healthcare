@@ -2,7 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Models\Exceptions;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Patient\PatientDetails;
 

@@ -3,13 +3,13 @@
 namespace Pulse\Models\MedicalCenter;
 
 use DB;
-use Pulse\Models\Exceptions;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Enums\VerificationState;
+use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\IFavouritable;
 use Pulse\Models\Patient\Patient;
 use Pulse\Models\Patient\PatientDetails;
