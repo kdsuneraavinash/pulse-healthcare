@@ -2,8 +2,8 @@
 
 namespace PulseTest;
 
-use DB;
 use PHPUnit\Framework\TestCase;
+use Pulse\Components\Database;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Exceptions;
 
@@ -19,12 +19,13 @@ final class LoginServiceTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        \Pulse\Components\Database::init();
+        Database::init();
         LoginService::setTestEnvironment();
-        LoginServiceTest::$userId = "login_service_tester";
-        LoginServiceTest::$password = "password";
-        LoginServiceTest::$fakePassword = "fakePassword";
-        DB::delete('account_credentials', "account_id = %s", LoginServiceTest::$userId);
+        self::$userId = "login_service_tester";
+        self::$password = "password";
+        self::$fakePassword = "fakePassword";
+        Database::delete('account_credentials', "account_id = :account_id",
+            array('account_id' => self::$userId));
     }
 
     /**
@@ -47,7 +48,7 @@ final class LoginServiceTest extends TestCase
     public function testTryToLogInWithoutSigningUp()
     {
         $this->expectException(Exceptions\AccountNotExistException::class);
-        LoginService::logInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
+        LoginService::logInSession(self::$userId, self::$password);
     }
 
     /**
@@ -60,7 +61,7 @@ final class LoginServiceTest extends TestCase
      */
     public function testTryToSignUp()
     {
-        $session = LoginService::signUpSession(LoginServiceTest::$userId, LoginServiceTest::$password);
+        $session = LoginService::signUpSession(self::$userId, self::$password);
         $this->assertNotNull($session);
     }
 
@@ -87,7 +88,7 @@ final class LoginServiceTest extends TestCase
     public function testTryToSignUpAfterSigningUp()
     {
         $this->expectException(Exceptions\AlreadyLoggedInException::class);
-        LoginService::signUpSession(LoginServiceTest::$userId, LoginServiceTest::$password);
+        LoginService::signUpSession(self::$userId, self::$password);
     }
 
     /**
@@ -111,7 +112,7 @@ final class LoginServiceTest extends TestCase
      */
     public function testTryToLogInWithFakePassword()
     {
-        $session = LoginService::logInSession(LoginServiceTest::$userId, LoginServiceTest::$fakePassword);
+        $session = LoginService::logInSession(self::$userId, self::$fakePassword);
         $this->assertNull($session);
     }
 
@@ -135,7 +136,7 @@ final class LoginServiceTest extends TestCase
      */
     public function testTryToLogInWithCorrectPassword()
     {
-        $session = LoginService::logInSession(LoginServiceTest::$userId, LoginServiceTest::$password);
+        $session = LoginService::logInSession(self::$userId, self::$password);
         $this->assertNotNull($session);
     }
 

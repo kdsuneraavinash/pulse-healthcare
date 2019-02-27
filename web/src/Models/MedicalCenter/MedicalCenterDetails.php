@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\MedicalCenter;
 
-use DB;
+use Pulse\Components\Database;
 use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\IDetails;
 
@@ -63,7 +63,9 @@ class MedicalCenterDetails implements IDetails
      */
     public static function readFromDatabase(string $accountId): MedicalCenterDetails
     {
-        $query = DB::queryFirstRow("SELECT * FROM medical_center_details WHERE account_id=%s", $accountId);
+        $query = Database::queryFirstRow("SELECT * from medical_center_details WHERE account_id=:account_id",
+            array('account_id' => $accountId));
+
         if ($query == null) {
             throw new Exceptions\AccountNotExistException($accountId);
         }
@@ -76,7 +78,7 @@ class MedicalCenterDetails implements IDetails
      */
     public function saveInDatabase(string $accountId)
     {
-        DB::insert('medical_center_details', array(
+        Database::insert('medical_center_details', array(
             'account_id' => $accountId,
             'name' => $this->getName(),
             'phsrc' => $this->getPhsrc(),

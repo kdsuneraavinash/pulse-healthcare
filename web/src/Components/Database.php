@@ -2,7 +2,6 @@
 
 namespace Pulse\Components;
 
-use DB;
 use PDO;
 
 class Database
@@ -11,15 +10,6 @@ class Database
 
     public static function init()
     {
-        DB::$error_handler = 'databaseErrorHandler';
-        DB::$nonsql_error_handler = 'databaseErrorHandler';
-        DB::$user = 'pulse_root';
-        DB::$password = 'password';
-        DB::$dbName = 'pulse';
-        DB::$host = 'localhost';
-        DB::$port = '3306';
-        DB::$encoding = 'latin1';
-
         // Define variables
         $hostName = 'localhost';
         $databaseName = 'pulse';
@@ -123,7 +113,11 @@ class Database
             self::bindToStatement($statement, $params);
             $statement->execute();
             // Get only first row
-            return $statement->fetch();
+            $result = $statement->fetch();
+            if ($result == false) {
+                $result = null;
+            }
+            return $result;
         } catch (\Exception $e) {
             self::handleErrors($e);
             exit;
@@ -175,7 +169,28 @@ class Database
     }
 
     /**
-     * Database::insert('users', 'id = :id AND name = :name', array('id' => $id, 'name' => $name))
+     * Database::update('users', 'name=:name', 'id=:id', array('id' => $id, 'name' => $name))
+     * @param string $table
+     * @param string $set
+     * @param string $where
+     * @param array $params
+     */
+    public static function update(string $table, string $set, string $where, array $params)
+    {
+        try {
+            /// Syntax = UPDATE users SET name=:name WHERE id=:id
+            $query = "UPDATE " . $table . " SET $set WHERE $where";
+            $statement = self::getDatabase()->prepare($query);
+            self::bindToStatement($statement, $params);
+            $statement->execute();
+        } catch (\Exception $e) {
+            self::handleErrors($e);
+            exit;
+        }
+    }
+
+    /**
+     * Database::delete('users', 'id = :id AND name = :name', array('id' => $id, 'name' => $name))
      * @param string $table
      * @param string $where
      * @param array $params
