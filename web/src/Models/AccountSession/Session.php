@@ -119,7 +119,7 @@ class Session implements BaseModel
     {
         Database::delete('sessions',
             "account_id = :account_id AND session_key = :session_key",
-            array('id' => $id, 'sessionKey' => $sessionKey));
+            array('account_id' => $id, 'session_key' => $sessionKey));
     }
 
     /**

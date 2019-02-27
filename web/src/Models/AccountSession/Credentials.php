@@ -2,11 +2,11 @@
 
 namespace Pulse\Models\AccountSession;
 
-use DB;
+use Pulse\Components\Database;
+use Pulse\Components\Utils;
 use Pulse\Definitions;
 use Pulse\Models\BaseModel;
 use Pulse\Models\Exceptions;
-use Pulse\Components\Utils;
 
 
 /**
@@ -45,13 +45,17 @@ class Credentials implements BaseModel
      */
     public static function fromNewCredentials(string $accountId, string $password): Credentials
     {
-        $query = DB::queryFirstRow("SELECT account_id from accounts WHERE account_id=%s", $accountId);
+        $query = Database::queryFirstRow("SELECT account_id from accounts WHERE account_id=:account_id",
+            array('account_id' => $accountId));
+
         if ($query == null) {
             // Account not existing
             throw new Exceptions\AccountNotExistException($accountId);
         }
 
-        $existingAccount = DB::queryFirstRow("SELECT account_id from account_credentials WHERE account_id=%s", $accountId);
+        $existingAccount = Database::queryFirstRow("SELECT account_id from account_credentials WHERE account_id=:account_id",
+            array('account_id' => $accountId));
+
         if ($existingAccount != null) {
             // Credentials Existing
             throw new Exceptions\AccountAlreadyExistsException($accountId);
@@ -73,7 +77,9 @@ class Credentials implements BaseModel
      */
     public static function fromExistingCredentials(string $accountId, string $password): Credentials
     {
-        $query = DB::queryFirstRow("SELECT salt from account_credentials WHERE account_id=%s", $accountId);
+        $query = Database::queryFirstRow("SELECT salt from account_credentials WHERE account_id=:account_id",
+            array('account_id' => $accountId));
+
         if ($query == null) {
             throw new Exceptions\AccountNotExistException($accountId);
         }
@@ -88,7 +94,7 @@ class Credentials implements BaseModel
      */
     private function createCredentials()
     {
-        DB::insert('account_credentials', array(
+        Database::insert('account_credentials', array(
             'account_id' => $this->accountId,
             'password' => $this->getHashedPassword(),
             'salt' => $this->salt
@@ -104,7 +110,9 @@ class Credentials implements BaseModel
         $hashedPassword = $this->getHashedPassword();
         $accountId = $this->accountId;
 
-        $query = DB::queryFirstRow("SELECT account_id from account_credentials WHERE account_id=%s AND password=%s", $accountId, $hashedPassword);
+        $query = Database::queryFirstRow("SELECT account_id from account_credentials " .
+            "WHERE account_id=:account_id AND password=:password",
+            array('account_id' => $accountId, 'password' => $hashedPassword));
 
         if ($query == null) {
             /// Unauthenticated
