@@ -70,7 +70,7 @@ class MedicalCenterDetails implements IDetails
             throw new Exceptions\AccountNotExistException($accountId);
         }
         return new MedicalCenterDetails($query['name'], $query['phsrc'], $query['email'], $query['fax'],
-            $query['phone_number'], $query['address'], $query['postal_code']);
+            $query['phone_number'], $query['address'], (int) $query['postal_code']);
     }
 
     /**
@@ -196,7 +196,7 @@ class MedicalCenterDetails implements IDetails
     /**
      * @return string
      */
-    public function getPostalCode(): string
+    public function getPostalCode(): int
     {
         return $this->postalCode;
     }
