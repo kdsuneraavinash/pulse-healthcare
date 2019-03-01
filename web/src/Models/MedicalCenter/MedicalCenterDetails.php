@@ -27,7 +27,7 @@ class MedicalCenterDetails implements IDetails
      * @param $postalCode
      */
     public function __construct(string $name, string $phsrc, string $email, string $fax,
-                                string $phoneNumber, string $address, string $postalCode)
+                                string $phoneNumber, string $address, int $postalCode)
     {
         $this->name = $name;
         $this->phsrc = $phsrc;
