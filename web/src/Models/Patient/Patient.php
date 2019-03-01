@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\Patient;
 
-use DB;
+use Pulse\Components\Database;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
@@ -28,7 +28,9 @@ class Patient extends Account
     {
         parent::__construct($patientDetails->getNic(), AccountType::Patient);
         if ($defaultPassword == null) {
-            $query = DB::queryFirstRow('SELECT default_password FROM doctors WHERE account_id = %s', $this->accountId);
+            $query = Database::queryFirstRow("SELECT default_password from patients WHERE account_id=:account_id",
+                array('account_id' => $this->accountId));
+
             if ($query == null) {
                 throw new Exceptions\InvalidDataException("Default password retrieval error.");
             }
@@ -65,7 +67,7 @@ class Patient extends Account
     {
         $this->validateFields();
         parent::saveInDatabase();
-        DB::insert('patients', array(
+        Database::insert('patients', array(
             'account_id' => $this->getAccountId(),
             'default_password' => $this->getDefaultPassword()
         ));

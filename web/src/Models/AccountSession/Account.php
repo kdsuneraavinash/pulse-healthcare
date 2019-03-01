@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\AccountSession;
 
-use DB;
+use Pulse\Components\Database;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
@@ -32,7 +32,9 @@ abstract class Account
      */
     public function exists(): bool
     {
-        $query = DB::queryFirstRow('SELECT * FROM accounts WHERE account_id = %s', $this->accountId);
+        $query = Database::queryFirstRow("SELECT account_id from accounts WHERE account_id=:account_id",
+            array('account_id' => $this->accountId));
+
         return $query != null;
     }
 
@@ -46,7 +48,9 @@ abstract class Account
      */
     public static function retrieveAccount(string $accountId, bool $ignoreMedicalCenterVerificationError = false): ?Account
     {
-        $account = DB::queryFirstRow("SELECT * FROM accounts WHERE account_id=%s", $accountId);
+        $account = Database::queryFirstRow("SELECT * from accounts WHERE account_id=:account_id",
+            array('account_id' => $accountId));
+
         if ($account == null) {
             throw new Exceptions\AccountNotExistException($accountId);
         }
@@ -69,7 +73,7 @@ abstract class Account
 
     protected function saveInDatabase()
     {
-        DB::insert('accounts', array(
+        Database::insert('accounts', array(
             'account_id' => $this->getAccountId(),
             'account_type' => $this->getAccountType()
         ));
@@ -80,8 +84,9 @@ abstract class Account
      */
     protected function checkWhetherAccountIDExists()
     {
-        $existingAccount = DB::queryFirstRow("SELECT account_id from accounts where account_id=%s",
-            $this->accountId);
+        $existingAccount = Database::queryFirstRow("SELECT account_id from accounts WHERE account_id=:account_id",
+            array('account_id' => $this->accountId));
+
         if ($existingAccount != null) {
             throw new Exceptions\AccountAlreadyExistsException($existingAccount['account_id']);
         }

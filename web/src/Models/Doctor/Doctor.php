@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\Doctor;
 
-use DB;
+use Pulse\Components\Database;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
@@ -25,8 +25,11 @@ class Doctor extends Account implements ICreatable
     {
         parent::__construct($doctorDetails->getNic(), AccountType::Doctor);
         $this->doctorDetails = $doctorDetails;
-        if ($defaultPassword == null) {
-            $query = DB::queryFirstRow('SELECT default_password FROM doctors WHERE account_id = %s', $this->accountId);
+        if ($defaultPassword == null) { // Null means it have to be filled
+            // Get default password
+            $query = Database::queryFirstRow("SELECT default_password from doctors WHERE account_id=:account_id",
+                array('account_id' => $this->accountId));
+
             if ($query == null) {
                 throw new Exceptions\InvalidDataException("Default password retrieval error.");
             }
@@ -62,7 +65,7 @@ class Doctor extends Account implements ICreatable
         $this->validateFields();
 
         parent::saveInDatabase();
-        DB::insert('doctors', array(
+        Database::insert('doctors', array(
             'account_id' => parent::getAccountId(),
             'default_password' => $this->getDefaultPassword(),
         ));
@@ -89,8 +92,9 @@ class Doctor extends Account implements ICreatable
      */
     private function checkWhetherSLMCExists()
     {
-        $existingDoctor = DB::queryFirstRow("SELECT account_id from doctor_details where slmc_ID=%s",
-            $this->doctorDetails->getSlmcId());
+        $existingDoctor = Database::queryFirstRow("SELECT account_id from doctor_details WHERE slmc_ID=:slmc_ID",
+            array('slmc_ID' => $this->doctorDetails->getSlmcId()));
+
         if ($existingDoctor != null) {
             throw new Exceptions\SLMCAlreadyInUse($this->doctorDetails->getSlmcId());
         }

@@ -2,8 +2,8 @@
 
 namespace PulseTest;
 
-use DB;
 use PHPUnit\Framework\TestCase;
+use Pulse\Components\Database;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
@@ -29,7 +29,7 @@ final class DoctorTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        \Pulse\Components\Database::init();
+        Database::init();
         LoginService::setTestEnvironment();
         self::$nic = "652566699V";
         self::$fullName = "Medical Center Tester";
@@ -43,8 +43,10 @@ final class DoctorTest extends TestCase
 
         self::restoreDetails();
 
-        DB::delete('accounts', "account_id = %s", self::$nic);
-        DB::delete('accounts', "account_id = %s", self::$unusedNic);
+        Database::delete('accounts', "account_id = :account_id",
+            array('account_id' => self::$nic));
+        Database::delete('accounts', "account_id = :account_id",
+            array('account_id' => self::$unusedNic));
     }
 
     /**
@@ -77,9 +79,13 @@ final class DoctorTest extends TestCase
     public function testRegister()
     {
         Doctor::register(self::$doctorDetails);
-        $query = DB::queryFirstRow("SELECT * FROM doctors WHERE account_id=%s", self::$nic);
+
+        $query = Database::queryFirstRow("SELECT * from doctors WHERE account_id=:account_id",
+            array('account_id' => self::$nic));
         $this->assertNotNull($query);
-        $query = DB::queryFirstRow("SELECT * FROM sessions WHERE account_id=%s", self::$nic);
+
+        $query = Database::queryFirstRow("SELECT * from sessions WHERE account_id=:account_id",
+            array('account_id' => self::$nic));
         $this->assertNull($query);
     }
 

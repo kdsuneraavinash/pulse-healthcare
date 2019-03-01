@@ -25,7 +25,7 @@
     "filp/whoops": "~2.3",
     "klein/klein": "^2.1",
     "twig/twig": "^2.0",
-    "sergeytsalkov/meekrodb": "^2.3"
+    "ext-pdo": "*"
   },
   "autoload": {
     "psr-4": {

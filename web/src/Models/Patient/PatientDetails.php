@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lahiru
- * Date: 2/23/19
- * Time: 11:33 AM
- */
 
 namespace Pulse\Models\Patient;
 
-use DB;
+use Pulse\Components\Database;
 use Pulse\Models\Exceptions;
 
 class PatientDetails
@@ -60,7 +54,9 @@ class PatientDetails
      */
     public static function readFromDatabase(string $accountId): PatientDetails
     {
-        $query = DB::queryFirstRow("SELECT * FROM patient_details WHERE account_id=%s", $accountId);
+        $query = Database::queryFirstRow("SELECT * from patient_details WHERE account_id=:account_id",
+            array('account_id' => $accountId));
+
         if ($query == null) {
             throw new Exceptions\AccountNotExistException($accountId);
         }
@@ -68,10 +64,9 @@ class PatientDetails
             $query['address'], $query['postal_code']);
     }
 
-
     public function saveInDatabase(string $accountId)
     {
-        DB::insert('patient_details', array(
+        Database::insert('patient_details', array(
             'account_id' => $accountId,
             'name' => $this->getName(),
             'nic' => $this->getNic(),

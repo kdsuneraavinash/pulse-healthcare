@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\MedicalCenter;
 
-use DB;
+use Pulse\Components\Database;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Doctor\Doctor;
@@ -35,7 +35,9 @@ class MedicalCenter extends Account implements IFavouritable
         $this->medicalCenterDetails = $medicalCenterDetails;
         if ($verificationState === null) {
             // Need to fetch from database
-            $query = DB::queryFirstRow("SELECT verified FROM medical_centers WHERE account_id=%s", $accountId);
+            $query = Database::queryFirstRow("SELECT verified from medical_centers WHERE account_id=:account_id",
+                array('account_id' => $accountId));
+
             if ($query == null) {
                 throw new Exceptions\AccountNotExistException($accountId);
             }
@@ -80,7 +82,7 @@ class MedicalCenter extends Account implements IFavouritable
         $this->validateFields();
 
         parent::saveInDatabase();
-        DB::insert('medical_centers', array(
+        Database::insert('medical_centers', array(
             'account_id' => parent::getAccountId(),
             'verified' => (string)$this->getVerificationState()
         ));
@@ -107,8 +109,9 @@ class MedicalCenter extends Account implements IFavouritable
      */
     private function checkWhetherPHSRCExists()
     {
-        $existingMedicalCenter = DB::queryFirstRow("SELECT account_id from medical_center_details where phsrc=%s",
-            $this->medicalCenterDetails->getPhsrc());
+        $existingMedicalCenter = Database::queryFirstRow("SELECT account_id from medical_center_details WHERE phsrc=:phsrc",
+            array('phsrc' => $this->medicalCenterDetails->getPhsrc()));
+
         if ($existingMedicalCenter != null) {
             throw new Exceptions\PHSRCAlreadyInUse($existingMedicalCenter['account_id']);
         }

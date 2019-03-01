@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\AccountSession;
 
-use DB;
+use Pulse\Components\Database;
 use Pulse\Definitions;
 use Pulse\Models\BaseModel;
 use Pulse\Models\Exceptions;
@@ -12,6 +12,7 @@ class LoginService implements BaseModel
     private static $testFlag = false;
 
     /**
+     * Continue the previous session (by using cookies)
      * @return Session|null
      * @throws Exceptions\AccountNotExistException
      * @throws Exceptions\AccountRejectedException
@@ -20,6 +21,7 @@ class LoginService implements BaseModel
     public static function continueSession(): ?Session
     {
         if (self::sessionCookiesExist()) {
+            // Cookies are present
             $sessionUser = self::getSessionUser();
             $sessionKey = self::getSessionKey();
 
@@ -39,6 +41,7 @@ class LoginService implements BaseModel
     }
 
     /**
+     * Create session and login
      * @param string $accountId
      * @param string $password
      * @return Session|null
@@ -65,6 +68,7 @@ class LoginService implements BaseModel
 
 
     /**
+     * Try to sign up - create passwords and save them
      * @param string $accountId
      * @param string $password
      * @return Session
@@ -152,7 +156,10 @@ class LoginService implements BaseModel
 
     private static function deleteSession()
     {
-        DB::delete('sessions', 'account_id=%s', self::getSessionUser());
+        // Detele session details from DB and cookies
+        Database::delete('sessions',
+            'account_id=:account_id',
+            array('account_id' => self::getSessionUser()));
         self::deleteCookie(Definitions::SESSION_USER);
         self::deleteCookie(Definitions::SESSION_KEY);
     }
@@ -183,6 +190,9 @@ class LoginService implements BaseModel
         }
     }
 
+    /**
+     * For testing purposes - to emulate cookies
+     */
     public static function setTestEnvironment()
     {
         self::$testFlag = true;

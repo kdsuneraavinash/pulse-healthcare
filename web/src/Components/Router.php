@@ -2,9 +2,11 @@
 
 namespace Pulse\Components;
 
-final class Routes
+use Klein;
+
+final class Router
 {
-    public static function getRoutes()
+    private static function getRoutes()
     {
         return [
             // ['METHOD', '/path, ['Pulse\Controllers\Controller', 'method']]
@@ -65,5 +67,44 @@ final class Routes
             405 => '405',
             500 => '500'
         );
+    }
+
+    public static function init()
+    {
+        $klein = new Klein\Klein();
+
+        /// Get routes has 2D arrays where each row is a route
+        /// and first = TYPE, second = /path, third = function response()
+        $routes = self::getRoutes();
+        foreach ($routes as $route) {
+            // Get type (POST/GET) and path (/login)
+            $type = $route[0];
+            $route_path = $route[1];
+
+            // Get controller class method reference
+            $controller = new $route[2][0]();
+            $method = $route[2][1];
+            $callback = [$controller, $method];
+
+            // Pass reference to Klein
+            $klein->respond($type, $route_path, $callback);
+        }
+
+        /// getRouterErrorHandlers() has dictionary like array where each key is a handler
+        ///
+        /// getRouterDefaultErrorHandler($code) will have the
+        /// default response (Unhandled error)
+        $klein->onHttpError(function (int $code) {
+            $router_err_handlers = self::getRouterErrorHandlers();
+            // If handler is supported
+            if (array_key_exists($code, $router_err_handlers)) {
+                HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/$code");
+            } else {
+                // Default handler
+                HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/undefined?code=$code");
+            }
+        });
+
+        $klein->dispatch();
     }
 }
