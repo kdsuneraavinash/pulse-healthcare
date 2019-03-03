@@ -2,16 +2,9 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\AccountAlreadyExistsException;
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AccountRejectedException;
-use Pulse\Exceptions\AlreadyLoggedInException;
-use Pulse\Exceptions\InvalidDataException;
-use Pulse\Exceptions\PHSRCAlreadyInUse;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
-use Pulse\StaticLogger;
-use Pulse\Utils;
+use Pulse\Models\Exceptions;
 
 class MedicalCenterRegistrationController extends BaseController
 {
@@ -19,19 +12,20 @@ class MedicalCenterRegistrationController extends BaseController
      */
     public function post()
     {
-        $accountId = $this->getRequest()->getBodyParameter('account');
-        $password = $this->getRequest()->getBodyParameter('password');
-        $passwordRetype = $this->getRequest()->getBodyParameter('password_retype');
-        $name = $this->getRequest()->getBodyParameter('name');
-        $phsrc = $this->getRequest()->getBodyParameter('phsrc');
-        $email = $this->getRequest()->getBodyParameter('email');
-        $fax = $this->getRequest()->getBodyParameter('fax');
-        $phoneNumber = $this->getRequest()->getBodyParameter('phone_number');
-        $address = $this->getRequest()->getBodyParameter('address');
-        $postalCode = $this->getRequest()->getBodyParameter('postal');
+        $accountId = $this->httpHandler()->postParameter('account');
+        $password = $this->httpHandler()->postParameter('password');
+        $passwordRetype = $this->httpHandler()->postParameter('password_retype');
+        $name = $this->httpHandler()->postParameter('name');
+        $phsrc = $this->httpHandler()->postParameter('phsrc');
+        $email = $this->httpHandler()->postParameter('email');
+        $fax = $this->httpHandler()->postParameter('fax');
+        $phoneNumber = $this->httpHandler()->postParameter('phone_number');
+        $address = $this->httpHandler()->postParameter('address');
+        $postalCode = $this->httpHandler()->postParameter('postal');
 
         if ($password == $passwordRetype) {
 
+            $error = null;
             if (!($accountId == null || $password == null || $name == null ||
                 $phsrc == null || $email == null ||
                 $phoneNumber == null || $address == null || $postalCode == null)) {
@@ -41,38 +35,29 @@ class MedicalCenterRegistrationController extends BaseController
 
                 try {
                     MedicalCenter::requestRegistration($accountId, $medicalCenterDetails, $password);
-                } catch (AccountAlreadyExistsException $e) {
+                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/profile");
+                } catch (Exceptions\AccountAlreadyExistsException $e) {
                     $error = "Account name $accountId already taken.";
-                } catch (AccountNotExistException $e) {
+                } catch (Exceptions\AccountNotExistException $e) {
                     $error = "Account name $accountId cannot be signed in!";
-                } catch (AlreadyLoggedInException $e) {
+                } catch (Exceptions\AlreadyLoggedInException $e) {
                     $error = "Account name $accountId already logged in.";
-                } catch (InvalidDataException $e) {
+                } catch (Exceptions\InvalidDataException $e) {
                     $error = "Server side validation failed.";
-                } catch (PHSRCAlreadyInUse $e) {
+                } catch (Exceptions\PHSRCAlreadyInUse $e) {
                     $error = "PHSRC already registered";
-                } catch (AccountRejectedException $e) {
+                } catch (Exceptions\AccountRejectedException $e) {
                     $error = "Server error. Please try again";
                 }
-
-                if (!isset($error)) {
-                    header("Location: http://$_SERVER[HTTP_HOST]/profile");
-                    exit;
-                }
             } else {
-                StaticLogger::loggerWarn("A field was null when registering a medical center by POST: " .
-                    "for Account $accountId and IP " . Utils::getClientIP());
-
                 $error = 'Some fields are empty.';
             }
-
 
         } else {
             $error = 'Password and retype password mismatch.';
         }
-        header("Location: http://$_SERVER[HTTP_HOST]/register/medi?error=$error&name=$name" .
+        $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/register/medi?error=$error&name=$name" .
             "&phsrc=$phsrc&email=$email&fax=$fax&phone_number=$phoneNumber&address=$address&postal=$postalCode");
-        exit;
     }
 
 
@@ -86,13 +71,13 @@ class MedicalCenterRegistrationController extends BaseController
         $account = $this->getCurrentAccount();
         if ($account == null) {
             $this->render('MedicalCenterRegistration.html.twig', array(
-                'name' => $this->getRequest()->getQueryParameter('name'),
-                'phsrc' => $this->getRequest()->getQueryParameter('phsrc'),
-                'email' => $this->getRequest()->getQueryParameter('email'),
-                'fax' => $this->getRequest()->getQueryParameter('fax'),
-                'phone_number' => $this->getRequest()->getQueryParameter('phone_number'),
-                'address' => $this->getRequest()->getQueryParameter('address'),
-                'postal' => $this->getRequest()->getQueryParameter('postal')
+                'name' => $this->httpHandler()->getParameter('name'),
+                'phsrc' => $this->httpHandler()->getParameter('phsrc'),
+                'email' => $this->httpHandler()->getParameter('email'),
+                'fax' => $this->httpHandler()->getParameter('fax'),
+                'phone_number' => $this->httpHandler()->getParameter('phone_number'),
+                'address' => $this->httpHandler()->getParameter('address'),
+                'postal' => $this->httpHandler()->getParameter('postal')
             ), $account);
         } else {
             $this->render('AlreadyLoggedIn.html.twig', array(), $account);

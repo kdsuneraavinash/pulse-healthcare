@@ -2,9 +2,11 @@
 
 namespace PulseTest;
 
-use DB;
 use PHPUnit\Framework\TestCase;
+use Pulse\Components\Database;
 use Pulse\Models\AccountSession\Session;
+use Pulse\Models\Exceptions;
+
 
 final class SessionTest extends TestCase
 {
@@ -22,12 +24,12 @@ final class SessionTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        \Pulse\Database::init();
-        SessionTest::$userId = "session_tester";
-        SessionTest::$customIP = "113.59.194.60";
-        SessionTest::$customUserAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T)" .
-            " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Mobile Safari/537.36";
-        DB::delete('sessions', "account_id = %s", SessionTest::$userId);
+        Database::init();
+        self::$userId = "session_tester";
+        self::$customIP = "113.59.194.60";
+
+        Database::delete('sessions', "account_id = :account_id",
+            array('account_id' => self::$userId));
     }
 
     public static function toSession($session): Session
@@ -36,58 +38,58 @@ final class SessionTest extends TestCase
     }
 
     /**
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testCreateSession()
     {
-        SessionTest::$session = Session::createSession(SessionTest::$userId);
-        $this->assertInstanceOf(Session::class, SessionTest::$session);
+        self::$session = Session::createSession(self::$userId);
+        $this->assertInstanceOf(Session::class, self::$session);
 
-        $query = SessionTest::getSessions();
+        $query = self::getSessions();
         $this->assertCount(1, $query);
     }
 
     /**
      * @depends testCreateSession
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testResumeSession()
     {
-        SessionTest::$session2 = Session::resumeSession(SessionTest::$userId, SessionTest::getSession()->getSessionKey());
-        $this->assertNotNull(SessionTest::$session2);
+        self::$session2 = Session::resumeSession(self::$userId, self::getSession()->getSessionKey());
+        $this->assertNotNull(self::$session2);
 
-        $query = SessionTest::getSessions();
+        $query = self::getSessions();
         $this->assertCount(1, $query);
     }
 
     /**
      * @depends testResumeSession
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testCreateAnotherSession()
     {
-        SessionTest::$session = Session::createSession(SessionTest::$userId);
-        $query = SessionTest::getSessions();
+        self::$session = Session::createSession(self::$userId);
+        $query = self::getSessions();
         $this->assertCount(1, $query);
     }
 
     /**
      * @depends testCreateAnotherSession
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testCreateSessionFromAnotherIP()
     {
-        $_SERVER['REMOTE_ADDR'] = SessionTest::$customIP;
-        SessionTest::$session_pc = Session::createSession(SessionTest::$userId);
-        $query = SessionTest::getSessions();
+        $_SERVER['REMOTE_ADDR'] = self::$customIP;
+        self::$session_pc = Session::createSession(self::$userId);
+        $query = self::getSessions();
         $this->assertCount(2, $query);
         unset($_SERVER['REMOTE_ADDR']);
     }
@@ -97,20 +99,20 @@ final class SessionTest extends TestCase
      */
     public function testCloseFirstSession()
     {
-        SessionTest::getSession()->closeSession();
-        $query = SessionTest::getSessions();
+        self::getSession()->closeSession();
+        $query = self::getSessions();
         $this->assertCount(1, $query);
     }
 
     /**
      * @depends testCloseFirstSession
-     * @throws \Pulse\Exceptions\AccountNotExistException
-     * @throws \Pulse\Exceptions\AccountRejectedException
-     * @throws \Pulse\Exceptions\InvalidDataException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public function testAnotherSessionTriedToResumeSession()
     {
-        $session4 = Session::resumeSession(SessionTest::$userId, SessionTest::getSession()->getSessionKey());
+        $session4 = Session::resumeSession(self::$userId, self::getSession()->getSessionKey());
         $this->assertNull($session4);
     }
 
@@ -119,8 +121,8 @@ final class SessionTest extends TestCase
      */
     public function testSecondSessionTriedToCloseSession()
     {
-        SessionTest::getSession2()->closeSession();
-        $query = SessionTest::getSessions();
+        self::getSession2()->closeSession();
+        $query = self::getSessions();
         $this->assertCount(1, $query);
     }
 
@@ -129,21 +131,22 @@ final class SessionTest extends TestCase
      */
     public function testCloseSessionFromAnotherIP()
     {
-        $_SERVER['HTTP_USER_AGENT'] = SessionTest::$customUserAgent;
-        SessionTest::getSessionPc()->closeSession();
-        $query = SessionTest::getSessions();
+        $_SERVER['HTTP_USER_AGENT'] = self::$customUserAgent;
+        self::getSessionPc()->closeSession();
+        $query = self::getSessions();
         $this->assertCount(0, $query);
         unset($_SERVER['REMOTE_ADDR']);
     }
 
     private function getSessions()
     {
-        return SessionTest::getSessionsOfUser(SessionTest::$userId);
+        return self::getSessionsOfUser(self::$userId);
     }
 
     private static function getSessionsOfUser($id)
     {
-        return DB::query("SELECT * FROM sessions WHERE account_id = '$id'");
+        return Database::query("SELECT * from sessions WHERE account_id=:account_id",
+            array('account_id' => $id));
     }
 
     public static function getSession(): Session

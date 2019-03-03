@@ -6,170 +6,48 @@ namespace Pulse;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Http;
-use Klein;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Pulse\Components;
 use Whoops;
-
-define('TEMPLATES', __DIR__ . '/../templates');
-define('CACHE', __DIR__ . '/../cache');
 
 /**
  * ========================================================
- * = Whoops Initialization
- * ========================================================
- * Error Reporter
- * --------------------------------------------------------
- * DOCUMENTATION
- * https://github.com/filp/whoops
+ * = BEFORE
  * ========================================================
  */
 
 error_reporting(E_ALL);
-
 $environment = 'development';
 
 /// Register the error handler
 $whoops = new Whoops\Run;
-if ($environment !== 'production') {
+if ($environment === 'development') {
     $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler);
 } else {
     $whoops->pushHandler(function (\Exception $e) {
-        // TODO: Log error or send an email to dev
+        /// Log error in production
+        Components\Logger::log($e->getMessage(), Components\Logger::ERROR, $e->getFile());
     });
 }
 
 $whoops->register();
 
+/// Initialize Http Handler
+Components\HttpHandler::init($_GET, $_POST);
+
+/// Initialize Database Handler
+Components\Database::init();
+
+/// Initialize Twig Handler
+Components\TwigHandler::init();
+
+/// Initialize Router
+Components\Router::init();
 
 /**
  * ========================================================
- * = HTTP Initialization
- * ========================================================
- * HTTP Component Handler
- * --------------------------------------------------------
- * DOCUMENTATION
- * https://github.com/PatrickLouys/http
+ * = AFTER
  * ========================================================
  */
 
-$httpRequest = new Http\HttpRequest($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
-$httpResponse = new Http\HttpResponse;
-
-
-/**
- * ========================================================
- * = MeekroDB Initialization
- * ========================================================
- * Database Handler
- * --------------------------------------------------------
- * DOCUMENTATION
- * https://meekro.com/docs.php
- * ========================================================
- */
-
-Database::init();
-
-
-/**
- * ========================================================
- * = Twig Initialization
- * ========================================================
- * Template Engine
- * --------------------------------------------------------
- * DOCUMENTATION
- * https://twig.sensiolabs.org/
- * ========================================================
- */
-
-$loader = new Twig_Loader_Filesystem(TEMPLATES);
-$twig = new Twig_Environment($loader, [
-    // TODO: Uncomment to cache and speedup process of templating
-    //    'cache' => __DIR__ . '/../cache',
-]);
-
-
-/**
- * ========================================================
- * = Monolog Initialization
- * ========================================================
- * Logging Library
- * --------------------------------------------------------
- * DOCUMENTATION
- * https://github.com/Seldaek/monolog
- * ========================================================
- */
-
-$log = new Logger('main');
-try {
-    $log->pushHandler(new StreamHandler('log/logs.log'));
-} catch (\Exception $e) {
-}
-
-StaticLogger::setLogger($log);
-
-/**
- * ========================================================
- * = Klein.php
- * ========================================================
- * Router
- * --------------------------------------------------------
- * DOCUMENTATION
- * https://github.com/klein/klein.php
- * ========================================================
- */
-
-require __DIR__ . '/Routes.php';
-require __DIR__ . '/Controllers/BaseController.php';
-
-$klein = new Klein\Klein();
-
-/// Get routes has 2D arrays where each row is a route
-/// and first = TYPE, second = /path, third = function response()
-$routes = getRoutes();
-foreach ($routes as $route) {
-    $type = $route[0];
-    $route_path = $route[1];
-
-    $controller = new $route[2][0]();
-    Controllers\BaseController::activate($controller, $httpRequest, $httpResponse, $twig);
-    $method = $route[2][1];
-    $callback = [$controller, $method];
-    $klein->respond($type, $route_path, $callback);
-}
-
-/// getRouterErrorHandlers() has 2D arrays where each row is a handler
-/// and first = ERROR_CODE, second = response body
-///
-/// getRouterDefaultErrorHandler($code) will have the
-/// default response (Unhandled error)
-$klein->onHttpError(function (int $code) {
-    $router_err_handlers = getRouterErrorHandlers();
-    foreach ($router_err_handlers as $handler) {
-        if ($code == $handler[0]) {
-            header("Location: http://$_SERVER[HTTP_HOST]/$code");
-            exit;
-        }
-    }
-    header("Location: http://$_SERVER[HTTP_HOST]/undefined?code=$code");
-    exit;
-});
-
-
-$klein->dispatch();
-
-
-/**
- * ========================================================
- * = HTTP sending response
- * ========================================================
- */
-
-foreach ($httpResponse->getHeaders() as $header) {
-    header($header, false);
-}
-
-echo $httpResponse->getContent();
+// Echo result of page
+Components\HttpHandler::getInstance()->echoContent();

@@ -2,14 +2,12 @@
 
 namespace Pulse\Models\Admin;
 
-use DB;
+use Pulse\Components\Database;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Enums\AccountType;
+use Pulse\Models\Enums\VerificationState;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 
-define('ACCOUNT_NORMAL', 0);
-define('ACCOUNT_VERIFIED', 1);
-define('ACCOUNT_REJECTED', 2);
 
 class Admin extends Account
 {
@@ -24,13 +22,15 @@ class Admin extends Account
 
     public function retrieveMedicalCentersList()
     {
-        $query = DB::query(
+        $query = Database::query(
             "SELECT DISTINCT *
                 FROM medical_centers
                        INNER JOIN medical_center_details ON medical_centers.account_id = medical_center_details.account_id
                 GROUP BY medical_centers.account_id
-                ORDER BY medical_center_details.creation_date DESC;"
+                ORDER BY medical_center_details.creation_date DESC;",
+            array()
         );
+
         for ($i = 0; $i < count($query); $i++) {
             $spaced_removed = str_replace(' ', '+', $query[$i]['address']);
             $commas_removed = str_replace(',', '', $spaced_removed);
@@ -42,27 +42,34 @@ class Admin extends Account
 
     public function deleteMedicalCenter(MedicalCenter $account)
     {
-        DB::delete('accounts', "account_id=%s", $account->getAccountId());
+        Database::delete('accounts', "account_id=:account_id",
+            array('account_id' => $account->getAccountId()));
     }
 
     public function retractMedicalCenter(MedicalCenter $account)
     {
-        DB::update('medical_centers', array(
-            'verified' => ACCOUNT_NORMAL
-        ), "account_id=%s", $account->getAccountId());
+        Database::update('medical_centers', 'verified=:verified', "account_id=:account_id",
+            array(
+                'verified' => VerificationState::Default,
+                'account_id' => $account->getAccountId()
+            ));
     }
 
     public function rejectMedicalCenter(MedicalCenter $account)
     {
-        DB::update('medical_centers', array(
-            'verified' => ACCOUNT_REJECTED
-        ), "account_id=%s", $account->getAccountId());
+        Database::update('medical_centers', 'verified=:verified', "account_id=:account_id",
+            array(
+                'verified' => VerificationState::Rejected,
+                'account_id' => $account->getAccountId()
+            ));
     }
 
     public function verifyMedicalCenter(MedicalCenter $account)
     {
-        DB::update('medical_centers', array(
-            'verified' => ACCOUNT_VERIFIED
-        ), "account_id=%s", $account->getAccountId());
+        Database::update('medical_centers', 'verified=:verified', "account_id=:account_id",
+            array(
+                'verified' => VerificationState::Verified,
+                'account_id' => $account->getAccountId()
+            ));
     }
 }

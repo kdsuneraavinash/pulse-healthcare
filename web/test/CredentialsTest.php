@@ -2,11 +2,11 @@
 
 namespace PulseTest;
 
-use DB;
 use PHPUnit\Framework\TestCase;
-use Pulse\Database;
-use Pulse\Exceptions;
+use Pulse\Components\Database;
 use Pulse\Models\AccountSession\Credentials;
+use Pulse\Models\Exceptions;
+
 
 final class CredentialsTest extends TestCase
 {
@@ -22,12 +22,13 @@ final class CredentialsTest extends TestCase
     public static function setSharedVariables()
     {
         Database::init();
-        CredentialsTest::$userId = "credentials_tester";
-        CredentialsTest::$fakeId = "fakeTestUser123";
-        CredentialsTest::$userPassword = "password";
-        CredentialsTest::$secondPassword = "233.34.56.788";
-        CredentialsTest::$fakePassword = "113.34.56.788";
-        DB::delete('account_credentials', "account_id = %s", CredentialsTest::$userId);
+        self::$userId = "credentials_tester";
+        self::$fakeId = "fakeTestUser123";
+        self::$userPassword = "password";
+        self::$secondPassword = "233.34.56.788";
+        self::$fakePassword = "113.34.56.788";
+        Database::delete('account_credentials', "account_id = :account_id",
+            array('account_id' => self::$userId));
     }
 
     /**
@@ -36,7 +37,7 @@ final class CredentialsTest extends TestCase
      */
     public function testLoginFromNewAccount()
     {
-        $credentials = Credentials::fromNewCredentials(CredentialsTest::$userId, CredentialsTest::$userPassword);
+        $credentials = Credentials::fromNewCredentials(self::$userId, self::$userPassword);
         $this->assertInstanceOf(Credentials::class, $credentials);
         $this->assertTrue($credentials->authenticate());
     }
@@ -47,7 +48,7 @@ final class CredentialsTest extends TestCase
      */
     public function testLoginFromExisitngAccount()
     {
-        $credentials = Credentials::fromExistingCredentials(CredentialsTest::$userId, CredentialsTest::$userPassword);
+        $credentials = Credentials::fromExistingCredentials(self::$userId, self::$userPassword);
         $this->assertInstanceOf(Credentials::class, $credentials);
         $this->assertTrue($credentials->authenticate());
     }
@@ -58,7 +59,7 @@ final class CredentialsTest extends TestCase
      */
     public function testLoginFromFakePassword()
     {
-        $credentials = Credentials::fromExistingCredentials(CredentialsTest::$userId, CredentialsTest::$fakePassword);
+        $credentials = Credentials::fromExistingCredentials(self::$userId, self::$fakePassword);
         $this->assertInstanceOf(Credentials::class, $credentials);
         $this->assertFalse($credentials->authenticate());
     }
@@ -71,7 +72,7 @@ final class CredentialsTest extends TestCase
     public function testLoginFromNewAccountForExistingUser()
     {
         $this->expectException(Exceptions\AccountAlreadyExistsException::class);
-        Credentials::fromNewCredentials(CredentialsTest::$userId, CredentialsTest::$fakePassword);
+        Credentials::fromNewCredentials(self::$userId, self::$fakePassword);
     }
 
     /**
@@ -81,7 +82,7 @@ final class CredentialsTest extends TestCase
     public function testLoginFromExistingAccountForNonExistingUser()
     {
         $this->expectException(Exceptions\AccountNotExistException::class);
-        Credentials::fromExistingCredentials(CredentialsTest::$fakeId, CredentialsTest::$userPassword);
+        Credentials::fromExistingCredentials(self::$fakeId, self::$userPassword);
     }
 
 }

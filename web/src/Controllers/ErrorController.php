@@ -13,6 +13,7 @@ class ErrorController extends BaseController
     {
         $this->render('errors/404.html.twig', array(), null);
     }
+
     /**
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
@@ -40,7 +41,7 @@ class ErrorController extends BaseController
      */
     public function errorUndefined()
     {
-        $code = $this->getRequest()->getParameter('code');
+        $code = $this->httpHandler()->anyParameter('code');
         $this->render('errors/undefined.html.twig', array(
             'code' => $code
         ), null);

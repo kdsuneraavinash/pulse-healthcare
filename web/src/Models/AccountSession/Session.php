@@ -2,14 +2,11 @@
 
 namespace Pulse\Models\AccountSession;
 
-use DB;
-use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Components\Database;
+use Pulse\Components\Utils;
+use Pulse\Definitions;
 use Pulse\Models\BaseModel;
-use Pulse\Utils;
-
-define('USER_EXPIRATION_DAYS', 1);
-define('SESSION_SALT_LENGTH', 40);
-
+use Pulse\Models\Exceptions;
 
 class Session implements BaseModel
 {
@@ -20,15 +17,17 @@ class Session implements BaseModel
      * Session constructor.
      * @param string $accountId id of the account
      * @param string $sessionKey Session key
-     * @throws AccountNotExistException if account does not exist
-     * @throws \Pulse\Exceptions\InvalidDataException
-     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     private function __construct(string $accountId, string $sessionKey)
     {
+        // Get account accordingly
         $this->account = Account::retrieveAccount($accountId);
         if (!$this->account->exists()) {
-            throw new AccountNotExistException($accountId);
+            // If the account does not exist
+            throw new Exceptions\AccountNotExistException($accountId);
         }
         $this->sessionKey = $sessionKey;
     }
@@ -37,54 +36,63 @@ class Session implements BaseModel
      * Create a new account session
      * @param string $accountId ID of the account to create session
      * @return Session Created Session Object
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\InvalidDataException
-     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public static function createSession(string $accountId): Session
     {
         $ipAddress = Utils::getClientIP();
         $sessionKey = Session::getEncryptedSessionKey($accountId, $ipAddress);
 
-        $primaryKey = array(
-            'account_id' => $accountId,
-            'ip_address' => $ipAddress);
-        $record = array(
-            'created' => DB::sqleval("NOW()"),
-            'expires' => DB::sqleval("ADDDATE(NOW(), " . USER_EXPIRATION_DAYS . ")"),
-            'session_key' => $sessionKey
+        // Get the row with corresponding session key (if exists)
+        $query = Database::queryFirstRow('SELECT session_key FROM sessions ' .
+            'WHERE account_id = :account_id AND ip_address= :ip_address',
+            array('account_id' => $accountId, 'ip_address' => $ipAddress)
         );
 
-        $query = DB::queryFirstRow('SELECT session_key FROM sessions WHERE account_id=%s AND ip_address=%s',
-            $accountId, $ipAddress);
         if ($query != null) {
             // Exists: Get existing data - Must Not Update since old session keys will become invalid
             $sessionKey = $query['session_key'];
         } else {
             // Does Not Exist: Insert session
-            DB::insert('sessions', array_merge($primaryKey, $record));
+            Database::insert(
+                'sessions',
+                array(
+                    'account_id' => $accountId,
+                    'ip_address' => $ipAddress,
+                    'created' => Database::sqleval("NOW()"),
+                    'expires' => Database::sqleval("ADDDATE(NOW(), " . Definitions::USER_EXPIRATION_DAYS . ")"),
+                    'session_key' => $sessionKey),
+                false);
         }
 
         return new Session($accountId, $sessionKey);
     }
 
     /**
-     * Resumes a account session
+     * Resumes an account session
      * @param string $accountId BaseAccount Id to resume session
      * @param string $sessionKey Session Key of the session to resume
      * @return Session|null Created session(null if session key is invalid)
-     * @throws AccountNotExistException
-     * @throws \Pulse\Exceptions\InvalidDataException
-     * @throws \Pulse\Exceptions\AccountRejectedException
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountRejectedException
+     * @throws Exceptions\InvalidDataException
      */
     public static function resumeSession(string $accountId, string $sessionKey): ?Session
     {
         $ipAddress = Utils::getClientIP();
 
-        $query = DB::queryFirstRow('SELECT session_key FROM sessions ' .
-            'WHERE account_id = %s AND ip_address = %s AND ' .
-            'session_key = %s AND expires > NOW() ',
-            $accountId, $ipAddress, $sessionKey);
+        // Get session details for DB(check for expiration)
+        $query = Database::queryFirstRow('SELECT session_key FROM sessions ' .
+            'WHERE account_id = :account_id AND ip_address = :ip_address AND ' .
+            'session_key = :session_key AND expires > NOW() ',
+            array(
+                'account_id' => $accountId,
+                'ip_address' => $ipAddress,
+                'session_key' => $sessionKey
+            )
+        );
 
         // Return null if session didn't exist
         if ($query == null) {
@@ -109,7 +117,9 @@ class Session implements BaseModel
      */
     public static function closeSessionOfContext(string $id, string $sessionKey)
     {
-        DB::delete('sessions', "account_id = %s AND session_key = %s", $id, $sessionKey);
+        Database::delete('sessions',
+            "account_id = :account_id AND session_key = :session_key",
+            array('account_id' => $id, 'session_key' => $sessionKey));
     }
 
     /**
@@ -120,7 +130,7 @@ class Session implements BaseModel
      */
     private static function getEncryptedSessionKey(string $accountId, string $ip): string
     {
-        $salt = Utils::generateRandomSaltyString(SESSION_SALT_LENGTH);
+        $salt = Utils::generateRandomSaltyString(Definitions::SESSION_SALT_LENGTH);
         return sha1($salt . time() . $accountId . $ip);
     }
 

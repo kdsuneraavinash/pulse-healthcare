@@ -2,8 +2,8 @@
 
 namespace Pulse\Models\MedicalCenter;
 
-use DB;
-use Pulse\Exceptions\AccountNotExistException;
+use Pulse\Components\Database;
+use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\IDetails;
 
 class MedicalCenterDetails implements IDetails
@@ -27,7 +27,7 @@ class MedicalCenterDetails implements IDetails
      * @param $postalCode
      */
     public function __construct(string $name, string $phsrc, string $email, string $fax,
-                                string $phoneNumber, string $address, string $postalCode)
+                                string $phoneNumber, string $address, int $postalCode)
     {
         $this->name = $name;
         $this->phsrc = $phsrc;
@@ -59,16 +59,18 @@ class MedicalCenterDetails implements IDetails
     /**
      * @param string $accountId
      * @return MedicalCenterDetails
-     * @throws AccountNotExistException
+     * @throws Exceptions\AccountNotExistException
      */
     public static function readFromDatabase(string $accountId): MedicalCenterDetails
     {
-        $query = DB::queryFirstRow("SELECT * FROM medical_center_details WHERE account_id=%s", $accountId);
+        $query = Database::queryFirstRow("SELECT * from medical_center_details WHERE account_id=:account_id",
+            array('account_id' => $accountId));
+
         if ($query == null) {
-            throw new AccountNotExistException($accountId);
+            throw new Exceptions\AccountNotExistException($accountId);
         }
         return new MedicalCenterDetails($query['name'], $query['phsrc'], $query['email'], $query['fax'],
-            $query['phone_number'], $query['address'], $query['postal_code']);
+            $query['phone_number'], $query['address'], (int) $query['postal_code']);
     }
 
     /**
@@ -76,7 +78,7 @@ class MedicalCenterDetails implements IDetails
      */
     public function saveInDatabase(string $accountId)
     {
-        DB::insert('medical_center_details', array(
+        Database::insert('medical_center_details', array(
             'account_id' => $accountId,
             'name' => $this->getName(),
             'phsrc' => $this->getPhsrc(),
@@ -194,7 +196,7 @@ class MedicalCenterDetails implements IDetails
     /**
      * @return string
      */
-    public function getPostalCode(): string
+    public function getPostalCode(): int
     {
         return $this->postalCode;
     }

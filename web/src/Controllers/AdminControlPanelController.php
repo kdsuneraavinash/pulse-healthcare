@@ -2,12 +2,10 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Exceptions\AccountNotExistException;
-use Pulse\Exceptions\AccountRejectedException;
-use Pulse\Exceptions\InvalidDataException;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
+use Pulse\Models\Exceptions;
 
 class AdminControlPanelController extends BaseController
 {
@@ -18,8 +16,7 @@ class AdminControlPanelController extends BaseController
      */
     public function get()
     {
-        parent::loadOnlyIfUserIsOfType(Admin::class,
-            'ControlPanelAdminPage.html.twig', "http://$_SERVER[HTTP_HOST]/405");
+        parent::loadOnlyIfUserIsOfType(Admin::class, 'ControlPanelAdminPage.html.twig');
     }
 
     /**
@@ -29,8 +26,7 @@ class AdminControlPanelController extends BaseController
      */
     public function getAdminDashboardIframe()
     {
-        parent::loadOnlyIfUserIsOfType(Admin::class,
-            'iframe/AdminDashboardIFrame.htm.twig', "http://$_SERVER[HTTP_HOST]/405");
+        parent::loadOnlyIfUserIsOfType(Admin::class, 'iframe/AdminDashboardIFrame.htm.twig');
     }
 
     /**
@@ -46,18 +42,17 @@ class AdminControlPanelController extends BaseController
                 'medical_centers' => $currentAccount->retrieveMedicalCentersList()
             ), $currentAccount);
         } else {
-            header("Location: http://$_SERVER[HTTP_HOST]/405");
-            exit;
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 
     /**
-     * @throws AccountRejectedException
+     * @throws Exceptions\AccountRejectedException
      */
     public function postAdminVerifyMedicalCentersIframe()
     {
-        $targetAccountId = $this->getRequest()->getBodyParameter('account');
-        $action = $this->getRequest()->getBodyParameter('action');
+        $targetAccountId = $this->httpHandler()->postParameter('account');
+        $action = $this->httpHandler()->postParameter('action');
 
         $currentAccount = $this->getCurrentAccount();
         if ($currentAccount instanceof Admin) {
@@ -66,11 +61,11 @@ class AdminControlPanelController extends BaseController
                 /// Get target user object
                 $targetAccount = Account::retrieveAccount($targetAccountId, true);
 
-            } catch (AccountNotExistException $e) {
-                header("Location: http://$_SERVER[HTTP_HOST]/405");
+            } catch (Exceptions\AccountNotExistException $e) {
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
                 exit;
-            } catch (InvalidDataException $e) {
-                header("Location: http://$_SERVER[HTTP_HOST]/405");
+            } catch (Exceptions\InvalidDataException $e) {
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
                 exit;
             }
 
@@ -86,22 +81,18 @@ class AdminControlPanelController extends BaseController
                     $currentAccount->rejectMedicalCenter($targetAccount);
                 } else {
                     /// Unknown method
-                    header("Location: http://$_SERVER[HTTP_HOST]/405");
-                    exit;
+                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
                 }
             } else {
                 /// Account is not a MedicalCenter
-                header("Location: http://$_SERVER[HTTP_HOST]/405");
-                exit;
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
             }
 
             /// Exit in normal way
-            header("Location: http://$_SERVER[HTTP_HOST]/control/admin/verify#$targetAccountId");
-            exit;
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/admin/verify#$targetAccountId");
         } else {
             /// Current user is not ADMIN
-            header("Location: http://$_SERVER[HTTP_HOST]/405");
-            exit;
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 }

@@ -3,8 +3,7 @@
 namespace Pulse\Controllers;
 
 use DB;
-use Pulse\Controllers\BaseController;
-use Pulse\StaticLogger;
+use Pulse\Components\Logger;
 
 class SearchDoctorController extends BaseController
 {
@@ -15,8 +14,8 @@ class SearchDoctorController extends BaseController
      */
     public function show()
     {
-        $get_string = $this->getRequest()->getQueryParameter('key');
-        $post_string = $this->getRequest()->getBodyParameter('key');
+        $get_string = $this->httpHandler()->getParameter('key');
+        $post_string = $this->httpHandler()->getParameter('key');
         $db_query = DB::query("SELECT * FROM test;");
         $db_session_query = DB::query("SELECT * FROM sessions;");
 
@@ -30,29 +29,19 @@ class SearchDoctorController extends BaseController
         $this->render('SearchDoctor.html.twig', $data, null);
     }
 
-    public function get(){
-
-
-
-
+    public function get()
+    {
     }
 
 
-    public function post(){
+    public function post()
+    {
+        $account = $this->httpHandler()->postParameter('account');
+        $slmc_id = $this->httpHandler()->postParameter('slmc_id');
+        $email = $this->httpHandler()->postParameter('email');
+        $nic = $this->httpHandler()->postParameter('nic');
+        $region = $this->httpHandler()->postParameter('region');
 
-        $account = $this->getRequest()->getBodyParameter('account');
-        $slmc_id = $this->getRequest()->getBodyParameter('slmc_id');
-        $email = $this->getRequest()->getBodyParameter('email');
-        $nic = $this->getRequest()->getBodyParameter('nic');
-        $region = $this->getRequest()->getBodyParameter('region');
-
-        StaticLogger::loggerInfo($account . ' ' . $slmc_id . ' ' .$email. ' ' . $nic . ' ' . $region);
-
-
-
-
+        Logger::log($account . ' ' . $slmc_id . ' ' . $email . ' ' . $nic . ' ' . $region);
     }
-
-
-
 }
