@@ -4,7 +4,8 @@ namespace Pulse\Controllers;
 
 
 //use DB;
-use Pulse\Components\Database;use Pulse\Components\Logger;
+use Pulse\Components\Database;
+use Pulse\Components\Logger;
 
 class SearchDoctorController extends BaseController
 {
@@ -17,8 +18,8 @@ class SearchDoctorController extends BaseController
     {
         $get_string = $this->httpHandler()->getParameter('key');
         $post_string = $this->httpHandler()->getParameter('key');
-        $db_query = DB::query("SELECT * FROM test;");
-        $db_session_query = DB::query("SELECT * FROM sessions;");
+        $db_query = Database::query("SELECT * FROM accounts;", array());
+        $db_session_query = Database::query("SELECT * FROM sessions;", array());
 
         $data = [
             'get' => $get_string,
@@ -40,11 +41,11 @@ class SearchDoctorController extends BaseController
 
     public function post(){
 
-        $account = $this->getRequest()->getBodyParameter('account');
-        $slmc_id = $this->getRequest()->getBodyParameter('slmc_id');
-        $email = $this->getRequest()->getBodyParameter('email');
-        $nic = $this->getRequest()->getBodyParameter('nic');
-        $region = $this->getRequest()->getBodyParameter('region');
+        $account = $this->httpHandler()->postParameter('account');
+        $slmc_id = $this->httpHandler()->postParameter('slmc_id');
+        $email = $this->httpHandler()->postParameter('email');
+        $nic = $this->httpHandler()->postParameter('nic');
+        $region = $this->httpHandler()->postParameter('region');
 
         //StaticLogger::loggerInfo($account . ' ' . $slmc_id . ' ' .$email. ' ' . $nic . ' ' . $region);
 
@@ -52,12 +53,10 @@ class SearchDoctorController extends BaseController
 
         if($slmc_id!==null){
 
-            $query=Database::query('\'SELECT * FROM doctor_details WHERE slmc_id = $slmc_id\'',null);
-            $result = mysqli_connect($query);
+            $query = Database::query('SELECT * FROM doctor_details WHERE slmc_id = :slmc_id',
+                array("slmc_id" => $slmc_id));
 
-            StaticLogger::loggerInfo($result);
-
-
+            Logger::log(join(", ", $query));
         }
 
 

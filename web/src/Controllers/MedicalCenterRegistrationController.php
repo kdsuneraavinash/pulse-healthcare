@@ -31,7 +31,7 @@ class MedicalCenterRegistrationController extends BaseController
                 $phoneNumber == null || $address == null || $postalCode == null)) {
 
                 $medicalCenterDetails = new MedicalCenterDetails($name, $phsrc, $email, $fax, $phoneNumber,
-                    $address, $postalCode);
+                    $address, (int) $postalCode);
 
                 try {
                     MedicalCenter::requestRegistration($accountId, $medicalCenterDetails, $password);
