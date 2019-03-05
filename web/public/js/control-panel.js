@@ -10,7 +10,7 @@ $("#drawer-close").click(function (e) {
 });
 
 $(".sidebar-button").click(
-    function () {
+    function (e) {
         let buttons = $(".sidebar-button");
         let iframe = $("#content-iframe");
 
@@ -21,13 +21,27 @@ $(".sidebar-button").click(
             buttons.removeClass("rounded");
             buttons.removeClass("mb-0");
             buttons.removeClass("z-depth-2");
+            buttons.removeClass("blue");
+            buttons.addClass("bg-light");
 
             $(this).toggleClass("active");
             $(this).toggleClass("rounded");
             $(this).toggleClass("mb-0");
             $(this).toggleClass("z-depth-2");
+            $(this).toggleClass("blue");
+            $(this).removeClass("bg-light");
 
-            iframe.attr('src', newLoc);
+            iframe.fadeOut(200,function(){
+                iframe.attr('src', newLoc );
+                setTimeout(function() {
+                    iframe.fadeIn(200);
+                }, 200);
+            });
         }
     }
 );
+
+
+$("#content-iframe").load(function() {
+    console.log("Loaded");
+});

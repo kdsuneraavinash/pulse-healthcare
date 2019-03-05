@@ -62,10 +62,10 @@
 {%- endmacro %}
 
 {% macro verification_modal(model_id, theme, color, icon, title, message, bold, action, site) -%}
-    <div class="modal fade right account-modal" id="{{ model_id }}" tabindex="-1" role="dialog"
+    <div class="modal fade account-modal" id="{{ model_id }}" tabindex="-1" role="dialog"
          aria-labelledby="ModalLabel"
          data-backdrop="true" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog show modal-side modal-top-right modal-notify modal-{{ theme }}" role="document">
+        <div class="modal-dialog show modal-center modal-notify modal-{{ theme }}" role="document">
 
             <div class="modal-content">
 
@@ -90,18 +90,21 @@
 
                         <hr/>
 
-                        <form method="post" action='{{ site }}/control/admin/verify' class="d-inline">
-                            <input name="account" class="data-account" hidden>
-                            <input name="action" value="{{ action|lower }}" hidden>
-                            <button type="submit" class="btn btn-{{ theme }} waves-effect"
-                                    onclick="window.location='{{ site }}/control/admin/verify'">{{ action }}
-                                <i class="fas fa-{{ icon }} ml-1"></i></button>
-                        </form>
-                        <button type="button" class="btn btn-outline-{{ theme }} waves-effect waves-light"
-                                data-dismiss="modal">
-                            Cancel
-                            <i class="fas fa-times ml-1"></i>
-                        </button>
+                        <div class="text-center">
+                            <form method="post" action='{{ site }}/control/admin/verify' class="d-inline">
+                                <input name="account" class="data-account" hidden>
+                                <input name="action" value="{{ action|lower }}" hidden>
+                                <button type="submit" class="btn btn-{{ theme }} waves-effect"
+                                        onclick="window.location='{{ site }}/control/admin/verify'">{{ action }}
+                                    <i class="fas fa-{{ icon }} ml-1"></i></button>
+                            </form>
+                            <button type="button" class="btn btn-outline-{{ theme }} waves-effect waves-light"
+                                    data-dismiss="modal">
+                                Cancel
+                                <i class="fas fa-times ml-1"></i>
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>

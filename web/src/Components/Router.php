@@ -56,6 +56,8 @@ final class Router
             ['POST', '/500', ['Pulse\Controllers\ErrorController', 'error500']],
             ['GET', '/undefined', ['Pulse\Controllers\ErrorController', 'errorUndefined']],
             ['POST', '/undefined', ['Pulse\Controllers\ErrorController', 'errorUndefined']],
+            ['GET', '/lock', ['Pulse\Controllers\ErrorController', 'errorLock']],
+            ['POST', '/lock', ['Pulse\Controllers\ErrorController', 'errorLock']],
 
         ];
     }
