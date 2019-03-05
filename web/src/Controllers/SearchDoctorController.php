@@ -2,8 +2,9 @@
 
 namespace Pulse\Controllers;
 
-use DB;
-use Pulse\Components\Logger;
+
+//use DB;
+use Pulse\Components\Database;use Pulse\Components\Logger;
 
 class SearchDoctorController extends BaseController
 {
@@ -34,13 +35,69 @@ class SearchDoctorController extends BaseController
     }
 
 
-    public function post()
-    {
-        $account = $this->httpHandler()->postParameter('account');
-        $slmc_id = $this->httpHandler()->postParameter('slmc_id');
-        $email = $this->httpHandler()->postParameter('email');
-        $nic = $this->httpHandler()->postParameter('nic');
-        $region = $this->httpHandler()->postParameter('region');
+
+
+
+    public function post(){
+
+        $account = $this->getRequest()->getBodyParameter('account');
+        $slmc_id = $this->getRequest()->getBodyParameter('slmc_id');
+        $email = $this->getRequest()->getBodyParameter('email');
+        $nic = $this->getRequest()->getBodyParameter('nic');
+        $region = $this->getRequest()->getBodyParameter('region');
+
+        //StaticLogger::loggerInfo($account . ' ' . $slmc_id . ' ' .$email. ' ' . $nic . ' ' . $region);
+
+        //////////////////////////////////////////////
+
+        if($slmc_id!==null){
+
+            $query=Database::query('\'SELECT * FROM doctor_details WHERE slmc_id = $slmc_id\'',null);
+            $result = mysqli_connect($query);
+
+            StaticLogger::loggerInfo($result);
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         Logger::log($account . ' ' . $slmc_id . ' ' . $email . ' ' . $nic . ' ' . $region);
     }
