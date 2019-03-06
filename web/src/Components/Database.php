@@ -215,6 +215,51 @@ class Database
     {
         return self::$database;
     }
+
+
+    public static function search(){
+
+        try {
+            $query = "SELECT slmc_id, display_name FROM doctor_details WHERE MATCH(slmc_id,display_name) AGAINST('Tester 1023136')";
+            $statement = self::getDatabase()->prepare($query);
+            //self::bindToStatement($statement,null);
+            $statement->execute();
+            //print_r($statement);
+            return $statement->fetchAll();
+        } catch (\Exception $e) {
+            self::handleErrors($e);
+            exit;
+        }
+
+
+
+
+    }
+
+    public static function addToFullSearch(){
+        try {
+            $query = "ALTER TABLE doctor_details ADD FULLTEXT(slmc_id,display_name)";
+            $statement = self::getDatabase()->prepare($query);
+            //self::bindToStatement($statement,null);
+            $statement->execute();
+        } catch (\Exception $e) {
+            self::handleErrors($e);
+            exit;
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
 }
 
 class PureSqlStatement

@@ -33,6 +33,9 @@ class SearchDoctorController extends BaseController
 
     public function get()
     {
+
+
+
     }
 
 
@@ -43,20 +46,45 @@ class SearchDoctorController extends BaseController
 
         $account = $this->httpHandler()->postParameter('account');
         $slmc_id = $this->httpHandler()->postParameter('slmc_id');
-        $email = $this->httpHandler()->postParameter('email');
-        $nic = $this->httpHandler()->postParameter('nic');
         $region = $this->httpHandler()->postParameter('region');
 
-        //StaticLogger::loggerInfo($account . ' ' . $slmc_id . ' ' .$email. ' ' . $nic . ' ' . $region);
+//        StaticLogger::loggerInfo($account . ' ' . $slmc_id . ' ' .$email. ' ' . $nic . ' ' . $region);
 
         //////////////////////////////////////////////
 
-        if($slmc_id!==null){
+        if($slmc_id!=null && $account!=null && $region!=null){
 
-            $query = Database::query('SELECT * FROM doctor_details WHERE slmc_id = :slmc_id',
-                array("slmc_id" => $slmc_id));
+            $query = Database::query('SELECT * FROM doctor_details WHERE (slmc_id = :slmc_id) AND (display_name= :display_name)',
+                array("slmc_id" => $slmc_id,"display_name"=>$account));
 
-            Logger::log(join(", ", $query));
+            print_r($query);
+
+
+//            Logger::log(join(", ", $query));
+        }else if($account!=null && $slmc_id!=null){
+
+            //$query = Database::query('SELECT * FROM doctor_details WHERE (slmc_id = :slmc_id) AND (display_name= :display_name)',
+              //  array("slmc_id" => $slmc_id,"display_name"=>$account));
+
+            //Database::search();
+
+            Database::addToFullSearch();
+            $result = Database::search();
+
+            print_r($result);
+            echo "Done";
+
+            //print_r($query);
+
+        }else if($account!= null && $region!=null){
+
+            $query = Database::query('SELECT * FROM doctor_details WHERE (slmc_id = :slmc_id) AND (display_name= :display_name)',
+                array("slmc_id" => $slmc_id,"display_name"=>$account));
+
+
+        }else if($slmc_id && $region){
+
+
         }
 
 
@@ -98,6 +126,6 @@ class SearchDoctorController extends BaseController
 
 
 
-        Logger::log($account . ' ' . $slmc_id . ' ' . $email . ' ' . $nic . ' ' . $region);
+        Logger::log($account . ' ' . $slmc_id . ' ' . $region);
     }
 }
