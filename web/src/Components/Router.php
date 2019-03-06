@@ -34,6 +34,12 @@ final class Router
             ['GET', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'getAdminVerifyMedicalCentersIframe']],
             ['POST', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'postAdminVerifyMedicalCentersIframe']],
 
+            // Control Panel - Doctor
+            ['GET', '/control/doctor', ['Pulse\Controllers\DoctorControlPanelController', 'get']],
+            ['GET', '/control/doctor/dashboard', ['Pulse\Controllers\DoctorControlPanelController', 'getDoctorDashboardIframe']],
+            ['GET','control/doctor/create/prescription',['Pulse\Controllers\DoctorControlPanelController','getDoctorCreatePrescriptionIframe']],
+            ['POST', '/control/doctor/create/prescription', ['Pulse\Controllers\DoctorCreatePrescriptionController', 'post']],
+
             // Control Panel - Medical Center
             ['GET', '/control/med_center', ['Pulse\Controllers\MediControlPanelController', 'get']],
             ['GET', '/control/med_center/dashboard', ['Pulse\Controllers\MediControlPanelController', 'getMediDashboardIframe']],
