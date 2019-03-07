@@ -37,93 +37,30 @@ class SearchDoctorController extends BaseController
 
 
     }
-
-
-
-
+    
 
     public function post(){
 
         $account = $this->httpHandler()->postParameter('account');
         $slmc_id = $this->httpHandler()->postParameter('slmc_id');
         $region = $this->httpHandler()->postParameter('region');
+        $doctor_details = 'doctor_details';
 
-//        StaticLogger::loggerInfo($account . ' ' . $slmc_id . ' ' .$email. ' ' . $nic . ' ' . $region);
-
-        //////////////////////////////////////////////
-
-        if($slmc_id!=null && $account!=null && $region!=null){
-
-            $query = Database::query('SELECT * FROM doctor_details WHERE (slmc_id = :slmc_id) AND (display_name= :display_name)',
-                array("slmc_id" => $slmc_id,"display_name"=>$account));
-
-            print_r($query);
-
-
-//            Logger::log(join(", ", $query));
-        }else if($account!=null && $slmc_id!=null){
-
-            //$query = Database::query('SELECT * FROM doctor_details WHERE (slmc_id = :slmc_id) AND (display_name= :display_name)',
-              //  array("slmc_id" => $slmc_id,"display_name"=>$account));
-
-            //Database::search();
-
-            Database::addToFullSearch();
-            $result = Database::search();
-
+        $searchText = '+'.$slmc_id ." ". '+'.$account;
+        $result = Database::search($doctor_details,$slmc_id,$account,$searchText,
+            array("doctor_details"=>$doctor_details,"slmc_id"=>$slmc_id,"display_name"=>$account,(string)($searchText)=>$searchText));
+        if($result){
             print_r($result);
-            echo "Done";
-
-            //print_r($query);
-
-        }else if($account!= null && $region!=null){
-
-            $query = Database::query('SELECT * FROM doctor_details WHERE (slmc_id = :slmc_id) AND (display_name= :display_name)',
-                array("slmc_id" => $slmc_id,"display_name"=>$account));
-
-
-        }else if($slmc_id && $region){
-
-
         }
 
 
+        if($result==null){
+            $searchText = $slmc_id ." ". $account;
+            $result = Database::search($doctor_details,$slmc_id,$account,$searchText,
+                array("doctor_details"=>$doctor_details,"slmc_id"=>$slmc_id,"display_name"=>$account,(string)($searchText)=>$searchText));
+            print_r($result);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
 
 
         Logger::log($account . ' ' . $slmc_id . ' ' . $region);

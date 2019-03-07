@@ -217,36 +217,34 @@ class Database
     }
 
 
-    public static function search(){
+    public static function search($table,$slmc_id,$display_name,$searchText,array $params){
 
         try {
-            $query = "SELECT slmc_id, display_name FROM doctor_details WHERE MATCH(slmc_id,display_name) AGAINST('Tester 1023136')";
+            $query = "SELECT slmc_id,display_name FROM $table WHERE MATCH(slmc_id,display_name)AGAINST('$searchText' IN BOOLEAN MODE)";
             $statement = self::getDatabase()->prepare($query);
-            //self::bindToStatement($statement,null);
+            self::bindToStatement($statement,$params);
             $statement->execute();
             //print_r($statement);
             return $statement->fetchAll();
         } catch (\Exception $e) {
-            self::handleErrors($e);
+            echo $e;
+            //self::handleErrors($e);
             exit;
         }
-
-
-
 
     }
 
-    public static function addToFullSearch(){
+    public static function addToFullSearch($table,$slmc_id,$display_name,array $params){
         try {
-            $query = "ALTER TABLE doctor_details ADD FULLTEXT(slmc_id,display_name)";
+            $query = "ALTER TABLE $table ADD FULLTEXT(slmc_id,display_name)";
             $statement = self::getDatabase()->prepare($query);
-            //self::bindToStatement($statement,null);
+            self::bindToStatement($statement,$params);
             $statement->execute();
         } catch (\Exception $e) {
-            self::handleErrors($e);
+            echo $e;
+            //self::handleErrors($e);
             exit;
         }
-
 
 
     }
