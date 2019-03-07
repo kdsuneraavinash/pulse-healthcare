@@ -37,7 +37,7 @@ class SearchDoctorController extends BaseController
 
 
     }
-    
+
 
     public function post(){
 
@@ -46,6 +46,17 @@ class SearchDoctorController extends BaseController
         $region = $this->httpHandler()->postParameter('region');
         $doctor_details = 'doctor_details';
 
+        $this->searchDoctor($account,$slmc_id,$region,$doctor_details);
+
+
+
+        //$this->render('SearchDoctor.html.twig',$result, null);
+
+        Logger::log($account . ' ' . $slmc_id . ' ' . $region);
+    }
+
+    
+    private function searchDoctor($account,$slmc_id,$region,$doctor_details){
         $searchText = '+'.$slmc_id ." ". '+'.$account;
         $result = Database::search($doctor_details,$slmc_id,$account,$searchText,
             array("doctor_details"=>$doctor_details,"slmc_id"=>$slmc_id,"display_name"=>$account,(string)($searchText)=>$searchText));
@@ -62,7 +73,7 @@ class SearchDoctorController extends BaseController
 
         }
 
-
-        Logger::log($account . ' ' . $slmc_id . ' ' . $region);
     }
+
+
 }
