@@ -2,6 +2,7 @@
 
 namespace Pulse\Components;
 
+
 class Logger
 {
     const INFO = 'INFO';
@@ -17,6 +18,7 @@ class Logger
         try {
             file_put_contents(__DIR__ . '/../../log/' . date("j.n.Y") . '.log', $log, FILE_APPEND);
         } catch (\Exception $e) {
+
         }
     }
 }

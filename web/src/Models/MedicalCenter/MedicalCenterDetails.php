@@ -194,7 +194,7 @@ class MedicalCenterDetails implements IDetails
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getPostalCode(): int
     {
