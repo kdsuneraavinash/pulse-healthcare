@@ -24,11 +24,12 @@ class Database
         ];
 
         // Try to connect to database
-        try {
-            self::$database = new PDO($dataSourceName, $userName, $password, $options);
-        } catch (\PDOException $e) {
-            self::handleErrors($e);
-        }
+//        try {
+//            self::$database = new PDO($dataSourceName, $userName, $password, $options);
+//        } catch (\PDOException $e) {
+//            self::handleErrors($e);
+//        }
+        self::$database = new PDO($dataSourceName, $userName, $password, $options);
     }
 
     /**
