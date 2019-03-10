@@ -222,49 +222,6 @@ class Database
     {
         return self::$database;
     }
-
-
-    public static function search($table,$slmc_id,$display_name,$searchText,array $params){
-
-        try {
-            $query = "SELECT slmc_id,display_name FROM $table WHERE MATCH(slmc_id,display_name)AGAINST('$searchText' IN BOOLEAN MODE)";
-            $statement = self::getDatabase()->prepare($query);
-            self::bindToStatement($statement,$params);
-            $statement->execute();
-            //print_r($statement);
-            return $statement->fetchAll();
-        } catch (\Exception $e) {
-            echo $e;
-            //self::handleErrors($e);
-            exit;
-        }
-
-    }
-
-    public static function addToFullSearch($table,$slmc_id,$display_name,array $params){
-        try {
-            $query = "ALTER TABLE $table ADD FULLTEXT(slmc_id,display_name)";
-            $statement = self::getDatabase()->prepare($query);
-            self::bindToStatement($statement,$params);
-            $statement->execute();
-        } catch (\Exception $e) {
-            echo $e;
-            //self::handleErrors($e);
-            exit;
-        }
-
-
-    }
-
-
-
-
-
-
-
-
-
-
 }
 
 class PureSqlStatement

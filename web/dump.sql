@@ -37,7 +37,7 @@ CREATE TABLE `account_credentials` (
 
 LOCK TABLES `account_credentials` WRITE;
 /*!40000 ALTER TABLE `account_credentials` DISABLE KEYS */;
-INSERT INTO `account_credentials` (`account_id`, `password`, `salt`) VALUES ('652566699V','1c23f2ef1abdae6340bc39934aca90c6b9ad7f9ea7e9ddbd6564126fea803c6a','NSnYJ!eLW\"5,0h/d/2q+uY6,G|7L\'pb8@@*y|qrU'),('administrator','c5e5453bb50d0673615b206fabd904fa6c47a5881857b83512b0cfa74fdc402c','.3.$)8Gj]aB<AS!#*)T4\'}wwTu,i.#ETF;17QB&h'),('credentials_tester','885605b2a8931c47893d7f56741c11815b3ee0895aadf89eb3214977c232e675','TJiYj7^9%=+WE`!Yz-*sRq=:c:vl#~%U,un?9&1j'),('login_service_tester','69a2c411d5026d68326c0878f955fb17426d3be3a64eef01fa4996cd2b85aecd','Jpx3hY{hr:C@/C+&tJR_YmbBMqNhRU;/g&H>n~{8'),('medCenter','9bfc39e1f4a394156c274082a6682096f8b115d123548fa8a32c209994efab6b','a^UoD[;Pb;5|q(bsZz\"jludK}@=JvQ*:M]w\"9p&S'),('medical_center_tester','dbeee500569b3834643be15081f43a241ae18027b404dfcf13c9f2ed6d21598c','yCIg&@Ac8DAWID+-RnXwG62;8ZC2[)X\"YQP1Dk^4'),('pTest','c4dfdceb710452bda60e33a358ff9b3ede2224e1241debc0d42a5cc87ae9504f','6kE1%H5ja44Lna<0;tl)9*dxF9[79(RO:84sFV#C');
+INSERT INTO `account_credentials` (`account_id`, `password`, `salt`) VALUES ('652566699V','685afa20c0bd3d38ef45ab5d02e50e4b27e1faf2ece42e270f2c9227e3e6a116','KuDH)l:|kw{CRpn5~v*&^#|DFX);=h<a<04}IQAt'),('932503234V','e49612a94db03b386481148e4136734e8f34901fd05ea0499808c54a6fd7ce06','AvA3&MgVS9_6\"</nc]>[T*wpA6Rd{wpoB35Dr}dw'),('971112610V','40459bce4629a194dbc34ef53f21937e419a8575ee129458b28b71b916586f03','gp;?CU8c~,b>7|}@n1X@Vl}95)zPQ87B.ap7.]!b'),('972502456V','e89c9b225422045be22cfe5b0e44cc22f508de7a72b2dfddd31ad4a3891f4d0e','a389E;v:M*gLVv_Rh?.dE#w\\#>5x9(dj7L4Pr6fs'),('978978877V','300c6bdc9a3f1458fa39affd30167c00267e0f0f755cb628cc684690b6d16bac','FP>19di8\\+F>Oy^Mm:vXJREk3>oH9ty0tOA!MD*e'),('administrator','c5e5453bb50d0673615b206fabd904fa6c47a5881857b83512b0cfa74fdc402c','.3.$)8Gj]aB<AS!#*)T4\'}wwTu,i.#ETF;17QB&h'),('credentials_tester','92ca43ba97b4510bc1a985d196fe36130b944e70b82d3cc5415f0c8cd06669a4','RkUdoj!zj3\'LBt{a<?\')phs`MyJ]!,)sYj<Gq\'LL'),('login_service_tester','948d8ba4aa26b9923f323559eb71b8de6d39720f1db28f654ac74aa6b559d8ab','+c(XJ]zuUv*i^O0>Dq\"]\'3I|$eOco>d3.5h4;BYH'),('medCenter','9bfc39e1f4a394156c274082a6682096f8b115d123548fa8a32c209994efab6b','a^UoD[;Pb;5|q(bsZz\"jludK}@=JvQ*:M]w\"9p&S'),('MedCenter23','cc92bd424e4e6a184e51d79eaa4d328c10241415960ab0bcc5e0c916df743716',':J_:T)APMlUlADP[oiCbI,2%Cb{>t9j@{Y-^`qA0'),('medical_center_tester','641c5c3e9352a1a48169511445ba33930a08667b2ddf2ade1c4a234c89153a53','6Hh*x:Ess=GD/=7Y8Lo[TP0G3\'z\'S\":YZ)qI@>\\Q'),('pTest','c4dfdceb710452bda60e33a358ff9b3ede2224e1241debc0d42a5cc87ae9504f','6kE1%H5ja44Lna<0;tl)9*dxF9[79(RO:84sFV#C');
 /*!40000 ALTER TABLE `account_credentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`account_id`, `account_type`) VALUES ('administrator','admin'),('652566699V','doctor'),('medCenter','med_center'),('medical_center_tester','med_center'),('credentials_tester','tester'),('login_service_tester','tester'),('pTest','tester'),('session_tester','tester');
+INSERT INTO `accounts` (`account_id`, `account_type`) VALUES ('administrator','admin'),('652566699V','doctor'),('932503234V','doctor'),('971112610V','doctor'),('medCenter','med_center'),('MedCenter23','med_center'),('medical_center_tester','med_center'),('972502456V','patient'),('978978877V','patient'),('credentials_tester','tester'),('login_service_tester','tester'),('pTest','tester'),('session_tester','tester');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,9 +107,11 @@ CREATE TABLE `doctor_details` (
   `slmc_id` varchar(16) NOT NULL,
   `email` varchar(320) NOT NULL,
   `phone_number` varchar(32) NOT NULL,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`account_id`),
   UNIQUE KEY `doctor_details_slmc_id_uindex` (`slmc_id`),
   UNIQUE KEY `doctor_details_nic_uindex` (`nic`),
+  FULLTEXT KEY `doctor_details_slmc_id__display_name_index` (`slmc_id`,`display_name`),
   CONSTRAINT `doctor_details_doctors_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `doctors` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store doctor account details';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -120,7 +122,7 @@ CREATE TABLE `doctor_details` (
 
 LOCK TABLES `doctor_details` WRITE;
 /*!40000 ALTER TABLE `doctor_details` DISABLE KEYS */;
-INSERT INTO `doctor_details` (`account_id`, `nic`, `full_name`, `display_name`, `category`, `slmc_id`, `email`, `phone_number`) VALUES ('652566699V','652566699V','Medical Center Tester','Tester','opd','1023136','tester@doctor.org','0342225658');
+INSERT INTO `doctor_details` (`account_id`, `nic`, `full_name`, `display_name`, `category`, `slmc_id`, `email`, `phone_number`, `creation_date`) VALUES ('652566699V','652566699V','Medical Center Tester','Tester','opd','1023136','tester@doctor.org','0342225658','2019-03-04 13:52:24'),('932503234V','932503234V','D. J. Saman Kumara','Saman Kumara','opd','111','kdsuneraavinash@gmail.com','8886654533','2019-02-27 11:05:12'),('971112610V','971112610V','D. J. Saman Kumr','Kumar','opd','1112','abc@gmail.com','11122132412','2019-03-07 09:04:20');
 /*!40000 ALTER TABLE `doctor_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +135,7 @@ DROP TABLE IF EXISTS `doctors`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `doctors` (
   `account_id` varchar(32) NOT NULL,
-  `default_password` varchar(16) NOT NULL,
+  `default_password` char(16) NOT NULL,
   PRIMARY KEY (`account_id`),
   CONSTRAINT `doctors_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Rable to store all doctors';
@@ -145,7 +147,7 @@ CREATE TABLE `doctors` (
 
 LOCK TABLES `doctors` WRITE;
 /*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
-INSERT INTO `doctors` (`account_id`, `default_password`) VALUES ('652566699V','jxypfwcaxrejroon');
+INSERT INTO `doctors` (`account_id`, `default_password`) VALUES ('652566699V','acrjapuqfershyeq'),('932503234V','vpijuqovawotxqnl'),('971112610V','cjdfbftbdrekkpqc');
 /*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +166,7 @@ CREATE TABLE `medical_center_details` (
   `fax` varchar(32) DEFAULT NULL,
   `phone_number` varchar(32) DEFAULT NULL,
   `address` text NOT NULL,
-  `postal_code` int(11) NOT NULL,
+  `postal_code` text NOT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`account_id`),
   UNIQUE KEY `medical_centers_phsrc_id_uindex` (`phsrc`),
@@ -178,7 +180,7 @@ CREATE TABLE `medical_center_details` (
 
 LOCK TABLES `medical_center_details` WRITE;
 /*!40000 ALTER TABLE `medical_center_details` DISABLE KEYS */;
-INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`, `creation_date`) VALUES ('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road',12000,'2019-02-24 11:50:14'),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.',99999,'2019-02-25 21:47:19');
+INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`, `creation_date`) VALUES ('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-02-24 11:50:14'),('MedCenter23','medicalcenter2','PHSRC/DEMO/002','sunerasocacc@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-03-07 09:17:14'),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.','99999','2019-03-04 13:52:24');
 /*!40000 ALTER TABLE `medical_center_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,8 +231,65 @@ CREATE TABLE `medical_centers` (
 
 LOCK TABLES `medical_centers` WRITE;
 /*!40000 ALTER TABLE `medical_centers` DISABLE KEYS */;
-INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('medCenter',0),('medical_center_tester',0);
+INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('MedCenter23',0),('medCenter',1),('medical_center_tester',1);
 /*!40000 ALTER TABLE `medical_centers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `patient_details`
+--
+
+DROP TABLE IF EXISTS `patient_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patient_details` (
+  `account_id` varchar(32) NOT NULL,
+  `nic` varchar(16) NOT NULL,
+  `name` text NOT NULL,
+  `phone_number` varchar(32) NOT NULL,
+  `email` varchar(320) NOT NULL,
+  `address` text NOT NULL,
+  `postal_code` text NOT NULL,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`account_id`),
+  UNIQUE KEY `patient_details_nic_uindex` (`nic`),
+  CONSTRAINT `patient_details_patients_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `patients` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store details of each patient';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patient_details`
+--
+
+LOCK TABLES `patient_details` WRITE;
+/*!40000 ALTER TABLE `patient_details` DISABLE KEYS */;
+INSERT INTO `patient_details` (`account_id`, `nic`, `name`, `phone_number`, `email`, `address`, `postal_code`, `creation_date`) VALUES ('972502456V','972502456V','Sunera Avinash','8886654533','kdsuneraavinash@gmail.com','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-02-26 11:26:21'),('978978877V','978978877V','Patient Tester','07655667890','tester@medical.patient','Fake Number, Fake Street, Fake City, Fake Province.','99999','2019-03-04 13:52:25');
+/*!40000 ALTER TABLE `patient_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `patients`
+--
+
+DROP TABLE IF EXISTS `patients`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patients` (
+  `account_id` varchar(32) NOT NULL,
+  `default_password` char(16) NOT NULL,
+  PRIMARY KEY (`account_id`),
+  CONSTRAINT `patients_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to stop patients';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patients`
+--
+
+LOCK TABLES `patients` WRITE;
+/*!40000 ALTER TABLE `patients` DISABLE KEYS */;
+INSERT INTO `patients` (`account_id`, `default_password`) VALUES ('972502456V','jpcihpxjjkimtwmt'),('978978877V','pstbllexpmnrcrtt');
+/*!40000 ALTER TABLE `patients` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -246,7 +305,8 @@ CREATE TABLE `sessions` (
   `created` datetime NOT NULL,
   `expires` datetime NOT NULL,
   `session_key` char(40) NOT NULL,
-  PRIMARY KEY (`account_id`,`ip_address`)
+  PRIMARY KEY (`account_id`,`ip_address`),
+  CONSTRAINT `sessions_accounts_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store sessions of all users';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -256,35 +316,8 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` (`account_id`, `ip_address`, `created`, `expires`, `session_key`) VALUES ('medCenter','127.0.0.1','2019-02-25 21:48:06','2019-02-26 21:48:06','3d610a5d46e2ba9f7aa89c4a20face9891549994');
+INSERT INTO `sessions` (`account_id`, `ip_address`, `created`, `expires`, `session_key`) VALUES ('971112610V','127.0.0.1','2019-03-10 21:48:37','2019-03-11 21:48:37','959e01cf6bd039cb18ea8944855d497099714ac5');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `test`
---
-
-DROP TABLE IF EXISTS `test`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `test` (
-  `ID` varchar(32) NOT NULL,
-  `LastName` varchar(255) NOT NULL,
-  `FirstName` varchar(255) DEFAULT NULL,
-  `Age` int(11) DEFAULT NULL,
-  `Password` varchar(128) NOT NULL DEFAULT '',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `test`
---
-
-LOCK TABLES `test` WRITE;
-/*!40000 ALTER TABLE `test` DISABLE KEYS */;
-INSERT INTO `test` (`ID`, `LastName`, `FirstName`, `Age`, `Password`) VALUES ('170074','Chamantha','Anju',22,'anju'),('170081','Chandrasiri','Sunera',22,'sunera'),('170109','Udayanga	','Lahiru',22,'lahiru'),('pTest','Doe','John',101,'password');
-/*!40000 ALTER TABLE `test` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -296,4 +329,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-25 21:51:39
+-- Dump completed on 2019-03-11  0:58:09
