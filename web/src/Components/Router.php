@@ -34,10 +34,11 @@ final class Router
             ['GET', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'getAdminVerifyMedicalCentersIframe']],
             ['POST', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'postAdminVerifyMedicalCentersIframe']],
 
+
             // Control Panel - Doctor
             ['GET', '/control/doctor', ['Pulse\Controllers\DoctorControlPanelController', 'get']],
             ['GET', '/control/doctor/dashboard', ['Pulse\Controllers\DoctorControlPanelController', 'getDoctorDashboardIframe']],
-            ['GET','control/doctor/create/prescription',['Pulse\Controllers\DoctorControlPanelController','getDoctorCreatePrescriptionIframe']],
+            ['GET','/control/doctor/create/prescription',['Pulse\Controllers\DoctorControlPanelController','getDoctorCreatePrescriptionIframe']],
             ['POST', '/control/doctor/create/prescription', ['Pulse\Controllers\DoctorCreatePrescriptionController', 'post']],
 
             // Control Panel - Medical Center
@@ -62,6 +63,8 @@ final class Router
             ['POST', '/500', ['Pulse\Controllers\ErrorController', 'error500']],
             ['GET', '/undefined', ['Pulse\Controllers\ErrorController', 'errorUndefined']],
             ['POST', '/undefined', ['Pulse\Controllers\ErrorController', 'errorUndefined']],
+            ['GET', '/lock', ['Pulse\Controllers\ErrorController', 'errorLock']],
+            ['POST', '/lock', ['Pulse\Controllers\ErrorController', 'errorLock']],
 
         ];
     }

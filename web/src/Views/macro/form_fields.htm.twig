@@ -25,6 +25,24 @@
     </div>
 {%- endmacro %}
 
+{% macro input_with_icon(name, icon, placeholder, value, type, tooltip) -%}
+    <div class="md-form">
+        <i class="fas {{ icon }} prefix mr-3"></i>
+        {% if (value == '' or value == null) %}
+            <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{ name }}"
+                   {{ required }} data-html="true" data-toggle="popover"
+                   data-trigger="focus"
+                   data-placement="right" title="{{ tooltip }}">
+        {% else %}
+            <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{ name }}"
+                  {{ required }} data-html="true" data-toggle="popover"
+                   data-trigger="focus"
+                   data-placement="right" title="{{ tooltip }}" value="{{ value }}">
+        {% endif %}
+        <label for="{{ name }}">{{ placeholder }}</label>
+    </div>
+{%- endmacro %}
+
 {% macro check_box(name, text) -%}
     <div>
         <div class="custom-control custom-checkbox">

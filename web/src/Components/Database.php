@@ -58,12 +58,18 @@ class Database
      * @param string $query
      * @param array $params
      * @return string
+     * @throws \Exception
      */
     private static function includePureSqlStatements(string $query, array $params): string
     {
         foreach ($params as $key => $value) {
             if ($value instanceof PureSqlStatement) {
-                $query = str_replace(":$key", $value->getStatement(), $query);
+                $replace_counter = substr_count($query, ":$key");
+                if ($replace_counter > 1){
+                    throw new \Exception("Pure SQL statement error. Replaces more than one instances.");
+                }
+                $count = 1;
+                $query = str_replace(":$key", $value->getStatement(), $query, $count);
             }
         }
         return $query;

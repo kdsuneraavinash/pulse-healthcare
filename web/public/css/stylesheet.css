@@ -9,10 +9,8 @@ html {
     overflow-y: scroll;
 }
 
-body {
-    background-image: url(http://getwallpapers.com/wallpaper/full/c/1/b/302104.jpg);
-    background-size: cover;
-    background-attachment: fixed;
+body{
+    background: white;
 }
 
 /*
@@ -101,3 +99,39 @@ footer {
 main {
     min-height: 100vh;
 }
+
+/* Remove Chrome Input Field's Unwanted Yellow Background Color */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+/*
+-----------------------------------------------
+Animated Navbar
+-----------------------------------------------
+ */
+
+/*
+@media (min-width: 800px) and (max-width: 850px) {
+    .navbar:not(.top-nav-collapse) {
+        background: #FFFFFF!important;
+    }
+}
+.navbar {
+    background-color:#FFFFFFAA;
+}
+
+.top-nav-collapse {
+    background-color: #FFFFFF;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        background-color: #FFFFFF;
+    }
+}
+*/

@@ -1,0 +1,18 @@
+{% import 'macro/errors.htm.twig' as errors %}
+
+{{ errors.errors_page_start(site) }}
+<div class="row content">
+    <div class="col-sm-5">
+        <div class="text-right">
+            <img src="https://dumielauxepices.net/sites/default/files/padlock-clipart-lock-icon-704791-3332632.jpg" class="img-fluid p-3"
+                 alt="Lock Image"/>
+        </div>
+    </div>
+    <div class="col-sm-7">
+        <h1 class="display-2 red-text font-weight-bold">LOCKED</h1>
+        <h5><strong>You don't have permissions complete that task.</strong></h5>
+        <p></p>
+        <a href="{{ site }}" class="btn btn-sm btn-outline-dark">Home Page</a>
+    </div>
+</div>
+{{ errors.errors_page_end(site) }}
