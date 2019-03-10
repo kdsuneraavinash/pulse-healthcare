@@ -2,7 +2,9 @@
 
 namespace Pulse\Controllers;
 
-use DB;
+
+//use DB;
+use Pulse\Components\Database;
 use Pulse\Components\Logger;
 
 class SearchDoctorController extends BaseController
@@ -16,8 +18,8 @@ class SearchDoctorController extends BaseController
     {
         $get_string = $this->httpHandler()->getParameter('key');
         $post_string = $this->httpHandler()->getParameter('key');
-        $db_query = DB::query("SELECT * FROM test;");
-        $db_session_query = DB::query("SELECT * FROM sessions;");
+        $db_query = Database::query("SELECT * FROM accounts;", array());
+        $db_session_query = Database::query("SELECT * FROM sessions;", array());
 
         $data = [
             'get' => $get_string,
@@ -31,17 +33,47 @@ class SearchDoctorController extends BaseController
 
     public function get()
     {
+
+
+
     }
 
 
-    public function post()
-    {
+    public function post(){
+
         $account = $this->httpHandler()->postParameter('account');
         $slmc_id = $this->httpHandler()->postParameter('slmc_id');
-        $email = $this->httpHandler()->postParameter('email');
-        $nic = $this->httpHandler()->postParameter('nic');
         $region = $this->httpHandler()->postParameter('region');
+        $doctor_details = 'doctor_details';
 
-        Logger::log($account . ' ' . $slmc_id . ' ' . $email . ' ' . $nic . ' ' . $region);
+        $this->searchDoctor($account,$slmc_id,$region,$doctor_details);
+
+
+
+        //$this->render('SearchDoctor.html.twig',$result, null);
+
+        Logger::log($account . ' ' . $slmc_id . ' ' . $region);
     }
+
+    
+    private function searchDoctor($account,$slmc_id,$region,$doctor_details){
+        $searchText = '+'.$slmc_id ." ". '+'.$account;
+        $result = Database::search($doctor_details,$slmc_id,$account,$searchText,
+            array("doctor_details"=>$doctor_details,"slmc_id"=>$slmc_id,"display_name"=>$account,(string)($searchText)=>$searchText));
+        if($result){
+            print_r($result);
+        }
+
+
+        if($result==null){
+            $searchText = $slmc_id ." ". $account;
+            $result = Database::search($doctor_details,$slmc_id,$account,$searchText,
+                array("doctor_details"=>$doctor_details,"slmc_id"=>$slmc_id,"display_name"=>$account,(string)($searchText)=>$searchText));
+            print_r($result);
+
+        }
+
+    }
+
+
 }
