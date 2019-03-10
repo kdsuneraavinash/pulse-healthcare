@@ -113,9 +113,9 @@ IFrameCards
 -----------------------------------------------
 */
 
-{% macro card_start(title) -%}
+{% macro card_start(title, color="primary") -%}
 <div class="card my-2 border border-dark">
-    <div class="card-header text-center primary-color-dark text-white">
+    <div class="card-header text-center {{ color }}-color-dark text-white">
         {{ title }}
     </div>
     <div class="card-body">
