@@ -6,6 +6,7 @@ namespace Pulse\Controllers;
 //use DB;
 use Pulse\Components\Database;
 use Pulse\Components\Logger;
+use Pulse\Models\MedicalCenter\MedicalCenter;
 
 class SearchDoctorController extends BaseController
 {
@@ -44,9 +45,10 @@ class SearchDoctorController extends BaseController
         $account = $this->httpHandler()->postParameter('account');
         $slmc_id = $this->httpHandler()->postParameter('slmc_id');
         $region = $this->httpHandler()->postParameter('region');
-        $doctor_details = 'doctor_details';
+        //$doctor_details = 'doctor_details';
+        $category =$this->httpHandler()->postParameter('doctor-category');
 
-        $this->searchDoctor($account,$slmc_id,$region,$doctor_details);
+        $this->search($slmc_id,$account,$region,$category);
 
 
 
@@ -55,22 +57,21 @@ class SearchDoctorController extends BaseController
         Logger::log($account . ' ' . $slmc_id . ' ' . $region);
     }
 
-    
-    private function searchDoctor($account,$slmc_id,$region,$doctor_details){
-        $searchText = '+'.$slmc_id ." ". '+'.$account;
-        $result = Database::search($doctor_details,$slmc_id,$account,$searchText,
-            array("doctor_details"=>$doctor_details,"slmc_id"=>$slmc_id,"display_name"=>$account,(string)($searchText)=>$searchText));
-        if($result){
-            print_r($result);
+
+
+    private function search($slmc_id,$account,$region,$category){
+        if($account!=null){
+            $name=explode(" ",$account);
+        }else{
+            $name = array();
         }
 
 
-        if($result==null){
-            $searchText = $slmc_id ." ". $account;
-            $result = Database::search($doctor_details,$slmc_id,$account,$searchText,
-                array("doctor_details"=>$doctor_details,"slmc_id"=>$slmc_id,"display_name"=>$account,(string)($searchText)=>$searchText));
-            print_r($result);
+        $ret = MedicalCenter::searchDoctor($slmc_id,$name,$region,$category);
 
+        if (! $ret){
+            $error = "No results found";
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/search/doctor?error=$error");
         }
 
     }

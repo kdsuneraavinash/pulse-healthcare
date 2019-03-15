@@ -220,7 +220,7 @@ class Database
     public static function search($table,$slmc_id,$display_name,$searchText,array $params){
 
         try {
-            $query = "SELECT slmc_id,display_name FROM $table WHERE MATCH(slmc_id,display_name)AGAINST('$searchText' IN BOOLEAN MODE)";
+            $query = "SELECT slmc_id,display_name FROM doctor_details WHERE MATCH(slmc_id,display_name)AGAINST(':searchText' IN BOOLEAN MODE)";
             $statement = self::getDatabase()->prepare($query);
             self::bindToStatement($statement,$params);
             $statement->execute();
@@ -248,15 +248,6 @@ class Database
 
 
     }
-
-
-
-
-
-
-
-
-
 
 }
 

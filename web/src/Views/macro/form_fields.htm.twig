@@ -33,3 +33,16 @@
         </div>
     </div>
 {%- endmacro %}
+
+{% macro dropdown_menu(name,placeholder,feilds) -%}
+
+    <select class="custom-select custom-select-sm" name="{{ name }}">
+        <option selected value="null">{{ placeholder }}</option>
+        {% for value,text in feilds -%}
+            <option value="{{ value }}">{{ text }}</option>
+        {%- endfor %}
+
+    </select>
+
+{%- endmacro %}
+
