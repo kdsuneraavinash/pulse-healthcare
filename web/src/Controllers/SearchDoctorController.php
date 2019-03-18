@@ -69,9 +69,18 @@ class SearchDoctorController extends BaseController
 
         $ret = MedicalCenter::searchDoctor($slmc_id,$name,$region,$category);
 
+        $size = sizeof($ret);
+
         if (! $ret){
             $error = "No results found";
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/search/doctor?error=$error");
+        }else{
+            try{
+                $this->render("SearchResults.html.twig",array('ret'=>$ret,'size'=>$size),$this->getCurrentAccount());
+            }catch (\Exception $e){
+                echo $e;
+            }
+
         }
 
     }

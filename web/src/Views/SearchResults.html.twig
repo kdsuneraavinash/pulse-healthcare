@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+
+
+<head>
+    {% include("part/header.htm.twig") %}
+    {% include("part/nojs.htm.twig") %}
+    <title>Search Results</title>
+</head>
+
+<body>
+<div class="bg-image"></div>
+
+<main class="mt-sm-5 py-5">
+    <div class="container">
+        <section class="wow fadeIn">
+
+                <h1>Search Results</h1>
+                <h4>{{ size }} results matching the keywords</h4>
+                {% for result in ret %}
+
+                    <div class="card text-white bg-info mb-3" style="max-width: 200rem;">
+                        <div class="card-header"><b>Dr. {{ result['display_name'] }}</b></div>
+                        <div class="card-body">
+                            <h5 class="card-title">Full name:   {{ result['full_name'] }}</h5>
+                            <h6 class="card-title">SLMC Registration:   {{ result['slmc_id'] }}</h6>
+                            <h6 class="card-title">NIC:   {{ result['nic'] }}</h6>
+                            <h6 class="card-title">Email:   {{ result['email'] }}</h6>
+                            <h6 class="card-title">Phone Number:   {{ result['phone_number'] }}</h6>
+                        </div>
+
+                    </div>
+
+
+                {% endfor %}
+
+
+        </section>
+
+    </div>
+</main>
+
+{% include "part/footer.htm.twig" %}
+{% include "part/scripts.htm.twig" %}
+
+</body>
+
+</html>

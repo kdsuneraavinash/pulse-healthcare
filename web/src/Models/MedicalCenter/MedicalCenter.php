@@ -216,7 +216,8 @@ class MedicalCenter extends Account implements IFavouritable
 
             $result=Database::query($query,array());
 
-            print_r($result);
+            //print_r($result);
+            return $result;
 
 
         }else if(($slmc_id!=null || ! empty($name)) && $category!="null"){
@@ -237,7 +238,8 @@ class MedicalCenter extends Account implements IFavouritable
             LIMIT 25";
 
             $result=Database::query($query,array());
-            print_r($result);
+            //print_r($result);
+            return $result;
         }else if(($slmc_id!= null || ! empty($name)) && $category=="null"){
             $query ="SELECT display_name,account_id,nic,full_name,slmc_id,
             email,phone_number,category,
@@ -255,12 +257,13 @@ class MedicalCenter extends Account implements IFavouritable
             LIMIT 25";
 
             $result=Database::query($query,array());
-            print_r($result);
+            //print_r($result);
+            return $result;
         }else{
             return false;
         }
 
-        return ($result != null);
+        //return ($result != null);
 
     }
 
