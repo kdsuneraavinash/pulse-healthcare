@@ -6,18 +6,18 @@ Sidebar
 
 {% macro sidebar_start(account_id, account_type, site) -%}
     <!--suppress HtmlUnknownTarget, HtmlFormInputWithoutLabel -->
-<div class="sidebar-fixed position-fixed p-2 bg-white z-depth-5">
+<div class="sidebar-fixed position-fixed p-2 bg-white">
     <div class="text-center">
-        <a class="logo-wrapper waves-effect p-3" href='{{ site }}'>
+        <a class="logo-wrapper waves-effect p-3 text-white" href='{{ site }}'>
             <h1 class="font-weight-bold mb-2 wow fadeIn" data-wow-delay="0.3s">
                 MediKit
             </h1>
         </a>
     </div>
 
-    <div class="text-center pb-4">
+    <div class="text-center pb-4 text-white">
         {% import 'macro/common.htm.twig' as common %}
-        {{ common.profile_button(account_id, account_type, site) }}
+        {{ common.profile_button(account_id, account_type, site, false) }}
     </div>
 
     <div>
@@ -39,9 +39,9 @@ Buttons in sidebar
 
 {% macro sidebar_button(text, id, icon, active) -%}
     {% if (active) %}
-        {% set additional_classes = "active rounded mb-0 z-depth-2 blue" %}
+        {% set additional_classes = "active rounded red" %}
     {% else %}
-        {% set additional_classes = "bg-light" %}
+        {% set additional_classes = "white" %}
     {% endif %}
     <button id="{{ id }}"
             class="list-group-item list-group-item-action waves-effect {{ additional_classes }} sidebar-button">

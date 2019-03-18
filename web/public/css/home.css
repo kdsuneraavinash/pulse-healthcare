@@ -1,58 +1,104 @@
+body {
+    overflow-x: hidden;
+    position: relative;
+}
+
+
+
 /*
 -----------------------------------------------
-Basic
+Custom Classes
 -----------------------------------------------
  */
 
-body {
-    background-color: #0e244a;
-    background-image: none;
+.full-screen {
+    height: 100vh;
+    width: 100vw;
 }
 
-.img-carousel {
+.vertical-center {
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+}
+
+.strict-full-screen {
     height: 100vh;
     width: 100vw;
     object-fit: cover;
 }
 
-a.active {
-    color: #aa1c78 !important;
+@media (max-width:768px) {
+    .hide-on-small{
+        display: none;
+    }
 }
 
-a.active:hover {
-    color: #aa1c78 !important;
+.icon{
+    width: 80px;
+    height: 80px;
+    margin: 30px;
 }
-
-.carousel-mask{
-    background: #3c4147;
-    opacity: 0.7;
-}
-
-.section {
-    min-height: 100vh;
-    width: 100vw;
-
-}
-
 
 
 /*
 -----------------------------------------------
-Services
+Home Page
 -----------------------------------------------
  */
 
-div.service {
-    box-shadow: inherit;
+.home-start-bg {
+    background-size: cover;
+    background-attachment: fixed;
 }
 
-/*
------------------------------------------------
-Features
------------------------------------------------
- */
+.home-start-sec {
+    background-size: cover;
+}
+
 
 #doctor-image {
-    background-image: url(http://www.chapelhillfamilydoctors.com.au/images/doctor-img2.png);
+    background-image: url(../images/doctor-2.png);
     background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.home-feature-doctor {
+    display: none;
+}
+
+.home-cta-register {
+    background-image: url(../images/svg/rose-petals.svg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Smaller than Tab */
+@media (min-width:768px) {
+    /* Show home page image only in large devices */
+    .home-start-sec {
+        background-image: url(../images/img-1.png);
+        height: 100vh;
+    }
+}
+
+
+.home-scroll-down {
+    padding-top: 70px;
+}
+
+/*
+-----------------------------------------------
+Google Map
+-----------------------------------------------
+*/
+
+.home-mapouter {
+    text-align: left;
+}
+
+.home-gmap_canvas {
+    overflow: hidden;
+    background: none !important;
 }

@@ -12,6 +12,6 @@ class HomePageController extends BaseController
     public function get()
     {
         $account = $this->getCurrentAccount();
-        $this->render('HomePage.html.twig', array(), $account);
+        $this->render('HomePage2.html.twig', array(), $account);
     }
 }

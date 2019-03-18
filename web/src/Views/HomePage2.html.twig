@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/home_utils.htm.twig' as home_utils %}
+
+<head>
+    {% include("part/header.htm.twig") %}
+    <link href="{{ site }}/css/home.css" rel="stylesheet">
+    <title>Medikit</title>
+</head>
+
+<body>
+{% include "part/navbar.htm.twig" with {"page": "Home"} %}
+
+<main>
+    <section class="full-screen home-start-bg text-dark text-center" id="home">
+        <div class="vertical-center row">
+            <div class="col-md-1"></div>
+            <div class="col-md-5 my-auto">
+                <div class="row">
+                    <div class="col-12 col-md-8 text-center">
+                        <h1 class="display-1 font-weight-bold" data-aos="fade-in">MediKit</h1>
+                        <p class="lead display-6 text-dark" data-aos="fade-in">
+                            Best & free platform to mange all your medical needs
+                        </p>
+                        <p class="mt-4 mb-3" data-aos="fade-up">
+                            {% if (account_id == null) %}
+                        <form method="get" action="{{ site }}/login">
+                            <button type="submit" class="btn btn-red waves-effect font-weight-bold">
+                                <i class="fas fa-user"></i> &nbsp; SIGN IN
+                            </button>
+                        </form>
+                        {% else %}
+                            <form method="get" action="{{ site }}/control/{{ account_type }}">
+                                <button type="submit" class="btn btn-pink waves-effect font-weight-bold">
+                                    <i class="fas fa-cogs"></i> &nbsp; CONTROL PANEL
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 home-start-sec" data-aos="fade-in">
+            </div>
+        </div>
+    </section>
+
+
+    <section class="p-5" id="features">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h1 class="font-weight-bold">Features</h1>
+                </div>
+            </div>
+
+            <div class="row text-center mt-5">
+                <div class="col-12 col-sm-4" data-aos="fade-in">
+                    <img alt="image" class="icon" src="images/svg/pills.svg" data-aos="zoom-in" data-aos-delay="300">
+                    <h3><strong>Feature One</strong></h3>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                        there live the blind texts</p>
+                </div>
+
+                <div class="col-12 col-sm-4 pt-4 pt-sm-0" data-aos="fade-in">
+                    <img alt="image" class="icon" src="images/svg/medicine.svg" data-aos="zoom-in" data-aos-delay="300">
+                    <h3><strong>Feature Two</strong></h3>
+                    <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language
+                        ocean. </p>
+                </div>
+
+                <div class="col-12 col-sm-4 pt-4 pt-sm-0" data-aos="fade-in">
+                    <img alt="image" class="icon" src="images/svg/medicine_bottle.svg" data-aos="zoom-in"
+                         data-aos-delay="300">
+                    <h3><strong>Feature Three</strong></h3>
+                    <p>A small river named Duden flows by their place and supplies it with the necessary
+                        regelialia. It is a paradisematic country,</p>
+                </div>
+            </div>
+
+            <div class="row mt-5 justify-content-center">
+                <div class="col-8">
+                    <img alt="image" class="img-fluid hide-on-small"
+                         src="https://cdn.jsdelivr.net/gh/froala/design-blocks@2.0.1/dist//imgs/draws/product-tour.svg"
+                         data-aos="fade-in">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if (account_id == null) %}
+    <section class="bg-white py-5 my-5 text-dark home-cta-register">
+        <div class="container my-5 align-items-center justify-content-center d-flex">
+            <div class="row justify-content-center text-center">
+                <div>
+                    <h1>Want to register a Medical Center?<br/>Register Now.</h1>
+                    <p class="mt-3"><a href="{{ site }}/register/medi" class="btn btn-dark">Register Now</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="bg-white py-5 section" id="services">
+        <div class="container">
+            <div class="row">
+                <div id="doctor-image" class="col-md-5 p-md-5 mt-5 mt-md-0" data-aos="fade-in">
+                </div>
+                <div class="col-md-7 py-4 py-md-5">
+                    <div class="mb-5" data-aos="fade-in" data-aos-delay="200">
+                        <div class="pl-md-5 ml-md-5">
+                            <span>About MediKit</span>
+                            <h2 class="mb-4" style="font-size: 28px;">Medical specialty concerned with the care of
+                                acutely ill hospitalized patients</h2>
+                        </div>
+                    </div>
+                    <div class="pl-md-5 ml-md-5 mb-5" data-aos="fade-up" data-aos-delay="400">
+                        <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it
+                            would have been rewritten a thousand times and everything that was left from its origin
+                            would be the word.</p>
+                        <div class="row mt-5 pt-2">
+
+                            {{ home_utils.feature_2("fas fa-medkit", "Primary Care",
+                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
+                            {{ home_utils.feature_2("fas fa-eye-dropper", "Lab Test",
+                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
+                            {{ home_utils.feature_2("fas fa-chart-area", "Symptom Check",
+                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
+                            {{ home_utils.feature_2("fas fa-heartbeat", "Heart Rate",
+                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section bg-white py-5" id="team">
+        <div class="container py-4">
+
+            <div class="row">
+                <div class="col-md-6 col-lg-12 d-flex justify-content-center p-4">
+                    <div class="col-md-8 text-center heading-section">
+                        <h1 class="mb-4 font-weight-bold">Our Team</h1>
+                        <div>Separated they live in. A small river named Duden flows by their place and supplies it with
+                            the
+                            necessary regelialia. It is a paradisematic country
+                        </div>
+                    </div>
+                </div>
+                {{ home_utils.about_us_card(site ~ "/images/team/sunera.jpg", "Sunera Avinash") }}
+                {{ home_utils.about_us_card(site ~ "/images/team/anju.jpg", "Anju Chamantha") }}
+                {{ home_utils.about_us_card(site ~ "/images/team/lahiru.jpg", "Lahiru Udayanga") }}
+            </div>
+        </div>
+    </section>
+
+    <section class="my-5" data-aos="fade-in" id="contact">
+        <div class="container">
+            <div class="row text-center justify-content-center">
+                <div class="col-12 col-md-8 col-lg-7">
+                    <h1 class="font-weight-bold">Contact Us</h1>
+                    <p class="lead">
+                        One day however a small line of blind text by the name of Lorem Ipsum decided
+                        to leave for the far World of Grammar.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row pt-4">
+                <div class="col-12 col-md-6">
+                    <div class="mapouter">
+                        <div class="home-gmap_canvas">
+                            <iframe width="540" height="300" id="home-gmap_canvas"
+                                    src="https://maps.google.com/maps?q=university%20of%20moratuwa&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 pt-5 pt-md-0">
+                    <form>
+                        <div class="row">
+                            <div class="col">
+                                <input type="email" class="form-control" placeholder="Enter email">
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col">
+                                <input type="email" class="form-control" placeholder="Subject">
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <textarea class="form-control" name="message" rows="3"
+                                          placeholder="How can we help?"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+{% include("part/footer.htm.twig") %}
+{% include("part/scripts.htm.twig") %}
+<script>
+    $('body').scrollspy({target: "#links", offset: 50});
+
+    $("#links a").on('click', function (event) {
+        if (this.hash !== "") {
+            event.preventDefault();
+            let hash = this.hash;
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top
+            }, 800, function () {
+                window.location.hash = hash;
+            });
+        }
+    });
+
+    // Wallpaper dynamic set
+    $(document).ready(function () {
+        var pattern = Trianglify({
+            width: window.innerWidth,
+            height: window.innerHeight,
+            cell_size: 100
+        });
+
+        dataUrl = pattern.canvas().toDataURL();
+        $(".home-start-bg").css("background-image", 'url(' + dataUrl + ')');
+        $(".home-cta-register").css("background-image", 'url(' + dataUrl + ')');
+    })
+</script>
+</body>
+
+</html>
