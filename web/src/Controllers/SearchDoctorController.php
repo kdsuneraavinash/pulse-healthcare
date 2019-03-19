@@ -2,12 +2,9 @@
 
 namespace Pulse\Controllers;
 
-
-//use DB;
-use Pulse\Components\Database;
 use Pulse\Components\Logger;
 use Pulse\Components\Utils;
-use Pulse\Models\Doctor\Doctor;
+use Pulse\Models\MedicalCenter\MedicalCenter;
 
 class SearchDoctorController extends BaseController
 {
@@ -19,18 +16,31 @@ class SearchDoctorController extends BaseController
     public function get()
     {
         $account = $this->getCurrentAccount();
-        $this->render('SearchDoctor.html.twig', array(), $account);
+        $this->render('iframe/SearchDoctor.html.twig', array(), $account);
     }
 
-    public function post(){
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function post()
+    {
+        $name = $this->httpHandler()->postParameter('account');
+        $slmc_id = $this->httpHandler()->postParameter('slmc_id');
+        // $region = $this->httpHandler()->postParameter('region');
 
-        $displayName = $this->httpHandler()->postParameter('display_name');
-        $slmcId = $this->httpHandler()->postParameter('slmc_id');
+        $category = $this->httpHandler()->postParameter('doctor-category');
 
-        $result = Doctor::searchDoctor($slmcId, $displayName);
+        $results = MedicalCenter::searchDoctor($slmc_id, $name, $category);
 
-        Logger::log(Utils::array2string($result));
+        if ($results == null || sizeof($results) == 0) {
+            // Empty results set
+            $error = "No results found";
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/search/doctor?error=$error");
+        } else {
+            $this->render("SearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
+                $this->getCurrentAccount());
+        }
     }
-
-
 }
