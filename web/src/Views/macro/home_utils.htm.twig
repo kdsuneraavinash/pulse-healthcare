@@ -1,9 +1,9 @@
 {% macro feature(icon, title, desc, dark) -%}
     {% if (dark) %}
         <!--suppress HtmlUnknownTarget -->
-        <div class="service col-md-3 d-flex align-self-stretch p-4 primary-color-dark text-white" data-aos="flip-left">
+        <div class="service col-md-3 d-flex align-self-stretch p-4 primary-color-dark text-white hvr-shrink" data-aos="flip-left">
     {% else %}
-        <div class="service col-md-3 d-flex align-self-stretch p-4 primary-color text-white" data-aos="flip-right">
+        <div class="service col-md-3 d-flex align-self-stretch p-4 primary-color text-white hvr-shrink" data-aos="flip-right">
     {% endif %}
 
     <div class="text-center">

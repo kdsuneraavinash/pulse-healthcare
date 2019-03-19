@@ -21,7 +21,7 @@ class MedicalCenterRegistrationController extends BaseController
         $fax = $this->httpHandler()->postParameter('fax');
         $phoneNumber = $this->httpHandler()->postParameter('phone_number');
         $address = $this->httpHandler()->postParameter('address');
-        $postalCode = $this->httpHandler()->postParameter('postal');
+        $postalCode = (int) $this->httpHandler()->postParameter('postal');
 
         if ($password == $passwordRetype) {
 

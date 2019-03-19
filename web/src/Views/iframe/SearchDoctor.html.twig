@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/control_panel/common.htm.twig' as control_panel %}
+{% import 'macro/form_fields.htm.twig' as form_fields %}
+
+{{ control_panel.iframe_start() }}
+
+<div class="container pt-2">
+
+    {{ control_panel.card_start("Search Doctor") }}
+    <form action="{{ site }}/search/doctor" class="needs-validation" method="post"
+          novalidate>
+
+        {% if (error != null) %}
+            <div class="alert alert-danger text-center mb-3" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {{ form_fields.input_with_label('account', 'Name', 'Name', username, 'text',
+            '8-20 characters long and can contain english letters or digits') }}
+        {{ form_fields.input_with_label('slmc_id', 'SLMC Reg ID', 'Doctor Registration ID in SLMC','', 'text') }}
+        {#{{ form_fields.input_with_label('region', 'Region', 'Region', region, 'text',
+            '8-30 characters long and can contain english letters or digits') }}#}
+        {{ form_fields.dropdown_menu('doctor-category','Any Category',{'opd':'OPD','abc':'ABC'}) }}
+
+
+        <hr/>
+
+        <div class="text-right">
+            <button class="btn btn-primary my-4" type="submit">Search</button>
+        </div>
+    </form>
+    {{ control_panel.card_end() }}
+
+</div>
+
+{{ control_panel.iframe_middle() }}
+
+{% if (account_password != null) %}
+    {% include 'modals/created_account.htm.twig' %}
+{% endif %}
+
+{{ control_panel.iframe_end() }}
+</html>

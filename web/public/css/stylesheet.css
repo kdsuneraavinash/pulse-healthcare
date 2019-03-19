@@ -9,10 +9,12 @@ html {
     overflow-y: scroll;
 }
 
-body {
-    background-image: url(http://getwallpapers.com/wallpaper/full/c/1/b/302104.jpg);
-    background-size: cover;
-    background-attachment: fixed;
+body{
+    background: white;
+}
+
+div{
+    background-repeat: no-repeat !important;
 }
 
 /*
@@ -54,13 +56,7 @@ Theme Gradient
  */
 
 .bg-gradient {
-    background: #0e244a; /* Old Browsers */
-    background: -moz-linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* FF3.6+ */
-    background: -webkit-linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* IE 10+ */
-    background: linear-gradient(45deg, #0e244a 0%, #1b386f 14%, #3f3f7c 21%, #2e4790 30%, #004797 55%, #004da5 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0e244a', endColorstr='#004da5', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+    background-size: cover;
 }
 
 /*
@@ -101,3 +97,39 @@ footer {
 main {
     min-height: 100vh;
 }
+
+/* Remove Chrome Input Field's Unwanted Yellow Background Color */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+/*
+-----------------------------------------------
+Animated Navbar
+-----------------------------------------------
+ */
+
+/*
+@media (min-width: 800px) and (max-width: 850px) {
+    .navbar:not(.top-nav-collapse) {
+        background: #FFFFFF!important;
+    }
+}
+.navbar {
+    background-color:#FFFFFFAA;
+}
+
+.top-nav-collapse {
+    background-color: #FFFFFF;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        background-color: #FFFFFF;
+    }
+}
+*/

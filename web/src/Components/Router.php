@@ -34,6 +34,13 @@ final class Router
             ['GET', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'getAdminVerifyMedicalCentersIframe']],
             ['POST', '/control/admin/verify', ['Pulse\Controllers\AdminControlPanelController', 'postAdminVerifyMedicalCentersIframe']],
 
+
+            // Control Panel - Doctor
+            ['GET', '/control/doctor', ['Pulse\Controllers\DoctorControlPanelController', 'get']],
+            ['GET', '/control/doctor/dashboard', ['Pulse\Controllers\DoctorControlPanelController', 'getDoctorDashboardIframe']],
+            ['GET','/control/doctor/create/prescription',['Pulse\Controllers\DoctorControlPanelController','getDoctorCreatePrescriptionIframe']],
+            ['POST', '/control/doctor/create/prescription', ['Pulse\Controllers\DoctorCreatePrescriptionController', 'post']],
+
             // Control Panel - Medical Center
             ['GET', '/control/med_center', ['Pulse\Controllers\MediControlPanelController', 'get']],
             ['GET', '/control/med_center/dashboard', ['Pulse\Controllers\MediControlPanelController', 'getMediDashboardIframe']],
@@ -41,12 +48,10 @@ final class Router
             ['POST', '/control/med_center/register/doctor', ['Pulse\Controllers\DoctorRegistrationController', 'post']],
             ['GET', '/control/med_center/register/patient', ['Pulse\Controllers\MediControlPanelController', 'getMediRegisterPatientIframe']],
             ['POST', '/control/med_center/register/patient', ['Pulse\Controllers\PatientRegistrationController', 'post']],
-            ['GET', '/control/med_center/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'show']],
             ['GET', '/control/med_center/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'get']],
             ['POST', '/control/med_center/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'post']],
 
             //Search pages
-            ['GET', '/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'show']],
             ['GET', '/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'get']],
             ['POST', '/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'post']],
 
@@ -59,6 +64,8 @@ final class Router
             ['POST', '/500', ['Pulse\Controllers\ErrorController', 'error500']],
             ['GET', '/undefined', ['Pulse\Controllers\ErrorController', 'errorUndefined']],
             ['POST', '/undefined', ['Pulse\Controllers\ErrorController', 'errorUndefined']],
+            ['GET', '/lock', ['Pulse\Controllers\ErrorController', 'errorLock']],
+            ['POST', '/lock', ['Pulse\Controllers\ErrorController', 'errorLock']],
 
         ];
     }

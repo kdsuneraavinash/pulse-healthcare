@@ -2,6 +2,7 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Models\Enums\VerificationState;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 
 class MediControlPanelController extends BaseController
@@ -33,7 +34,16 @@ class MediControlPanelController extends BaseController
      */
     public function getMediRegisterDoctorIframe()
     {
-        parent::loadOnlyIfUserIsOfType(MedicalCenter::class, 'iframe/MedicalCenterCreateDoctor.htm.twig');
+        $currentAccount = $this->getCurrentAccount();
+        if ($currentAccount instanceof MedicalCenter) {
+            if ($currentAccount->getVerificationState() == VerificationState::Verified){
+                $this->render('iframe/MedicalCenterCreateDoctor.htm.twig', array(), $currentAccount);
+            }else{
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/lock");
+            }
+        } else {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        }
     }
 
     /**
@@ -43,6 +53,15 @@ class MediControlPanelController extends BaseController
      */
     public function getMediRegisterPatientIframe()
     {
-        parent::loadOnlyIfUserIsOfType(MedicalCenter::class, 'iframe/MedicalCenterCreatePatient.htm.twig');
+        $currentAccount = $this->getCurrentAccount();
+        if ($currentAccount instanceof MedicalCenter) {
+            if ($currentAccount->getVerificationState() == VerificationState::Verified){
+                $this->render('iframe/MedicalCenterCreatePatient.htm.twig', array(), $currentAccount);
+            }else{
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/lock");
+            }
+        } else {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        }
     }
 }

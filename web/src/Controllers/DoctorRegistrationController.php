@@ -26,6 +26,8 @@ class DoctorRegistrationController extends BaseController
             $phoneNumber = $this->httpHandler()->postParameter('phone_number');
             $nic = $this->httpHandler()->postParameter('nic');
 
+            echo $fullName;
+
             if (!($fullName == null || $displayName == null || $category == null ||
                 $slmcId == null || $email == null ||
                 $phoneNumber == null || $nic == null)) {
