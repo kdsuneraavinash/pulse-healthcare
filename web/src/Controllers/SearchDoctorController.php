@@ -2,6 +2,7 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Components\Logger;
 use Pulse\Models\Doctor\DoctorDetails;
 
 class SearchDoctorController extends BaseController
@@ -11,7 +12,7 @@ class SearchDoctorController extends BaseController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function getIFrame()
     {
         $page = $this->httpHandler()->postParameter('page');
         $account = $this->getCurrentAccount();
@@ -23,7 +24,7 @@ class SearchDoctorController extends BaseController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function post()
+    public function getSearchResults()
     {
         $name = $this->httpHandler()->postParameter('full_name');
         $slmc_id = $this->httpHandler()->postParameter('slmc_id');
@@ -33,14 +34,29 @@ class SearchDoctorController extends BaseController
             $category = null;
         }
 
-        $results = DoctorDetails::searchDoctor($slmc_id, $name, $category);
+        return DoctorDetails::searchDoctor($slmc_id, $name, $category);
+    }
+
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function postIframe(){
+        $account = $this->getCurrentAccount();
+        if ($account == null){
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        }
+
+        $results = $this->getSearchResults();
 
         if ($results == null || sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/search/doctor?error=$error");
+            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
         } else {
-            $this->render("SearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
+            $this->render("iframe/SearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
                 $this->getCurrentAccount());
         }
     }

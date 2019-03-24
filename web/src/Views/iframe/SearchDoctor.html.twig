@@ -10,7 +10,7 @@
 <div class="container pt-2">
 
     {{ control_panel.card_start("Search Doctor") }}
-    <form action="{{ site }}/search/doctor" class="needs-validation" method="post"
+    <form action="{{ site }}/control/{{ account_type }}/search/doctor" class="needs-validation" method="post"
           novalidate>
 
         {% if (error != null) %}
@@ -22,8 +22,6 @@
         {{ form_fields.input_with_label('full_name', 'Name', 'Name', username, 'text') }}
         {{ form_fields.input_with_label('slmc_id', 'SLMC Reg ID', 'Doctor Registration ID in SLMC',null, 'text') }}
         {{ form_fields.dropdown_menu('doctor_category', 'Category', 'Any Category',{'opd':'OPD','abc':'ABC'}) }}
-
-        <hr/>
 
         <div class="text-right">
             <button class="btn btn-primary my-4" type="submit">Search</button>

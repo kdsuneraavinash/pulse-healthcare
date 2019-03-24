@@ -14,37 +14,54 @@
 {% include "part/navbar.htm.twig" with {"page": "Home"} %}
 
 <main>
-    <section style="height: 100vh; width: 100vw; margin-top: -45px;" id="home">
-        <div id="mainSectionCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000">
-            <ol class="carousel-indicators">
-                <li data-target="#mainSectionCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#mainSectionCarousel" data-slide-to="1"></li>
-                <li data-target="#mainSectionCarousel" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="view">
-                        <img class="d-block img-carousel"
-                             src="https://wallpaperplay.com/walls/full/0/4/3/13967.jpg"
-                             alt="First slide">
-                        <div class="mask carousel-mask"></div>
+    <section class="full-screen home-start-bg text-dark text-center" id="home">
+        <div class="vertical-center row">
+            <div class="col-md-1"></div>
+            <div class="col-md-5 my-auto">
+                <div class="row">
+                    <div class="col-12 col-md-8 text-center">
+                        <h1 class="display-1 font-weight-bold" data-aos="fade-in">MediKit</h1>
+                        <p class="lead display-6 text-dark" data-aos="fade-in">
+                            Best & free platform to mange all your medical needs
+                        </p>
+                        <p class="mt-4 mb-3" data-aos="fade-up">
+                            {% if (account_id == null) %}
+                        <form method="get" action="{{ site }}/login">
+                            <button type="submit" class="btn btn-red waves-effect font-weight-bold">
+                                <i class="fas fa-user"></i> &nbsp; SIGN IN
+                            </button>
+                        </form>
+                        {% else %}
+                            <form method="get" action="{{ site }}/control/{{ account_type }}">
+                                <button type="submit" class="btn btn-pink waves-effect font-weight-bold">
+                                    <i class="fas fa-cogs"></i> &nbsp; CONTROL PANEL
+                                </button>
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <div class="view">
-                        <img class="d-block img-carousel" src="https://wallpapercave.com/wp/wp1848640.jpg"
-                             alt="Second slide">
-                        <div class="mask carousel-mask"></div>
-                    </div>
-                    {{ home_utils.carousal_caption(account_id, account_type) }}
+            </div>
+
+            <div class="col-md-6 home-start-sec" data-aos="fade-in">
+            </div>
+        </div>
+    </section>
+
+
+    <section class="p-5" id="features">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h1 class="font-weight-bold">Features</h1>
                 </div>
-                <div class="carousel-item">
-                    <div class="view">
-                        <img class="d-block img-carousel"
-                             src="https://images.pexels.com/photos/1282308/pexels-photo-1282308.jpeg" alt="Third slide">
-                        <div class="mask carousel-mask"></div>
-                    </div>
-                    {{ home_utils.carousal_caption(account_id, account_type) }}
+            </div>
+
+            <div class="row text-center mt-5">
+                <div class="col-12 col-sm-4" data-aos="fade-in">
+                    <img alt="image" class="icon" src="images/svg/pills.svg" data-aos="zoom-in" data-aos-delay="300">
+                    <h3><strong>Feature One</strong></h3>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                        there live the blind texts</p>
                 </div>
 
                 <div class="col-12 col-sm-4 pt-4 pt-sm-0" data-aos="fade-in">
