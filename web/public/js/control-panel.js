@@ -19,14 +19,14 @@ $(".sidebar-button").click(
         if (iframe.attr("src") !== newLoc) {
             buttons.removeClass("active");
             buttons.removeClass("rounded");
-            buttons.removeClass("red");
-            buttons.removeClass("white");
-            buttons.addClass("white");
+            buttons.removeClass("black");
+            buttons.removeClass("light");
+            buttons.addClass("light");
 
             $(this).toggleClass("active");
             $(this).toggleClass("rounded");
-            $(this).toggleClass("red");
-            $(this).toggleClass("white");
+            $(this).toggleClass("black");
+            $(this).toggleClass("light");
 
             iframe.fadeOut(200,function(){
                 iframe.attr('src', newLoc );
@@ -46,10 +46,10 @@ $("#content-iframe").on('load', function() {
 // Wallpaper dynamic set
 $(document).ready(function () {
     let pattern = Trianglify({
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: Math.max(window.innerWidth, 500),
+        height: Math.max(window.innerHeight, 500),
         cell_size: 100,
-        x_colors: ['#8467bf', '#0d80c7', '#163fc7']
+        x_colors: ['#833ab4', '#fd1d1d', '#fcb045']
     });
 
     let dataUrl = pattern.canvas().toDataURL();

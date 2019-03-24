@@ -52,7 +52,7 @@ class SearchDoctorController extends BaseController
             Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
         } else {
-            $this->render("iframe/SearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
+            $this->render("iframe/DoctorSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
                 $this->getCurrentAccount());
         }
     }

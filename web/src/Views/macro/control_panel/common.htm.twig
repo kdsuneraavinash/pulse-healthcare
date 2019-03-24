@@ -39,9 +39,9 @@ Buttons in sidebar
 
 {% macro sidebar_button(text, id, icon, active) -%}
     {% if (active) %}
-        {% set additional_classes = "active rounded red" %}
+        {% set additional_classes = "active rounded black" %}
     {% else %}
-        {% set additional_classes = "white" %}
+        {% set additional_classes = "light" %}
     {% endif %}
     <button id="{{ id }}"
             class="list-group-item list-group-item-action waves-effect {{ additional_classes }} sidebar-button">

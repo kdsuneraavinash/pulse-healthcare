@@ -3,6 +3,8 @@
 namespace Pulse\Models\Doctor;
 
 use Pulse\Components\Database;
+use Pulse\Components\Logger;
+use Pulse\Components\Utils;
 use Pulse\Definitions;
 use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\IDetails;
@@ -90,7 +92,7 @@ class DoctorDetails implements IDetails
      * @param string|null $slmcId
      * @param string|null $name
      * @param string|null $category
-     * @return array|null
+     * @return array
      */
     public static function searchDoctor(?string $slmcId, ?string $name, ?string $category){
         /// TODO: Implement region search
@@ -104,9 +106,8 @@ class DoctorDetails implements IDetails
         }
 
         if ($slmcId != null) {
-            $slmcSQL = "if (slmc_id LIKE :slmc_id, :slmc_relevance, 0)";
+            $slmcSQL = "if(slmc_id LIKE :slmc_id, ". Definitions::SLMC_RELEVANCE_WEIGHT .", 0)";
             $sqlKeys["slmc_id"] = "%$slmcId%";
-            $sqlKeys["slmc_relevance"] = Definitions::SLMC_RELEVANCE_WEIGHT;
         }else{
             $slmcSQL = "0";
         }
@@ -116,11 +117,10 @@ class DoctorDetails implements IDetails
             for($i = 0; $i < sizeof($nameArr); $i++){
                 $key = $nameArr[$i];
                 $nameKeyStr = "name_part_$i";
-                $nameSQLi = "if (full_name LIKE :$nameKeyStr, :name_relevance, 0)";
+                $nameSQLi = "if(full_name LIKE :$nameKeyStr, ". Definitions::NAME_RELEVANCE_WEIGHT .", 0)";
                 $sqlKeys[$nameKeyStr] = "%$key%";
                 array_push($nameSQL, $nameSQLi);
             }
-            $sqlKeys["name_relevance"] = Definitions::NAME_RELEVANCE_WEIGHT;
             $nameSQL =implode(" + ", $nameSQL);
         }else{
             $nameSQL = "0";
@@ -149,7 +149,7 @@ class DoctorDetails implements IDetails
         }else{
             if ($slmcId == null && $name == null) {
                 // Nothing given
-                return null;
+                return array();
             }else{
                 /**
                  * SELECT *, ( (0) + (if (full_name LIKE '%Saman%', 4, 0) ))  as relevance

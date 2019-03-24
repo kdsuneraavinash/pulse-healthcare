@@ -13,7 +13,7 @@
         <h1>Search Results</h1>
         <h2 class="lead"><strong class="text-danger">{{ size }}</strong> results matching the <strong
                     class="text-danger">keywords</strong></h2>
-        <p>Go <a href="{{ site }}/control/{{ account_type }}/search/doctor">Back</a> to search page</p>
+        <p>Go <a href="{{ site }}/control/{{ account_type }}/search/patient">Back</a> to search page</p>
     </div>
 
     <section class="row">
@@ -24,11 +24,12 @@
                     <div class="card-header"><b>Relevance: {{ result['relevance'] }}</b></div>
                     <div class="card-body">
                         <div>
-                            <h3><a href="#" title="">Dr. {{ result['display_name'] }}</a></h3>
+                            <h3><a href="#" title="">{{ result['name'] }}</a></h3>
                             <hr/>
-                            <h6>SLMC Registration: {{ result['slmc_id'] }} </h6>
-                            <h6>Email: {{ result['email'] }} </h6>
-                            <h6>Phone Number: {{ result['phone_number'] }}</h6>
+                            <h6><strong>NIC:</strong> {{ result['nic'] }} </h6>
+                            <h6><strong>Email:</strong> {{ result['email'] }} </h6>
+                            <h6><strong>Phone Number:</strong> {{ result['phone_number'] }}</h6>
+                            <h6><strong>Address:</strong> {{ result['address'] }}</h6>
                         </div>
                     </div>
                 </article>
