@@ -4,7 +4,6 @@ namespace Pulse\Controllers;
 
 use Pulse\Components;
 use Pulse\Models\Doctor\Doctor;
-use Pulse\Models\Exceptions;
 
 class DoctorCreatePrescriptionController extends BaseController
 {

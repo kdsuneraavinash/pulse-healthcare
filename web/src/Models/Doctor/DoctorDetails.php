@@ -95,6 +95,7 @@ class DoctorDetails implements IDetails
     public static function searchDoctor(?string $slmcId, ?string $name, ?string $category){
         /// TODO: Implement region search
 
+        $sqlKeys = array();
         if ($name == null){
             $nameArr = array();
         }else{
@@ -103,19 +104,23 @@ class DoctorDetails implements IDetails
         }
 
         if ($slmcId != null) {
-            // if (slmc_id LIKE '%SLMC_MED_11%', 5, 0)
-            $slmcSQL = "if (slmc_id LIKE '%$slmcId%', ". Definitions::SLMC_RELEVENCE_WEIGHT .", 0)";
+            $slmcSQL = "if (slmc_id LIKE :slmc_id, :slmc_relevance, 0)";
+            $sqlKeys["slmc_id"] = "%$slmcId%";
+            $sqlKeys["slmc_relevance"] = Definitions::SLMC_RELEVANCE_WEIGHT;
         }else{
             $slmcSQL = "0";
         }
 
         if ($name != null) {
             $nameSQL = array();
-            foreach ($nameArr as $key) {
-                // if (full_name LIKE '%Sunera%', 4, 0)
-                $nameSQLi = "if (full_name LIKE '%$key%', ". Definitions::NAME_RELEVENCE_WEIGHT .", 0)";
+            for($i = 0; $i < sizeof($nameArr); $i++){
+                $key = $nameArr[$i];
+                $nameKeyStr = "name_part_$i";
+                $nameSQLi = "if (full_name LIKE :$nameKeyStr, :name_relevance, 0)";
+                $sqlKeys[$nameKeyStr] = "%$key%";
                 array_push($nameSQL, $nameSQLi);
             }
+            $sqlKeys["name_relevance"] = Definitions::NAME_RELEVANCE_WEIGHT;
             $nameSQL =implode(" + ", $nameSQL);
         }else{
             $nameSQL = "0";
@@ -126,11 +131,7 @@ class DoctorDetails implements IDetails
             // Only category given
             if ($slmcId == null && $name == null) {
                 // 25 doctors with given category
-                /**
-                 * SELECT * FROM doctor_details WHERE category = 'OPD' LIMIT 25
-                 */
-                $query = "SELECT * FROM doctor_details WHERE category = '$category' LIMIT 25";
-
+                $query = "SELECT * FROM doctor_details WHERE category = :category";
             } else {
                 /**
                  * SELECT *, ( (0) + (if (full_name LIKE '%Saman%', 4, 0) ))  as relevance FROM doctor_details
@@ -139,11 +140,12 @@ class DoctorDetails implements IDetails
                  */
                 $query = "SELECT *, ( ($slmcSQL) + ($nameSQL) )  as relevance
                           FROM doctor_details
-                          WHERE category = '$category'
+                          WHERE category = :category
                           HAVING relevance > 0
-                          ORDER BY relevance DESC
-                          LIMIT 25";
+                          ORDER BY relevance DESC";
             }
+            $sqlKeys["category"] = $category;
+
         }else{
             if ($slmcId == null && $name == null) {
                 // Nothing given
@@ -156,12 +158,11 @@ class DoctorDetails implements IDetails
                 $query = "SELECT *, ( ($slmcSQL) + ($nameSQL) )  as relevance
                           FROM doctor_details
                           HAVING relevance > 0
-                          ORDER BY relevance DESC
-                          LIMIT 25";
+                          ORDER BY relevance DESC";
             }
         }
 
-        $result = Database::query($query, array());
+        $result = Database::query($query, $sqlKeys);
         return $result;
     }
 

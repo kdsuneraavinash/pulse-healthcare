@@ -14,15 +14,11 @@ class SearchDoctorController extends BaseController
      */
     public function getIFrame()
     {
-        $page = $this->httpHandler()->postParameter('page');
         $account = $this->getCurrentAccount();
         $this->render('iframe/SearchDoctor.html.twig', array(), $account);
     }
 
     /**
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function getSearchResults()
     {

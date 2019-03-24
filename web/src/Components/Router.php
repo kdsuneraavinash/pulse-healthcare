@@ -15,10 +15,6 @@ final class Router
             ['GET', '/', ['Pulse\Controllers\HomePageController', 'get']],
             ['GET', '/profile', ['Pulse\Controllers\ProfilePageController', 'get']],
 
-            // Test pages
-            ['GET', '/test', ['Pulse\Controllers\Test\TestController', 'show']],
-            ['POST', '/test', ['Pulse\Controllers\Test\TestController', 'show']],
-
             // Login handlers
             ['GET', '/login', ['Pulse\Controllers\LoginController', 'get']],
             ['POST', '/login', ['Pulse\Controllers\LoginController', 'post']],
