@@ -20,5 +20,6 @@ class Definitions
 
     const SLMC_RELEVANCE_WEIGHT = 5;
     const NAME_RELEVANCE_WEIGHT = 4;
-     const REGION_RELEVENCE_WEIGHT = 3;
+    const REGION_RELEVENCE_WEIGHT = 3;
+    const ADDRESS_RELEVANCE_WEIGHT = 3;
 }
