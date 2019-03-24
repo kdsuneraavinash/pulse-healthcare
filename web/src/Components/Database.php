@@ -78,7 +78,6 @@ class Database
     private static function bindToStatement(\PDOStatement $statement, array $params)
     {
         foreach ($params as $key => $value) {
-            Logger::log($key);
             if ($value instanceof PureSqlStatement) {
                 continue;
             }

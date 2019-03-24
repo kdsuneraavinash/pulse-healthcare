@@ -3,8 +3,8 @@
 namespace Pulse\Controllers;
 
 use Pulse\Components\Logger;
-use Pulse\Components\Utils;
-use Pulse\Models\MedicalCenter\MedicalCenter;
+use Pulse\Models\Doctor\Doctor;
+use Pulse\Models\Doctor\DoctorDetails;
 
 class SearchDoctorController extends BaseController
 {
@@ -15,6 +15,7 @@ class SearchDoctorController extends BaseController
      */
     public function get()
     {
+        $page = $this->httpHandler()->postParameter('page');
         $account = $this->getCurrentAccount();
         $this->render('iframe/SearchDoctor.html.twig', array(), $account);
     }
@@ -28,13 +29,19 @@ class SearchDoctorController extends BaseController
     {
         $name = $this->httpHandler()->postParameter('account');
         $slmc_id = $this->httpHandler()->postParameter('slmc_id');
-        // $region = $this->httpHandler()->postParameter('region');
-
         $category = $this->httpHandler()->postParameter('doctor-category');
 
-        $results = MedicalCenter::searchDoctor($slmc_id, $name, $category);
+        if ($category == 'NONE'){
+            $category = null;
+        }
 
-        if ($results == null || sizeof($results) == 0) {
+        $results = DoctorDetails::searchDoctor($slmc_id, $name, $category);
+
+        if ($results == null){
+            // Nothing entered
+            $error = "Empty Fields";
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/search/doctor?error=$error");
+        } else if (sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/search/doctor?error=$error");

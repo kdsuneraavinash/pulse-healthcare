@@ -4,6 +4,7 @@ namespace Pulse\Models\Doctor;
 
 use Pulse\Components\Database;
 use Pulse\Components\Utils;
+use Pulse\Definitions;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
@@ -114,26 +115,5 @@ class Doctor extends Account implements ICreatable
     public function getDefaultPassword(): string
     {
         return $this->defaultPassword;
-    }
-
-    public static function searchDoctor(?string $slmcId, ?string $displayName): array
-    {
-        $slmcId = ($slmcId == null) ? "" : $slmcId;
-        $displayName = ($displayName == null) ? "" : $displayName;
-
-        $query = Doctor::searchDoctorInDatabase("'+$slmcId +$displayName'");
-        if ($query == null) {
-            return array();
-        }
-
-        return $query;
-    }
-
-    private static function searchDoctorInDatabase(string $param): ?array
-    {
-        return Database::query(
-            "SELECT * FROM doctor_details WHERE MATCH(slmc_id, display_name) AGAINST(:param IN BOOLEAN MODE)",
-            array("param" => $param)
-        );
     }
 }
