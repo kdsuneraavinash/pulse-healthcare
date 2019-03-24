@@ -17,4 +17,8 @@ class Definitions
     const COOKIE_VALID_PERIOD_DAYS = 7;
     const SESSION_USER = 'session_user';
     const SESSION_KEY = 'session_key';
+
+    const SLMC_RELEVENCE_WEIGHT = 5;
+    const NAME_RELEVENCE_WEIGHT = 4;
+     const REGION_RELEVENCE_WEIGHT = 3;
 }

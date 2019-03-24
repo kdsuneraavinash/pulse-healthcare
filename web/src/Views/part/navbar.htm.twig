@@ -24,9 +24,9 @@
 
             <div class="collapse navbar-collapse" id="navbar-content">
                 {% if (page == "Home") %}
-                    <ul class="navbar-nav mr-auto" id="links">
+                    <ul class="navbar-nav mx-auto text-center" id="links">
 
-                        {% set nav_links = [["#home", 'Home'], ['#services', 'Services'], ['#team', 'Our Team']] %}
+                        {% set nav_links = [["#home", 'Home'], ['#services', 'Services'], ['#team', 'Our Team'], ['#contact', 'Contact Us']] %}
 
                         {% for item in nav_links %}
                             {% set href = item[0] %}

@@ -51,3 +51,24 @@
         </div>
     </div>
 {%- endmacro %}
+
+{% macro dropdown_menu(name, label, placeholder, feilds) -%}
+
+    <div class="form-group row">
+        <label for="{{ name }}" class="col-lg-3 col-form-label">{{ label }}
+        </label>
+        <div class="col-lg-9">
+            <select id="{{ name }}" class="custom-select custom-select" name="{{ name }}">
+                <option selected value="NONE">{{ placeholder }}</option>
+                {% for value,text in feilds -%}
+                    <option value="{{ value }}">{{ text }}</option>
+                {%- endfor %}
+
+            </select>
+        </div>
+    </div>
+
+
+
+{%- endmacro %}
+

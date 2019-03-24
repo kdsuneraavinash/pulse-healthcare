@@ -3,6 +3,7 @@
 namespace Pulse\Models\Doctor;
 
 use Pulse\Components\Database;
+use Pulse\Definitions;
 use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\IDetails;
 
@@ -83,6 +84,85 @@ class DoctorDetails implements IDetails
             'email' => $this->getEmail(),
             'phone_number' => $this->getPhoneNumber(),
         ));
+    }
+
+    /**
+     * @param string|null $slmcId
+     * @param string|null $name
+     * @param string|null $category
+     * @return array|null
+     */
+    public static function searchDoctor(?string $slmcId, ?string $name, ?string $category){
+        /// TODO: Implement region search
+
+        if ($name == null){
+            $nameArr = array();
+        }else{
+            // Split by space
+            $nameArr = explode(" ", $name);
+        }
+
+        if ($slmcId != null) {
+            // if (slmc_id LIKE '%SLMC_MED_11%', 5, 0)
+            $slmcSQL = "if (slmc_id LIKE '%$slmcId%', ". Definitions::SLMC_RELEVENCE_WEIGHT .", 0)";
+        }else{
+            $slmcSQL = "0";
+        }
+
+        if ($name != null) {
+            $nameSQL = array();
+            foreach ($nameArr as $key) {
+                // if (full_name LIKE '%Sunera%', 4, 0)
+                $nameSQLi = "if (full_name LIKE '%$key%', ". Definitions::NAME_RELEVENCE_WEIGHT .", 0)";
+                array_push($nameSQL, $nameSQLi);
+            }
+            $nameSQL =implode(" + ", $nameSQL);
+        }else{
+            $nameSQL = "0";
+        }
+
+        if ($category != null){
+
+            // Only category given
+            if ($slmcId == null && $name == null) {
+                // 25 doctors with given category
+                /**
+                 * SELECT * FROM doctor_details WHERE category = 'OPD' LIMIT 25
+                 */
+                $query = "SELECT * FROM doctor_details WHERE category = '$category' LIMIT 25";
+
+            } else {
+                /**
+                 * SELECT *, ( (0) + (if (full_name LIKE '%Saman%', 4, 0) ))  as relevance FROM doctor_details
+                 * WHERE category = 'OPD' HAVING relevance > 0 ORDER BY relevance DESC
+                 * LIMIT 25
+                 */
+                $query = "SELECT *, ( ($slmcSQL) + ($nameSQL) )  as relevance
+                          FROM doctor_details
+                          WHERE category = '$category'
+                          HAVING relevance > 0
+                          ORDER BY relevance DESC
+                          LIMIT 25";
+            }
+        }else{
+            if ($slmcId == null && $name == null) {
+                // Nothing given
+                return null;
+            }else{
+                /**
+                 * SELECT *, ( (0) + (if (full_name LIKE '%Saman%', 4, 0) ))  as relevance
+                 * FROM doctor_details HAVING relevance > 0 ORDER BY relevance DESC LIMIT 25
+                 */
+                $query = "SELECT *, ( ($slmcSQL) + ($nameSQL) )  as relevance
+                          FROM doctor_details
+                          HAVING relevance > 0
+                          ORDER BY relevance DESC
+                          LIMIT 25";
+            }
+        }
+
+        $result = Database::query($query, array());
+        return $result;
     }
 
     /*

@@ -143,11 +143,6 @@ class MedicalCenter extends Account implements IFavouritable
         return Doctor::register($doctorDetails);
     }
 
-    public function searchDoctor()
-    {
-        // TODO: implementation of searchDoctor() function
-    }
-
     public function searchPatient()
     {
         // TODO: implementation of searchPatient() function
@@ -168,4 +163,6 @@ class MedicalCenter extends Account implements IFavouritable
     {
         return $this->verificationState;
     }
+
+
 }
