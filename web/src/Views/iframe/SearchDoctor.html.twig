@@ -19,11 +19,9 @@
             </div>
         {% endif %}
 
-        {{ form_fields.input_with_label('account', 'Name', 'Name', username, 'text',
-            '8-20 characters long and can contain english letters or digits') }}
+        {{ form_fields.input_with_label('full_name', 'Name', 'Name', username, 'text') }}
         {{ form_fields.input_with_label('slmc_id', 'SLMC Reg ID', 'Doctor Registration ID in SLMC',null, 'text') }}
-        {{ form_fields.dropdown_menu('Category', 'doctor-category','Any Category',{'opd':'OPD','abc':'ABC'}) }}
-
+        {{ form_fields.dropdown_menu('doctor_category', 'Category', 'Any Category',{'opd':'OPD','abc':'ABC'}) }}
 
         <hr/>
 
@@ -40,6 +38,6 @@
 {% if (account_password != null) %}
     {% include 'modals/created_account.htm.twig' %}
 {% endif %}
-
+<script src="{{ site }}/js/search.js"></script>
 {{ control_panel.iframe_end() }}
 </html>

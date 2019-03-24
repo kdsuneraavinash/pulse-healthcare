@@ -2,8 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Components\Logger;
-use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
 
 class SearchDoctorController extends BaseController
@@ -27,21 +25,17 @@ class SearchDoctorController extends BaseController
      */
     public function post()
     {
-        $name = $this->httpHandler()->postParameter('account');
+        $name = $this->httpHandler()->postParameter('full_name');
         $slmc_id = $this->httpHandler()->postParameter('slmc_id');
-        $category = $this->httpHandler()->postParameter('doctor-category');
+        $category = $this->httpHandler()->postParameter('doctor_category');
 
-        if ($category == 'NONE'){
+        if ($category == 'NONE') {
             $category = null;
         }
 
         $results = DoctorDetails::searchDoctor($slmc_id, $name, $category);
 
-        if ($results == null){
-            // Nothing entered
-            $error = "Empty Fields";
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/search/doctor?error=$error");
-        } else if (sizeof($results) == 0) {
+        if ($results == null || sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/search/doctor?error=$error");
