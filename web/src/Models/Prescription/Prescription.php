@@ -1,28 +1,57 @@
 <?php
 
 namespace Pulse\Models\Prescription;
+
 use Pulse\Components\Database;
+use Pulse\Models\Prescription\MediCard;
 
-class Prescription{
-    private $prescriptionID;
-    private $mediCards=array();
+class Prescription
+{
+    private $patientNIC;
+    private $date;
+    private $mediCards = array();
 
-
-    public function __construct($prescriptionID, array $mediCards)
+    public function __construct($patientNIC, $date, array $mediCards)
     {
-        $this->prescriptionID = $prescriptionID;
+        $this->patientNIC = $patientNIC;
+        $this->date = $date;
         $this->mediCards = $mediCards;
     }
+
 
     public function saveInDatabase()
     {
         Database::insert('prescriptions', array(
-            'name' => $this->getName(),
-            'dose' => $this->getDose(),
-            'frequency' => $this->getFrequency(),
-            'time' => $this->getTime(),
-            'comment' => $this->getComment(),
+            'patientNIC' => $this->getPatientNIC(),
+            'date' => $this->getDate(),
         ));
+
+        $this->saveMediCardsInDatabase();
+
+    }
+
+    public function saveMediCardsInDatabase(){
+        $mediCardObjects=$this->getMediCards();
+
+        foreach($mediCardObjects as $mediCard){
+            $mediCard->saveInDatabase();
+
+        };
+    }
+
+    public function getPatientNIC()
+    {
+        return $this->patientNIC;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function getMediCards(): array
+    {
+        return $this->mediCards;
     }
 
 
