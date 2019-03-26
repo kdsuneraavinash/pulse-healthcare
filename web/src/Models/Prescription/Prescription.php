@@ -1,71 +1,54 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: Anju Chamantha
- * Date: 3/7/2019
- * Time: 10:53 AM
- */
 
-class Prescription{
-    private $prescriptionID;
-    private $typeOfIllness;
-    private $overallComments =null;
-    private $mediCards=array();
+namespace Pulse\Models\Prescription;
 
-    /**
-     * Prescription constructor.
-     * @param $prescriptionID
-     * @param $typeOfIllness
-     */
-    public function __construct($prescriptionID, $typeOfIllness)
+use Pulse\Components\Database;
+use Pulse\Models\Prescription\MediCard;
+
+class Prescription
+{
+    private $patientNIC;
+    private $date;
+    private $mediCards = array();
+
+    public function __construct($patientNIC, $date, array $mediCards)
     {
-        $this->prescriptionID = $prescriptionID;
-        $this->typeOfIllness = $typeOfIllness;
-    }
-
-    /**
-     * @param null $overallComments
-     */
-    public function setOverallComments($overallComments): void
-    {
-        $this->overallComments = $overallComments;
-    }
-
-    /**
-     * @param array $mediCards
-     */
-    public function setMediCards(array $mediCards): void
-    {
+        $this->patientNIC = $patientNIC;
+        $this->date = $date;
         $this->mediCards = $mediCards;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPrescriptionID()
+
+    public function saveInDatabase()
     {
-        return $this->prescriptionID;
+        Database::insert('prescriptions', array(
+            'patientNIC' => $this->getPatientNIC(),
+            'date' => $this->getDate(),
+        ));
+
+        $this->saveMediCardsInDatabase();
+
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTypeOfIllness()
-    {
-        return $this->typeOfIllness;
+    public function saveMediCardsInDatabase(){
+        $mediCardObjects=$this->getMediCards();
+
+        foreach($mediCardObjects as $mediCard){
+            $mediCard->saveInDatabase();
+
+        };
     }
 
-    /**
-     * @return null
-     */
-    public function getOverallComments()
+    public function getPatientNIC()
     {
-        return $this->overallComments;
+        return $this->patientNIC;
     }
 
-    /**
-     * @return array
-     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
     public function getMediCards(): array
     {
         return $this->mediCards;

@@ -1,51 +1,45 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: Anju Chamantha
- * Date: 3/8/2019
- * Time: 10:07 PM
- */
 
-class MediCard{
-    private $mediCardID;
-    private $medicine;
+namespace Pulse\Models\Prescription;
+use Pulse\Components\Database;
+
+class MediCard
+{
+    private $name;
     private $dose;
-    private $quantity;
     private $frequency;
     PRIVATE $time;
     private $comment;
 
     /**
- * MediCard constructor.
- * @param $mediCardID
- */public function __construct($mediCardID)
-{
-    $this->mediCardID = $mediCardID;
-}
+     * MediCard constructor
+     */
+    public function __construct($name, $dose, $frequency, $time, $comment)
+    {
+        $this->name = $name;
+        $this->dose = $dose;
+        $this->frequency = $frequency;
+        $this->time = $time;
+        $this->comment = $comment;
+    }
+
+    public function saveInDatabase()
+    {
+        Database::insert('medi_cards', array(
+            'name' => $this->getName(),
+            'dose' => $this->getDose(),
+            'frequency' => $this->getFrequency(),
+            'time' => $this->getTime(),
+            'comment' => $this->getComment(),
+        ));
+    }
 
     /**
      * @return mixed
      */
-    public function getMediCardID()
+    public function getName()
     {
-        return $this->mediCardID;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getMedicine()
-    {
-        return $this->medicine;
-    }
-
-    /**
-     * @param mixed $medicine
-     */
-    public function setMedicine($medicine): void
-    {
-        $this->medicine = $medicine;
+        return $this->name;
     }
 
     /**
@@ -57,43 +51,11 @@ class MediCard{
     }
 
     /**
-     * @param mixed $dose
-     */
-    public function setDose($dose): void
-    {
-        $this->dose = $dose;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * @param mixed $quantity
-     */
-    public function setQuantity($quantity): void
-    {
-        $this->quantity = $quantity;
-    }
-
-    /**
      * @return mixed
      */
     public function getFrequency()
     {
         return $this->frequency;
-    }
-
-    /**
-     * @param mixed $frequency
-     */
-    public function setFrequency($frequency): void
-    {
-        $this->frequency = $frequency;
     }
 
     /**
@@ -105,30 +67,11 @@ class MediCard{
     }
 
     /**
-     * @param mixed $time
-     */
-    public function setTime($time): void
-    {
-        $this->time = $time;
-    }
-
-    /**
      * @return mixed
      */
     public function getComment()
     {
         return $this->comment;
     }
-
-    /**
-     * @param mixed $comment
-     */
-    public function setComment($comment): void
-    {
-        $this->comment = $comment;
-    }
-
-
-
 
 }
