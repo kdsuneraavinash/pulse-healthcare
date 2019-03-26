@@ -155,7 +155,7 @@ UNLOCK TABLES;
 -- Table structure for table `medi_cards`
 --
 
-DROP TABLE IF EXISTS `medi_cards`;
+DROP TABLE IF EXISTS medications;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `medi_cards` (
@@ -176,9 +176,9 @@ CREATE TABLE `medi_cards` (
 -- Dumping data for table `medi_cards`
 --
 
-LOCK TABLES `medi_cards` WRITE;
-/*!40000 ALTER TABLE `medi_cards` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medi_cards` ENABLE KEYS */;
+LOCK TABLES medications WRITE;
+/*!40000 ALTER TABLE medications DISABLE KEYS */;
+/*!40000 ALTER TABLE medications ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

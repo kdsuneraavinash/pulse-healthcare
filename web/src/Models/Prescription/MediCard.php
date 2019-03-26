@@ -25,13 +25,14 @@ class MediCard
 
     public function saveInDatabase()
     {
-        Database::insert('medi_cards', array(
-            'name' => $this->getName(),
-            'dose' => $this->getDose(),
-            'frequency' => $this->getFrequency(),
-            'time' => $this->getTime(),
-            'comment' => $this->getComment(),
-        ));
+        // TODO: Fix these
+//        Database::insert('medi_cards', array(
+//            'name' => $this->getName(),
+//            'dose' => $this->getDose(),
+//            'frequency' => $this->getFrequency(),
+//            'time' => $this->getTime(),
+//            'comment' => $this->getComment(),
+//        ));
     }
 
     /**

@@ -21,12 +21,13 @@ class Prescription
 
     public function saveInDatabase()
     {
-        Database::insert('prescriptions', array(
-            'patientNIC' => $this->getPatientNIC(),
-            'date' => $this->getDate(),
-        ));
-
-        $this->saveMediCardsInDatabase();
+        // TODO: Fix these to new table
+//        Database::insert('prescriptions', array(
+//            'patientNIC' => $this->getPatientNIC(),
+//            'date' => $this->getDate(),
+//        ));
+//
+//        $this->saveMediCardsInDatabase();
 
     }
 
