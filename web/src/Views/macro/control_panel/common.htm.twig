@@ -119,7 +119,7 @@ IFrame
             x_colors: ['#833ab4', '#fd1d1d', '#fcb045']
         });
         dataUrl = pattern.canvas().toDataURL();
-        $(".card-header-text").css("background-image", 'url(' + dataUrl + ')');
+        $(".card-header-text").not(".ignore-triangle").css("background-image", 'url(' + dataUrl + ')');
     });
 
 </script>

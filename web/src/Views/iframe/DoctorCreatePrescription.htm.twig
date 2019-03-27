@@ -13,6 +13,13 @@
 
     {{ control_panel.card_start("Session Details") }}
     <div class="p-3">
+
+        {% if (error != null) %}
+            <div class="alert alert-danger text-center mb-3" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
         <div class="form-group row">
             <label for="id" class="col-lg-3 col-form-label">Patient ID</label>
             <input id="id" type="text" class="col-lg-9 form-control mb-2" placeholder="PATIENT_ID">
@@ -28,7 +35,7 @@
         <div v-for="(medCard,index) in medCards">
 
 
-        {{ control_panel.card_start("Medicine Prescription #" ~ "{{ index+1 }}") }}
+            {{ control_panel.card_start("Medicine Prescription #" ~ "{{ index+1 }}", "ignore-triangle primary") }}
             <div class="medicine-form p-3" style="margin:auto">
                 <div class="form-group row">
                     <label for="medName" class="col-lg-3 col-form-label">Name </label>
@@ -78,11 +85,63 @@
 
 {{ control_panel.iframe_middle() }}
 
+{% if (prescription != null) %}
+    {% include 'modals/prescription_saved.htm.twig' %}
+{% endif %}
+
 {% include("modals/ajax_loading.htm.twig") %}
 
 <!-- Vue to clone medCards-->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
-<script src="{{ site }}/js/create-prescription.js"></script>
+<script>
+    let medVue = new Vue(
+        {
+            el: '.med',
+            data: {
+                medCards: [
+                    {
+                        name: '',
+                        dose: '',
+                        frequency: '',
+                        time: '',
+                        comment: ''
+                    }
+                ]
+            },
+            methods: {
+                addMedCard() {
+                    this.medCards.push({
+                        name: '',
+                        dose: '',
+                        frequency: '',
+                        time: '',
+                        comment: ''
+                    });
+                },
+                removeMedCard(index) {
+                    this.medCards.splice(index, 1)
+                },
+            }
+        }
+    );
+
+    function submitForm() {
+        $.ajax({
+            type: "POST",
+            url: '/control/doctor/create/prescription',
+            data: {
+                patient: $("#id").val(),
+                medications: medVue.medCards,
+            },
+            dataType: 'html',
+            success: function (data) {
+                window.location = data;
+            }
+        });
+    }
+
+</script>
+
 
 {{ control_panel.iframe_end() }}
 </html>

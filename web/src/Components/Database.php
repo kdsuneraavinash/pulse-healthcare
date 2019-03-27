@@ -65,7 +65,7 @@ class Database
         foreach ($params as $key => $value) {
             if ($value instanceof PureSqlStatement) {
                 $replace_counter = substr_count($query, ":$key");
-                if ($replace_counter > 1){
+                if ($replace_counter > 1) {
                     throw new \Exception("Pure SQL statement error. Replaces more than one instances.");
                 }
                 $count = 1;
@@ -173,6 +173,15 @@ class Database
             self::handleErrors($e);
             exit;
         }
+    }
+
+    /**
+     * Returns last inserted record id
+     * @return string|null
+     */
+    public static function lastInsertedId(): ?string
+    {
+        return self::getDatabase()->lastInsertId();
     }
 
     /**
