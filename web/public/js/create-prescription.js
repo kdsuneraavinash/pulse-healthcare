@@ -2,7 +2,6 @@ let medVue = new Vue(
     {
         el: '.med',
         data: {
-
             medCards: [
                 {
                     name: '',
@@ -31,17 +30,17 @@ let medVue = new Vue(
 );
 
 function submitForm() {
-    let data = {
-        patientNIC: document.getElementById('patientNIC').value,
-        date: document.getElementById('date').value,
-        medCards: medVue.medCards,
-    };
-
     $.ajax({
         type: "POST",
         url: '{{ site }}/control/doctor/create/prescription',
-        data: {data: data},
-        dataType: 'html'
+        data: {
+            patient: $("#id").val(),
+            date: $("#date").val(),
+            medications: medVue.medCards,
+        },
+        dataType: 'html',
+        success: function () {
 
+        }
     });
 }

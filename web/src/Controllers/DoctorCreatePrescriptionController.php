@@ -18,10 +18,9 @@ class DoctorCreatePrescriptionController extends BaseController
         if ($currentAccount instanceof Doctor) {
             $data = $this->httpHandler()->postParameter('data');
 
-            $patientNIC = $data['patientNIC'];
+            $patientNIC = $data['nic'];
             $date = $data['date'];
             $medCards = $data['medCards'];
-
 
             Components\Logger::log(Utils::array2string($data));
 
