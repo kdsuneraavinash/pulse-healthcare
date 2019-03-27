@@ -38,17 +38,12 @@ $(".sidebar-button").click(
     }
 );
 
-
-$("#content-iframe").on('load', function() {
-    console.log("Loaded");
-});
-
 // Wallpaper dynamic set
 $(document).ready(function () {
     let pattern = Trianglify({
-        width: Math.max(window.innerWidth, 500),
-        height: Math.max(window.innerHeight, 500),
-        cell_size: 100,
+        width: 2000,
+        height: 2000,
+        cell_size: 150,
         x_colors: ['#833ab4', '#fd1d1d', '#fcb045']
     });
 

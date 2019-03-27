@@ -21,10 +21,6 @@
             <label for="date" class="col-lg-3 col-form-label">Date </label>
             <input id="date" type="text" class="col-lg-9 form-control mb-2" value="{{ "now"|date("m/d/Y") }}" readonly>
         </div>
-
-        <button class="float-right btn btn-blue mt-4" type="button" onclick="submitForm()">
-            Submit Added Prescriptions
-        </button>
     </div>
     {{ control_panel.card_end() }}
 
@@ -71,6 +67,10 @@
             Card
         </button>
 
+        <button class="float-right btn btn-blue mt-4" type="button" onclick="submitForm()">
+            Submit Added Prescriptions
+        </button>
+
     </div>
 
 
@@ -78,87 +78,7 @@
 
 {{ control_panel.iframe_middle() }}
 
-<div class="modal" tabindex="-100" role="dialog" id="loading" data-backdrop="static" data-keyboard="false" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-            <div class="text-center">
-                <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading...">
-                <br>
-                <p class="m-3">
-                    Please Wait for a moment
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    /**
-     * Sometimes if the ajax call returns before the modal is shown,
-     * the modal might not hide.
-     *
-     * We have to handle that case.
-     */
-
-    let loading = false;
-    let trasitioningToHide = false;
-    let trasitioningToShow = false;
-
-    /**
-     * Show the loading modal. Safe handler.
-     */
-    function showModal() {
-        let loadingModal = $("#loading");
-
-        loading = true;
-        if (trasitioningToHide) return;
-        trasitioningToShow = true;
-        loadingModal.on('shown.bs.modal', showCompleted);
-        loadingModal.modal("show");
-
-        function showCompleted() {
-            trasitioningToShow = false;
-            $("#loading").off('shown.bs.modal');
-            if (!loading) {
-                hideModal();
-            }
-        }
-    }
-
-    /**
-     * Hide the loading modal. Safe handler.
-     */
-    function hideModal() {
-        let loadingModal = $("#loading");
-
-        loading = false;
-        if (trasitioningToShow) return;
-        trasitioningToHide = true;
-        loadingModal.on('hidden.bs.modal', hideCompleted);
-        loadingModal.modal("hide");
-
-        function hideCompleted() {
-            trasitioningToHide = false;
-            $("#loading").off('hidden.bs.modal');
-            if (loading) {
-                showModal();
-            }
-        }
-    }
-
-    $(document).ajaxStart(async function () {
-        showModal();
-        // For some reason, sometimes body will get a right padding after showing the modal
-        // We have to reset that
-        $("body").css("padding-right", "0");
-    });
-
-    $(document).ajaxComplete(async function () {
-        hideModal();
-        $("body").css("padding-right", "0");
-    });
-</script>
-
+{% include("modals/ajax_loading.htm.twig") %}
 
 <!-- Vue to clone medCards-->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
