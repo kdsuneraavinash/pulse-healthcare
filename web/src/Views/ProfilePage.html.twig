@@ -4,62 +4,271 @@
 <head>
     {% include("part/header.htm.twig") %}
     {% include("part/nojs.htm.twig") %}
+    <link href="{{ site }}/css/profile.css" rel="stylesheet">
     <title>MediKit</title>
 </head>
+
+
 
 <body>
 
 {% include "part/navbar.htm.twig" with {"page": "Profile"} %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-9">
 
-<main>
-    <section class="container mt-5 py-5 text-center text-lg-left">
-        <div class="row my-xl-5 py-xl-4">
 
-            <div class="col-sm-12 col-md-5 col-xl-5 mb-4">
-                <div class="view overlay">
-                    <img src="https://format-com-cld-res.cloudinary.com/image/private/s--Q6bw0Lij--/c_limit,g_center,h_400,w_65535/a_auto,fl_keep_iptc.progressive,q_95/30388-2127009-JiB_Wallpaper_O_Yellow.jpg"
-                         class="img-fluid z-depth-1" alt="">
-                    <div class="mask rgba-white-slight"></div>
+
+            <!-- User profile -->
+            <div class="panel panel-primary class">
+                <div class="panel-heading">
+                    <h4 class="panel-title">User profile</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="profile__avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="...">
+                    </div>
+                    <div class="profile__header">
+                        <h4>{{ context['name'] }}<small>  {{ context['account_type'] }}</small></h4>
+                        <p class="text-muted">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non nostrum odio cum repellat veniam eligendi rem cumque magnam autem delectus qui.
+                        </p>
+                        <p>
+                            <a href="#">bootdey.com</a>
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-sm-12 col-md-6 col-xl-6">
 
-                <h3 class="dark-grey-text pb-2 font-weight-bold">
-                    <strong>About me</strong>
-                </h3>
-                <p class="gold-text mb-4 text-uppercase font-weight-bold">SOME FACTS ABOUT ME</p>
-                <hr>
+            <!-- User info -->
+            {% if context["account_type"]=="med_center" %}
+            <div class="panel panel-primary class">
+                <div class="panel-heading">
+                    <h4 class="panel-title">User info</h4>
+                </div>
+                <div class="panel-body">
+                    <table class="table profile__table">
+                        <tbody>
+                        <tr>
+                            <th><strong>Medical Center Name</strong></th>
+                            <td>{{ context['name'] }}</td>
+                        </tr>
+                        <tr>
+                            <th><strong>Phsrc ID</strong></th>
+                            <td>{{ context['phsrc'] }}</td>
+                        </tr>
+                        <tr>
+                            <th><strong>Account ID</strong></th>
+                            <td>{{ context['account_id'] }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
 
-                <p class="dark-grey-text mt-4 text-justify">Nemo enim ipsam voluptatem quia voluptas sit
-                    aspernatur aut odit aut fugit, sed quia consequuntur
-                    magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
-                    dolorem
-                    ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
-                    tempora
-                    incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam,
-                    quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
-                    commodi
-                    consequatur. Quis autem vel eum iure reprehenderit.</p>
+            {% if context["account_type"]=="patient" %}
+                <div class="panel panel-primary class">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">User info</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table profile__table">
+                            <tbody>
+                            <tr>
+                                <th><strong>Name</strong></th>
+                                <td>{{ context['name'] }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>National Identity Card Number</strong></th>
+                                <td>{{ context['nic'] }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>Account ID</strong></th>
+                                <td>{{ context['account_id'] }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
 
-                <p class="dark-grey-text text-justify">Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-                    aut odit aut fugit, sed quia consequuntur
-                    magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
-                    dolorem
-                    ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
-                    tempora
-                    incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+            {% if context["account_type"]=="doctor" %}
+                <div class="panel panel-primary class">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">User info</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table profile__table">
+                            <tbody>
+                            <tr>
+                                <th><strong>Full Name</strong></th>
+                                <td>{{ context['full_name'] }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>National Identity Card Number</strong></th>
+                                <td>{{ context['nic'] }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>SLMC Registration Number</strong></th>
+                                <td>{{ context['slmc_id'] }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>Doctor Category</strong></th>
+                                <td>{{ context['category'] }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>Account ID</strong></th>
+                                <td>{{ context['account_id'] }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
 
-                <h5 class="text-right font-weight-bold dark-grey-text mt-5">
-                    <em>John Doe</em>
-                </h5>
+
+            <!-- Community -->
+            <div class="panel panel-primary class">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Community</h4>
+                </div>
+                <div class="panel-body">
+                    <table class="table profile__table">
+                        <tbody>
+                        <tr>
+                            <th><strong>Comments</strong></th>
+                            <td>58584</td>
+                        </tr>
+                        <tr>
+                            <th><strong>Member since</strong></th>
+                            <td>Jan 01, 2016</td>
+                        </tr>
+                        <tr>
+                            <th><strong>Last login</strong></th>
+                            <td>1 day ago</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Latest posts -->
+            <div class="panel panel-primary class">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Latest Medical Records</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="profile__comments">
+                        <div class="profile-comments__item">
+                            <div class="profile-comments__controls">
+                                <a href="#"><i class="fa fa-share-square-o"></i></a>
+                                <a href="#"><i class="fa fa-edit"></i></a>
+                                <a href="#"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                            <div class="profile-comments__avatar">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="...">
+                            </div>
+                            <div class="profile-comments__body">
+                                <h5 class="profile-comments__sender">
+                                    Dr. Richard Roe <small>2 hours ago</small>
+                                </h5>
+                                <div class="profile-comments__content">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, corporis. Voluptatibus odio perspiciatis non quisquam provident, quasi eaque officia.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-comments__item">
+                            <div class="profile-comments__controls">
+                                <a href="#"><i class="fa fa-share-square-o"></i></a>
+                                <a href="#"><i class="fa fa-edit"></i></a>
+                                <a href="#"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                            <div class="profile-comments__avatar">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="...">
+                            </div>
+                            <div class="profile-comments__body">
+                                <h5 class="profile-comments__sender">
+                                    Dr. Richard Roe <small>5 hours ago</small>
+                                </h5>
+                                <div class="profile-comments__content">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero itaque dolor laboriosam dolores magnam mollitia, voluptatibus inventore accusamus illo.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-comments__item">
+                            <div class="profile-comments__controls">
+                                <a href="#"><i class="fa fa-share-square-o"></i></a>
+                                <a href="#"><i class="fa fa-edit"></i></a>
+                                <a href="#"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                            <div class="profile-comments__avatar">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="...">
+                            </div>
+                            <div class="profile-comments__body">
+                                <h5 class="profile-comments__sender">
+                                    Dr. Richard Roe <small>1 day ago</small>
+                                </h5>
+                                <div class="profile-comments__content">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, esse, magni aliquam quisquam modi delectus veritatis est ut culpa minus repellendus.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
+        <div class="col-xs-12 col-sm-3">
 
-    </section>
+            <hr class="style1">
 
-</main>
+            <!-- Contact info -->
+            <div class="profile__contact-info">
+                <div class="profile__contact-info-item">
+                    <div class="profile__contact-info-icon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div class="profile__contact-info-body">
+                        <h5 class="profile__contact-info-heading">Contact Number</h5>
+                        {{ context['phone_number'] }}
+                    </div>
+                </div>
+                <div class="profile__contact-info-item">
+                    <div class="profile__contact-info-icon">
+                        <i class="fa fa-envelope-square"></i>
+                    </div>
+                    <div class="profile__contact-info-body">
+                        <h5 class="profile__contact-info-heading">E-mail address</h5>
+                        <a href="mailto:admin@domain.com">{{ context['email'] }}</a>
+                    </div>
+                </div>
+                <div class="profile__contact-info-item">
+                    <div class="profile__contact-info-icon">
+                        <i class="fa fa-map-marker"></i>
+                    </div>
+                    <div class="profile__contact-info-body">
+                        <h5 class="profile__contact-info-heading">Work address</h5>
+                        {{ context['address'] }}
+                    </div>
+                </div>
+                {% if context['fax'] %}
+                <div class="profile__contact-info-item">
+                    <div class="profile__contact-info-icon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div class="profile__contact-info-body">
+                        <h5 class="profile__contact-info-heading">Fax</h5>
+                        {{ context['fax'] }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 {% include "part/footer.htm.twig" %}

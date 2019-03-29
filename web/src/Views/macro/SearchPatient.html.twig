@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/form_fields.htm.twig' as form_fields %}
+
+
+<head>
+    {% include("part/header.htm.twig") %}
+    {% include("part/nojs.htm.twig") %}
+    <title>Search Patients</title>
+</head>
+
+<body>
+<div class="bg-image"></div>
+
+<main class="mt-sm-5 py-5">
+    <div class="container">
+        <section class="wow fadeIn">
+
+            <div class="border border-light">
+                <form action="{{ site }}/search/doctor" class="m-0 p-5 bg-white needs-validation" method="post"
+                      novalidate>
+                    <p class="text-center h4 mb-5">SEARCH PATIENTS</p>
+
+                    {% if (error != null) %}
+                        <div class="alert alert-danger text-center mb-3" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    {{ form_fields.input_with_label('account', 'Name', 'Name', username, 'text',
+                        '8-20 characters long and can contain english letters or digits') }}
+                    {{ form_fields.input_with_label('nic', 'NIC number', 'National Identity card number','', 'text') }}
+                    {{ form_fields.input_with_label('region', 'Region', 'Region', region, 'text',
+                        '8-30 characters long and can contain english letters or digits') }}
+                    {{ form_fields.dropdown_menu('doctor-category','Any Category',{'opd':'OPD','abc':'ABC'}) }}
+
+
+                    <hr/>
+
+                    <div class="text-right">
+                        <button class="btn btn-primary my-4" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+
+    </div>
+</main>
+
+{% include "part/footer.htm.twig" %}
+{% include "part/scripts.htm.twig" %}
+
+</body>
+
+</html>
