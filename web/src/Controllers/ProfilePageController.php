@@ -39,6 +39,7 @@ class ProfilePageController extends BaseController
             $account = Account::retrieveAccount($accountId, true);
         } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
+            exit();
         }
         $context = $this->populate_with_account($account);
         $this->render("ProfilePage.html.twig", $context, $current_account);
@@ -72,6 +73,8 @@ class ProfilePageController extends BaseController
             $context['category'] = $account->getDoctorDetails()->getCategory();
             $context['email'] = $account->getDoctorDetails()->getEmail();
             $context['phone_number'] = $account->getDoctorDetails()->getPhoneNumber();
+            $context['creation_date'] = $account->getDoctorDetails()->getCreationDate();
+            $context['last_login'] = $account->getDoctorDetails()->getLastLoginDate();
         } else if ($account instanceof Admin) {
             $context['name'] = "Administrator";
         }

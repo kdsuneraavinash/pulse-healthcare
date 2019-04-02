@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-sm-9 px-5 text-center text-sm-left">
                         <h4>{{ name }}</h4>
-                        <kbd>[{{ profile_type }}]</kbd>
+                        <kbd>[{{ profile_account_id }}]</kbd>
                         <p class="text-muted pt-3">
                             Bio not available.
                         </p>
@@ -102,11 +102,11 @@
                         </tr>
                         <tr>
                             <th><strong>Member Since</strong></th>
-                            <td>2019/02/25</td>
+                            <td>{{ creation_date }}</td>
                         </tr>
                         <tr>
                             <th><strong>Last Login</strong></th>
-                            <td>2019/03/31</td>
+                            <td>{{ last_login }}</td>
                         </tr>
                         </tbody>
                     </table>
