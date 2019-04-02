@@ -79,7 +79,7 @@
                                 <th><strong>Doctor Category</strong></th>
                                 <td>{{ category }}</td>
                             </tr>
-                        {% elseif context["account_type"]=="patient" %}
+                        {% elseif account_type == "patient" %}
                             <tr>
                                 <th><strong>Name</strong></th>
                                 <td>{{ name }}</td>

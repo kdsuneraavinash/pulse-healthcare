@@ -20,11 +20,19 @@
 
         {% for result in ret %}
             <div class="col-md-6">
-                <article class="card bg-light search-result my-4">
+                <article class="card bg-white search-result my-4">
                     <div class="card-header"><b>Relevance: {{ result['relevance'] }}</b></div>
                     <div class="card-body">
                         <div>
-                            <h3><a href="#" title="">{{ result['name'] }}</a></h3>
+                            <div class="d-flex justify-content-between">
+                                <h3>{{ result['name'] }} </h3>
+                                <a href="{{ site }}/showprofile?user={{ result['account_id'] }}" target="_blank">
+                                    <div class="blue-text pb-2" style="display: inline;">
+                                        <h4><i class="fas fa-external-link-alt ml-2"></i></h4>
+                                    </div>
+                                </a>
+                            </div>
+
                             <hr/>
                             <h6><strong>NIC:</strong> {{ result['nic'] }} </h6>
                             <h6><strong>Email:</strong> {{ result['email'] }} </h6>

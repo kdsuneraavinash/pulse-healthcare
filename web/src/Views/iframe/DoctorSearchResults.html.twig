@@ -20,16 +20,22 @@
 
         {% for result in ret %}
             <div class="col-md-6">
-                <article class="card bg-light search-result my-4">
+                <article class="card bg-white search-result my-4">
                     <div class="card-header"><b>Relevance: {{ result['relevance'] }}</b></div>
                     <div class="card-body">
-                        <div>
-                            <h3><a href="#" title="">Dr. {{ result['display_name'] }}</a></h3>
-                            <hr/>
-                            <h6><strong>SLMC Registration:</strong> {{ result['slmc_id'] }} </h6>
-                            <h6><strong>Email:</strong> {{ result['email'] }} </h6>
-                            <h6><strong>Phone Number:</strong> {{ result['phone_number'] }}</h6>
+                        <div class="d-flex justify-content-between">
+                            <h3>Dr. {{ result['display_name'] }} </h3>
+                            <a href="{{ site }}/showprofile?user={{ result['account_id'] }}" target="_blank">
+                                <div class="blue-text pb-2" style="display: inline;">
+                                    <h4><i class="fas fa-external-link-alt ml-2"></i></h4>
+                                </div>
+                            </a>
                         </div>
+
+                        <hr/>
+                        <h6><strong>SLMC Registration:</strong> {{ result['slmc_id'] }} </h6>
+                        <h6><strong>Email:</strong> {{ result['email'] }} </h6>
+                        <h6><strong>Phone Number:</strong> {{ result['phone_number'] }}</h6>
                     </div>
                 </article>
             </div>
