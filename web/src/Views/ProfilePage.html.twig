@@ -8,13 +8,13 @@
 </head>
 <body>
 
-{% if (account_type == 'admin') %}
+{% if (profile_type == 'admin') %}
     {% set account_icon = 'user-cog' %}
-{% elseif (account_type == 'doctor') %}
+{% elseif (profile_type == 'doctor') %}
     {% set account_icon = 'user-md' %}
-{% elseif (account_type == 'patient') %}
+{% elseif (profile_type == 'patient') %}
     {% set account_icon = 'user-tie' %}
-{% elseif (account_type == 'med_center') %}
+{% elseif (profile_type == 'med_center') %}
     {% set account_icon = 'hospital' %}
 {% else %}
     {% set account_icon = 'user' %}
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-sm-9 px-5 text-center text-sm-left">
                         <h4>{{ name }}</h4>
-                        <kbd>[{{ account_type }}]</kbd>
+                        <kbd>[{{ profile_type }}]</kbd>
                         <p class="text-muted pt-3">
                             Bio not available.
                         </p>
@@ -49,7 +49,7 @@
                     <table class="table table-striped table-hover">
                         <tbody>
 
-                        {% if account_type == "med_center" %}
+                        {% if profile_type == "med_center" %}
                             <tr>
                                 <th><strong>Medical Center Name</strong></th>
                                 <td>{{ name }}</td>
@@ -58,10 +58,10 @@
                                 <th><strong>Phsrc ID</strong></th>
                                 <td>{{ phsrc }}</td>
                             </tr>
-                        {% elseif account_type == "doctor" %}
+                        {% elseif profile_type == "doctor" %}
                             <tr>
                                 <th><strong>Display Name</strong></th>
-                                <td>{{ display_name }}</td>
+                                <td>{{ name }}</td>
                             </tr>
                             <tr>
                                 <th><strong>Full Name</strong></th>
@@ -79,7 +79,7 @@
                                 <th><strong>Doctor Category</strong></th>
                                 <td>{{ category }}</td>
                             </tr>
-                        {% elseif account_type == "patient" %}
+                        {% elseif profile_type == "patient" %}
                             <tr>
                                 <th><strong>Name</strong></th>
                                 <td>{{ name }}</td>
@@ -98,7 +98,7 @@
 
                         <tr>
                             <th><strong>Account ID</strong></th>
-                            <td>{{ account_id }}</td>
+                            <td>{{ profile_account_id }}</td>
                         </tr>
                         <tr>
                             <th><strong>Member Since</strong></th>
@@ -114,7 +114,7 @@
             </div>
         </div>
 
-        {% if account_type != "admin" %}
+        {% if profile_type != "admin" %}
             <div class="col-xs-12 col-sm-4 mb-5 text-left">
                 <div class="text-left list-group">
                     <div class="list-group-item">
