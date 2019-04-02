@@ -3,9 +3,11 @@
 namespace Pulse\Models\AccountSession;
 
 use Pulse\Components\Database;
+use Pulse\Components\PureSqlStatement;
 use Pulse\Components\Utils;
 use Pulse\Definitions;
 use Pulse\Models\BaseModel;
+use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Exceptions;
 
 class Session implements BaseModel
@@ -29,7 +31,32 @@ class Session implements BaseModel
             // If the account does not exist
             throw new Exceptions\AccountNotExistException($accountId);
         }
+
         $this->sessionKey = $sessionKey;
+
+        // All was successful
+        // Must add last login time in account table
+        switch ($this->account->getAccountType()) {
+            case AccountType::MedicalCenter:
+                $table = "medical_center_details";
+                break;
+            case AccountType::Doctor:
+                $table = "doctor_details";
+                break;
+            case AccountType::Patient:
+                $table = "patient_details";
+                break;
+            default:
+                return;
+
+        }
+        Database::update($table,
+            "last_login = :today",
+            "account_id = :account_id",
+            array('account_id' => $accountId, 'today' => new PureSqlStatement('CURRENT_TIMESTAMP')),
+            false);
+
+
     }
 
     /**

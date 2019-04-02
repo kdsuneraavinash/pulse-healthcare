@@ -191,11 +191,17 @@ class Database
      * @param string $where
      * @param array $params
      */
-    public static function update(string $table, string $set, string $where, array $params)
+    public static function update(string $table, string $set, string $where, array $params, bool $ignorePureSqlStatements = true)
     {
         try {
             /// Syntax = UPDATE users SET name=:name WHERE id=:id
             $query = "UPDATE " . $table . " SET $set WHERE $where";
+
+            // Pass Pure Sql Statements if requested
+            if (!$ignorePureSqlStatements) {
+                $query = self::includePureSqlStatements($query, $params);
+            }
+
             $statement = self::getDatabase()->prepare($query);
             self::bindToStatement($statement, $params);
             $statement->execute();
