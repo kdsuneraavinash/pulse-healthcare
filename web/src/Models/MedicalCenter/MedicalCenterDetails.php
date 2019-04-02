@@ -73,6 +73,7 @@ class MedicalCenterDetails implements IDetails
             $query['phone_number'], $query['address'], (int) $query['postal_code']);
     }
 
+
     /**
      * @param string $accountId
      */

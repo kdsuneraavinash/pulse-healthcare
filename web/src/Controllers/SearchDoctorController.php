@@ -14,15 +14,11 @@ class SearchDoctorController extends BaseController
      */
     public function getIFrame()
     {
-        $page = $this->httpHandler()->postParameter('page');
         $account = $this->getCurrentAccount();
         $this->render('iframe/SearchDoctor.html.twig', array(), $account);
     }
 
     /**
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function getSearchResults()
     {
@@ -56,7 +52,7 @@ class SearchDoctorController extends BaseController
             Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
         } else {
-            $this->render("iframe/SearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
+            $this->render("iframe/DoctorSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
                 $this->getCurrentAccount());
         }
     }

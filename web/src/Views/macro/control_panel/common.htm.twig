@@ -39,9 +39,9 @@ Buttons in sidebar
 
 {% macro sidebar_button(text, id, icon, active) -%}
     {% if (active) %}
-        {% set additional_classes = "active rounded red" %}
+        {% set additional_classes = "active rounded black" %}
     {% else %}
-        {% set additional_classes = "white" %}
+        {% set additional_classes = "light" %}
     {% endif %}
     <button id="{{ id }}"
             class="list-group-item list-group-item-action waves-effect {{ additional_classes }} sidebar-button">
@@ -76,11 +76,6 @@ IFrame
               rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
               rel="stylesheet">
-        <style>
-            body {
-                background: #FFFFFF;
-            }
-        </style>
         <title>MediKit IFrame</title>
     </head>
 <body>
@@ -100,6 +95,34 @@ IFrame
 </main>
 
 {% include "part/scripts.htm.twig" %}
+<script>
+    // Wallpaper dynamic set
+    $(document).ready(function () {
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+
+        // Background
+        let pattern = Trianglify({
+            width: (width !== 0)? width: 2000,
+            height: (height !== 0)? height: 2000,
+            cell_size: 200,
+            x_colors: ['#E0EAFC', '#CFDEF3']
+        });
+        let dataUrl = pattern.canvas().toDataURL();
+        $("body").css("background-image", 'url(' + dataUrl + ')');
+
+        // Card Header
+        pattern = Trianglify({
+            width: 2000,
+            height: 2000,
+            cell_size: 150,
+            x_colors: ['#833ab4', '#fd1d1d', '#fcb045']
+        });
+        dataUrl = pattern.canvas().toDataURL();
+        $(".card-header-text").not(".ignore-triangle").css("background-image", 'url(' + dataUrl + ')');
+    });
+
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 {%- endmacro %}
 
@@ -115,7 +138,7 @@ IFrameCards
 
 {% macro card_start(title, color="primary") -%}
 <div class="card my-2 border border-dark">
-    <div class="card-header text-center {{ color }}-color-dark text-white">
+    <div class="card-header text-center {{ color }}-color-dark text-white card-header-text">
         {{ title }}
     </div>
     <div class="card-body">

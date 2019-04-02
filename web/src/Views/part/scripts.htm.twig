@@ -21,9 +21,12 @@
 <script>
     // Wallpaper dynamic set
     $(document).ready(function () {
+        let width = window.innerWidth;
+        let height = (document.height !== undefined) ? document.height : document.body.offsetHeight;
+
         var pattern = Trianglify({
-            width: window.innerWidth,
-            height: (document.height !== undefined) ? document.height : document.body.offsetHeight,
+            width: (width === 0)? 2000: width,
+            height: (height === 0)? 2000: height,
             cell_size: 100
         });
 

@@ -18,7 +18,8 @@ class Definitions
     const SESSION_USER = 'session_user';
     const SESSION_KEY = 'session_key';
 
-    const SLMC_RELEVENCE_WEIGHT = 5;
-    const NAME_RELEVENCE_WEIGHT = 4;
-     const REGION_RELEVENCE_WEIGHT = 3;
+    const SLMC_RELEVANCE_WEIGHT = 5;
+    const NAME_RELEVANCE_WEIGHT = 4;
+    const REGION_RELEVENCE_WEIGHT = 3;
+    const ADDRESS_RELEVANCE_WEIGHT = 3;
 }

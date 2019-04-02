@@ -16,6 +16,8 @@ class DoctorDetails implements IDetails
     private $slmcId;
     private $email;
     private $phoneNumber;
+    private $creationDate;
+    private $lastLoginDate;
 
     /**
      * DoctorDetails constructor.
@@ -26,9 +28,11 @@ class DoctorDetails implements IDetails
      * @param string $slmcId
      * @param string $email
      * @param string $phoneNumber
+     * @param string|null $creationDate
+     * @param string|null $lastLoginDate
      */
     public function __construct(string $nic, string $fullName, string $displayName, string $category, string $slmcId,
-                                string $email, string $phoneNumber)
+                                string $email, string $phoneNumber, ?string $creationDate = null, ?string $lastLoginDate = null)
     {
         $this->nic = $nic;
         $this->fullName = $fullName;
@@ -37,6 +41,8 @@ class DoctorDetails implements IDetails
         $this->slmcId = $slmcId;
         $this->email = $email;
         $this->phoneNumber = $phoneNumber;
+        $this->creationDate = $creationDate;
+        $this->lastLoginDate = $lastLoginDate;
     }
 
 
@@ -69,7 +75,7 @@ class DoctorDetails implements IDetails
             throw new Exceptions\AccountNotExistException($nic);
         }
         return new DoctorDetails($nic, $query['full_name'], $query['display_name'], $query['category'],
-            $query['slmc_id'], $query['email'], $query['phone_number']);
+            $query['slmc_id'], $query['email'], $query['phone_number'], $query['creation_date'], $query['last_login']);
     }
 
     public function saveInDatabase(string $accountId)
@@ -90,47 +96,47 @@ class DoctorDetails implements IDetails
      * @param string|null $slmcId
      * @param string|null $name
      * @param string|null $category
-     * @return array|null
+     * @return array
      */
-    public static function searchDoctor(?string $slmcId, ?string $name, ?string $category){
+    public static function searchDoctor(?string $slmcId, ?string $name, ?string $category)
+    {
         /// TODO: Implement region search
 
-        if ($name == null){
+        $sqlKeys = array();
+        if ($name == null) {
             $nameArr = array();
-        }else{
+        } else {
             // Split by space
             $nameArr = explode(" ", $name);
         }
 
         if ($slmcId != null) {
-            // if (slmc_id LIKE '%SLMC_MED_11%', 5, 0)
-            $slmcSQL = "if (slmc_id LIKE '%$slmcId%', ". Definitions::SLMC_RELEVENCE_WEIGHT .", 0)";
-        }else{
+            $slmcSQL = "if(slmc_id LIKE :slmc_id, " . Definitions::SLMC_RELEVANCE_WEIGHT . ", 0)";
+            $sqlKeys["slmc_id"] = "%$slmcId%";
+        } else {
             $slmcSQL = "0";
         }
 
         if ($name != null) {
             $nameSQL = array();
-            foreach ($nameArr as $key) {
-                // if (full_name LIKE '%Sunera%', 4, 0)
-                $nameSQLi = "if (full_name LIKE '%$key%', ". Definitions::NAME_RELEVENCE_WEIGHT .", 0)";
+            for ($i = 0; $i < sizeof($nameArr); $i++) {
+                $key = $nameArr[$i];
+                $nameKeyStr = "name_part_$i";
+                $nameSQLi = "if(full_name LIKE :$nameKeyStr, " . Definitions::NAME_RELEVANCE_WEIGHT . ", 0)";
+                $sqlKeys[$nameKeyStr] = "%$key%";
                 array_push($nameSQL, $nameSQLi);
             }
-            $nameSQL =implode(" + ", $nameSQL);
-        }else{
+            $nameSQL = implode(" + ", $nameSQL);
+        } else {
             $nameSQL = "0";
         }
 
-        if ($category != null){
+        if ($category != null) {
 
             // Only category given
             if ($slmcId == null && $name == null) {
                 // 25 doctors with given category
-                /**
-                 * SELECT * FROM doctor_details WHERE category = 'OPD' LIMIT 25
-                 */
-                $query = "SELECT * FROM doctor_details WHERE category = '$category' LIMIT 25";
-
+                $query = "SELECT * FROM doctor_details WHERE category = :category";
             } else {
                 /**
                  * SELECT *, ( (0) + (if (full_name LIKE '%Saman%', 4, 0) ))  as relevance FROM doctor_details
@@ -139,16 +145,17 @@ class DoctorDetails implements IDetails
                  */
                 $query = "SELECT *, ( ($slmcSQL) + ($nameSQL) )  as relevance
                           FROM doctor_details
-                          WHERE category = '$category'
+                          WHERE category = :category
                           HAVING relevance > 0
-                          ORDER BY relevance DESC
-                          LIMIT 25";
+                          ORDER BY relevance DESC";
             }
-        }else{
+            $sqlKeys["category"] = $category;
+
+        } else {
             if ($slmcId == null && $name == null) {
                 // Nothing given
-                return null;
-            }else{
+                return array();
+            } else {
                 /**
                  * SELECT *, ( (0) + (if (full_name LIKE '%Saman%', 4, 0) ))  as relevance
                  * FROM doctor_details HAVING relevance > 0 ORDER BY relevance DESC LIMIT 25
@@ -156,12 +163,11 @@ class DoctorDetails implements IDetails
                 $query = "SELECT *, ( ($slmcSQL) + ($nameSQL) )  as relevance
                           FROM doctor_details
                           HAVING relevance > 0
-                          ORDER BY relevance DESC
-                          LIMIT 25";
+                          ORDER BY relevance DESC";
             }
         }
 
-        $result = Database::query($query, array());
+        $result = Database::query($query, $sqlKeys);
         return $result;
     }
 
@@ -281,5 +287,37 @@ class DoctorDetails implements IDetails
     public function setPhoneNumber(string $phoneNumber): void
     {
         $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCreationDate(): ?string
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @param string|null $creationDate
+     */
+    public function setCreationDate(?string $creationDate): void
+    {
+        $this->creationDate = $creationDate;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLastLoginDate(): ?string
+    {
+        return $this->lastLoginDate;
+    }
+
+    /**
+     * @param string|null $lastLoginDate
+     */
+    public function setLastLoginDate(?string $lastLoginDate): void
+    {
+        $this->lastLoginDate = $lastLoginDate;
     }
 }

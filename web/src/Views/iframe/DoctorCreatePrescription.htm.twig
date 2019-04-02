@@ -6,69 +6,77 @@
 {% import 'macro/form_fields.htm.twig' as form_fields %}
 
 
+
 {{ control_panel.iframe_start() }}
 
 <div class="container pt-2">
 
-    {#{{ control_panel.card_start("Primary Prescription Details") }}#}
+    {{ control_panel.card_start("Session Details") }}
+    <div class="p-3">
 
-    {#<form action="{{ site }}/control/doctor/create/prescription" class="needs-validation p-3" method="post"#}
-          {#novalidate>#}
-
-
-        {#{{ form_fields.input_with_label('type', 'Type', 'Type of the illness','', 'text') }}#}
-        {#{{ form_fields.input_with_label('days', 'Days', "Days from now", '', 'text') }}#}
-        {#{{ form_fields.input_with_label('comments', 'Comments', 'Overall Comments', '', 'text') }}#}
-
-        {#<div class="text-right">#}
-            {#<button class="btn btn-primary mt-4" type="button" id="submit-btn">Submit</button>#}
-        {#</div>#}
-    {#</form>#}
-
-    <div class="container">
-
-
-        <div class ="card mb-3 " style="margin: auto" v-for="(medCard,index) in medCards">
-
-            <div class="card-body">
-                <div class="form-group row">
-                    <h4 class="card-title col-lg-3 " style="margin: auto;alignment: left"> Medicine (index : {{index}})</h4>
-                    <button class="float-right  btn btn-danger col-lg-1" type="button" style="cursor:pointer;padding: 5px; margin-left: 20px" id="remove-btn" @click="removeMedCard(index)">Remove</button>
-                </div>
-
-
-
-                <div class="medicine-form" style="margin:auto">
-                    <div class="form-group row">
-                        <label for="medName" class="col-lg-3 col-form-label">Name </label>
-                        <input type="text" class="col-lg-9 form-control mb-2" placeholder ="Medicine Name" name="medName" v-model="medCard.name">
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="dose" class="col-lg-3 col-form-label">Dose </label>
-                        <input type="text" class="col-lg-9 form-control mb-2" placeholder ="Dose per time (mg/ml/tablets/pills)" name="dose" v-model="medCard.dose">
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="frequency" class="col-lg-3 col-form-label">Frequency </label>
-                        <input type="text" class="col-lg-9 form-control mb-2" placeholder ="Frequency (times per day)" name="frequency" v-model="medCard.frequency">
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="time" class="col-lg-3 col-form-label">Dose </label>
-                        <input type="text" class="col-lg-9 form-control mb-2" placeholder ="Time (before/after meal)" name="time" v-model="medCard.time">
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="comment" class="col-lg-3 col-form-label">Dose </label>
-                        <input type="text" class="col-lg-9 form-control mb-2" placeholder ="Comment" name="comment" v-model="medCard.comment">
-                    </div>
-
-                </div>
-
+        {% if (error != null) %}
+            <div class="alert alert-danger text-center mb-3" role="alert">
+                {{ error }}
             </div>
+        {% endif %}
+
+        <div class="form-group row">
+            <label for="id" class="col-lg-3 col-form-label">Patient ID</label>
+            <input id="id" type="text" class="col-lg-9 form-control mb-2" placeholder="PATIENT_ID">
         </div>
-        <button class="btn btn-green mt-4" type="button" id="add-btn" style="margin: 20px" @click="addMedCard">Add Med Card</button>
+        <div class="form-group row">
+            <label for="date" class="col-lg-3 col-form-label">Date </label>
+            <input id="date" type="text" class="col-lg-9 form-control mb-2" value="{{ "now"|date("m/d/Y") }}" readonly>
+        </div>
+    </div>
+    {{ control_panel.card_end() }}
+
+    <div class="med">
+        <div v-for="(medCard,index) in medCards">
+
+
+            {{ control_panel.card_start("Medicine Prescription #" ~ "{{ index+1 }}", "ignore-triangle primary") }}
+            <div class="medicine-form p-3" style="margin:auto">
+                <div class="form-group row">
+                    <label for="medName" class="col-lg-3 col-form-label">Name </label>
+                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Medicine Name"
+                           v-model="medCard.name">
+                </div>
+                <div class="form-group row">
+                    <label for="dose" class="col-lg-3 col-form-label">Dose </label>
+                    <input type="text" class="col-lg-9 form-control mb-2"
+                           placeholder="Dose per time (mg/ml/tablets/pills)" v-model="medCard.dose">
+                </div>
+                <div class="form-group row">
+                    <label for="frequency" class="col-lg-3 col-form-label">Frequency </label>
+                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Eg: 3 times a day"
+                           v-model="medCard.frequency">
+                </div>
+                <div class="form-group row">
+                    <label for="time" class="col-lg-3 col-form-label">Time </label>
+                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Before Meal/ After Meal"
+                           v-model="medCard.time">
+                </div>
+
+                <div class="form-group row">
+                    <label for="comment" class="col-lg-3 col-form-label">Comment </label>
+                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Comment about this medicine"
+                           v-model="medCard.comment">
+                </div>
+            </div>
+            <button class="float-right btn btn-danger m-3" type="button" id="remove-btn" @click="removeMedCard(index)">
+                Remove This Prescription
+            </button>
+            {{ control_panel.card_end() }}
+
+        </div>
+        <button class="btn btn-green mt-4" type="button" id="add-btn" @click="addMedCard">Add Med
+            Card
+        </button>
+
+        <button class="float-right btn btn-blue mt-4" type="button" onclick="submitForm()">
+            Submit Added Prescriptions
+        </button>
 
     </div>
 
@@ -77,43 +85,62 @@
 
 {{ control_panel.iframe_middle() }}
 
+{% if (prescription != null) %}
+    {% include 'modals/prescription_saved.htm.twig' %}
+{% endif %}
+
+{% include("modals/ajax_loading.htm.twig") %}
 
 <!-- Vue to clone medCards-->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
-
 <script>
-    var app = new Vue(
+    let medVue = new Vue(
         {
-            el: '.container',
-            data:{
-                medCards:[
+            el: '.med',
+            data: {
+                medCards: [
                     {
-                        medName:'',
-                        dose:'',
-                        frequency:'',
-                        time:'',
-                        comment:''
+                        name: '',
+                        dose: '',
+                        frequency: '',
+                        time: '',
+                        comment: ''
                     }
                 ]
             },
-            methods:{
-                addMedCard(){
+            methods: {
+                addMedCard() {
                     this.medCards.push({
-                        medName:'',
-                        dose:'',
-                        frequency:'',
-                        time:'',
-                        comment:''
-                    })
+                        name: '',
+                        dose: '',
+                        frequency: '',
+                        time: '',
+                        comment: ''
+                    });
                 },
-                removeMedCard(index){
-                    this.medCards.splice(index,1)
-                }
+                removeMedCard(index) {
+                    this.medCards.splice(index, 1)
+                },
             }
         }
-    )
-</script>
+    );
 
+    function submitForm() {
+        $.ajax({
+            type: "POST",
+            url: '/control/doctor/create/prescription',
+            data: {
+                patient: $("#id").val(),
+                medications: medVue.medCards,
+            },
+            dataType: 'html',
+            success: function (data) {
+                window.location = data;
+            }
+        });
+    }
+
+</script>
 
 
 {{ control_panel.iframe_end() }}

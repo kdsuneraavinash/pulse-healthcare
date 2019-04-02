@@ -1,0 +1,39 @@
+<div class="modal fade down" id="modalPrescriptionAdded" tabindex="-1" role="dialog"
+     aria-labelledby="ModalLabel"
+     data-backdrop="true" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-notify modal-success" role="document">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <p class="heading">Prescription Added</p>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="p-2 text-center justify-content-center">
+                    <i class="fas fa-prescription-bottle-alt fa-5x"></i>
+                </div>
+                <div class="p-2">
+                    <strong>Prescription was added successfully.</strong>
+                    <br/>
+                    Prescription ID: <strong>{{ prescription }}</strong>
+                </div>
+
+                <button type="button" class="btn btn-success waves-effect waves-light" data-dismiss="modal">OK
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(window).on('load', function () {
+        setTimeout(function () {
+            $("#modalPrescriptionAdded").modal('show');
+        }, 500);
+    })
+</script>
