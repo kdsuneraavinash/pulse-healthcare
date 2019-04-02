@@ -3,8 +3,7 @@
 namespace Pulse\Controllers;
 
 use Pulse\Components\Logger;
-use Pulse\Components\Utils;
-use Pulse\Models\MedicalCenter\MedicalCenter;
+use Pulse\Models\Doctor\DoctorDetails;
 
 class SearchDoctorController extends BaseController
 {
@@ -13,10 +12,25 @@ class SearchDoctorController extends BaseController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function getIFrame()
     {
         $account = $this->getCurrentAccount();
         $this->render('iframe/SearchDoctor.html.twig', array(), $account);
+    }
+
+    /**
+     */
+    public function getSearchResults()
+    {
+        $name = $this->httpHandler()->postParameter('full_name');
+        $slmc_id = $this->httpHandler()->postParameter('slmc_id');
+        $category = $this->httpHandler()->postParameter('doctor_category');
+
+        if ($category == 'NONE') {
+            $category = null;
+        }
+
+        return DoctorDetails::searchDoctor($slmc_id, $name, $category);
     }
 
     /**
@@ -24,22 +38,21 @@ class SearchDoctorController extends BaseController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function post()
-    {
-        $name = $this->httpHandler()->postParameter('account');
-        $slmc_id = $this->httpHandler()->postParameter('slmc_id');
-        // $region = $this->httpHandler()->postParameter('region');
+    public function postIframe(){
+        $account = $this->getCurrentAccount();
+        if ($account == null){
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        }
 
-        $category = $this->httpHandler()->postParameter('doctor-category');
-
-        $results = MedicalCenter::searchDoctor($slmc_id, $name, $category);
+        $results = $this->getSearchResults();
 
         if ($results == null || sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/search/doctor?error=$error");
+            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
         } else {
-            $this->render("SearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
+            $this->render("iframe/DoctorSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
                 $this->getCurrentAccount());
         }
     }

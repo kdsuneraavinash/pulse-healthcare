@@ -38,8 +38,8 @@ class Database
      */
     private static function handleErrors(\Exception $e)
     {
-        echo str_replace('[DATABASE_ERROR]', $e->getMessage(), file_get_contents("database_error.html"));
         Logger::log("Error[{$e->getCode()}] {$e->getMessage()}", Logger::ERROR, 'Database');
+        echo str_replace('[DATABASE_ERROR]', $e->getMessage(), file_get_contents("database_error.html"));
         die;
     }
 
@@ -65,7 +65,7 @@ class Database
         foreach ($params as $key => $value) {
             if ($value instanceof PureSqlStatement) {
                 $replace_counter = substr_count($query, ":$key");
-                if ($replace_counter > 1){
+                if ($replace_counter > 1) {
                     throw new \Exception("Pure SQL statement error. Replaces more than one instances.");
                 }
                 $count = 1;
@@ -78,7 +78,6 @@ class Database
     private static function bindToStatement(\PDOStatement $statement, array $params)
     {
         foreach ($params as $key => $value) {
-            Logger::log($key);
             if ($value instanceof PureSqlStatement) {
                 continue;
             }
@@ -177,6 +176,15 @@ class Database
     }
 
     /**
+     * Returns last inserted record id
+     * @return string|null
+     */
+    public static function lastInsertedId(): ?string
+    {
+        return self::getDatabase()->lastInsertId();
+    }
+
+    /**
      * Database::update('users', 'name=:name', 'id=:id', array('id' => $id, 'name' => $name))
      * @param string $table
      * @param string $set
@@ -223,40 +231,6 @@ class Database
     {
         return self::$database;
     }
-
-
-    public static function search($table,$slmc_id,$display_name,$searchText,array $params){
-
-        try {
-            $query = "SELECT slmc_id,display_name FROM doctor_details WHERE MATCH(slmc_id,display_name)AGAINST(':searchText' IN BOOLEAN MODE)";
-            $statement = self::getDatabase()->prepare($query);
-            self::bindToStatement($statement,$params);
-            $statement->execute();
-            //print_r($statement);
-            return $statement->fetchAll();
-        } catch (\Exception $e) {
-            echo $e;
-            //self::handleErrors($e);
-            exit;
-        }
-
-    }
-
-    public static function addToFullSearch($table,$slmc_id,$display_name,array $params){
-        try {
-            $query = "ALTER TABLE $table ADD FULLTEXT(slmc_id,display_name)";
-            $statement = self::getDatabase()->prepare($query);
-            self::bindToStatement($statement,$params);
-            $statement->execute();
-        } catch (\Exception $e) {
-            echo $e;
-            //self::handleErrors($e);
-            exit;
-        }
-
-
-    }
-
 }
 
 class PureSqlStatement

@@ -3,38 +3,52 @@
 namespace Pulse\Controllers;
 
 use Pulse\Components;
+use Pulse\Components\Utils;
 use Pulse\Models\Doctor\Doctor;
-use Pulse\Models\Exceptions;
+use Pulse\Models\Exceptions\InvalidDataException;
+use Pulse\Models\Prescription\Medication;
+use Pulse\Models\Prescription\Prescription;
 
 class DoctorCreatePrescriptionController extends BaseController
 {
     public function post()
     {
         $currentAccount = $this->getCurrentAccount();
-        $error=null;
 
         if ($currentAccount instanceof Doctor) {
-            $type = $this->httpHandler()->postParameter('type');
-            $days = $this->httpHandler()->postParameter('days');
-            $comments = $this->httpHandler()->postParameter('comments');
+            $doctorId = $currentAccount->getAccountId();
+            $patientId = $this->httpHandler()->postParameter('patient');
+            $medications = $this->httpHandler()->postParameter('medications');
 
-            Components\Logger::log($type,$days,$comments);
+            $medicationsArr = array();
 
-            if (!($type == null)) {
-                try {
-                    $this->render('iframe/DoctorCreatePrescription.htm.twig', array(
-                        'requested_type' => $type
-                    ), $currentAccount);
-                } catch (\Twig_Error_Loader $e) {
-                } catch (\Twig_Error_Runtime $e) {
-                } catch (\Twig_Error_Syntax $e) {
-                }
-            } else {
-                $error = 'Enter type of illness.';
-            }
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?error=$error");
+            foreach ($medications as $item) {
+
+                $name = $item['name'];
+                $dose = $item['dose'];
+                $frequency = $item['frequency'];
+                $time = $item['time'];
+                $comment = $item['comment'];
+
+                $medication = new Medication(null, null, $name, $dose, $frequency, $time, $comment);
+                array_push($medicationsArr, $medication);
+            };
+
+            $prescription = new Prescription(null, $patientId, $doctorId, $medicationsArr);
+             try {
+                 $prescription->saveInDatabase();
+             } catch (InvalidDataException $error) {
+                 $this->httpHandler()->setContent("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?error=$error");
+             }
+
+            // TODO: Uncomment following line
+            // $prescriptionId = $prescription->getPrescriptionId();
+            // TODO: Comment following line
+            $prescriptionId = $patientId . "_PRECRIPTION";
+             
+            $this->httpHandler()->setContent("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?prescription=$prescriptionId");
         } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+            $this->httpHandler()->setContent("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 }

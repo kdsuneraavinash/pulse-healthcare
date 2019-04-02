@@ -9,8 +9,8 @@
 
 <div class="container pt-2">
 
-    {{ control_panel.card_start("Search Doctor") }}
-    <form action="{{ site }}/control/{{ account_type }}/search/doctor" class="needs-validation" method="post"
+    {{ control_panel.card_start("Search Patient") }}
+    <form action="{{ site }}/control/{{ account_type }}/search/patient" class="needs-validation" method="post"
           novalidate>
 
         {% if (error != null) %}
@@ -19,9 +19,9 @@
             </div>
         {% endif %}
 
-        {{ form_fields.input_with_label('full_name', 'Name', 'Name', null, 'text') }}
-        {{ form_fields.input_with_label('slmc_id', 'SLMC Reg ID', 'Doctor Registration ID in SLMC',null, 'text') }}
-        {{ form_fields.dropdown_menu('doctor_category', 'Category', 'Any Category',{'opd':'OPD','abc':'ABC'}) }}
+        {{ form_fields.input_with_label('name', 'Name', 'Name', null, 'text') }}
+        {{ form_fields.input_with_label('nic', 'NIC', 'NIC Number', null, 'text') }}
+        {{ form_fields.input_with_label('address', 'Part of Address', 'Part of Patient Address', null, 'text') }}
 
         <div class="text-right">
             <button class="btn btn-primary my-4" type="submit">Search</button>
