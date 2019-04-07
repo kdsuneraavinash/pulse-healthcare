@@ -34,9 +34,6 @@ $whoops->register();
 /// Initialize Http Handler
 Components\HttpHandler::init($_GET, $_POST);
 
-/// Initialize Database Handler
-Components\Database::init();
-
 /// Initialize Twig Handler
 Components\TwigHandler::init();
 

@@ -8,28 +8,38 @@ class Database
 {
     private static $database;
 
-    public static function init()
+    /**
+     * --------------------------------------
+     * ---------SINGLETON DESIGN PATTERN-----
+     * --------------------------------------
+     *
+     * @return PDO
+     */
+    private static function getDatabase(): PDO
     {
-        // Define variables
-        $hostName = 'localhost';
-        $databaseName = 'pulse';
-        $userName = 'pulse_root';
-        $password = 'password';
-        $charset = 'latin1';
-        $dataSourceName = "mysql:host=$hostName;dbname=$databaseName;charset=$charset";
-        $options = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
+        if (self::$database == null) {
+            // Establish connection
+            // Define variables
+            $hostName = 'localhost';
+            $databaseName = 'pulse';
+            $userName = 'pulse_root';
+            $password = 'password';
+            $charset = 'latin1';
+            $dataSourceName = "mysql:host=$hostName;dbname=$databaseName;charset=$charset";
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+            ];
 
-        // Try to connect to database
-//        try {
-//            self::$database = new PDO($dataSourceName, $userName, $password, $options);
-//        } catch (\PDOException $e) {
-//            self::handleErrors($e);
-//        }
-        self::$database = new PDO($dataSourceName, $userName, $password, $options);
+            // Try to connect to database
+            try {
+                self::$database = new PDO($dataSourceName, $userName, $password, $options);
+            } catch (\PDOException $e) {
+                self::handleErrors($e);
+            }
+        }
+        return self::$database;
     }
 
     /**
@@ -190,6 +200,7 @@ class Database
      * @param string $set
      * @param string $where
      * @param array $params
+     * @param bool $ignorePureSqlStatements
      */
     public static function update(string $table, string $set, string $where, array $params, bool $ignorePureSqlStatements = true)
     {
@@ -228,14 +239,6 @@ class Database
             self::handleErrors($e);
             exit;
         }
-    }
-
-    /**
-     * @return PDO
-     */
-    private static function getDatabase(): PDO
-    {
-        return self::$database;
     }
 }
 
