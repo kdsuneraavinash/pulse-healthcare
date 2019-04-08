@@ -38,7 +38,7 @@ class ProfilePageController extends BaseController
         try {
             $account = Account::retrieveAccount($accountId, true);
         } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404?a=$accountId");
             exit();
         }
         $context = $this->populate_with_account($account);

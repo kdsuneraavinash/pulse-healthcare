@@ -31,13 +31,22 @@ class DoctorControlPanelController extends BaseController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
+    public function getDoctorCreatePrescriptionSearchPatientIframe(){
+        parent::loadOnlyIfUserIsOfType(Doctor::class, 'iframe/CreatePrescriptionSearchPatient.htm.twig');
+    }
+
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function getDoctorCreatePrescriptionIframe()
     {
-        $prescription = $this->httpHandler()->getParameter('prescription');
+        $patientId = $this->httpHandler()->getParameter('patient');
 
         $currentAccount = $this->getCurrentAccount();
         if ($currentAccount instanceof Doctor) {
-            $this->render('iframe/DoctorCreatePrescription.htm.twig', array('prescription' => $prescription),
+            $this->render('iframe/DoctorCreatePrescription.htm.twig', array('patient_id' => $patientId),
                 $currentAccount);
         } else {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");

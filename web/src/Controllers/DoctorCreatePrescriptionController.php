@@ -4,8 +4,12 @@ namespace Pulse\Controllers;
 
 use Pulse\Components;
 use Pulse\Components\Utils;
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Doctor\Doctor;
+use Pulse\Models\Exceptions\AccountNotExistException;
+use Pulse\Models\Exceptions\AccountRejectedException;
 use Pulse\Models\Exceptions\InvalidDataException;
+use Pulse\Models\Patient\Patient;
 use Pulse\Models\Prescription\Medication;
 use Pulse\Models\Prescription\Prescription;
 
@@ -38,17 +42,39 @@ class DoctorCreatePrescriptionController extends BaseController
              try {
                  $prescription->saveInDatabase();
              } catch (InvalidDataException $error) {
-                 $this->httpHandler()->setContent("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?error=$error");
+                 $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?error=$error");
              }
 
             // TODO: Uncomment following line
             // $prescriptionId = $prescription->getPrescriptionId();
             // TODO: Comment following line
-            $prescriptionId = $patientId . "_PRECRIPTION";
+            $prescriptionId = $patientId . "_PRESCRIPTION";
              
-            $this->httpHandler()->setContent("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?prescription=$prescriptionId");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?prescription=$prescriptionId");
         } else {
-            $this->httpHandler()->setContent("http://$_SERVER[HTTP_HOST]/405");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        }
+    }
+
+    public function postSearchPatient(){
+        $currentAccount = $this->getCurrentAccount();
+
+        if ($currentAccount instanceof Doctor) {
+            $patientId = $this->httpHandler()->postParameter('patient');
+            try {
+                $account = Account::retrieveAccount($patientId, true);
+                if (!($account instanceof Patient)){
+                    throw new AccountNotExistException($patientId);
+                }
+            } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
+                $error = "Account ID Invalid";
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/search?error=$error");
+                return;
+            }
+
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?patient=$patientId");
+        } else {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 }
