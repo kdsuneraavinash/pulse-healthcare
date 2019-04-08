@@ -1,60 +1,65 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:pulse_healthcare/home.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pulse_healthcare/uigradient.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            Container(
-              child: FlareActor(
-                "assets/login_screen.flr",
-                alignment: Alignment.center,
-                fit: BoxFit.cover,
-                animation: "rotate",
-              ),
-            ),
-            ScrollConfiguration(
-              behavior: NoGlowScrollBehavior(),
-              child: Center(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    LoginForm(),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Team Pulse",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                    letterSpacing: 2.0,
-                    fontWeight: FontWeight.w300),
-              ),
-            ),
-          ],
+    // Store media query hight to avoid lookup latency
+    double mediaQueryHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Login"),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: <Widget>[
+          SizedBox(
+            height: mediaQueryHeight / 3,
+            child: _buildTopBanner(context),
+          ),
+          Container(
+            height: mediaQueryHeight / 2,
+            child: LoginForm(),
+          )
+        ],
+      ),
+    );
+  }
+
+  /// Top Half of the screen
+  Widget _buildTopBanner(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      color: Theme.of(context).primaryColor,
+      padding: const EdgeInsets.all(16.0),
+      child: Text(
+        "MediKit",
+        style: TextStyle(
+          fontSize: 72,
+          color: Colors.white,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );
   }
 }
 
+/// Login Form (Stateful) - Bottom Half of the screen
 class LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
+  // Form key to validate form
   final _formKey = GlobalKey<FormState>();
+
+  // Text Controllers to retrieve text
   TextEditingController _usernameController;
   TextEditingController _passwordController;
 
@@ -64,29 +69,25 @@ class _LoginFormState extends State<LoginForm> {
     _passwordController = new TextEditingController();
   }
 
-  Widget _buildFormTextBox(
-      String hintText,
-      FormFieldValidator<String> validator,
-      TextEditingController _textEditingController,
-      [isPassword = false]) {
+  /// Builds a text box for the login form
+  Widget _buildFormTextBox({
+    String labelText,
+    FormFieldValidator<String> validator,
+    TextEditingController textEditingController,
+    IconData icon,
+    isPassword = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
         child: Center(
           child: TextFormField(
-            controller: _textEditingController,
+            controller: textEditingController,
             obscureText: isPassword,
             decoration: InputDecoration(
+              prefixIcon: Icon(icon),
               border: OutlineInputBorder(),
-              hintText: hintText,
-              fillColor: Colors.white,
-              filled: true,
-              errorStyle: TextStyle(
-                color: Colors.white,
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-              ),
+              labelText: labelText,
             ),
             validator: validator,
           ),
@@ -105,21 +106,20 @@ class _LoginFormState extends State<LoginForm> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "MediKit",
-                style: TextStyle(
-                  fontSize: 72,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+            _buildFormTextBox(
+              labelText: "Patient ID",
+              validator: _patientIdValidation,
+              textEditingController: _usernameController,
+              icon: FontAwesomeIcons.userAlt,
+              isPassword: false,
             ),
             _buildFormTextBox(
-                "PATIENT-ID", _patientIdValidation, _usernameController),
-            _buildFormTextBox(
-                "PASSWORD", _passwordIdValidation, _passwordController, true),
+              labelText: "Password",
+              validator: _passwordIdValidation,
+              textEditingController: _passwordController,
+              icon: FontAwesomeIcons.key,
+              isPassword: true,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -127,7 +127,7 @@ class _LoginFormState extends State<LoginForm> {
                   padding: const EdgeInsets.all(8.0),
                   child: RaisedButton(
                     onPressed: _loginButtonPress,
-                    color: Colors.pink,
+                    color: Theme.of(context).accentColor,
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Text(
@@ -147,7 +147,7 @@ class _LoginFormState extends State<LoginForm> {
 
   String _patientIdValidation(String value) {
     if (value.isEmpty) {
-      return 'Please enter your PATIENT-ID';
+      return 'Please enter your Patient ID';
     }
     return null;
   }
@@ -161,19 +161,22 @@ class _LoginFormState extends State<LoginForm> {
 
   void _loginButtonPress() {
     if (_formKey.currentState.validate()) {
-      if (_usernameController.text == 'demo' &&
-          _passwordController.text == 'pass') {
-        loginSuccessful();
+      if (_usernameController.text == 'demo') {
+        if (_passwordController.text == 'pass') {
+          loginSuccessful();
+        } else {
+          loginFailed(message: "Incorrect Password");
+        }
       } else {
-        loginFailed();
+        loginFailed(message: "User does not exist");
       }
     }
   }
 
-  void loginFailed() {
+  void loginFailed({String message}) {
     showDialog(
       context: context,
-      builder: (_) => LoginFailedDialog(),
+      builder: (_) => LoginFailedDialog(errorMessage: message),
     );
   }
 
@@ -193,37 +196,33 @@ class _LoginFormState extends State<LoginForm> {
 class LoginFailedDialog extends StatelessWidget {
   final String errorMessage;
 
-  LoginFailedDialog({Key key, this.errorMessage = "Login Failed"})
-      : super(key: key);
+  LoginFailedDialog({Key key, this.errorMessage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      backgroundColor: Colors.purple,
+      backgroundColor: UiGradient.warningColor,
       children: <Widget>[
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.width *
-              MediaQuery.of(context).size.aspectRatio,
-          child: FlareActor(
-            "assets/bird.flr",
-            animation: "cry",
-            fit: BoxFit.contain,
-            alignment: Alignment.center,
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 24.0),
+          alignment: Alignment.center,
+          child: Text(
+            errorMessage,
+            style: TextStyle(fontSize: 16.0),
+            textAlign: TextAlign.center,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-          child: RaisedButton(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: OutlineButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            color: Colors.pink,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Dismiss',
-                style: TextStyle(fontSize: 18, color: Colors.white),
+                'OK',
+                style: TextStyle(fontSize: 18),
               ),
             ),
           ),
@@ -231,18 +230,8 @@ class LoginFailedDialog extends StatelessWidget {
       ],
       title: Align(
         alignment: Alignment.center,
-        child: Text(
-          "Login Failed",
-          style: TextStyle(color: Colors.white),
-        ),
+        child: Text("Login Failed"),
       ),
     );
-  }
-}
-
-class NoGlowScrollBehavior extends ScrollBehavior {
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
   }
 }

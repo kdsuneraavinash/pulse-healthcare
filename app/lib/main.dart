@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:pulse_healthcare/home.dart';
 import 'package:pulse_healthcare/login.dart';
+import 'package:flutter/services.dart';
+import 'package:pulse_healthcare/uigradient.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // Set Status bar colors
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: UiGradient.primaryColor,
+    statusBarColor: UiGradient.primaryColor,
+  ));
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MediKit',
+      // Theme Definition
       theme: ThemeData(
-        primaryColor: Colors.black,
-        accentColor: Colors.deepPurple,
+        primaryColor: UiGradient.primaryColor,
+        accentColor: Colors.pink,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       home: LoginScreen(),
     );

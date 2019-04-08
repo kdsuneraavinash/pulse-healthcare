@@ -22,8 +22,8 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  flare_flutter: ^1.3.7
+  # cupertino_icons: ^0.1.2
+  # flare_flutter: ^1.3.7
   fancy_bottom_navigation: ^0.3.2
   font_awesome_flutter: ^8.4.0
 
@@ -45,11 +45,11 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/login_screen.flr
-    - assets/world.flr
-    - assets/cat_profile.flr
-    - assets/bird.flr
+  # assets:
+  #   - assets/login_screen.flr
+  #   - assets/world.flr
+  #   - assets/cat_profile.flr
+  #   - assets/bird.flr
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

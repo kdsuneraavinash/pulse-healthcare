@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pulse_healthcare/profile.dart';
+import 'package:pulse_healthcare/timeline.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -30,14 +31,14 @@ class _HomePageState extends State<HomePage> {
       body: PageView(
         controller: _pageController,
         children: <Widget>[
-          Center(child: ProfilePage(key: _profilePageKey,)),
-          Center(child: Text("Page 2")),
-          Center(child: Text("Page 3")),
+          Center(child: TimelinePage()),
+          Center(child: Text("Prescription Page")),
+          Center(child: ProfilePage(key: _profilePageKey)),
         ],
         onPageChanged: (position) {
-          if (!_isPageViewAnimating){
-            final FancyBottomNavigationState fState = _bottomNavigationKey
-                .currentState;
+          if (!_isPageViewAnimating) {
+            final FancyBottomNavigationState fState =
+                _bottomNavigationKey.currentState;
             fState.setPage(position);
           }
         },
@@ -45,27 +46,24 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: FancyBottomNavigation(
         key: _bottomNavigationKey,
         tabs: [
-          TabData(iconData: FontAwesomeIcons.userTie, title: "Profile"),
+          TabData(iconData: Icons.timeline, title: "Timeline"),
           TabData(iconData: FontAwesomeIcons.pills, title: "Prescriptions"),
-          TabData(iconData: Icons.search, title: "Search"),
+          TabData(iconData: FontAwesomeIcons.userTie, title: "Profile"),
         ],
         onTabChangedListener: (position) {
           setState(() {
             _isPageViewAnimating = true;
-            _pageController.animateToPage(position,
-                duration: Duration(milliseconds: 300), curve: Curves.easeOut)
-                .then((_){
-            setState(() {
-              _isPageViewAnimating = false;
-            });
+            _pageController
+                .animateToPage(position,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeOut)
+                .then((_) {
+              setState(() {
+                _isPageViewAnimating = false;
+              });
             });
           });
         },
-        circleColor: Colors.pink,
-        textColor: Colors.white,
-        inactiveIconColor: Colors.white,
-        barBackgroundColor: Colors.black,
-        activeIconColor: Colors.white,
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -7,26 +6,21 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double mediaQueryWidth = MediaQuery.of(context).size.width;
     return Container(
       child: ListView(
         children: <Widget>[
           Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width *
-                  MediaQuery.of(context).size.aspectRatio,
-              margin: EdgeInsets.all(16.0),
-              child: CircleAvatar(
-                backgroundColor: Colors.purple,
-                child: Container(
-                  margin: EdgeInsets.all(16.0),
-                  child: FlareActor(
-                    "assets/bird.flr",
-                    animation: "idle_breathe",
-                    fit: BoxFit.contain,
-                    alignment: Alignment.center,
-                  ),
-                ),
-              )),
+            color: Theme.of(context).primaryColor,
+            height: mediaQueryWidth / 2.5,
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: Icon(
+              FontAwesomeIcons.userTie,
+              size: mediaQueryWidth / 5,
+              color: Colors.white,
+            ),
+          ),
           _buildListTile(FontAwesomeIcons.key, "972502456V", "Patient ID"),
           _buildListTile(FontAwesomeIcons.userAlt, "Sunera Avinash", "Name"),
           _buildListTile(FontAwesomeIcons.idCard, "972502456V", "NIC"),
@@ -37,10 +31,19 @@ class ProfilePage extends StatelessWidget {
               FontAwesomeIcons.city,
               "344/1, Moonamalgahawatta, Duwatemple Rd, Kalutara South.",
               "Address"),
-          _buildListTile(
-              FontAwesomeIcons.phone, "076-8336850", "Phone NIcon(icon)umber"),
-          SizedBox(
-            height: 25,
+          _buildListTile(FontAwesomeIcons.phone, "076-8336850", "Phone Number"),
+          OutlineButton(
+            onPressed: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                'Logout',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ),
           )
         ],
       ),
