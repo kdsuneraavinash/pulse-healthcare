@@ -1,7 +1,7 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pulse_healthcare/profile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   PageController _pageController;
   GlobalKey _bottomNavigationKey = new GlobalKey();
+  GlobalKey _profilePageKey = new GlobalKey();
   bool _isPageViewAnimating = false;
 
   @override
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
       body: PageView(
         controller: _pageController,
         children: <Widget>[
-          Center(child: ProfilePage()),
+          Center(child: ProfilePage(key: _profilePageKey,)),
           Center(child: Text("Page 2")),
           Center(child: Text("Page 3")),
         ],
@@ -60,25 +61,11 @@ class _HomePageState extends State<HomePage> {
             });
           });
         },
-        circleColor: Colors.white,
+        circleColor: Colors.pink,
         textColor: Colors.white,
         inactiveIconColor: Colors.white,
         barBackgroundColor: Colors.black,
-        activeIconColor: Colors.black,
-      ),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FlareActor(
-        "assets/world.flr",
-        alignment: Alignment.center,
-        fit: BoxFit.cover,
-        animation: "Preview2",
+        activeIconColor: Colors.white,
       ),
     );
   }

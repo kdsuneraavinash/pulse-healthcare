@@ -48,6 +48,8 @@ flutter:
   assets:
     - assets/login_screen.flr
     - assets/world.flr
+    - assets/cat_profile.flr
+    - assets/bird.flr
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
