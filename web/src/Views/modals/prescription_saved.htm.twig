@@ -1,3 +1,4 @@
+<!--suppress SpellCheckingInspection, HtmlUnknownTarget -->
 <div class="modal fade down" id="modalPrescriptionAdded" tabindex="-1" role="dialog"
      aria-labelledby="ModalLabel"
      data-backdrop="true" aria-hidden="true" style="display: none;">
@@ -19,11 +20,16 @@
                 <div class="p-2">
                     <strong>Prescription was added successfully.</strong>
                     <br/>
-                    Prescription ID: <strong>{{ prescription }}</strong>
+                    Prescription ID: <strong>{{ prescription_id }}</strong>
                 </div>
 
-                <button type="button" class="btn btn-success waves-effect waves-light" data-dismiss="modal">OK
-                </button>
+               <div class="text-right">
+                   <button type="button" class="btn btn-success waves-effect waves-light" data-dismiss="modal">OK
+                   </button>
+                   <a target="_blank" class="btn btn-success waves-effect waves-light" href="{{ site }}/prescription?id={{ prescription_id }}">
+                       View Prescription
+                   </a>
+               </div>
             </div>
         </div>
 
@@ -31,9 +37,11 @@
 </div>
 
 <script>
-    $(window).on('load', function () {
-        setTimeout(function () {
-            $("#modalPrescriptionAdded").modal('show');
-        }, 500);
-    })
+    $(window).on('load',
+        function () {
+            setTimeout(function () {
+                $("#modalPrescriptionAdded").modal('show');
+            }, 500);
+        }
+    );
 </script>

@@ -1,0 +1,31 @@
+<div class="modal fade down" id="modalPrescriptionSaveFailed" tabindex="-1" role="dialog"
+     aria-labelledby="ModalLabel"
+     data-backdrop="true" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-notify modal-danger" role="document">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <p class="heading">Prescription Saving Failed</p>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="p-2 text-center justify-content-center">
+                    <i class="fas fa-exclamation-triangle fa-5x"></i>
+                </div>
+                <div class="p-2">
+                    <strong>Prescription adding failed.</strong>
+                    <br/>
+                    Error: <strong id="error_modal_message"></strong>
+                </div>
+
+                <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal">OK
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

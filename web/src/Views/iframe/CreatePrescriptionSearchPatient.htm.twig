@@ -34,5 +34,10 @@
 </div>
 
 {{ control_panel.iframe_middle() }}
+
+{% if (prescription_id != null) %}
+    {% include 'modals/prescription_saved.htm.twig' %}
+{% endif %}
+
 {{ control_panel.iframe_end() }}
 </html>
