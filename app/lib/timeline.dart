@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pulse_healthcare/logic/timeline_entry.dart';
 
 class TimelinePage extends StatelessWidget {
   TimelinePage({Key key}) : super(key: key);
@@ -10,6 +11,8 @@ class TimelinePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<TimelineEntry> timelineEntries = TimelineEntry.getTimeline();
+
     return Container(
       child: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
@@ -21,6 +24,7 @@ class TimelinePage extends StatelessWidget {
                 ),
                 child: TimeLineCard(
                   timelineItemHeight: timelineItemHeight,
+                  timelineEntry: timelineEntries[index],
                 ),
               ),
               _buildTimeLineVLine(context),
@@ -28,7 +32,7 @@ class TimelinePage extends StatelessWidget {
             ],
           );
         },
-        itemCount: 5,
+        itemCount: timelineEntries.length,
       ),
     );
   }
@@ -73,16 +77,41 @@ class TimelinePage extends StatelessWidget {
 
 class TimeLineCard extends StatelessWidget {
   final double timelineItemHeight;
+  final TimelineEntry timelineEntry;
+  final List<String> months = [
+    "JANUARY",
+    "FEBRUARY",
+    "MARCH",
+    "APRIL",
+    "MAY",
+    "JUNE",
+    "JULY",
+    "AUGUST",
+    "SEPTEMBER",
+    "OCTOBER",
+    "NOVEMBER",
+    "DECEMBER"
+  ];
 
-  TimeLineCard({Key key, this.timelineItemHeight}) : super(key: key);
+  TimeLineCard({Key key, this.timelineItemHeight, this.timelineEntry})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> tags = [
+      keywordChip("Med (${this.timelineEntry.medications})", context)
+    ];
+    if (this.timelineEntry.isImportant) {
+      tags.add(keywordChip("Important", context));
+    }
+    if (this.timelineEntry.hasReport) {
+      tags.add(keywordChip("Report", context));
+    }
+
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).primaryColor),
-        borderRadius: BorderRadius.circular(12.0)
-      ),
+          border: Border.all(color: Theme.of(context).primaryColor),
+          borderRadius: BorderRadius.circular(12.0)),
       width: double.infinity,
       height: timelineItemHeight + 2,
       margin: EdgeInsets.all(5.0),
@@ -94,17 +123,17 @@ class TimeLineCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: <Widget>[
-              Text("FEBRUARY 12",
+              Text("${months[this.timelineEntry.date.month-1]} ${this.timelineEntry.date.day}",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900)),
               SizedBox(width: 10),
-              Text("2019",
+              Text("${this.timelineEntry.date.year}",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
             ],
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: Icon(FontAwesomeIcons.userMd, color: Colors.black),
-            title: Text("Dr. Sanath Perera",
+            title: Text("Dr. ${this.timelineEntry.doctorName}",
                 style: TextStyle(
                     color: Colors.black, fontWeight: FontWeight.w700)),
             subtitle: Text("Prescribed doctor"),
@@ -112,11 +141,7 @@ class TimeLineCard extends StatelessWidget {
           Wrap(
             alignment: WrapAlignment.start,
             spacing: 5.0,
-            children: <Widget>[
-              keywordChip("Med (2)", context),
-              keywordChip("Report", context),
-              keywordChip("Important", context),
-            ],
+            children: tags,
           )
         ],
       ),

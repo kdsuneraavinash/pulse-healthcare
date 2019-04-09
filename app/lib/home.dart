@@ -32,7 +32,9 @@ class _HomePageState extends State<HomePage> {
         controller: _pageController,
         children: <Widget>[
           Center(child: TimelinePage()),
-          Center(child: Text("Prescription Page")),
+          Center(
+              child:
+                  Icon(FontAwesomeIcons.cogs, size: 72.0, color: Colors.black)),
           Center(child: ProfilePage(key: _profilePageKey)),
         ],
         onPageChanged: (position) {
