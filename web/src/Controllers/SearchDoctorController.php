@@ -3,7 +3,10 @@
 namespace Pulse\Controllers;
 
 use Pulse\Components\Logger;
+use Pulse\Models\Admin\Admin;
+use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
+use Pulse\Models\MedicalCenter\MedicalCenter;
 
 class SearchDoctorController extends BaseController
 {
@@ -15,7 +18,11 @@ class SearchDoctorController extends BaseController
     public function getIFrame()
     {
         $account = $this->getCurrentAccount();
-        $this->render('iframe/SearchDoctor.html.twig', array(), $account);
+        if ($account instanceof Doctor || $account instanceof Admin || $account instanceof MedicalCenter){
+            $this->render('iframe/SearchDoctor.html.twig', array(), $account);
+        }else{
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        }
     }
 
     /**
@@ -23,14 +30,14 @@ class SearchDoctorController extends BaseController
     public function getSearchResults()
     {
         $name = $this->httpHandler()->postParameter('full_name');
-        $slmc_id = $this->httpHandler()->postParameter('slmc_id');
+        $slmcId = $this->httpHandler()->postParameter('slmc_id');
         $category = $this->httpHandler()->postParameter('doctor_category');
 
         if ($category == 'NONE') {
             $category = null;
         }
 
-        return DoctorDetails::searchDoctor($slmc_id, $name, $category);
+        return DoctorDetails::searchDoctor($slmcId, $name, $category);
     }
 
     /**

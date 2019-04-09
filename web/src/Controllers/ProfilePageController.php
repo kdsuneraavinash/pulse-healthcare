@@ -21,8 +21,12 @@ class ProfilePageController extends BaseController
     public function get()
     {
         $current_account = $this->getCurrentAccount();
-        $context = $this->populate_with_account($current_account);
-        $this->render("ProfilePage.html.twig", $context, $current_account);
+        if ($current_account instanceof  Account){
+            $context = $this->populate_with_account($current_account);
+            $this->render("ProfilePage.html.twig", $context, $current_account);
+        }else{
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
+        }
     }
 
     /**
