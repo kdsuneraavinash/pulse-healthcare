@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       // Theme Definition
       theme: ThemeData(
         primaryColor: UiGradient.primaryColor,
-        accentColor: Colors.pink,
+        accentColor: UiGradient.accentColor,
         iconTheme: IconThemeData(color: Colors.white),
       ),
       home: LoginScreen(),
