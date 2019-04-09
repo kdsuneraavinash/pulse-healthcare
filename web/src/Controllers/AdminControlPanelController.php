@@ -2,6 +2,8 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Components\Logger;
+use Pulse\Components\Utils;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
@@ -26,7 +28,14 @@ class AdminControlPanelController extends BaseController
      */
     public function getAdminDashboardIframe()
     {
-        parent::loadOnlyIfUserIsOfType(Admin::class, 'iframe/AdminDashboardIFrame.htm.twig');
+        $currentAccount = $this->getCurrentAccount();
+        if ($currentAccount instanceof Admin){
+            $result = $currentAccount->generateUserTypeData();
+            $this->render('iframe/AdminDashboardIFrame.htm.twig', $result, $currentAccount);
+        }else{
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        }
+
     }
 
     /**

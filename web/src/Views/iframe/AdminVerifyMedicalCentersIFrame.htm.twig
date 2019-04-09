@@ -39,7 +39,8 @@
 
 <script>
     $(document).ready(function () {
-        $(".owl-carousel").owlCarousel(
+        let owl = $('.owl-carousel');
+        owl.owlCarousel(
             {
                 URLhashListener: true,
                 loop: false,
@@ -49,6 +50,7 @@
                 dots: true,
                 nav: true,
                 responsiveClass: true,
+                navText: ["<i class='fa fa-arrow-circle-left fa-3x p-4'></i>", "<i class='fa fa-arrow-circle-right fa-3x p-4'></i>"],
                 responsive: {
                     0: {
                         items: 1,
@@ -62,7 +64,15 @@
                 }
             }
         );
+        let owlCard = $(".card");
+        let minHeight = -1;
+        owlCard.each((i, div) =>
+            minHeight = $(div).height() > minHeight ? $(div).height() : minHeight
+        );
+        console.log(minHeight);
+        owlCard.css("min-height", minHeight + "px");
     });
+
 
     $('.account-modal').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget);

@@ -8,7 +8,6 @@
 
 <header>
     {{ control_panel.sidebar_start(account_id, account_type, site) }}
-    {{ control_panel.sidebar_button("Dashboard", "dashboard", "fa-chart-pie", true) }}
     {{ control_panel.sidebar_button("Register Doctors", "register/doctor", "fa-user-plus", false) }}
     {{ control_panel.sidebar_button("Register Patients", "register/patient", "fa-user-plus", false) }}
     {{ control_panel.sidebar_button("Search Doctors", "search/doctor", "fas fa-search", false) }}
@@ -19,7 +18,7 @@
 <main>
     <div class="container-fluid p-0">
         {{ control_panel.navbar() }}
-        <iframe src="{{ site }}/control/med_center/dashboard" style="border:none; min-height: 100vh;"
+        <iframe src="{{ site }}/control/med_center/register/patient" style="border:none; min-height: 100vh;"
                 class="embed-responsive m-0 p-0" id="content-iframe"></iframe>
     </div>
 </main>

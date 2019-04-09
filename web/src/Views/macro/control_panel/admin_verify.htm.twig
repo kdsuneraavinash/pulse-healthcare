@@ -2,7 +2,7 @@
     fax, phone_number, address, parsed_address, postal_code, state) -%}
     {% import  'macro/control_panel/common.htm.twig' as control_panel %}
     <!--suppress HtmlFormInputWithoutLabel, HtmlUnknownTarget -->
-    <div data-hash="{{ account_id }}">
+    <div data-hash="{{ account_id }}" class="owl-card">
         {{ control_panel.card_start(account_id) }}
         <h3 class="card-title"><strong>{{ name }}</strong></h3>
         <a href="http://www.phsrc.lk/pages_e.php?id=16" target="_blank"><h5 class="blue-text pb-2">
