@@ -4,6 +4,10 @@ namespace Pulse\Controllers;
 
 use Pulse\Components\Logger;
 use Pulse\Models\Doctor\DoctorDetails;
+use Pulse\Models\Interfaces\DoctorCategoryContext;
+use Pulse\Models\Interfaces\DoctorCategoryOnlyContext;
+use Pulse\Models\Interfaces\DoctorNoCategoryContext;
+use Pulse\Models\Search\SearchContext;
 
 class SearchDoctorController extends BaseController
 {
@@ -30,7 +34,17 @@ class SearchDoctorController extends BaseController
             $category = null;
         }
 
-        return DoctorDetails::searchDoctor($slmc_id, $name, $category);
+        if($category){
+            $searchContext = new DoctorCategoryContext(($slmc_id!=null) ? $slmc_id : null,($name!=null) ? $name :null,$category);
+
+        }else{
+            $searchContext = new DoctorNoCategoryContext(($slmc_id!=null) ? $slmc_id : null,($name!=null) ? $name:null);
+
+        }
+
+        return SearchContext::search($searchContext);
+
+        //return DoctorDetails::searchDoctor($slmc_id, $name, $category);
     }
 
     /**
@@ -49,8 +63,8 @@ class SearchDoctorController extends BaseController
         if ($results == null || sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
-            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
+            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/SearchContext/doctor?error=$error");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/SearchContext/doctor?error=$error");
         } else {
             $this->render("iframe/DoctorSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
                 $this->getCurrentAccount());
