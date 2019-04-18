@@ -108,6 +108,7 @@ CREATE TABLE `doctor_details` (
   `email` varchar(320) NOT NULL,
   `phone_number` varchar(32) NOT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_login` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`account_id`),
   UNIQUE KEY `doctor_details_slmc_id_uindex` (`slmc_id`),
   UNIQUE KEY `doctor_details_nic_uindex` (`nic`),
@@ -122,7 +123,7 @@ CREATE TABLE `doctor_details` (
 
 LOCK TABLES `doctor_details` WRITE;
 /*!40000 ALTER TABLE `doctor_details` DISABLE KEYS */;
-INSERT INTO `doctor_details` (`account_id`, `nic`, `full_name`, `display_name`, `category`, `slmc_id`, `email`, `phone_number`, `creation_date`) VALUES ('11009247V','11009247V','Anju Chamantha','Anju','opd','1234','demo@gmail.com','8886654533','2019-03-19 07:11:54'),('652566699V','652566699V','Medical Center Tester','Tester','opd','1023136','tester@doctor.org','0342225658','2019-03-24 21:55:17'),('932503234V','932503234V','D. J. Saman Kumara','Saman Kumara','opd','111','kdsuneraavinash@gmail.com','8886654533','2019-02-27 11:05:12'),('932503354V','932503354V','P. J. Saman Kumara','Nuwan Kumara','abc','1112SLMC','demo@gmail.com','11122132412','2019-03-26 10:00:42'),('971112610V','971112610V','D. J. Saman Kumr','Kumar','opd','1112','abc@gmail.com','11122132412','2019-03-07 09:04:20');
+INSERT INTO `doctor_details` (`account_id`, `nic`, `full_name`, `display_name`, `category`, `slmc_id`, `email`, `phone_number`, `creation_date`, `last_login`) VALUES ('11009247V','11009247V','Anju Chamantha','Anju','opd','1234','demo@gmail.com','8886654533','2019-03-19 07:11:54','2019-04-02 08:47:03'),('652566699V','652566699V','Medical Center Tester','Tester','opd','1023136','tester@doctor.org','0342225658','2019-03-24 21:55:17','2019-04-02 08:47:03'),('932503234V','932503234V','D. J. Saman Kumara','Saman Kumara','opd','111','kdsuneraavinash@gmail.com','8886654533','2019-02-27 11:05:12','2019-04-02 08:47:03'),('932503354V','932503354V','P. J. Saman Kumara','Nuwan Kumara','abc','1112SLMC','demo@gmail.com','11122132412','2019-03-26 10:00:42','2019-04-02 08:47:03'),('971112610V','971112610V','D. J. Saman Kumr','Kumar','opd','1112','abc@gmail.com','11122132412','2019-03-07 09:04:20','2019-04-02 08:47:03');
 /*!40000 ALTER TABLE `doctor_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,36 +153,6 @@ INSERT INTO `doctors` (`account_id`, `default_password`) VALUES ('11009247V','ew
 UNLOCK TABLES;
 
 --
--- Table structure for table `medi_cards`
---
-
-DROP TABLE IF EXISTS medications;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `medi_cards` (
-  `mediCardID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text,
-  `dose` text,
-  `frequency` text,
-  `time` text,
-  `comment` text,
-  `prescription_fk` int(11) DEFAULT NULL,
-  PRIMARY KEY (`mediCardID`),
-  KEY `prescription_fk` (`prescription_fk`),
-  CONSTRAINT `prescription_fk` FOREIGN KEY (`prescription_fk`) REFERENCES `prescriptions` (`prescriptionID`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `medi_cards`
---
-
-LOCK TABLES medications WRITE;
-/*!40000 ALTER TABLE medications DISABLE KEYS */;
-/*!40000 ALTER TABLE medications ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `medical_center_details`
 --
 
@@ -198,6 +169,7 @@ CREATE TABLE `medical_center_details` (
   `address` text NOT NULL,
   `postal_code` text NOT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_login` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`account_id`),
   UNIQUE KEY `medical_centers_phsrc_id_uindex` (`phsrc`),
   CONSTRAINT `medical_center_details_medical_centers_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `medical_centers` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -210,7 +182,7 @@ CREATE TABLE `medical_center_details` (
 
 LOCK TABLES `medical_center_details` WRITE;
 /*!40000 ALTER TABLE `medical_center_details` DISABLE KEYS */;
-INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`, `creation_date`) VALUES ('mc_demo_0','Med Center Demo 0','PHSRC/DEMO/00','medcenterdemo@gmail.com','','0769900876','CDF Street, ABC City.','15600','2019-03-26 08:28:46'),('mc_demo_1','Medical Center 2','PHSRC/DEMO/02','demo@gmail.com','','0769900876','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-03-26 09:27:53'),('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-02-24 11:50:14'),('MedCenter23','medicalcenter2','PHSRC/DEMO/002','sunerasocacc@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-03-07 09:17:14'),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.','99999','2019-03-24 21:55:18');
+INSERT INTO `medical_center_details` (`account_id`, `name`, `phsrc`, `email`, `fax`, `phone_number`, `address`, `postal_code`, `creation_date`, `last_login`) VALUES ('mc_demo_0','Med Center Demo 0','PHSRC/DEMO/00','medcenterdemo@gmail.com','','0769900876','CDF Street, ABC City.','15600','2019-03-26 08:28:46','2019-04-02 08:46:12'),('mc_demo_1','Medical Center 2','PHSRC/DEMO/02','demo@gmail.com','','0769900876','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-03-26 09:27:53','2019-04-02 08:46:12'),('medCenter','My Medical Center','PHSRC/DEMO/001','demo@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-02-24 11:50:14','2019-04-02 08:47:43'),('MedCenter23','medicalcenter2','PHSRC/DEMO/002','sunerasocacc@gmail.com','01122334455','8886654533','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-03-07 09:17:14','2019-04-02 08:46:12'),('medical_center_tester','Medical Center Tester','PHSRC/TEST/001','tester@medical.center','0102313546','07655667890','Fake Number, Fake Street, Fake City, Fake Province.','99999','2019-03-24 21:55:18','2019-04-02 08:46:12');
 /*!40000 ALTER TABLE `medical_center_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,6 +238,36 @@ INSERT INTO `medical_centers` (`account_id`, `verified`) VALUES ('mc_demo_1',0),
 UNLOCK TABLES;
 
 --
+-- Table structure for table `medications`
+--
+
+DROP TABLE IF EXISTS `medications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `prescription_id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `dose` text,
+  `frequency` text,
+  `time` text,
+  `comment` text,
+  PRIMARY KEY (`id`),
+  KEY `medications_prescriptions_account_id_fk` (`prescription_id`),
+  CONSTRAINT `medications_prescriptions_account_id_fk` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medications`
+--
+
+LOCK TABLES `medications` WRITE;
+/*!40000 ALTER TABLE `medications` DISABLE KEYS */;
+/*!40000 ALTER TABLE `medications` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `patient_details`
 --
 
@@ -281,6 +283,7 @@ CREATE TABLE `patient_details` (
   `address` text NOT NULL,
   `postal_code` text NOT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_login` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`account_id`),
   UNIQUE KEY `patient_details_nic_uindex` (`nic`),
   CONSTRAINT `patient_details_patients_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `patients` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -293,7 +296,7 @@ CREATE TABLE `patient_details` (
 
 LOCK TABLES `patient_details` WRITE;
 /*!40000 ALTER TABLE `patient_details` DISABLE KEYS */;
-INSERT INTO `patient_details` (`account_id`, `nic`, `name`, `phone_number`, `email`, `address`, `postal_code`, `creation_date`) VALUES ('932503335V','932503335V','Sunera Avinash','8886654533','kdsuneraavinash@gmail.com','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-03-19 07:13:12'),('932507834V','932507834V','dvnmnvd','8886654533','demo@gmail.com','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-03-26 09:19:15'),('972502456V','972502456V','Sunera Avinash','8886654533','kdsuneraavinash@gmail.com','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-02-26 11:26:21'),('978978877V','978978877V','Patient Tester','07655667890','tester@medical.patient','Fake Number, Fake Street, Fake City, Fake Province.','99999','2019-03-24 21:55:18');
+INSERT INTO `patient_details` (`account_id`, `nic`, `name`, `phone_number`, `email`, `address`, `postal_code`, `creation_date`, `last_login`) VALUES ('932503335V','932503335V','Sunera Avinash','8886654533','kdsuneraavinash@gmail.com','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-03-19 07:13:12','2019-04-02 08:45:48'),('932507834V','932507834V','dvnmnvd','8886654533','demo@gmail.com','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-03-26 09:19:15','2019-04-02 08:45:48'),('972502456V','972502456V','Sunera Avinash','8886654533','kdsuneraavinash@gmail.com','No 344/1, Moonamalgahawatta, Duwa Temple Road','12000','2019-02-26 11:26:21','2019-04-02 08:45:48'),('978978877V','978978877V','Patient Tester','07655667890','tester@medical.patient','Fake Number, Fake Street, Fake City, Fake Province.','99999','2019-03-24 21:55:18','2019-04-02 08:45:48');
 /*!40000 ALTER TABLE `patient_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,10 +333,15 @@ DROP TABLE IF EXISTS `prescriptions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `prescriptions` (
-  `prescriptionID` int(11) NOT NULL AUTO_INCREMENT,
-  `patientNIC` text NOT NULL,
-  `date` text,
-  PRIMARY KEY (`prescriptionID`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `patient_id` varchar(32) NOT NULL,
+  `doctor_id` varchar(32) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `prescription_doctors_account_id_fk` (`doctor_id`),
+  KEY `prescription_patients_account_id_fk` (`patient_id`),
+  CONSTRAINT `prescription_doctors_account_id_fk` FOREIGN KEY (`doctor_id`) REFERENCES `doctors` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `prescription_patients_account_id_fk` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -370,7 +378,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` (`account_id`, `ip_address`, `created`, `expires`, `session_key`) VALUES ('652566699V','127.0.0.1','2019-03-26 10:04:17','2019-03-27 10:04:17','9331be376ce854b84ce9a027eab173c4eb553e2b');
+INSERT INTO `sessions` (`account_id`, `ip_address`, `created`, `expires`, `session_key`) VALUES ('administrator','127.0.0.1','2019-04-18 17:43:50','2019-04-19 17:43:50','e14bfe665b84723b36202ce1e90fb450da317f1e');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -383,4 +391,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-26 18:28:47
+-- Dump completed on 2019-04-18 18:07:05
