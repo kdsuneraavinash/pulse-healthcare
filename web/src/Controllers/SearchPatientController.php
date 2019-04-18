@@ -3,11 +3,13 @@
 namespace Pulse\Controllers;
 
 use Pulse\Components\Logger;
+use Pulse\Models\Interfaces\PatientNICContext;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Patient\Patient;
 use Pulse\Models\Patient\PatientDetails;
+use Pulse\Models\Search\SearchContext;
 
 class SearchPatientController extends BaseController
 {
@@ -34,7 +36,15 @@ class SearchPatientController extends BaseController
         $nic = $this->httpHandler()->postParameter('nic');
         $address = $this->httpHandler()->postParameter('address');
 
-        return PatientDetails::searchPatient($name, $nic, $address);
+        if($nic){
+            $searchContext = new PatientNICContext($nic,($name!=null)? $name:null,($address!=null)?$address:null);
+        }else{
+            $searchContext = new PatientNICContext($nic,($name!=null)? $name:null,($address!=null)?$address:null);
+        }
+
+        return SearchContext::search($searchContext);
+
+        //return PatientDetails::searchPatient($name, $nic, $address);
     }
 
     /**
@@ -53,8 +63,8 @@ class SearchPatientController extends BaseController
         if ($results == null || sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
-            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/patient?error=$error");
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/patient?error=$error");
+            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/SearchContext/patient?error=$error");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/SearchContext/patient?error=$error");
         } else {
             $this->render("iframe/PatientSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
                 $this->getCurrentAccount());
