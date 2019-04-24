@@ -4,8 +4,12 @@ namespace Pulse\Controllers;
 
 use Pulse\Components;
 use Pulse\Components\Utils;
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Doctor\Doctor;
+use Pulse\Models\Exceptions\AccountNotExistException;
+use Pulse\Models\Exceptions\AccountRejectedException;
 use Pulse\Models\Exceptions\InvalidDataException;
+use Pulse\Models\Patient\Patient;
 use Pulse\Models\Prescription\Medication;
 use Pulse\Models\Prescription\Prescription;
 
@@ -19,6 +23,16 @@ class DoctorCreatePrescriptionController extends BaseController
             $doctorId = $currentAccount->getAccountId();
             $patientId = $this->httpHandler()->postParameter('patient');
             $medications = $this->httpHandler()->postParameter('medications');
+
+            if ($patientId == null){
+                $this->httpHandler()->setContent("E|No patient information submitted. Please resubmit.");
+                return;
+            }
+
+            if ($medications == null || !is_array($medications)){
+                $this->httpHandler()->setContent("E|No medications submitted. You have to enter at least one medication to submit.");
+                return;
+            }
 
             $medicationsArr = array();
 
@@ -35,20 +49,43 @@ class DoctorCreatePrescriptionController extends BaseController
             };
 
             $prescription = new Prescription(null, $patientId, $doctorId, $medicationsArr);
-             try {
-                 $prescription->saveInDatabase();
-             } catch (InvalidDataException $error) {
-                 $this->httpHandler()->setContent("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?error=$error");
-             }
+            try {
+                $prescription->saveInDatabase();
+            } catch (InvalidDataException|AccountNotExistException $error) {
+                $errorMessage = $error->getMessage();
+                $this->httpHandler()->setContent("E|$errorMessage");
+                return;
+            }
 
-            // TODO: Uncomment following line
-            // $prescriptionId = $prescription->getPrescriptionId();
-            // TODO: Comment following line
-            $prescriptionId = $patientId . "_PRECRIPTION";
-             
-            $this->httpHandler()->setContent("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?prescription=$prescriptionId");
+            $prescriptionId = $prescription->getPrescriptionId();
+
+            $this->httpHandler()->setContent("K|$prescriptionId");
         } else {
-            $this->httpHandler()->setContent("http://$_SERVER[HTTP_HOST]/405");
+            $this->httpHandler()->setContent("E|Method Not Allowed. You have been logged out. Please re-login.");
+        }
+    }
+
+    public function postSearchPatient()
+    {
+        $currentAccount = $this->getCurrentAccount();
+
+        if ($currentAccount instanceof Doctor) {
+            $patientId = $this->httpHandler()->postParameter('patient');
+            try {
+                $account = Account::retrieveAccount($patientId, true);
+                if ($account instanceof Patient) {
+                    $patientName = $account->getPatientDetails()->getName();
+                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?patient=$patientId&name=$patientName");
+                }else{
+                    throw new AccountNotExistException($patientId);
+                }
+            } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
+                $error = "Account ID Invalid";
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/search?error=$error");
+                return;
+            }
+        } else {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
     }
 }

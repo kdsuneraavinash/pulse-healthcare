@@ -10,6 +10,8 @@ use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Exceptions;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
+use Pulse\Models\Patient\Patient;
+use Pulse\Models\Patient\PatientDetails;
 
 abstract class Account
 {
@@ -64,7 +66,9 @@ abstract class Account
             $parsedAccount = new Doctor(DoctorDetails::readFromDatabase($accountId));
         } else if ($account['account_type'] === (string)AccountType::Admin) {
             $parsedAccount = new Admin($accountId);
-        } else {
+        }else if ($account['account_type'] === (string)AccountType::Patient) {
+            $parsedAccount = new Patient(PatientDetails::readFromDatabase($accountId));
+        }  else {
             throw new Exceptions\AccountNotExistException($accountId);
         }
 

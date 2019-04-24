@@ -2,6 +2,7 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Components\Logger;
 use Pulse\Models\Doctor\Doctor;
 
 class DoctorControlPanelController extends BaseController
@@ -21,9 +22,24 @@ class DoctorControlPanelController extends BaseController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getDoctorDashboardIframe()
+    public function getDoctorCreatePrescriptionSearchPatientIframe()
     {
-        parent::loadOnlyIfUserIsOfType(Doctor::class, 'iframe/AdminDashboardIFrame.htm.twig');
+        $prescriptionId = $this->httpHandler()->getParameter('prescription_id');
+
+        $currentAccount = $this->getCurrentAccount();
+        if ($currentAccount instanceof Doctor) {
+            if ($prescriptionId == null){
+                $this->render('iframe/CreatePrescriptionSearchPatient.htm.twig', array(),
+                    $currentAccount);
+            }else{
+                $this->render('iframe/CreatePrescriptionSearchPatient.htm.twig',
+                    array('prescription_id' => $prescriptionId),
+                    $currentAccount);
+            }
+
+        } else {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        }
     }
 
     /**
@@ -33,11 +49,14 @@ class DoctorControlPanelController extends BaseController
      */
     public function getDoctorCreatePrescriptionIframe()
     {
-        $prescription = $this->httpHandler()->getParameter('prescription');
+        $patientId = $this->httpHandler()->getParameter('patient');
+        $patientName = $this->httpHandler()->getParameter('name');
 
         $currentAccount = $this->getCurrentAccount();
         if ($currentAccount instanceof Doctor) {
-            $this->render('iframe/DoctorCreatePrescription.htm.twig', array('prescription' => $prescription),
+            $this->render('iframe/DoctorCreatePrescription.htm.twig',
+                array('patient_id' => $patientId,
+                    'patient_name' => $patientName),
                 $currentAccount);
         } else {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");

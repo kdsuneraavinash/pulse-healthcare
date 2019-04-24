@@ -21,8 +21,12 @@ class ProfilePageController extends BaseController
     public function get()
     {
         $current_account = $this->getCurrentAccount();
-        $context = $this->populate_with_account($current_account);
-        $this->render("ProfilePage.html.twig", $context, $current_account);
+        if ($current_account instanceof  Account){
+            $context = $this->populate_with_account($current_account);
+            $this->render("ProfilePage.html.twig", $context, $current_account);
+        }else{
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
+        }
     }
 
     /**
@@ -38,7 +42,7 @@ class ProfilePageController extends BaseController
         try {
             $account = Account::retrieveAccount($accountId, true);
         } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404?a=$accountId");
             exit();
         }
         $context = $this->populate_with_account($account);

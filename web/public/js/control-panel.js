@@ -44,7 +44,7 @@ $(document).ready(function () {
         width: 2000,
         height: 2000,
         cell_size: 150,
-        x_colors: ['#833ab4', '#fd1d1d', '#fcb045']
+        x_colors: ['#4b6cb7', '#182848']
     });
 
     let dataUrl = pattern.canvas().toDataURL();

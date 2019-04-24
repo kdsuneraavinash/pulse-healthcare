@@ -34,13 +34,13 @@ final class Router
 
             // Control Panel - Doctor
             ['GET', '/control/doctor', ['Pulse\Controllers\DoctorControlPanelController', 'get']],
-            ['GET', '/control/doctor/dashboard', ['Pulse\Controllers\DoctorControlPanelController', 'getDoctorDashboardIframe']],
+            ['GET','/control/doctor/create/search',['Pulse\Controllers\DoctorControlPanelController','getDoctorCreatePrescriptionSearchPatientIframe']],
+            ['POST','/control/doctor/create/search',['Pulse\Controllers\DoctorCreatePrescriptionController','postSearchPatient']],
             ['GET','/control/doctor/create/prescription',['Pulse\Controllers\DoctorControlPanelController','getDoctorCreatePrescriptionIframe']],
             ['POST', '/control/doctor/create/prescription', ['Pulse\Controllers\DoctorCreatePrescriptionController', 'post']],
 
             // Control Panel - Medical Center
             ['GET', '/control/med_center', ['Pulse\Controllers\MediControlPanelController', 'get']],
-            ['GET', '/control/med_center/dashboard', ['Pulse\Controllers\MediControlPanelController', 'getMediDashboardIframe']],
             ['GET', '/control/med_center/register/doctor', ['Pulse\Controllers\MediControlPanelController', 'getMediRegisterDoctorIframe']],
             ['POST', '/control/med_center/register/doctor', ['Pulse\Controllers\DoctorRegistrationController', 'post']],
             ['GET', '/control/med_center/register/patient', ['Pulse\Controllers\MediControlPanelController', 'getMediRegisterPatientIframe']],

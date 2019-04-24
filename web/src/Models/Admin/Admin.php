@@ -72,4 +72,26 @@ class Admin extends Account
                 'account_id' => $account->getAccountId()
             ));
     }
+
+    public function generateUserTypeData(): array
+    {
+        $query = Database::query("SELECT account_type, COUNT(*) as account_count FROM accounts GROUP BY account_type;", array());
+
+        $parsed = array(
+            'admin' => 0,
+            'patient' => 0,
+            'doctor' => 0,
+            'med_center' => 0,
+            'tester' => 0
+        );
+
+        if ($query == null || sizeof($query) == 0) {
+            return $parsed;
+        }
+
+        foreach ($query as $entry) {
+            $parsed[$entry['account_type']] = $entry['account_count'];
+        }
+        return $parsed;
+    }
 }

@@ -4,6 +4,11 @@ Basic
 -----------------------------------------------
  */
 
+ *{
+     font-family: 'Open Sans', 'Robota', sans-serif;
+     letter-spacing: 1.4;
+ }
+
 html {
     overflow-x: hidden;
     overflow-y: scroll;

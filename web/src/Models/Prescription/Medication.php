@@ -1,6 +1,7 @@
 <?php
 
 namespace Pulse\Models\Prescription;
+
 use Pulse\Components\Database;
 use Pulse\Models\Exceptions\InvalidDataException;
 
@@ -41,21 +42,32 @@ class Medication
      */
     public function validate(): bool
     {
-        if ($this->getMedicationId() !== null){
+        if ($this->getMedicationId() !== null) {
             throw new InvalidDataException('Medication ID is already populated. (It has to be null to save in DB)');
         }
 
-        if ($this->getPrescriptionId() !== null){
+        if ($this->getPrescriptionId() !== null) {
             throw new InvalidDataException('Prescription ID is already populated. (It has to be null to save in DB)');
         }
-        
-        // TODO: Validate all fields are not null and return false if not
+
+        if ($this->getName() == null) {
+            return false;
+        }
+
         return true;
     }
 
-    public function saveInDatabase()
+    public function saveInDatabase(string $prescriptionId)
     {
-        // TODO: Save All details in database
+        Database::insert('medications',
+            array(
+                'prescription_id' => $prescriptionId,
+                'name' => $this->getName(),
+                'dose' => $this->getDose(),
+                'frequency' => $this->getFrequency(),
+                'time' => $this->getTime(),
+                'comment' => $this->getComment(),
+            ));
     }
 
     public function getMedicationId(): ?string

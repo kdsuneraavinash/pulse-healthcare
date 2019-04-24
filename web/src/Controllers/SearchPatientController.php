@@ -3,6 +3,9 @@
 namespace Pulse\Controllers;
 
 use Pulse\Components\Logger;
+use Pulse\Models\Admin\Admin;
+use Pulse\Models\Doctor\Doctor;
+use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Patient\Patient;
 use Pulse\Models\Patient\PatientDetails;
 
@@ -16,7 +19,11 @@ class SearchPatientController extends BaseController
     public function getIFrame()
     {
         $account = $this->getCurrentAccount();
-        $this->render('iframe/SearchPatient.html.twig', array(), $account);
+        if ($account instanceof Doctor || $account instanceof Admin || $account instanceof MedicalCenter){
+            $this->render('iframe/SearchPatient.html.twig', array(), $account);
+        }else{
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        }
     }
 
     /**

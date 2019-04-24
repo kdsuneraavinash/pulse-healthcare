@@ -22,16 +22,6 @@ class MediControlPanelController extends BaseController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getMediDashboardIframe()
-    {
-        parent::loadOnlyIfUserIsOfType(MedicalCenter::class, 'iframe/AdminDashboardIFrame.htm.twig');
-    }
-
-    /**
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     */
     public function getMediRegisterDoctorIframe()
     {
         $currentAccount = $this->getCurrentAccount();

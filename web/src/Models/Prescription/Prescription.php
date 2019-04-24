@@ -3,7 +3,9 @@
 namespace Pulse\Models\Prescription;
 
 use Pulse\Components\Database;
-use Pulse\Models\Doctor\Doctor;
+use Pulse\Components\Logger;
+use Pulse\Components\PureSqlStatement;
+use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\Exceptions\InvalidDataException;
 
 class Prescription
@@ -35,24 +37,23 @@ class Prescription
 
     /**
      * @throws InvalidDataException
+     * @throws AccountNotExistException
      */
     public function saveInDatabase()
     {
         if ($this->getPrescriptionId() != null) {
-            throw new InvalidDataException('Tried to resave already saved prescription');
+            throw new InvalidDataException('Tried to re-save already saved prescription');
         }
 
         $this->validateFields();
+        Database::insert('prescriptions', array(
+                'patient_id' => $this->getPatientId(),
+                'doctor_id' => $this->getDoctorId()
+            )
+        );
 
-        /*
-         * TODO: Insert Prescription Details (DATE, PATIENT_ID) to Database
-         * TODO: Retrieve Prescription ID of the inserted record
-         *
-         * Uncomment following lines
-         */
-
-        // $this->prescriptionId = Database::lastInsertedId();
-        // $this->saveMedicationsInDatabase();
+         $this->prescriptionId = Database::lastInsertedId();
+         $this->saveMedicationsInDatabase();
     }
 
     /**
@@ -73,19 +74,35 @@ class Prescription
 
     /**
      * @throws InvalidDataException
+     * @throws AccountNotExistException
      */
     public function validateFields()
     {
         // Validate all medications and throw an error if invalid
         foreach ($this->getMedications() as $medication) {
             $medicationsValid = $medication->validate();
-            if (!$medicationsValid){
+            if (!$medicationsValid) {
                 throw new InvalidDataException("Medication Details Validation Failed.");
             }
         };
 
-        // TODO: Check whether doctor ID exists (if not throw an error)
-        // TODO: Check whether Patient ID exists (if not throw an error)
+        // Check whether doctor ID exists (if not throw an error)
+        $query = Database::queryFirstRow(
+            "SELECT account_id FROM doctors WHERE account_id=:account_id",
+            array("account_id" => $this->getDoctorId())
+        );
+        if ($query == null) {
+            throw new AccountNotExistException($this->getDoctorId());
+        }
+
+        // Check whether Patient ID exists (if not throw an error)
+        $query = Database::queryFirstRow(
+            "SELECT account_id FROM patients WHERE account_id=:account_id",
+            array("account_id" => $this->getPatientId())
+        );
+        if ($query == null) {
+            throw new AccountNotExistException($this->getPatientId());
+        }
     }
 
     public function getPrescriptionId(): ?string
