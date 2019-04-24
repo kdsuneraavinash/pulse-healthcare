@@ -70,6 +70,23 @@ class Medication
             ));
     }
 
+    public static function fromPrescription(string $prescriptionId)
+    {
+        $queries = Database::query("SELECT * FROM medications where prescription_id=:id",
+            array('id' => $prescriptionId));
+        if ($queries == null) {
+            return array();
+        }
+        $medications = array();
+        foreach ($queries as $query) {
+            $medication = new Medication($query['id'],
+                $query['prescription_id'], $query['name'], $query['dose'],
+                $query['frequency'], $query['time'], $query['comment']);
+            array_push($medications, $medication);
+        }
+        return $medications;
+    }
+
     public function getMedicationId(): ?string
     {
         return $this->medicationId;

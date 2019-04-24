@@ -3,11 +3,13 @@
 namespace Pulse\Models\Patient;
 
 use Pulse\Components\Database;
+use Pulse\Components\Logger;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Exceptions;
 use Pulse\Components\Utils;
+use Pulse\Models\Prescription\Prescription;
 
 
 class Patient extends Account
@@ -87,9 +89,18 @@ class Patient extends Account
         parent::checkWhetherAccountIDExists();
     }
 
-    public function viewTimeline()
+    /**
+     * @throws Exceptions\InvalidDataException
+     */
+    public function getPrescriptions()
     {
-        //TODO: implementation of viewTimeline() function
+        $prescriptionIds = Database::query("SELECT id from prescriptions where patient_id=:patient_id",
+            array('patient_id'=>$this->getAccountId()));
+        $prescriptions = array();
+        foreach ($prescriptionIds as $prescriptionId){
+            array_push($prescriptions, Prescription::fromDatabase((string) $prescriptionId['id']));
+        }
+        return $prescriptions;
     }
 
     public function setReminder($reminderDetails)
