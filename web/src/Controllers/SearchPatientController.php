@@ -3,7 +3,8 @@
 namespace Pulse\Controllers;
 
 use Pulse\Components\Logger;
-use Pulse\Models\Interfaces\PatientNICContext;
+use Pulse\Models\Search\PatientNICContext;
+use Pulse\Models\Search\PatientNoNICContext;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\MedicalCenter\MedicalCenter;
@@ -39,7 +40,7 @@ class SearchPatientController extends BaseController
         if($nic){
             $searchContext = new PatientNICContext($nic,($name!=null)? $name:null,($address!=null)?$address:null);
         }else{
-            $searchContext = new PatientNICContext($nic,($name!=null)? $name:null,($address!=null)?$address:null);
+            $searchContext = new PatientNoNICContext(($name!=null)? $name:null,($address!=null)?$address:null);
         }
 
         return SearchContext::search($searchContext);

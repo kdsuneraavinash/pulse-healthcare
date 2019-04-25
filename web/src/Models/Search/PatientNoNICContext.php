@@ -6,9 +6,10 @@
  * Time: 12:20 AM
  */
 
-namespace Pulse\Models\Interfaces;
+namespace Pulse\Models\Search;
 use Pulse\Components\Database;
 use Pulse\Definitions;
+use Pulse\Models\Interfaces\ISearchable;
 
 class PatientNoNICContext implements ISearchable {
 

@@ -8,10 +8,11 @@
 
 namespace Pulse\Models\Search;
 
-use Pulse\Models\Interfaces\DoctorCategoryContext;
-use Pulse\Models\Interfaces\DoctorNoCategoryContext;
-use Pulse\Models\Interfaces\PatientNICContext;
-use Pulse\Models\Interfaces\PatientNoNICContext;
+use Pulse\Models\Search\DoctorCategoryContext;
+use Pulse\Models\Search\DoctorNoCategoryContext;
+use Pulse\Models\Search\PatientNICContext;
+use Pulse\Models\Search\PatientNoNICContext;
+
 
 class SearchContext{
 
@@ -19,7 +20,7 @@ class SearchContext{
     public static function search($ISearchable){
 
         if($ISearchable instanceof DoctorCategoryContext || $ISearchable instanceof DoctorNoCategoryContext || $ISearchable instanceof PatientNICContext || $ISearchable instanceof PatientNoNICContext){
-            $ISearchable->search();
+            return $ISearchable->search();
         }
 
     }

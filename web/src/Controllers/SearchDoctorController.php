@@ -2,14 +2,15 @@
 
 namespace Pulse\Controllers;
 
+
 use Pulse\Components\Logger;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\MedicalCenter\MedicalCenter;
-use Pulse\Models\Interfaces\DoctorCategoryContext;
-use Pulse\Models\Interfaces\DoctorCategoryOnlyContext;
-use Pulse\Models\Interfaces\DoctorNoCategoryContext;
+use Pulse\Models\Search\DoctorCategoryContext;
+use Pulse\Models\Search\DoctorNoCategoryContext;
+//use Pulse\Models\Search\
 use Pulse\Models\Search\SearchContext;
 
 class SearchDoctorController extends BaseController
@@ -34,13 +35,19 @@ class SearchDoctorController extends BaseController
     public function getSearchResults()
     {
         $name = $this->httpHandler()->postParameter('full_name');
-        $slmcId = $this->httpHandler()->postParameter('slmc_id');
+        $slmc_id = $this->httpHandler()->postParameter('slmc_id');
         $category = $this->httpHandler()->postParameter('doctor_category');
+
+        echo "<script>console.log($name)</script>";
 
         if ($category == 'NONE') {
             $category = null;
         }
 
+        /**
+         * Creates a searchContext according to the parameters passed by the user and call the Static search method of the SearchContext class by passing
+         *created searchContext object.         
+         */
         if($category){
             $searchContext = new DoctorCategoryContext(($slmc_id!=null) ? $slmc_id : null,($name!=null) ? $name :null,$category);
 
