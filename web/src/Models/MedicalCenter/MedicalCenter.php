@@ -3,8 +3,12 @@
 namespace Pulse\Models\MedicalCenter;
 
 use Pulse\Components\Database;
+use Pulse\Models\AccountSession\AbstractVerificationState;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
+use Pulse\Models\AccountSession\RejectedState;
+use Pulse\Models\AccountSession\UnverfiedState;
+use Pulse\Models\AccountSession\VerifiedState;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
@@ -22,13 +26,13 @@ class MedicalCenter extends Account implements IFavouritable
     /**
      * MedicalCenter constructor.
      * @param string $accountId
-     * @param int|null $verificationState
+     * @param AbstractVerificationState|null $verificationState
      * @param MedicalCenterDetails $medicalCenterDetails
      * @param bool $ignoreErrors
      * @throws Exceptions\AccountNotExistException
      * @throws Exceptions\AccountRejectedException
      */
-    protected function __construct(string $accountId, ?int $verificationState,
+    protected function __construct(string $accountId, ? AbstractVerificationState $verificationState,
                                    MedicalCenterDetails $medicalCenterDetails, bool $ignoreErrors = false)
     {
         parent::__construct($accountId, AccountType::MedicalCenter);
@@ -41,7 +45,14 @@ class MedicalCenter extends Account implements IFavouritable
             if ($query == null) {
                 throw new Exceptions\AccountNotExistException($accountId);
             }
-            $this->verificationState = (int)$query['verified'];
+            if((int)$query['verified']==0){
+                $this->verificationState = new UnverfiedState();
+            }elseif ((int)$query['verified']==1){
+                $this->verificationState = new VerifiedState();
+            }elseif((int)$query['verified']==2){
+                $this->verificationState = new RejectedState();
+            }
+//
             if (!$ignoreErrors && $this->getVerificationState() == VerificationState::Rejected) {
                 throw new Exceptions\AccountRejectedException($accountId);
             }
@@ -65,7 +76,7 @@ class MedicalCenter extends Account implements IFavouritable
     public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails,
                                                string $password): MedicalCenter
     {
-        $medicalCenter = new MedicalCenter($accountId, VerificationState::Default, $medicalCenterDetails);
+        $medicalCenter = new MedicalCenter($accountId, new UnverfiedState(), $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
         LoginService::signUpSession($accountId, $password);
         // TODO: Add code to request verification
@@ -161,7 +172,7 @@ class MedicalCenter extends Account implements IFavouritable
      */
     public function getVerificationState(): int
     {
-        return $this->verificationState;
+        return $this->verificationState->getStatus();
     }
 
 
