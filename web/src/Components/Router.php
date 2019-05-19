@@ -39,6 +39,10 @@ final class Router
             ['GET','/control/doctor/create/prescription',['Pulse\Controllers\DoctorControlPanelController','getDoctorCreatePrescriptionIframe']],
             ['POST', '/control/doctor/create/prescription', ['Pulse\Controllers\DoctorCreatePrescriptionController', 'post']],
 
+            // Control Panel - Patient
+            ['GET', '/control/patient', ['Pulse\Controllers\PatientControlPanelController', 'get']],
+            ['GET','/control/patient/timeline',['Pulse\Controllers\PatientControlPanelController','getPatientTimelineIframe']],
+
             // Control Panel - Medical Center
             ['GET', '/control/med_center', ['Pulse\Controllers\MediControlPanelController', 'get']],
             ['GET', '/control/med_center/register/doctor', ['Pulse\Controllers\MediControlPanelController', 'getMediRegisterDoctorIframe']],

@@ -2,6 +2,7 @@
 
 namespace Pulse\Models\Prescription;
 
+use http\Exception\InvalidArgumentException;
 use Pulse\Components\Database;
 use Pulse\Components\Logger;
 use Pulse\Components\PureSqlStatement;
@@ -73,6 +74,20 @@ class Prescription
     }
 
     /**
+     * @param string $prescriptionId
+     * @return Prescription
+     * @throws InvalidDataException
+     */
+    public static function fromDatabase(string $prescriptionId){
+        $query = Database::queryFirstRow("SELECT * FROM prescriptions where id=:id", array('id'=>$prescriptionId));
+        if ($query == null){
+            throw new InvalidDataException("Invalid Prescription ID.");
+        }
+        $medications = Medication::fromPrescription($prescriptionId);
+        return new Prescription($query['id'], $query['patient_id'], $query['doctor_id'], $medications);
+    }
+
+    /**
      * @throws InvalidDataException
      * @throws AccountNotExistException
      */
@@ -123,5 +138,10 @@ class Prescription
     public function getMedications(): array
     {
         return $this->medications;
+    }
+
+    public function getDate(): string
+    {
+        return $this->date;
     }
 }

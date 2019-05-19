@@ -38,7 +38,10 @@ class ProfilePageController extends BaseController
     {
         $accountId = $this->httpHandler()->getParameter("user");
         $current_account = $this->getCurrentAccount();
-
+        if ($accountId == null){
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404?a=$accountId");
+            exit();
+        }
         try {
             $account = Account::retrieveAccount($accountId, true);
         } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
