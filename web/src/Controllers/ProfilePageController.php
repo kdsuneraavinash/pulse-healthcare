@@ -10,6 +10,8 @@ use Pulse\Models\Exceptions\AccountRejectedException;
 use Pulse\Models\Exceptions\InvalidDataException;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Patient\Patient;
+use Pulse\Models\Prescription\Medication;
+use Pulse\Models\Prescription\Prescription;
 
 class ProfilePageController extends BaseController
 {
@@ -26,6 +28,67 @@ class ProfilePageController extends BaseController
             $this->render("ProfilePage.html.twig", $context, $current_account);
         }else{
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
+        }
+    }
+
+
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function getTimeline(){
+        $currentAccount = $this->getCurrentAccount();
+        try {
+            if ($currentAccount instanceof Doctor) {
+                $accountId = $this->httpHandler()->getParameter("user");
+                $patient = Account::retrieveAccount($accountId, true);
+                if ($patient instanceof Patient){
+                    $prescriptions = $patient->getPrescriptions();
+                    if (sizeof($prescriptions) == 0) {
+                        throw new InvalidDataException("No Prescriptions");
+                    }
+                    $parsedPrescriptions = array();
+                    foreach ($prescriptions as $prescription) {
+                        $parsedMedications = array();
+                        if ($prescription instanceof Prescription) {
+                            foreach ($prescription->getMedications() as $medication) {
+                                if ($medication instanceof Medication) {
+                                    $parsedMedication = array(
+                                        'id' => $medication->getMedicationId(),
+                                        'name' => $medication->getName(),
+                                        'dose' => $medication->getDose(),
+                                        'frequency' => $medication->getFrequency(),
+                                        'time' => $medication->getTime(),
+                                        'comment' => $medication->getComment(),
+                                    );
+                                    array_push($parsedMedications, $parsedMedication);
+                                }
+                            }
+                            $parsedPrescription = array(
+                                'doctor' => $prescription->getDoctorId(),
+                                'id' => $prescription->getPrescriptionId(),
+                                'date' => $prescription->getDate(),
+                                'patient' => $prescription->getPatientId(),
+                                'medications' => $parsedMedications
+                            );
+                            array_push($parsedPrescriptions, $parsedPrescription);
+                        }
+                    }
+
+                    $this->render('PatientTimeline.htm.twig', array('prescriptions' => $parsedPrescriptions), $currentAccount);
+                    return;
+                }
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+            } else {
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+            }
+        } catch (InvalidDataException $e) {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
+        } catch (AccountNotExistException $e) {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
+        } catch (AccountRejectedException $e) {
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
         }
     }
 

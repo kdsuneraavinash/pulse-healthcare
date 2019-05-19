@@ -15,6 +15,7 @@ final class Router
             ['GET', '/', ['Pulse\Controllers\HomePageController', 'get']],
             ['GET', '/profile', ['Pulse\Controllers\ProfilePageController', 'get']],
             ['GET', '/showprofile', ['Pulse\Controllers\ProfilePageController', 'getShowProfile']],
+            ['GET', '/timeline', ['Pulse\Controllers\ProfilePageController', 'getTimeline']],
 
             // Login handlers
             ['GET', '/login', ['Pulse\Controllers\LoginController', 'get']],
