@@ -6,6 +6,7 @@
         {
             "id": "{{ prescription['id'] }}",
             "doctor": "{{ prescription['doctor'] }}",
+            "date": "{{ prescription['date'] }}",
             "medications": [
                 {% for medication in prescription['medications'] %}
                 {
@@ -15,10 +16,6 @@
                     "frequency": "{{ medication['frequency'] }}",
                     "time": "{{ medication['time'] }}",
                     "comment": "{{ medication['comment'] == ''? 'No Comment' : medication['comment'] }}"
-                },
-                {% endfor %}
-            ]
-        },
-        {% endfor %}
-    ]
+                },{% endfor %}]
+        },{% endfor %}]
 }

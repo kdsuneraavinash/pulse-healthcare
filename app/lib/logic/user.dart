@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pulse_healthcare/logic/timeline_entry.dart';
 
 const String PC_IP = "10.0.2.2:8000";
 const String EMPTY = "-";
@@ -11,8 +12,9 @@ class UserManager with ChangeNotifier {
   User _user; // user object
   bool _pending; // is some action pending
 
-  get authorized => _user.authorized;
-  get pending => _pending;
+  get authorized => _user.authorized ?? false;
+  get pending => _pending ?? false;
+  List<TimelineEntry> get timeline => _user.timeline ?? [];
 
   get userId => _user.userId ?? EMPTY;
   get name => _user.name ?? EMPTY;
@@ -38,10 +40,9 @@ class UserManager with ChangeNotifier {
   }) async {
     setPending(true);
 
-  print(_user.headers);
     http.Response response =
         await http.get(apiLink, headers: {'cookie': _user.headers});
-    Map<String, dynamic> data = json.decode(response.body);
+    Map<String, dynamic> data = json.decode(response.body.replaceAll(",]", "]"));
 
     bool success = data['ok'] == 'true';
 
@@ -62,8 +63,11 @@ class UserManager with ChangeNotifier {
       ifOkay: (_) => null,
       ifError: (_) => _user.headers = "",
     );
-    if (err == null) {
-      err = await getUserData();
+    if (err == null) err = await getUserData();
+    if (err != null) {
+      _user.headers = "";
+    } else {
+      err = await getTimelineData();
       if (err != null) _user.headers = "";
     }
     return err;
@@ -80,6 +84,24 @@ class UserManager with ChangeNotifier {
         _user.phoneNumber = data['data']['phone_number'];
         _user.address = data['data']['address'];
       },
+      ifError: (_) => null,
+    );
+  }
+
+  Future<String> getTimelineData() async {
+    return await _getDataAndProcess(
+      apiLink: "http://$PC_IP/api/timeline",
+      ifOkay: (data) {
+        _user.timeline = TimelineEntry.getTimeline(List<Map<String, dynamic>>.from(data['prescriptions']));
+      },
+      ifError: (_) => null,
+    );
+  }
+
+  Future<String> logout() async {
+    return await _getDataAndProcess(
+      apiLink: "http://$PC_IP/api/logout",
+      ifOkay: (data) => null,
       ifError: (_) => null,
     );
   }
@@ -121,6 +143,7 @@ class User {
   String address;
   String email;
   String phoneNumber;
+  List<TimelineEntry> timeline;
 
   User() {
     headers = "";

@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
           Center(child: TimelinePage()),
           Center(
               child:
-                  Icon(FontAwesomeIcons.cogs, size: 72.0, color: Colors.black)),
+                  Icon(FontAwesomeIcons.cogs, size: 72.0, color: Provider.of<ThemeStash>(context).primaryColor)),
           Center(child: ProfilePage(key: _profilePageKey)),
         ],
         onPageChanged: (position) {

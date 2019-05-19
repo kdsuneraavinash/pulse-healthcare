@@ -64,6 +64,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   void loggedOut(BuildContext context) {
+    Provider.of<UserManager>(context).logout();
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
