@@ -19,7 +19,6 @@ final class LoginServiceTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        Database::init();
         LoginService::setTestEnvironment();
         self::$userId = "login_service_tester";
         self::$password = "password";

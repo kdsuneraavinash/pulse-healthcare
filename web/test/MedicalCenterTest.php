@@ -30,7 +30,6 @@ final class MedicalCenterTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        Database::init();
         LoginService::setTestEnvironment();
         self::$accountId = "medical_center_tester";
         self::$name = "Medical Center Tester";

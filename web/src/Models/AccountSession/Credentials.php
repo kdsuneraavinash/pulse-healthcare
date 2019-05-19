@@ -21,29 +21,33 @@ class Credentials implements BaseModel
     private $accountId;
     private $password;
     private $salt;
+    private $isExisting;
 
     /**
      * Credentials constructor.
      * @param string $accountId
      * @param string $password
      * @param string $salt
+     * @param bool $isExisting
      */
-    private function __construct($accountId, $password, $salt)
+    private function __construct($accountId, $password, $salt, bool $isExisting=false)
     {
         $this->accountId = $accountId;
         $this->password = $password;
         $this->salt = $salt;
+        $this->isExisting = $isExisting;
     }
 
     /**
      * Creates credentials
      * @param string $accountId
      * @param string $password
+     * @param bool $ignoreExistingCredentials
      * @return Credentials|null
-     * @throws Exceptions\AccountNotExistException
      * @throws Exceptions\AccountAlreadyExistsException
+     * @throws Exceptions\AccountNotExistException
      */
-    public static function fromNewCredentials(string $accountId, string $password): Credentials
+    public static function fromNewCredentials(string $accountId, string $password, bool $ignoreExistingCredentials = false): Credentials
     {
         $query = Database::queryFirstRow("SELECT account_id from accounts WHERE account_id=:account_id",
             array('account_id' => $accountId));
@@ -56,13 +60,13 @@ class Credentials implements BaseModel
         $existingAccount = Database::queryFirstRow("SELECT account_id from account_credentials WHERE account_id=:account_id",
             array('account_id' => $accountId));
 
-        if ($existingAccount != null) {
+        if (!$ignoreExistingCredentials and $existingAccount != null) {
             // Credentials Existing
             throw new Exceptions\AccountAlreadyExistsException($accountId);
         }
 
         $salt = Utils::generateRandomSaltyString(Definitions::CREDENTIALS_SALT_LENGTH);
-        $credentials = new Credentials($accountId, $password, $salt);
+        $credentials = new Credentials($accountId, $password, $salt, $existingAccount != null);
         $credentials->createCredentials();
 
         return $credentials;
@@ -94,11 +98,22 @@ class Credentials implements BaseModel
      */
     private function createCredentials()
     {
-        Database::insert('account_credentials', array(
-            'account_id' => $this->accountId,
-            'password' => $this->getHashedPassword(),
-            'salt' => $this->salt
-        ));
+        if ($this->isExisting){
+            Database::update('account_credentials', 'salt=:salt', 'account_id=:account_id', array(
+                'account_id' => $this->accountId,
+                'salt' => $this->salt
+            ));
+            Database::update('account_credentials', 'password=:password', 'account_id=:account_id', array(
+                'account_id' => $this->accountId,
+                'password' => $this->getHashedPassword()
+            ));
+        }else{
+            Database::insert('account_credentials', array(
+                'account_id' => $this->accountId,
+                'password' => $this->getHashedPassword(),
+                'salt' => $this->salt
+            ));
+        }
     }
 
     /**
@@ -120,6 +135,29 @@ class Credentials implements BaseModel
         }
 
         return true;
+    }
+
+    /**
+     * @param string $accountId
+     * @param string $password
+     * @return bool
+     * @throws Exceptions\AccountNotExistException
+     */
+    public static function isPasswordCorrectOfUser(string $accountId, string $password): bool
+    {
+        $credentials = Credentials::fromExistingCredentials($accountId, $password);
+        return $credentials->authenticate();
+    }
+
+    /**
+     * @param string $accountId
+     * @param string $newPassword
+     * @throws Exceptions\AccountNotExistException
+     * @throws Exceptions\AccountAlreadyExistsException
+     */
+    public static function setNewPasswordOfUser(string $accountId, string $newPassword)
+    {
+        Credentials::fromNewCredentials($accountId, $newPassword, true);
     }
 
     /**

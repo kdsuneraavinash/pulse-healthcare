@@ -27,6 +27,11 @@
                        class="dropdown-item" href="#"><i
                                 class="fas fa-cogs mr-2" style="width: 20px;"></i>Control Panel</a>
                 {% endif %}
+
+                <a onclick="post('{{ site }}/changepsw', null, 'get')"
+                   class="dropdown-item" href="#"><i
+                            class="fas fa-key mr-2" style="width: 20px;"></i>Change Password</a>
+
                 <a onclick="post('{{ site }}/logout')" class="dropdown-item" href="#"><i
                             class="fas fa-power-off mr-2" style="width: 20px;"></i>Sign Out</a>
             </div>

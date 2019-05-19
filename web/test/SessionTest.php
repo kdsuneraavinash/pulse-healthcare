@@ -24,7 +24,6 @@ final class SessionTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        Database::init();
         self::$userId = "session_tester";
         self::$customIP = "113.59.194.60";
 

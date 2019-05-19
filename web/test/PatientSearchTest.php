@@ -31,7 +31,6 @@ final class PatientSearchTest extends TestCase
      */
     public static function setSharedVariables()
     {
-        Database::init();
         LoginService::setTestEnvironment();
         self::$nic = "978978877V";
         self::$name = "Patient Tester";

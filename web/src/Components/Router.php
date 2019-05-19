@@ -16,6 +16,9 @@ final class Router
             ['GET', '/profile', ['Pulse\Controllers\ProfilePageController', 'get']],
             ['GET', '/showprofile', ['Pulse\Controllers\ProfilePageController', 'getShowProfile']],
             ['GET', '/timeline', ['Pulse\Controllers\ProfilePageController', 'getTimeline']],
+            ['GET', '/changepsw', ['Pulse\Controllers\ProfilePageController', 'getChangePassword']],
+            ['POST', '/changepsw', ['Pulse\Controllers\ProfilePageController', 'postChangePassword']],
+
 
             // Login handlers
             ['GET', '/login', ['Pulse\Controllers\LoginController', 'get']],
