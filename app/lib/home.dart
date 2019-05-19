@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:pulse_healthcare/profile.dart';
 import 'package:pulse_healthcare/timeline.dart';
+
+import 'logic/theme.dart';
+import 'logic/user.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -27,6 +31,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("MedKit"),
         centerTitle: true,
+        leading: Provider.of<UserManager>(context).pending
+            ? Center(child: CircularProgressIndicator())
+            : Icon(FontAwesomeIcons.medkit),
+        actions: <Widget>[
+          IconButton(
+            onPressed: Provider.of<ThemeStash>(context).nextTheme,
+            icon: Icon(Icons.palette),
+          ),
+        ],
       ),
       body: PageView(
         controller: _pageController,
@@ -34,7 +47,7 @@ class _HomePageState extends State<HomePage> {
           Center(child: TimelinePage()),
           Center(
               child:
-                  Icon(FontAwesomeIcons.cogs, size: 72.0, color: Colors.black)),
+                  Icon(FontAwesomeIcons.cogs, size: 72.0, color: Provider.of<ThemeStash>(context).primaryColor)),
           Center(child: ProfilePage(key: _profilePageKey)),
         ],
         onPageChanged: (position) {

@@ -79,6 +79,13 @@ final class Router
             ['GET', '/lock', ['Pulse\Controllers\ErrorController', 'errorLock']],
             ['POST', '/lock', ['Pulse\Controllers\ErrorController', 'errorLock']],
 
+            // API
+            ['GET', '/api/login', ['Pulse\Controllers\API\LoginController', 'login']],
+            ['GET', '/api/timeline', ['Pulse\Controllers\API\TimelineController', 'timeline']],
+            ['GET', '/api/profile', ['Pulse\Controllers\API\ProfileController', 'profile']],
+            ['GET', '/api/logout', ['Pulse\Controllers\API\LoginController', 'logout']],
+
+
         ];
     }
 

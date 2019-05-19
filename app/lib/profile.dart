@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:pulse_healthcare/logic/user.dart';
 import 'package:pulse_healthcare/login.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -8,6 +10,8 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double mediaQueryWidth = MediaQuery.of(context).size.width;
+    UserManager userManager = Provider.of<UserManager>(context);
+
     return Container(
       child: ListView(
         children: <Widget>[
@@ -22,17 +26,14 @@ class ProfilePage extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          _buildListTile(FontAwesomeIcons.key, "972502456V", "Patient ID"),
-          _buildListTile(FontAwesomeIcons.userAlt, "Sunera Avinash", "Name"),
-          _buildListTile(FontAwesomeIcons.idCard, "972502456V", "NIC"),
-          _buildListTile(FontAwesomeIcons.birthdayCake, "22 years", "Age"),
-          _buildListTile(FontAwesomeIcons.mars, "Male", "Gender"),
-          _buildListTile(FontAwesomeIcons.language, "Sinhala", "Ethnicity"),
           _buildListTile(
-              FontAwesomeIcons.city,
-              "344/1, Moonamalgahawatta, Duwatemple Rd, Kalutara South.",
-              "Address"),
-          _buildListTile(FontAwesomeIcons.phone, "076-8336850", "Phone Number"),
+              FontAwesomeIcons.key, userManager.userId, "Patient ID"),
+          _buildListTile(FontAwesomeIcons.userAlt, userManager.name, "Name"),
+          _buildListTile(FontAwesomeIcons.idCard, userManager.nic, "NIC"),
+          _buildListTile(FontAwesomeIcons.envelope, userManager.email, "Email"),
+          _buildListTile(
+              FontAwesomeIcons.phone, userManager.phoneNumber, "Phone Number"),
+          _buildListTile(FontAwesomeIcons.city, userManager.address, "Address"),
           OutlineButton(
             onPressed: () => loggedOut(context),
             child: Padding(
@@ -62,7 +63,8 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  void loggedOut(BuildContext context){
+  void loggedOut(BuildContext context) {
+    Provider.of<UserManager>(context).logout();
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(

@@ -2,7 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Components\Logger;
 use Pulse\Models\Doctor\Doctor;
 
 class DoctorControlPanelController extends BaseController

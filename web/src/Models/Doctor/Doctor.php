@@ -4,7 +4,6 @@ namespace Pulse\Models\Doctor;
 
 use Pulse\Components\Database;
 use Pulse\Components\Utils;
-use Pulse\Definitions;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;

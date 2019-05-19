@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pulse_healthcare/home.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pulse_healthcare/uigradient.dart';
+
+import 'logic/theme.dart';
+import 'logic/user.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -15,6 +18,15 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Login"),
         centerTitle: true,
+        leading: Provider.of<UserManager>(context).pending
+            ? Center(child: CircularProgressIndicator())
+            : Icon(FontAwesomeIcons.medkit),
+        actions: <Widget>[
+          IconButton(
+            onPressed: Provider.of<ThemeStash>(context).nextTheme,
+            icon: Icon(Icons.palette),
+          ),
+        ],
       ),
       body: ListView(
         children: <Widget>[
@@ -22,10 +34,7 @@ class LoginScreen extends StatelessWidget {
             height: mediaQueryHeight / 3,
             child: _buildTopBanner(context),
           ),
-          Container(
-            height: mediaQueryHeight / 2,
-            child: LoginForm(),
-          )
+          LoginForm(),
         ],
       ),
     );
@@ -159,21 +168,19 @@ class _LoginFormState extends State<LoginForm> {
     return null;
   }
 
-  void _loginButtonPress() {
+  void _loginButtonPress() async {
     if (_formKey.currentState.validate()) {
-      if (_usernameController.text == 'demo') {
-        if (_passwordController.text == 'pass') {
-          loginSuccessful();
-        } else {
-          loginFailed(message: "Incorrect Password");
-        }
+      String result = await Provider.of<UserManager>(context)
+          .login(_usernameController.text, _passwordController.text);
+      if (result == null) {
+        loginSuccessful();
       } else {
-        loginFailed(message: "User does not exist");
+        loginFailed(result);
       }
     }
   }
 
-  void loginFailed({String message}) {
+  void loginFailed(String message) {
     showDialog(
       context: context,
       builder: (_) => LoginFailedDialog(errorMessage: message),
@@ -201,7 +208,7 @@ class LoginFailedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      backgroundColor: UiGradient.warningColor,
+      backgroundColor: Provider.of<ThemeStash>(context).warningColor,
       children: <Widget>[
         Container(
           margin: EdgeInsets.symmetric(vertical: 24.0),
