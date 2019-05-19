@@ -9,13 +9,15 @@
     <title>MediKit</title>
 </head>
 
-<body>
+<body class="bg-gradient">
 <div class="bg-image"></div>
 
 {% include("part/navbar.htm.twig") %}
 
 <main class="mt-sm-5 mb-5 pt-5">
-    <section class="container wow fadeIn" style="max-width: 800px;">
+    <section class="container card pt-5 wow fadeIn" style="max-width: 800px;">
+        <h2 class="text-center">Timeline: {{ patient }}</h2>
+        <hr/>
         {% for prescription in prescriptions %}
             {{ control_panel.card_start(prescription['date'],  "ignore-triangle danger") }}
             {% for medication in prescription['medications'] %}
@@ -45,10 +47,6 @@
             {{ control_panel.card_end() }}
             <hr class="m-4"/>
         {% endfor %}
-
-        <div>
-            <h6 class="text-center">No more entries...</h6>
-        </div>
 
 
     </section>

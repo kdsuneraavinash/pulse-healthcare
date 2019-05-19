@@ -109,13 +109,15 @@
                             <td>{{ last_login }}</td>
                         </tr>
 
-                        <tr>
-                            <th><strong>Password</strong></th>
-                            <td><a href="{{ site }}/changepsw" class="btn btn-sm btn-warning waves-effect">
-                                    Change Password
-                                </a>
-                            </td>
-                        </tr>
+                        {% if is_viewing == false %}
+                            <tr>
+                                <th><strong>Password</strong></th>
+                                <td><a href="{{ site }}/changepsw" class="btn btn-sm btn-warning waves-effect">
+                                        Change Password
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>
