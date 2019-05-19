@@ -6,6 +6,7 @@ use Pulse\Controllers\BaseController;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Exceptions;
 use Pulse\Models\Patient\Patient;
+use Pulse\Components\Definitions;
 
 class ProfileController extends BaseController
 {
@@ -43,8 +44,11 @@ class ProfileController extends BaseController
             $this->render('api/Profile.json.twig',
                 array('message' => "Account Details Loaded", 'ok' => 'true', 'context' => $context),
                 $account);
-        } else {
-            $this->echoError('Current account is not a patient');
+        } else if ($account == null){
+		$this->echoError("User not logged in");
+            	return;
+	} else {
+            $this->echoError("Current account is not a Patient");
             return;
         }
     }
