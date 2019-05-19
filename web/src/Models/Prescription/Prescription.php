@@ -2,10 +2,7 @@
 
 namespace Pulse\Models\Prescription;
 
-use http\Exception\InvalidArgumentException;
 use Pulse\Components\Database;
-use Pulse\Components\Logger;
-use Pulse\Components\PureSqlStatement;
 use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\Exceptions\InvalidDataException;
 

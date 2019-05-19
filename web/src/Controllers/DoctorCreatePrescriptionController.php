@@ -2,8 +2,6 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Components;
-use Pulse\Components\Utils;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Exceptions\AccountNotExistException;

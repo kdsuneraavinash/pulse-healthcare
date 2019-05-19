@@ -3,7 +3,6 @@
 namespace Pulse\Models\Patient;
 
 use Pulse\Components\Database;
-use Pulse\Components\Logger;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
