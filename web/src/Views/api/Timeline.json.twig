@@ -1,0 +1,24 @@
+{
+    "message": "{{ message }}",
+    "ok": "{{ ok }}",
+    "prescriptions": [
+        {% for prescription in prescriptions %}
+        {
+            "id": "{{ prescription['id'] }}",
+            "doctor": "{{ prescription['doctor'] }}",
+            "medications": [
+                {% for medication in prescription['medications'] %}
+                {
+                    "id": "{{ medication['id'] }}",
+                    "name": "{{ medication['name'] }}",
+                    "dose": "{{ medication['dose'] }}",
+                    "frequency": "{{ medication['frequency'] }}",
+                    "time": "{{ medication['time'] }}",
+                    "comment": "{{ medication['comment'] == ''? 'No Comment' : medication['comment'] }}"
+                },
+                {% endfor %}
+            ]
+        },
+        {% endfor %}
+    ]
+}
