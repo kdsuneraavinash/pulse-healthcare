@@ -155,6 +155,7 @@ class ProfilePageController extends BaseController
                 $patient = Account::retrieveAccount($accountId, true);
                 if ($patient instanceof Patient) {
                     $this->showTimelineOfPatient($patient, $currentAccount);
+                    return;
                 }
                 $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
             } else if ($currentAccount instanceof Patient) {
