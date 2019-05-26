@@ -15,7 +15,7 @@ class Admin extends Account
      * MedicalCenter constructor.
      * @param string $accountId
      */
-    protected function __construct(string $accountId)
+    function __construct(string $accountId)
     {
         parent::__construct($accountId, AccountType::Admin);
     }

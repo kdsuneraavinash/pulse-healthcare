@@ -6,7 +6,6 @@ namespace Pulse\Controllers;
 use Pulse\Components\Logger;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
-use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Search\DoctorCategoryContext;
 use Pulse\Models\Search\DoctorNoCategoryContext;

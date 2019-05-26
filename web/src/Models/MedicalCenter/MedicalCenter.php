@@ -28,7 +28,7 @@ class MedicalCenter extends Account implements IFavouritable
      * @throws Exceptions\AccountNotExistException
      * @throws Exceptions\AccountRejectedException
      */
-    protected function __construct(string $accountId, ? AbstractVerificationState $verificationState,
+    function __construct(string $accountId, ? AbstractVerificationState $verificationState,
                                    MedicalCenterDetails $medicalCenterDetails, bool $ignoreErrors = false)
     {
         parent::__construct($accountId, AccountType::MedicalCenter);

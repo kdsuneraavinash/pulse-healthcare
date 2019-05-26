@@ -3,6 +3,7 @@
 namespace Pulse\Controllers;
 
 use Pulse\Models\AccountSession\Account;
+use Pulse\Models\AccountSession\AccountFactory;
 use Pulse\Models\AccountSession\Credentials;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
@@ -48,7 +49,8 @@ class ProfilePageController extends BaseController
             exit();
         }
         try {
-            $account = Account::retrieveAccount($accountId, true);
+            $accountFactory = new AccountFactory();
+            $account = $accountFactory->createAccount($accountId, true);
         } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404?a=$accountId");
             exit();
@@ -153,7 +155,8 @@ class ProfilePageController extends BaseController
             if ($currentAccount instanceof Doctor) {
                 $accountId = $this->httpHandler()->getParameter("user");
                 if ($accountId != null){
-                    $patient = Account::retrieveAccount($accountId, true);
+                    $accountFactory = new AccountFactory();
+                    $patient = $accountFactory->createAccount($accountId, true);
                     if ($patient instanceof Patient) {
                         $this->showTimelineOfPatient($patient, $currentAccount);
                         return;

@@ -9,7 +9,6 @@ use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Patient\Patient;
-use Pulse\Models\Patient\PatientDetails;
 use Pulse\Models\Search\SearchContext;
 
 class SearchPatientController extends BaseController

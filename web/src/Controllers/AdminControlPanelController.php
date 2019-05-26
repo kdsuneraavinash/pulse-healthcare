@@ -2,7 +2,7 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Models\AccountSession\Account;
+use Pulse\Models\AccountSession\AccountFactory;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Exceptions;
@@ -66,7 +66,8 @@ class AdminControlPanelController extends BaseController
             /// Current user must be ADMIN
             try {
                 /// Get target user object
-                $targetAccount = Account::retrieveAccount($targetAccountId, true);
+                $accountFactory = new AccountFactory();
+                $targetAccount = $accountFactory->createAccount($targetAccountId, true);
 
             } catch (Exceptions\AccountNotExistException $e) {
                 $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
