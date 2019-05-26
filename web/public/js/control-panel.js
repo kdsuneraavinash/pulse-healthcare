@@ -43,8 +43,8 @@ $(document).ready(function () {
     let pattern = Trianglify({
         width: 2000,
         height: 2000,
-        cell_size: 150,
-        x_colors: ['#4b6cb7', '#182848']
+        cell_size: 50,
+        x_colors: ['#D84315', '#1565C0', '#000000']
     });
 
     let dataUrl = pattern.canvas().toDataURL();
