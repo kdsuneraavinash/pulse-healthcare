@@ -8,6 +8,8 @@ class Database
 {
     private static $database;
 
+    private function __construct(){}
+
     /**
      * --------------------------------------
      * ---------SINGLETON DESIGN PATTERN-----
