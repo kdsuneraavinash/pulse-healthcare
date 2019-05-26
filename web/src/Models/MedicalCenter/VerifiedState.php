@@ -2,31 +2,35 @@
 /**
  * Created by PhpStorm.
  * User: lahiru
- * Date: 5/7/19
- * Time: 1:34 AM
+ * Date: 5/6/19
+ * Time: 10:29 PM
  */
 
 declare(strict_types=1);
 
-namespace Pulse\Models\AccountSession;
-use Pulse\Models\Enums\VerificationState;
-use Pulse\Models\AccountSession\AbstractVerificationState;
+namespace Pulse\Models\MedicalCenter;
 
-class RejectedState extends AbstractVerificationState{
+use Pulse\Models\Enums\VerificationState;
+
+
+class VerifiedState extends AbstractVerificationState
+{
 
     private $status;
 
     /**
-     * RejectedState constructor.
+     * VerifiedState constructor.
      */
     public function __construct()
     {
-        $this->status = VerificationState::Rejected;
+        $this->status = VerificationState::Verified;
     }
 
     public function getStatus()
     {
+
         return $this->status;
+
     }
 
 

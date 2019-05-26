@@ -8,11 +8,10 @@
 
 declare(strict_types=1);
 
-namespace Pulse\Models\AccountSession;
+namespace Pulse\Models\MedicalCenter;
 
 
 abstract class AbstractVerificationState{
 
     abstract function getStatus();
-
 }

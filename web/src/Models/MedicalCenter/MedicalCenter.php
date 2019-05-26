@@ -3,12 +3,8 @@
 namespace Pulse\Models\MedicalCenter;
 
 use Pulse\Components\Database;
-use Pulse\Models\AccountSession\AbstractVerificationState;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
-use Pulse\Models\AccountSession\RejectedState;
-use Pulse\Models\AccountSession\UnverfiedState;
-use Pulse\Models\AccountSession\VerifiedState;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;
 use Pulse\Models\Enums\AccountType;
@@ -45,14 +41,16 @@ class MedicalCenter extends Account implements IFavouritable
             if ($query == null) {
                 throw new Exceptions\AccountNotExistException($accountId);
             }
-            if((int)$query['verified']==0){
-                $this->verificationState = new UnverfiedState();
-            }elseif ((int)$query['verified']==1){
+
+
+            if ((int)$query['verified'] == 0) {
+                $this->verificationState = new UnverifiedState();
+            } elseif ((int)$query['verified'] == 1) {
                 $this->verificationState = new VerifiedState();
-            }elseif((int)$query['verified']==2){
+            } else {
                 $this->verificationState = new RejectedState();
             }
-//
+
             if (!$ignoreErrors && $this->getVerificationState() == VerificationState::Rejected) {
                 throw new Exceptions\AccountRejectedException($accountId);
             }
@@ -76,7 +74,7 @@ class MedicalCenter extends Account implements IFavouritable
     public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails,
                                                string $password): MedicalCenter
     {
-        $medicalCenter = new MedicalCenter($accountId, new UnverfiedState(), $medicalCenterDetails);
+        $medicalCenter = new MedicalCenter($accountId, new UnverifiedState(), $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
         LoginService::signUpSession($accountId, $password);
         // TODO: Add code to request verification

@@ -7,11 +7,13 @@
  */
 
 namespace Pulse\Models\Search;
+
 use Pulse\Components\Database;
 use Pulse\Definitions;
 use Pulse\Models\Interfaces\ISearchable;
 
-class DoctorCategoryContext implements ISearchable{
+class DoctorCategoryContext implements ISearchable
+{
 
     private $category;
     private $slmcId;
@@ -31,8 +33,8 @@ class DoctorCategoryContext implements ISearchable{
     }
 
 
-    public function search(){
-
+    public function search()
+    {
         $sqlKeys = array();
         if ($this->name == null) {
             $nameArr = array();

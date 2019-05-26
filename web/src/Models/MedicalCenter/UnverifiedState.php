@@ -9,15 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Pulse\Models\AccountSession;
-namespace Pulse\Models\AccountSession;
+namespace Pulse\Models\MedicalCenter;
 use Pulse\Models\Enums\VerificationState;
-use Pulse\Models\AccountSession\AbstractVerificationState;
 
 
-
-
-class UnverfiedState extends AbstractVerificationState {
+class UnverifiedState extends AbstractVerificationState {
 
     private $status;
 

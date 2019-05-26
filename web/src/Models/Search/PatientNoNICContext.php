@@ -7,11 +7,13 @@
  */
 
 namespace Pulse\Models\Search;
+
 use Pulse\Components\Database;
 use Pulse\Definitions;
 use Pulse\Models\Interfaces\ISearchable;
 
-class PatientNoNICContext implements ISearchable {
+class PatientNoNICContext implements ISearchable
+{
 
     private $name;
     private $address;
@@ -28,49 +30,49 @@ class PatientNoNICContext implements ISearchable {
     }
 
 
-    public function search(){
-
+    public function search()
+    {
         $sqlKeys = array();
 
-        if ($this->name == null){
+        if ($this->name == null) {
             $nameArr = array();
-        }else{
+        } else {
             // Split by space
             $nameArr = explode(" ", $this->name);
         }
 
-        if ($this->address == null){
+        if ($this->address == null) {
             $addressArr = array();
-        }else{
+        } else {
             // Split by space
             $addressArr = explode(" ", $this->address);
         }
 
         if ($this->name != null) {
             $nameSQL = array();
-            for($i = 0; $i < sizeof($nameArr); $i++){
+            for ($i = 0; $i < sizeof($nameArr); $i++) {
                 $key = $nameArr[$i];
                 $nameKeyStr = "name_part_$i";
-                $nameSQLi = "if (name LIKE :$nameKeyStr, ". Definitions::NAME_RELEVANCE_WEIGHT .", 0)";
+                $nameSQLi = "if (name LIKE :$nameKeyStr, " . Definitions::NAME_RELEVANCE_WEIGHT . ", 0)";
                 $sqlKeys[$nameKeyStr] = "%$key%";
                 array_push($nameSQL, $nameSQLi);
             }
-            $nameSQL =implode(" + ", $nameSQL);
-        }else{
+            $nameSQL = implode(" + ", $nameSQL);
+        } else {
             $nameSQL = "0";
         }
 
         if ($this->address != null) {
             $addressSQL = array();
-            for($i = 0; $i < sizeof($addressArr); $i++){
+            for ($i = 0; $i < sizeof($addressArr); $i++) {
                 $key = $addressArr[$i];
                 $addressKeyStr = "address_part_$i";
-                $addressSQLi = "if(address LIKE :$addressKeyStr, ". Definitions::ADDRESS_RELEVANCE_WEIGHT .", 0)";
+                $addressSQLi = "if(address LIKE :$addressKeyStr, " . Definitions::ADDRESS_RELEVANCE_WEIGHT . ", 0)";
                 $sqlKeys[$addressKeyStr] = "%$key%";
                 array_push($addressSQL, $addressSQLi);
             }
-            $addressSQL =implode(" + ", $addressSQL);
-        }else{
+            $addressSQL = implode(" + ", $addressSQL);
+        } else {
             $addressSQL = "0";
         }
 

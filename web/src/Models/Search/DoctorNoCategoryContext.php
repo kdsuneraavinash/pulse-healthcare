@@ -7,11 +7,13 @@
  */
 
 namespace Pulse\Models\Search;
+
 use Pulse\Components\Database;
 use Pulse\Definitions;
 use Pulse\Models\Interfaces\ISearchable;
 
-class DoctorNoCategoryContext implements ISearchable{
+class DoctorNoCategoryContext implements ISearchable
+{
 
     private $slmcId;
     private $name;
