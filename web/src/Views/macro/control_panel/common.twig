@@ -16,7 +16,7 @@ Sidebar
     </div>
 
     <div class="text-center pb-4 text-white">
-        {% import 'macro/common.htm.twig' as common %}
+        {% import 'macro/common.twig' as common %}
         {{ common.profile_button(account_id, account_type, site, false) }}
     </div>
 
@@ -71,7 +71,7 @@ IFrame
 
 {% macro iframe_start() -%}
     <head>
-        {% include("part/header.htm.twig") %}
+        {% include("part/header.twig") %}
         <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
               rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
@@ -103,7 +103,7 @@ IFrame
     </div>
 </main>
 
-{% include "part/scripts.htm.twig" %}
+{% include "part/scripts.twig" %}
 <script>
     // Wallpaper dynamic set
     $(document).ready(function () {
@@ -156,7 +156,7 @@ IFrame Control Page
 
 {% macro page_start(title, site) -%}
     <head>
-        {% include("part/header.htm.twig") %}
+        {% include("part/header.twig") %}
         <link href="{{ site }}/css/control-panel.css" rel="stylesheet">
         <style>
             html {
@@ -168,7 +168,7 @@ IFrame Control Page
 <body class="bg-white">
 {%- endmacro %}
 {% macro page_end(site) -%}
-{% include "part/scripts.htm.twig" %}
+{% include "part/scripts.twig" %}
 <script src="{{ site }}/js/control-panel.js"></script>
 </body>
 {%- endmacro %}

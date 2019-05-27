@@ -1,6 +1,6 @@
 {% macro account_verify_card(account_id, name, phsrc, email,
     fax, phone_number, address, parsed_address, postal_code, state) -%}
-    {% import  'macro/control_panel/common.htm.twig' as control_panel %}
+    {% import  'macro/control_panel/common.twig' as control_panel %}
     <!--suppress HtmlFormInputWithoutLabel, HtmlUnknownTarget -->
     <div data-hash="{{ account_id }}" class="owl-card">
         {{ control_panel.card_start(account_id) }}
