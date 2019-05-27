@@ -3,6 +3,7 @@ import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pulse_healthcare/profile.dart';
+import 'package:pulse_healthcare/search.dart';
 import 'package:pulse_healthcare/timeline.dart';
 
 import 'package:pulse_healthcare/logic/theme.dart';
@@ -45,10 +46,7 @@ class _HomePageState extends State<HomePage> {
         controller: _pageController,
         children: <Widget>[
           Center(child: TimelinePage()),
-          Center(
-              child: Icon(FontAwesomeIcons.cogs,
-                  size: 72.0,
-                  color: Provider.of<ThemeStash>(context).primaryColor)),
+          Center(child: SearchScreen()),
           Center(child: ProfilePage(key: _profilePageKey)),
         ],
         onPageChanged: (position) {
@@ -63,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         key: _bottomNavigationKey,
         tabs: [
           TabData(iconData: Icons.timeline, title: "Timeline"),
-          TabData(iconData: FontAwesomeIcons.pills, title: "Prescriptions"),
+          TabData(iconData: FontAwesomeIcons.search, title: "Search"),
           TabData(iconData: FontAwesomeIcons.userTie, title: "Profile"),
         ],
         onTabChangedListener: (position) {
@@ -108,14 +106,15 @@ class _HomePageState extends State<HomePage> {
             "About this app",
             FontAwesomeIcons.questionCircle,
             () {
-              showAboutDialog(context: context,
-              applicationIcon: Icon(FontAwesomeIcons.medkit),
-              applicationName: "MediKit",
-              applicationVersion: "v1.0.0",
-              children: <Widget>[
-                Text("This is a app made for MediKit, an record keeping website for medical purposes.")
-              ]
-              );
+              showAboutDialog(
+                  context: context,
+                  applicationIcon: Icon(FontAwesomeIcons.medkit),
+                  applicationName: "MediKit",
+                  applicationVersion: "v1.0.0",
+                  children: <Widget>[
+                    Text(
+                        "This is a app made for MediKit, an record keeping website for medical purposes.")
+                  ]);
             },
           ),
           _buildListTile(

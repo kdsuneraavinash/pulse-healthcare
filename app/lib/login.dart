@@ -103,7 +103,6 @@ class _LoginFormState extends State<LoginForm> {
       return;
     }
 
-    print(map.values.toList());
     String result = await Provider.of<UserManager>(context)
         .loginAndGetAllData(map['username'], map['password']);
     if (result == null) {

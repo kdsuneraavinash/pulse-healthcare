@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pulse_healthcare/logic/doctor.dart';
 import 'package:pulse_healthcare/logic/timeline_entry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pulse_healthcare/logic/user_functions.dart';
@@ -83,5 +84,9 @@ class UserManager extends UserFunctions with ChangeNotifier {
     await prefs.remove('username');
     await prefs.remove('password');
     return super.logout();
+  }
+
+  Future<List<Doctor>> getSearchResults(String searchTerm) async {
+    return await super.getSearchResults(searchTerm);
   }
 }

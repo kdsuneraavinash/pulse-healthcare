@@ -29,9 +29,9 @@ class SearchController extends APIController
             $results =  SearchContext::search($searchContext);
 
             if ($results == null || sizeof($results) == 0) {
-                $this->echoError($jsonTemplate,  "No results found");
+                $this->echoError($jsonTemplate,  "No results found for $name");
             } else {
-                $this->render($jsonTemplate, array('ret' => $results, 'size' => sizeof($results)), $currentAccount);
+                $this->render($jsonTemplate,  array('message' => "Searched Successfully", 'ok' => 'true', 'ret' => $results), $currentAccount);
             }
         } else {
             $this->echoError($jsonTemplate, "Current account is not a Patient");

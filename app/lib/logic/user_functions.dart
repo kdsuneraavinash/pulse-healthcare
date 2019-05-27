@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
+import 'package:pulse_healthcare/logic/doctor.dart';
 import 'package:pulse_healthcare/logic/timeline_entry.dart';
 import 'package:pulse_healthcare/logic/user.dart';
 import 'package:pulse_healthcare/logic/user_manager.dart';
+
+typedef MapAcceter(Map<String, dynamic> data);
 
 abstract class UserFunctions {
   @protected
@@ -17,10 +20,10 @@ abstract class UserFunctions {
   }
 
   Future<String> _getDataAndProcess(
-      {String apiLink, Function ifOkay, Function ifError}) async {
-
+      {String apiLink, MapAcceter ifOkay, MapAcceter ifError}) async {
     ifOkay ??= _doNothing;
     ifError ??= _doNothing;
+    // apiLink = HtmlEscape().convert(apiLink);
 
     http.Response response =
         await http.get(apiLink, headers: {'cookie': user.headers});
@@ -64,6 +67,22 @@ abstract class UserFunctions {
         user.address = data['data']['address'];
       },
     );
+  }
+
+  /// Retrive user data callback
+  @protected
+  Future<List<Doctor>> getSearchResults(String searchTerm) async {
+    List<Doctor> maps;
+
+    await _getDataAndProcess(
+        apiLink: "http://$PC_IP/api/search?name=$searchTerm",
+        ifOkay: (data) {
+          maps = List<Doctor>.from(List<Map>.from(data['results'])
+                  .map<Doctor>((v) => Doctor.fromMap(Map<String, String>.from(v))))
+              .toList();
+        },
+        ifError: (data) {});
+    return maps;
   }
 
   /// Retrieve timeline data callback
