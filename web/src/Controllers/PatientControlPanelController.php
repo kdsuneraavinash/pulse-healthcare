@@ -2,12 +2,9 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Components\Logger;
-use Pulse\Components\Utils;
 use Pulse\Models\Exceptions\InvalidDataException;
+use Pulse\Models\Exceptions\NoPrescriptionsException;
 use Pulse\Models\Patient\Patient;
-use Pulse\Models\Prescription\Medication;
-use Pulse\Models\Prescription\Prescription;
 
 class PatientControlPanelController extends BaseController
 {
@@ -31,46 +28,16 @@ class PatientControlPanelController extends BaseController
         $currentAccount = $this->getCurrentAccount();
         try {
             if ($currentAccount instanceof Patient) {
-                $prescriptions = $currentAccount->getPrescriptions();
-                if (sizeof($prescriptions) == 0) {
-                    $this->render('iframe/NoPrescriptions.html.twig', array('prescriptions' => array()), $currentAccount);
-                    return;
-                }
-                $parsedPrescriptions = array();
-                foreach ($prescriptions as $prescription) {
-                    $parsedMedications = array();
-                    if ($prescription instanceof Prescription) {
-                        foreach ($prescription->getMedications() as $medication) {
-                            if ($medication instanceof Medication) {
-                                $parsedMedication = array(
-                                    'id' => $medication->getMedicationId(),
-                                    'name' => $medication->getName(),
-                                    'dose' => $medication->getDose(),
-                                    'frequency' => $medication->getFrequency(),
-                                    'time' => $medication->getTime(),
-                                    'comment' => $medication->getComment(),
-                                );
-                                array_push($parsedMedications, $parsedMedication);
-                            }
-                        }
-                        $parsedPrescription = array(
-                            'doctor' => $prescription->getDoctorId(),
-                            'id' => $prescription->getPrescriptionId(),
-                            'date' => $prescription->getDate(),
-                            'patient' => $prescription->getPatientId(),
-                            'medications' => $parsedMedications
-                        );
-                        array_push($parsedPrescriptions, $parsedPrescription);
-                    }
-                }
-
-
+                $parsedPrescriptions = $currentAccount->getParsedPrescriptions();
                 $this->render('iframe/PatientTimelineIFrame.htm.twig', array('prescriptions' => $parsedPrescriptions), $currentAccount);
             } else {
                 $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
             }
         } catch (InvalidDataException $e) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
+        } catch (NoPrescriptionsException $e) {
+            $this->render('iframe/NoPrescriptions.html.twig', array('prescriptions' => array()), $currentAccount);
+            return;
         }
     }
 }

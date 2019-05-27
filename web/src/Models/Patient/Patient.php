@@ -9,6 +9,7 @@ use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Exceptions;
 use Pulse\Components\Utils;
 use Pulse\Models\Interfaces\ICreatable;
+use Pulse\Models\Prescription\Medication;
 use Pulse\Models\Prescription\Prescription;
 
 
@@ -95,32 +96,53 @@ class Patient extends Account implements ICreatable
     public function getPrescriptions()
     {
         $prescriptionIds = Database::query("SELECT id from prescriptions where patient_id=:patient_id",
-            array('patient_id'=>$this->getAccountId()));
+            array('patient_id' => $this->getAccountId()));
         $prescriptions = array();
-        foreach ($prescriptionIds as $prescriptionId){
-            array_push($prescriptions, Prescription::fromDatabase((string) $prescriptionId['id']));
+        foreach ($prescriptionIds as $prescriptionId) {
+            array_push($prescriptions, Prescription::fromDatabase((string)$prescriptionId['id']));
         }
         return $prescriptions;
     }
 
-    public function setReminder($reminderDetails)
+    /**
+     * @throws Exceptions\InvalidDataException
+     * @throws Exceptions\NoPrescriptionsException
+     */
+    public function getParsedPrescriptions(): array
     {
-        //TODO: implementation of setReminder() function
-    }
+        $prescriptions = $this->getPrescriptions();
+        if (sizeof($prescriptions) == 0) {
+            throw new Exceptions\NoPrescriptionsException();
+        }
 
-    public function viewMedicineInformation($medicine)
-    {
-        //TODO: implementation of viewMedicineInformation() function
-    }
-
-    public function setReminderNextDate()
-    {
-        //TODO: implementation of setReminderNextDate() function
-    }
-
-    public function editNotifications()
-    {
-        //TODO: implementation of editNotifications() function
+        $parsedPrescriptions = array();
+        foreach ($prescriptions as $prescription) {
+            $parsedMedications = array();
+            if ($prescription instanceof Prescription) {
+                foreach ($prescription->getMedications() as $medication) {
+                    if ($medication instanceof Medication) {
+                        $parsedMedication = array(
+                            'id' => $medication->getMedicationId(),
+                            'name' => $medication->getName(),
+                            'dose' => $medication->getDose(),
+                            'frequency' => $medication->getFrequency(),
+                            'time' => $medication->getTime(),
+                            'comment' => $medication->getComment(),
+                        );
+                        array_push($parsedMedications, $parsedMedication);
+                    }
+                }
+                $parsedPrescription = array(
+                    'doctor' => $prescription->getDoctorId(),
+                    'id' => $prescription->getPrescriptionId(),
+                    'date' => $prescription->getDate(),
+                    'patient' => $prescription->getPatientId(),
+                    'medications' => $parsedMedications
+                );
+                array_push($parsedPrescriptions, $parsedPrescription);
+            }
+        }
+        return $parsedPrescriptions;
     }
 
     /*
