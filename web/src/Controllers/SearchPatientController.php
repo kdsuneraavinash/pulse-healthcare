@@ -19,7 +19,7 @@ class SearchPatientController extends BaseController
     public function getIFrame(Account $currentAccount)
     {
         if ($currentAccount instanceof Patient) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+            $this->redirectToErrorPage(405);
         } else {
             $this->renderWithNoContext('iframe/SearchPatient.html.twig', $currentAccount);
         }
@@ -53,7 +53,7 @@ class SearchPatientController extends BaseController
     public function postIframe(Account $currentAccount)
     {
         if ($currentAccount instanceof Patient) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+            $this->redirectToErrorPage(405);
         }
 
         $results = $this->getSearchResults();

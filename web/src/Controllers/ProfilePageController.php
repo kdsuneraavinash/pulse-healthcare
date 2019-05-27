@@ -38,14 +38,14 @@ class ProfilePageController extends BaseController
         $accountId = $this->httpHandler()->getParameter("user");
 
         if ($accountId == null) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
+            $this->redirectToErrorPage(404);
             exit();
         }
         try {
             $accountFactory = new AccountFactory();
             $account = $accountFactory->getAccount($accountId, true);
         } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
+            $this->redirectToErrorPage(404);
             exit();
         }
 

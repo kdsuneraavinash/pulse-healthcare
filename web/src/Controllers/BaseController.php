@@ -69,7 +69,10 @@ abstract class BaseController
         return TwigHandler::getInstance();
     }
 
+    /**
+     * @param int $errorCode
+     */
     protected function redirectToErrorPage(int $errorCode){
-
+        $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/$errorCode");
     }
 }

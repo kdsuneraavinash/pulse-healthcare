@@ -31,7 +31,7 @@ class PatientControlPanelController extends BaseController
             $parsedPrescriptions = $currentAccount->getParsedPrescriptions();
             $this->render('iframe/PatientTimelineIFrame.htm.twig', array('prescriptions' => $parsedPrescriptions), $currentAccount);
         } catch (InvalidDataException $e) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
+            $this->redirectToErrorPage(404);
         } catch (NoPrescriptionsException $e) {
             $this->render('iframe/NoPrescriptions.html.twig', array('prescriptions' => array()), $currentAccount);
         }

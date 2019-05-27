@@ -1,18 +1,18 @@
 {% import 'macro/errors.htm.twig' as errors %}
 
-{{ errors.errors_page_start(site, '405') }}
+{{ errors.errors_page_start(site, '401') }}
 <div class="row content">
     <div class="col-sm-5">
         <div class="text-right">
-            <img src="https://st3.depositphotos.com/2951719/14028/v/450/depositphotos_140281514-stock-illustration-broken-green-robot-cartoon-character.jpg"
+            <img src="https://miro.medium.com/max/440/1*JY-JZfN8GW_OsJoVrI7wBg.png"
                  class="img-fluid p-3"
                  alt="Error Image"/>
         </div>
     </div>
     <div class="col-sm-7">
-        <h1 class="display-2 red-text font-weight-bold">405</h1>
-        <h5><strong>Method not allowed</strong></h5>
-        Something went wrong. You better head back to home page.
+        <h1 class="display-2 red-text font-weight-bold">Locked</h1>
+        <h5><strong>Authentication Error</strong></h5>
+        You are not authenticated to view this page. It is possible that you were logged out. Please re-login to continue.
         <p></p>
         <a href="http://localhost:8000" class="btn btn-sm btn-outline-dark">Home Page</a>
     </div>

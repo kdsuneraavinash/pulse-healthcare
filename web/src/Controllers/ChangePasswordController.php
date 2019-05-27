@@ -39,7 +39,7 @@ class ChangePasswordController extends BaseController
             } catch (AccountNotExistException $e) {
                 $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
             } catch (AccountAlreadyExistsException $e) {
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+                $this->redirectToErrorPage(405);
             }
         } else {
             $msg = "Retype Password Mismatch";

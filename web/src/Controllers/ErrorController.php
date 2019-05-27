@@ -19,6 +19,16 @@ class ErrorController extends BaseController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
+    public function error401()
+    {
+        $this->renderWithNoContext('errors/401.html.twig', null);
+    }
+
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function error405()
     {
         $this->renderWithNoContext('errors/405.html.twig', null);

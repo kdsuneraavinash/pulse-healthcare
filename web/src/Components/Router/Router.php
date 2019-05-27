@@ -84,6 +84,8 @@ final class Router
             ['POST', '/405', ['Pulse\Controllers\ErrorController', 'error405'], AccountList::Anyone],
             ['GET', '/500', ['Pulse\Controllers\ErrorController', 'error500'], AccountList::Anyone],
             ['POST', '/500', ['Pulse\Controllers\ErrorController', 'error500'], AccountList::Anyone],
+            ['GET', '/401', ['Pulse\Controllers\ErrorController', 'error401'], AccountList::Anyone],
+            ['POST', '/401', ['Pulse\Controllers\ErrorController', 'error401'], AccountList::Anyone],
             ['GET', '/undefined', ['Pulse\Controllers\ErrorController', 'errorUndefined'], AccountList::Anyone],
             ['POST', '/undefined', ['Pulse\Controllers\ErrorController', 'errorUndefined'], AccountList::Anyone],
             ['GET', '/lock', ['Pulse\Controllers\ErrorController', 'errorLock'], AccountList::Anyone],
@@ -104,7 +106,8 @@ final class Router
         return array(
             404 => '404',
             405 => '405',
-            500 => '500'
+            500 => '500',
+            401 => '401'
         );
     }
 

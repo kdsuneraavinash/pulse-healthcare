@@ -72,6 +72,6 @@ class AdminControlPanelController extends BaseController
             // Ignore error (to catch later)
         }
         /// Account is not a MedicalCenter or error thrown
-        $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        $this->redirectToErrorPage(405);
     }
 }

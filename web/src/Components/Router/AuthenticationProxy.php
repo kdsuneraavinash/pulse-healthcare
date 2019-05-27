@@ -38,7 +38,7 @@ class AuthenticationProxy implements ICallback
             $callback->execute();
             return;
         }
-        HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/401");
     }
 
     /**
