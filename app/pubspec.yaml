@@ -23,6 +23,7 @@ dependencies:
   font_awesome_flutter: ^8.4.0
   provider: ^2.0.1
   http: ^0.12.0+2
+  shared_preferences: ^0.5.2+1
 
 
 dev_dependencies:

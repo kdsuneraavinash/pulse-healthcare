@@ -14,29 +14,45 @@ class LoginScreen extends StatelessWidget {
     // Store media query hight to avoid lookup latency
     double mediaQueryHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Login"),
-        centerTitle: true,
-        leading: Provider.of<UserManager>(context).pending
-            ? Center(child: CircularProgressIndicator())
-            : Icon(FontAwesomeIcons.medkit),
-        actions: <Widget>[
-          IconButton(
-            onPressed: Provider.of<ThemeStash>(context).nextTheme,
-            icon: Icon(Icons.palette),
+    return Stack(
+      children: <Widget>[
+        Scaffold(
+          appBar: AppBar(
+            title: Text("Login"),
+            centerTitle: true,
+            leading: Provider.of<UserManager>(context).pending
+                ? Center(child: CircularProgressIndicator())
+                : Icon(FontAwesomeIcons.medkit),
+            actions: <Widget>[
+              IconButton(
+                onPressed: Provider.of<ThemeStash>(context).nextTheme,
+                icon: Icon(Icons.palette),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: ListView(
-        children: <Widget>[
-          SizedBox(
-            height: mediaQueryHeight / 3,
-            child: _buildTopBanner(context),
+          body: ListView(
+            children: <Widget>[
+              SizedBox(
+                height: mediaQueryHeight / 3,
+                child: _buildTopBanner(context),
+              ),
+              LoginForm(),
+            ],
           ),
-          LoginForm(),
-        ],
-      ),
+        ),
+        IgnorePointer(
+          ignoring: Provider.of<UserManager>(context).userDataRetrieved,
+          child: AnimatedOpacity(
+            duration: Duration(seconds: 1),
+            opacity:
+                Provider.of<UserManager>(context).userDataRetrieved ? 0 : 1,
+            child: Container(
+              color: Theme.of(context).primaryColor,
+              child: Center(child: CircularProgressIndicator()),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -67,6 +83,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   // Form key to validate form
   final _formKey = GlobalKey<FormState>();
+  bool _isPrefsRetrieved = false;
 
   // Text Controllers to retrieve text
   TextEditingController _usernameController;
@@ -78,6 +95,24 @@ class _LoginFormState extends State<LoginForm> {
     _passwordController = new TextEditingController();
   }
 
+  void takePrefsAndLoadNextPage() async {
+    Map<String, String> map = await Provider.of<UserManager>(context)
+        .setPreviousUsernameAndPassword();
+    if (map == null) {
+      // loginFailed("Prefs Not Found");
+      return;
+    }
+
+    print(map.values.toList());
+    String result = await Provider.of<UserManager>(context)
+        .loginAndGetAllData(map['username'], map['password']);
+    if (result == null) {
+      loginSuccessful();
+    } else {
+      loginFailed(result);
+    }
+  }
+
   /// Builds a text box for the login form
   Widget _buildFormTextBox({
     String labelText,
@@ -86,6 +121,11 @@ class _LoginFormState extends State<LoginForm> {
     IconData icon,
     isPassword = false,
   }) {
+    if (!_isPrefsRetrieved) {
+      takePrefsAndLoadNextPage();
+      _isPrefsRetrieved = true;
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(

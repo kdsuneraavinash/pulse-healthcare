@@ -108,7 +108,9 @@ class TimeLineCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> tags = [keywordChip("Med (${timelineEntry.medications.length})", context)];
+    List<Widget> tags = [
+      keywordChip("Med (${timelineEntry.medications.length})", context)
+    ];
     tags.add(keywordChip("Important", context));
     tags.add(keywordChip("No Report", context));
 
@@ -150,10 +152,15 @@ class TimeLineCard extends StatelessWidget {
                       color: Colors.black, fontWeight: FontWeight.w700)),
               subtitle: Text("Prescribed doctor"),
             ),
-            Wrap(
-              alignment: WrapAlignment.start,
-              spacing: 5.0,
-              children: tags,
+            SizedBox(
+              height: 40,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: tags.map<Widget>((w) => Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 3.0),
+                      child: w,
+                    )).toList(),
+              ),
             )
           ],
         ),

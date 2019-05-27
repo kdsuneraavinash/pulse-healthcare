@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:pulse_healthcare/profile.dart';
 import 'package:pulse_healthcare/timeline.dart';
 
-import 'logic/theme.dart';
-import 'logic/user_manager.dart';
+import 'package:pulse_healthcare/logic/theme.dart';
+import 'package:pulse_healthcare/logic/user_manager.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         leading: Provider.of<UserManager>(context).pending
             ? Center(child: CircularProgressIndicator())
-            : Icon(FontAwesomeIcons.medkit),
+            : null,
         actions: <Widget>[
           IconButton(
             onPressed: Provider.of<ThemeStash>(context).nextTheme,
@@ -46,8 +46,9 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Center(child: TimelinePage()),
           Center(
-              child:
-                  Icon(FontAwesomeIcons.cogs, size: 72.0, color: Provider.of<ThemeStash>(context).primaryColor)),
+              child: Icon(FontAwesomeIcons.cogs,
+                  size: 72.0,
+                  color: Provider.of<ThemeStash>(context).primaryColor)),
           Center(child: ProfilePage(key: _profilePageKey)),
         ],
         onPageChanged: (position) {
@@ -80,6 +81,61 @@ class _HomePageState extends State<HomePage> {
           });
         },
       ),
+      drawer: _buildDrawer(),
+    );
+  }
+
+  Widget _buildDrawer() {
+    UserManager userManager = Provider.of<UserManager>(context);
+
+    return Drawer(
+      child: Column(
+        children: <Widget>[
+          UserAccountsDrawerHeader(
+            accountEmail: Text(userManager.userId),
+            accountName: Text(userManager.name),
+            currentAccountPicture: CircleAvatar(
+              child: Icon(
+                FontAwesomeIcons.userTie,
+                color: Theme.of(context).primaryColor,
+                size: 40,
+              ),
+              backgroundColor: Colors.white,
+            ),
+          ),
+          _buildListTile(
+            "About",
+            "About this app",
+            FontAwesomeIcons.questionCircle,
+            () {
+              showAboutDialog(context: context,
+              applicationIcon: Icon(FontAwesomeIcons.medkit),
+              applicationName: "MediKit",
+              applicationVersion: "v1.0.0",
+              children: <Widget>[
+                Text("This is a app made for MediKit, an record keeping website for medical purposes.")
+              ]
+              );
+            },
+          ),
+          _buildListTile(
+            "Logout",
+            "Logout from the app",
+            FontAwesomeIcons.signOutAlt,
+            () => userManager.logout(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildListTile(
+      String title, String subtitle, IconData icon, VoidCallback onPressed) {
+    return ListTile(
+      title: Text(title),
+      subtitle: Text(subtitle),
+      leading: Icon(icon, color: Theme.of(context).primaryColor),
+      onTap: onPressed,
     );
   }
 }
