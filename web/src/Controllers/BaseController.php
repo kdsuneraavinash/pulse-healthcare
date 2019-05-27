@@ -62,23 +62,6 @@ abstract class BaseController
     }
 
     /**
-     * @param string $className
-     * @param string $page
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     */
-    protected function loadOnlyIfUserIsOfType(string $className, string $page)
-    {
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount instanceof $className) {
-            $this->render($page, array(), $currentAccount);
-        } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-        }
-    }
-
-    /**
      * @return Twig_Environment rendering engine
      */
     protected function getRenderer(): Twig_Environment
@@ -86,27 +69,7 @@ abstract class BaseController
         return TwigHandler::getInstance();
     }
 
-    /**
-     * @return Account|null
-     */
-    protected function getCurrentAccount(): ?Account
-    {
-        try {
-            $session = LoginService::continueSession();
-            if ($session != null) {
-                return $session->getSessionAccount();
-            } else {
-                return null;
-            }
-        } catch (AccountNotExistException $e) {
-            LoginService::signOutSession();
-            return null;
-        } catch (Exceptions\InvalidDataException $e) {
-            LoginService::signOutSession();
-            return null;
-        } catch (Exceptions\AccountRejectedException $e) {
-            LoginService::signOutSession();
-            return null;
-        }
+    protected function redirectToErrorPage(int $errorCode){
+
     }
 }

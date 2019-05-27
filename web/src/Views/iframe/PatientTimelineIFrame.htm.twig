@@ -8,7 +8,12 @@
 <link href="{{ site }}/css/timeline.css" rel="stylesheet">
 {{ control_panel.iframe_start() }}
 
-<div class="timeline" style="min-height: 100vh">
+<div class="container card p-5 mt-4 elegant-color-dark text-white text-center">
+    <h2>{{ patient }} Prescription Timeline</h2>
+</div>
+
+<div class="timeline">
+    <div style="height: 100px"></div>
     {% set left=true %}
     {% for prescription in prescriptions %}
         <div class="timeline-container {{ left ? 'left' : 'right' }}">

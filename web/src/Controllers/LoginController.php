@@ -2,6 +2,7 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
@@ -9,8 +10,6 @@ use Pulse\Models\Exceptions;
 
 class LoginController extends BaseController
 {
-    /**
-     */
     public function post()
     {
         $accountId = $this->httpHandler()->postParameter('account');
@@ -50,18 +49,17 @@ class LoginController extends BaseController
     }
 
     /**
+     * @param Account|null $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(?Account $currentAccount)
     {
-        $account = $this->getCurrentAccount();
-
-        if ($account == null) {
-            $this->render('LoginPage.html.twig', array(), $account);
+        if ($currentAccount == null) {
+            $this->render('LoginPage.html.twig', array(), $currentAccount);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig', array(), $account);
+            $this->render('AlreadyLoggedIn.html.twig', array(), $currentAccount);
         }
     }
 }

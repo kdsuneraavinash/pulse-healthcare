@@ -15,48 +15,46 @@ use Pulse\Models\Patient\Patient;
 class ProfilePageController extends BaseController
 {
     /**
+     * @param Account $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(Account $currentAccount)
     {
-        $current_account = $this->getCurrentAccount();
-        if ($current_account instanceof Account) {
-            $context = $this->populate_with_account($current_account);
+            $context = $this->populate_with_account($currentAccount);
             $context['is_viewing'] = false;
-            $this->render("ProfilePage.html.twig", $context, $current_account);
-        } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
-        }
+            $this->render("ProfilePage.html.twig", $context, $currentAccount);
     }
 
     /**
+     * @param Account $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getShowProfile()
+    public function getShowProfile(Account $currentAccount)
     {
         $accountId = $this->httpHandler()->getParameter("user");
-        $current_account = $this->getCurrentAccount();
+
         if ($accountId == null) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404?a=$accountId");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
             exit();
         }
         try {
             $accountFactory = new AccountFactory();
             $account = $accountFactory->getAccount($accountId, true);
         } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404?a=$accountId");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
             exit();
         }
+
         $context = $this->populate_with_account($account);
         $context['is_viewing'] = true;
-        $this->render("ProfilePage.html.twig", $context, $current_account);
+        $this->render("ProfilePage.html.twig", $context, $currentAccount);
     }
 
-    function populate_with_account(Account $account): array
+    private function populate_with_account(Account $account): array
     {
         $context = array();
         $context['profile_account_id'] = $account->getAccountId();

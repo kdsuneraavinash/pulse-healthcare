@@ -9,35 +9,31 @@ use Pulse\Models\Patient\Patient;
 class PatientControlPanelController extends BaseController
 {
     /**
+     * @param Patient $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(Patient $currentAccount)
     {
-        parent::loadOnlyIfUserIsOfType(Patient::class, 'ControlPanelPatientPage.html.twig');
+        $this->renderWithNoContext('ControlPanelPatientPage.html.twig', $currentAccount);
     }
 
     /**
+     * @param Patient $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getPatientTimelineIframe()
+    public function getPatientTimelineIframe(Patient $currentAccount)
     {
-        $currentAccount = $this->getCurrentAccount();
         try {
-            if ($currentAccount instanceof Patient) {
-                $parsedPrescriptions = $currentAccount->getParsedPrescriptions();
-                $this->render('iframe/PatientTimelineIFrame.htm.twig', array('prescriptions' => $parsedPrescriptions), $currentAccount);
-            } else {
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-            }
+            $parsedPrescriptions = $currentAccount->getParsedPrescriptions();
+            $this->render('iframe/PatientTimelineIFrame.htm.twig', array('prescriptions' => $parsedPrescriptions), $currentAccount);
         } catch (InvalidDataException $e) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
         } catch (NoPrescriptionsException $e) {
             $this->render('iframe/NoPrescriptions.html.twig', array('prescriptions' => array()), $currentAccount);
-            return;
         }
     }
 }

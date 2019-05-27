@@ -5,29 +5,21 @@ namespace Pulse\Controllers;
 
 use Pulse\Components\Logger;
 use Pulse\Models\AccountSession\Account;
-use Pulse\Models\Admin\Admin;
-use Pulse\Models\Doctor\Doctor;
-use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Search\DoctorCategoryContext;
 use Pulse\Models\Search\DoctorNoCategoryContext;
-//use Pulse\Models\Search\
 use Pulse\Models\Search\SearchContext;
 
 class SearchDoctorController extends BaseController
 {
     /**
+     * @param Account $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getIFrame()
+    public function getIFrame(Account $currentAccount)
     {
-        $account = $this->getCurrentAccount();
-        if ($account instanceof Account){
-            $this->render('iframe/SearchDoctor.html.twig', array(), $account);
-        }else{
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-        }
+        $this->renderWithNoContext('iframe/SearchDoctor.html.twig', $currentAccount);
     }
 
     /**
@@ -35,7 +27,7 @@ class SearchDoctorController extends BaseController
     public function getSearchResults()
     {
         $name = $this->httpHandler()->postParameter('full_name');
-        $slmc_id = $this->httpHandler()->postParameter('slmc_id');
+        $slmcId = $this->httpHandler()->postParameter('slmc_id');
         $category = $this->httpHandler()->postParameter('doctor_category');
 
         if ($category == 'NONE') {
@@ -43,43 +35,38 @@ class SearchDoctorController extends BaseController
         }
 
         /**
-         * Creates a searchContext according to the parameters passed by the user and call the Static search method of the SearchContext class by passing
-         *created searchContext object.         
+         * Creates a searchContext according to the parameters passed by the user
+         * and call the Static search method of the SearchContext class by passing
+         *created searchContext object.
          */
-        if($category){
-            $searchContext = new DoctorCategoryContext(($slmc_id!=null) ? $slmc_id : null,($name!=null) ? $name :null,$category);
+        $slmcId = ($slmcId != null) ? $slmcId : null;
+        $name = ($name != null) ? $name : null;
 
-        }else{
-            $searchContext = new DoctorNoCategoryContext(($slmc_id!=null) ? $slmc_id : null,($name!=null) ? $name:null);
-
+        if ($category) {
+            $searchContext = new DoctorCategoryContext($slmcId, $name, $category);
+        } else {
+            $searchContext = new DoctorNoCategoryContext($slmcId, $name);
         }
 
         return SearchContext::search($searchContext);
-
-        //return DoctorDetails::searchDoctor($slmc_id, $name, $category);
     }
 
     /**
+     * @param Account $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function postIframe(){
-        $account = $this->getCurrentAccount();
-        if ($account == null){
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-        }
-
+    public function postIframe(Account $currentAccount)
+    {
         $results = $this->getSearchResults();
 
         if ($results == null || sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
-            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$currentAccount->getAccountType()}/search/doctor?error=$error");
         } else {
-            $this->render("iframe/DoctorSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
-                $this->getCurrentAccount());
+            $this->render("iframe/DoctorSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)), $currentAccount);
         }
     }
 }

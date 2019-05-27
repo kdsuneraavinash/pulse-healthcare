@@ -2,16 +2,18 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Models\AccountSession\Account;
+
 class HomePageController extends BaseController
 {
     /**
+     * @param Account|null $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(?Account $currentAccount)
     {
-        $account = $this->getCurrentAccount();
-        $this->render('HomePage.html.twig', array(), $account);
+        $this->renderWithNoContext('HomePage.html.twig',  $currentAccount);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\MedicalCenter\MedicalCenterDetails;
 use Pulse\Models\Exceptions;
@@ -62,14 +63,14 @@ class MedicalCenterRegistrationController extends BaseController
 
 
     /**
+     * @param Account|null $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(?Account $currentAccount)
     {
-        $account = $this->getCurrentAccount();
-        if ($account == null) {
+        if ($currentAccount == null) {
             $this->render('MedicalCenterRegistration.html.twig', array(
                 'name' => $this->httpHandler()->getParameter('name'),
                 'phsrc' => $this->httpHandler()->getParameter('phsrc'),
@@ -78,9 +79,9 @@ class MedicalCenterRegistrationController extends BaseController
                 'phone_number' => $this->httpHandler()->getParameter('phone_number'),
                 'address' => $this->httpHandler()->getParameter('address'),
                 'postal' => $this->httpHandler()->getParameter('postal')
-            ), $account);
+            ), $currentAccount);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig', array(), $account);
+            $this->renderWithNoContext('AlreadyLoggedIn.html.twig', $currentAccount);
         }
     }
 }

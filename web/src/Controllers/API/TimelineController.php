@@ -3,6 +3,7 @@
 namespace Pulse\Controllers\API;
 
 use Pulse\Controllers\BaseController;
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Exceptions\InvalidDataException;
 use Pulse\Models\Patient\Patient;
 use Pulse\Models\Prescription\Medication;
@@ -25,13 +26,13 @@ class TimelineController extends BaseController
 
 
     /**
+     * @param Account|null $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function timeline()
+    public function timeline(?Account $currentAccount)
     {
-        $currentAccount = $this->getCurrentAccount();
         try {
             if ($currentAccount instanceof Patient) {
                 $this->showTimelineOfPatient($currentAccount);

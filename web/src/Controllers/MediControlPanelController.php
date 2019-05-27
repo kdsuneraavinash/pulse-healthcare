@@ -8,50 +8,44 @@ use Pulse\Models\MedicalCenter\MedicalCenter;
 class MediControlPanelController extends BaseController
 {
     /**
+     * @param MedicalCenter $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(MedicalCenter $currentAccount)
     {
-        parent::loadOnlyIfUserIsOfType(MedicalCenter::class, 'ControlPanelMediPage.htm.twig');
+        $this->renderWithNoContext('ControlPanelMediPage.htm.twig', $currentAccount);
     }
 
     /**
+     * @param MedicalCenter $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getMediRegisterDoctorIframe()
+    public function getMediRegisterDoctorIframe(MedicalCenter $currentAccount)
     {
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount instanceof MedicalCenter) {
-            if ($currentAccount->getVerificationState() == VerificationState::Verified){
-                $this->render('iframe/MedicalCenterCreateDoctor.htm.twig', array(), $currentAccount);
-            }else{
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/lock");
-            }
+        if ($currentAccount->getVerificationState() == VerificationState::Verified) {
+            $this->render('iframe/MedicalCenterCreateDoctor.htm.twig', array(), $currentAccount);
         } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/lock");
         }
+
     }
 
     /**
+     * @param MedicalCenter $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getMediRegisterPatientIframe()
+    public function getMediRegisterPatientIframe(MedicalCenter $currentAccount)
     {
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount instanceof MedicalCenter) {
-            if ($currentAccount->getVerificationState() == VerificationState::Verified){
-                $this->render('iframe/MedicalCenterCreatePatient.htm.twig', array(), $currentAccount);
-            }else{
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/lock");
-            }
+        if ($currentAccount->getVerificationState() == VerificationState::Verified) {
+            $this->render('iframe/MedicalCenterCreatePatient.htm.twig', array(), $currentAccount);
         } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/lock");
         }
     }
 }

@@ -2,59 +2,57 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Components\Logger;
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Search\PatientNICContext;
 use Pulse\Models\Search\PatientNoNICContext;
-use Pulse\Models\Admin\Admin;
-use Pulse\Models\Doctor\Doctor;
-use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Patient\Patient;
 use Pulse\Models\Search\SearchContext;
 
 class SearchPatientController extends BaseController
 {
     /**
+     * @param Account $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getIFrame()
+    public function getIFrame(Account $currentAccount)
     {
-        $account = $this->getCurrentAccount();
-        if ($account instanceof Doctor || $account instanceof Admin || $account instanceof MedicalCenter){
-            $this->render('iframe/SearchPatient.html.twig', array(), $account);
-        }else{
+        if ($currentAccount instanceof Patient) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        } else {
+            $this->renderWithNoContext('iframe/SearchPatient.html.twig', $currentAccount);
         }
     }
 
-    /**
-     */
+
     public function getSearchResults()
     {
         $name = $this->httpHandler()->postParameter('name');
         $nic = $this->httpHandler()->postParameter('nic');
         $address = $this->httpHandler()->postParameter('address');
 
-        if($nic){
-            $searchContext = new PatientNICContext($nic,($name!=null)? $name:null,($address!=null)?$address:null);
-        }else{
-            $searchContext = new PatientNoNICContext(($name!=null)? $name:null,($address!=null)?$address:null);
+        $name = ($name != null) ? $name : null;
+        $address = ($address != null) ? $address : null;
+
+        if ($nic) {
+            $searchContext = new PatientNICContext($nic, $name, $address);
+        } else {
+            $searchContext = new PatientNoNICContext($name, $address);
         }
 
         return SearchContext::search($searchContext);
-
-        //return PatientDetails::searchPatient($name, $nic, $address);
     }
 
     /**
+     * @param Account $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function postIframe(){
-        $account = $this->getCurrentAccount();
-        if ($account == null || $account instanceof Patient){
+    public function postIframe(Account $currentAccount)
+    {
+        if ($currentAccount instanceof Patient) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
         }
 
@@ -63,10 +61,9 @@ class SearchPatientController extends BaseController
         if ($results == null || sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/patient?error=$error");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$currentAccount->getAccountType()}/search/patient?error=$error");
         } else {
-            $this->render("iframe/PatientSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
-                $this->getCurrentAccount());
+            $this->render("iframe/PatientSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)), $currentAccount);
         }
     }
 }

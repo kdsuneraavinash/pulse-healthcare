@@ -17,13 +17,13 @@ use Pulse\Models\Prescription\Prescription;
 class TimelineController extends BaseController
 {
     /**
+     * @param Account $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(Account $currentAccount)
     {
-        $currentAccount = $this->getCurrentAccount();
         try {
             if ($currentAccount instanceof Doctor) {
                 $accountId = $this->httpHandler()->getParameter("user");

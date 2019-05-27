@@ -3,6 +3,7 @@
 namespace Pulse\Controllers\API;
 
 use Pulse\Controllers\BaseController;
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Exceptions;
 use Pulse\Models\Patient\Patient;
@@ -25,29 +26,29 @@ class ProfileController extends BaseController
 
 
     /**
+     * @param Account $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function profile()
+    public function profile(?Account $currentAccount)
     {
-        $account = $this->getCurrentAccount();
-        if ($account instanceof Patient) {
+        if ($currentAccount instanceof Patient) {
             $context = array();
-            $context['id'] = $account->getAccountId();
-            $context['name'] = $account->getPatientDetails()->getName();
-            $context['nic'] = $account->getPatientDetails()->getNic();
-            $context['email'] = $account->getPatientDetails()->getEmail();
-            $context['phone_number'] = $account->getPatientDetails()->getPhoneNumber();
-            $context['address'] = $account->getPatientDetails()->getAddress();
-            $context['postal_code'] = $account->getPatientDetails()->getPostalCode();
+            $context['id'] = $currentAccount->getAccountId();
+            $context['name'] = $currentAccount->getPatientDetails()->getName();
+            $context['nic'] = $currentAccount->getPatientDetails()->getNic();
+            $context['email'] = $currentAccount->getPatientDetails()->getEmail();
+            $context['phone_number'] = $currentAccount->getPatientDetails()->getPhoneNumber();
+            $context['address'] = $currentAccount->getPatientDetails()->getAddress();
+            $context['postal_code'] = $currentAccount->getPatientDetails()->getPostalCode();
             $this->render('api/Profile.json.twig',
                 array('message' => "Account Details Loaded", 'ok' => 'true', 'context' => $context),
-                $account);
-        } else if ($account == null){
-		$this->echoError("User not logged in");
-            	return;
-	} else {
+                $currentAccount);
+        } else if ($currentAccount == null) {
+            $this->echoError("User not logged in");
+            return;
+        } else {
             $this->echoError("Current account is not a Patient");
             return;
         }

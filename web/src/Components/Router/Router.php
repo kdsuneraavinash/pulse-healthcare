@@ -61,12 +61,19 @@ final class Router
             //Search pages
             ['GET', '/control/med_center/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe'], AccountList::MedicalCenterOnly],
             ['POST', '/control/med_center/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe'], AccountList::MedicalCenterOnly],
+            ['GET', '/control/med_center/search/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe'], AccountList::MedicalCenterOnly],
+            ['POST', '/control/med_center/search/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe'], AccountList::MedicalCenterOnly],
+
             ['GET', '/control/admin/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe'], AccountList::AdminOnly],
             ['POST', '/control/admin/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe'], AccountList::AdminOnly],
             ['GET', '/control/admin/search/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe'], AccountList::AdminOnly],
             ['POST', '/control/admin/search/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe'], AccountList::AdminOnly],
+
             ['GET', '/control/doctor/search/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe'], AccountList::DoctorOnly],
             ['POST', '/control/doctor/search/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe'], AccountList::DoctorOnly],
+            ['GET', '/control/doctor/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe'], AccountList::DoctorOnly],
+            ['POST', '/control/doctor/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe'], AccountList::DoctorOnly],
+
             ['GET', '/control/patient/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe'], AccountList::PatientOnly],
             ['POST', '/control/patient/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe'], AccountList::PatientOnly],
 
