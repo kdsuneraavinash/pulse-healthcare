@@ -4,7 +4,7 @@ import 'package:pulse_healthcare/home.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'logic/theme.dart';
-import 'logic/user.dart';
+import 'logic/user_manager.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -171,7 +171,8 @@ class _LoginFormState extends State<LoginForm> {
   void _loginButtonPress() async {
     if (_formKey.currentState.validate()) {
       String result = await Provider.of<UserManager>(context)
-          .login(_usernameController.text, _passwordController.text);
+          .loginAndGetAllData(
+              _usernameController.text, _passwordController.text);
       if (result == null) {
         loginSuccessful();
       } else {

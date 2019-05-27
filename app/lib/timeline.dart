@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pulse_healthcare/logic/theme.dart';
 import 'package:pulse_healthcare/logic/timeline_entry.dart';
-import 'package:pulse_healthcare/logic/user.dart';
+import 'logic/user_manager.dart';
 
 class TimelinePage extends StatelessWidget {
   TimelinePage({Key key}) : super(key: key);

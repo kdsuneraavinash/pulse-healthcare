@@ -6,7 +6,7 @@ import 'package:pulse_healthcare/profile.dart';
 import 'package:pulse_healthcare/timeline.dart';
 
 import 'logic/theme.dart';
-import 'logic/user.dart';
+import 'logic/user_manager.dart';
 
 class HomePage extends StatefulWidget {
   @override

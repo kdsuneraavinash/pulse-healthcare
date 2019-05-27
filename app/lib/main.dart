@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:pulse_healthcare/logic/theme.dart';
 import 'package:pulse_healthcare/login.dart';
 
-import 'logic/user.dart';
+import 'logic/user_manager.dart';
 
 void main() {
   runApp(MyApp());
