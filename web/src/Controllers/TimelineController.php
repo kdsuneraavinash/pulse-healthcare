@@ -2,6 +2,7 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Components\Logger;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\AccountFactory;
 use Pulse\Models\Doctor\Doctor;
@@ -36,6 +37,7 @@ class TimelineController extends BaseController
                 $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
             } else if ($currentAccount instanceof Patient) {
                 $this->showTimelineOfPatient($currentAccount, $currentAccount);
+                return;
             } else {
                 $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
             }

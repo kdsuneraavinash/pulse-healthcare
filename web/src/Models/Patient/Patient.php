@@ -8,10 +8,11 @@ use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Exceptions;
 use Pulse\Components\Utils;
+use Pulse\Models\Interfaces\ICreatable;
 use Pulse\Models\Prescription\Prescription;
 
 
-class Patient extends Account
+class Patient extends Account implements ICreatable
 {
     private $patientDetails;
     private $defaultPassword;

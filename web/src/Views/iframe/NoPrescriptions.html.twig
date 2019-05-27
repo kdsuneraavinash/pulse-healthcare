@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/control_panel/common.htm.twig' as control_panel %}
+{% import 'macro/form_fields.htm.twig' as form_fields %}
+
+{{ control_panel.iframe_start() }}
+
+<div class="container pt-2">
+
+    {{ control_panel.card_start("No Prescriptions") }}
+        <h3>No available Prescriptions</h3>
+    {{ control_panel.card_end() }}
+
+</div>
+
+{{ control_panel.iframe_middle() }}
+
+{% if (account_password != null) %}
+    {% include 'modals/created_account.htm.twig' %}
+{% endif %}
+<script src="{{ site }}/js/search.js"></script>
+{{ control_panel.iframe_end() }}
+</html>

@@ -63,8 +63,7 @@ class SearchPatientController extends BaseController
         if ($results == null || sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
-            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/SearchContext/patient?error=$error");
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/SearchContext/patient?error=$error");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/patient?error=$error");
         } else {
             $this->render("iframe/PatientSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
                 $this->getCurrentAccount());

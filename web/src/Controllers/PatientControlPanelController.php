@@ -33,7 +33,8 @@ class PatientControlPanelController extends BaseController
             if ($currentAccount instanceof Patient) {
                 $prescriptions = $currentAccount->getPrescriptions();
                 if (sizeof($prescriptions) == 0) {
-                    throw new InvalidDataException("No Prescriptions");
+                    $this->render('iframe/NoPrescriptions.html.twig', array('prescriptions' => array()), $currentAccount);
+                    return;
                 }
                 $parsedPrescriptions = array();
                 foreach ($prescriptions as $prescription) {
@@ -62,7 +63,6 @@ class PatientControlPanelController extends BaseController
                         array_push($parsedPrescriptions, $parsedPrescription);
                     }
                 }
-                Logger::log(Utils::array2string($parsedPrescriptions));
 
 
                 $this->render('iframe/PatientTimelineIFrame.htm.twig', array('prescriptions' => $parsedPrescriptions), $currentAccount);

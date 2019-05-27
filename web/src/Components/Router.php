@@ -54,18 +54,20 @@ final class Router
             ['GET', '/control/med_center/register/patient', ['Pulse\Controllers\MediControlPanelController', 'getMediRegisterPatientIframe']],
             ['POST', '/control/med_center/register/patient', ['Pulse\Controllers\PatientRegistrationController', 'post']],
 
-            //SearchContext pages
-            ['GET', '/control/med_center/SearchContext/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe']],
-            ['POST', '/control/med_center/SearchContext/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe']],
-            ['GET', '/control/admin/SearchContext/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe']],
-            ['POST', '/control/admin/SearchContext/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe']],
+            //Search pages
+            ['GET', '/control/med_center/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe']],
+            ['POST', '/control/med_center/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe']],
+            ['GET', '/control/admin/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe']],
+            ['POST', '/control/admin/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe']],
 
-            ['GET', '/control/med_center/SearchContext/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe']],
-            ['POST', '/control/med_center/SearchContext/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe']],
-            ['GET', '/control/admin/SearchContext/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe']],
-            ['POST', '/control/admin/SearchContext/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe']],
-            ['GET', '/control/doctor/SearchContext/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe']],
-            ['POST', '/control/doctor/SearchContext/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe']],
+            ['GET', '/control/med_center/search/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe']],
+            ['POST', '/control/med_center/search/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe']],
+            ['GET', '/control/admin/search/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe']],
+            ['POST', '/control/admin/search/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe']],
+            ['GET', '/control/doctor/search/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe']],
+            ['POST', '/control/doctor/search/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe']],
+            ['GET', '/control/patient/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe']],
+            ['POST', '/control/patient/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe']],
 
             // Error Handlers
             ['GET', '/404', ['Pulse\Controllers\ErrorController', 'error404']],

@@ -4,6 +4,7 @@ namespace Pulse\Controllers;
 
 
 use Pulse\Components\Logger;
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\MedicalCenter\MedicalCenter;
@@ -22,7 +23,7 @@ class SearchDoctorController extends BaseController
     public function getIFrame()
     {
         $account = $this->getCurrentAccount();
-        if ($account instanceof Doctor || $account instanceof Admin || $account instanceof MedicalCenter){
+        if ($account instanceof Account){
             $this->render('iframe/SearchDoctor.html.twig', array(), $account);
         }else{
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
@@ -36,8 +37,6 @@ class SearchDoctorController extends BaseController
         $name = $this->httpHandler()->postParameter('full_name');
         $slmc_id = $this->httpHandler()->postParameter('slmc_id');
         $category = $this->httpHandler()->postParameter('doctor_category');
-
-        echo "<script>console.log($name)</script>";
 
         if ($category == 'NONE') {
             $category = null;
@@ -76,8 +75,8 @@ class SearchDoctorController extends BaseController
         if ($results == null || sizeof($results) == 0) {
             // Empty results set
             $error = "No results found";
-            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/SearchContext/doctor?error=$error");
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/SearchContext/doctor?error=$error");
+            Logger::log("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$account->getAccountType()}/search/doctor?error=$error");
         } else {
             $this->render("iframe/DoctorSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)),
                 $this->getCurrentAccount());
