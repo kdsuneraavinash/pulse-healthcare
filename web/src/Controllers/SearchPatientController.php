@@ -21,7 +21,7 @@ class SearchPatientController extends BaseController
         if ($currentAccount instanceof Patient) {
             $this->redirectToErrorPage(405);
         } else {
-            $this->renderWithNoContext('iframe/SearchPatient.html.twig', $currentAccount);
+            $this->renderWithNoContext('iframe/SearchPatient.twig', $currentAccount);
         }
     }
 
@@ -63,7 +63,7 @@ class SearchPatientController extends BaseController
             $error = "No results found";
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$currentAccount->getAccountType()}/search/patient?error=$error");
         } else {
-            $this->render("iframe/PatientSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)), $currentAccount);
+            $this->render("iframe/PatientSearchResults.twig", array('ret' => $results, 'size' => sizeof($results)), $currentAccount);
         }
     }
 }

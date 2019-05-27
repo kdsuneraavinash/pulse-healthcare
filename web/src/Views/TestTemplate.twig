@@ -1,0 +1,79 @@
+{% import "macro/test.twig" as Test %}
+
+<!doctype html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+<head>
+    {% include("part/header.twig") %}
+    <title>Tests</title>
+</head>
+<body>
+{% include("part/navbar.twig") %}
+<div style="height:50px;"></div>
+
+<main>
+    <div class="container">
+
+        {{ Test.test_card_top('GET Request test:') }}
+        <table class="table table-bordered">
+            <thead class="thead">
+            <tr>
+                <th scope="col">GET</th>
+                <th scope="col">POST</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ get }}</td>
+                <td>{{ post }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="/test" method="get" class="text-right">
+                        <input type="text" name="key" class="form-control" placeholder="Key">
+                        <button type="submit" class="btn btn-amber btn-sm">GET</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/test" method="post" class="text-right">
+                        <input type="text" name="key" class="form-control" placeholder="Key">
+                        <button type="submit" class="btn btn-blue-grey btn-sm">POST</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        {{ Test.test_card_bottom() }}
+
+        {{ Test.test_card_top('Database test:') }}
+        <table class="table table-bordered">
+            <thead class="thead">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">FirstName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">Age</th>
+                <th scope="col">Password</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in db %}
+                <tr>
+                    <td>{{ row['ID'] }}</td>
+                    <td>{{ row['FirstName'] }}</td>
+                    <td>{{ row['LastName'] }}</td>
+                    <td>{{ row['Age'] }}</td>
+                    <td>{{ row['Password'] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {{ Test.test_card_bottom() }}
+
+    </div>
+</main>
+
+{% include("part/footer.twig") %}
+{% include("part/scripts.twig") %}
+</body>
+</html>

@@ -71,7 +71,7 @@ class MedicalCenterRegistrationController extends BaseController
     public function get(?Account $currentAccount)
     {
         if ($currentAccount == null) {
-            $this->render('MedicalCenterRegistration.html.twig', array(
+            $this->render('MedicalCenterRegistration.twig', array(
                 'name' => $this->httpHandler()->getParameter('name'),
                 'phsrc' => $this->httpHandler()->getParameter('phsrc'),
                 'email' => $this->httpHandler()->getParameter('email'),
@@ -81,7 +81,7 @@ class MedicalCenterRegistrationController extends BaseController
                 'postal' => $this->httpHandler()->getParameter('postal')
             ), $currentAccount);
         } else {
-            $this->renderWithNoContext('AlreadyLoggedIn.html.twig', $currentAccount);
+            $this->renderWithNoContext('AlreadyLoggedIn.twig', $currentAccount);
         }
     }
 }

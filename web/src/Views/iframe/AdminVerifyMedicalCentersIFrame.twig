@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/control_panel/common.twig' as control_panel %}
+{% import 'macro/control_panel/admin_verify.twig' as admin_verify %}
+
+{{ control_panel.iframe_start() }}
+
+<div class="row p-4">
+    <div class="owl-carousel owl-theme">
+        {% for item in medical_centers %}
+            {{ admin_verify.account_verify_card(
+                item['account_id'],
+                item['name'],
+                item['phsrc'],
+                item['email'],
+                item['fax'],
+                item['phone_number'],
+                item['address'],
+                item['parsed_address'],
+                item['postal_code'],
+                item['verified']
+            ) }}
+        {% endfor %}
+    </div>
+
+</div>
+{{ control_panel.iframe_middle() }}
+
+{{ admin_verify.verification_modal( 'modelDeleteConfirm', 'danger', 'red', 'trash',
+    'Confirm Deletion', 'Do you really want to delete this account?', 'This action cannot be undone.', 'Delete', site) }}
+{{ admin_verify.verification_modal('modelVerifyAccount', 'success', 'green', 'check',
+    'Confirm Verification', 'Are you sure you want to verify this account?', 'From now on this account will be granted all permissions.', 'Verify', site) }}
+{{ admin_verify.verification_modal('modelRejectConfirm', 'danger', 'red', 'user-times',
+    'Confirm Rejection', 'Do you really want to reject this request?', 'Account owner will be notified of this action.', 'Reject', site) }}
+{{ admin_verify.verification_modal('modelRetractAccount', 'dark', 'black', 'redo-alt',
+    'Confirm Retraction', 'Are you sure you want to retract account state?', 'Account will return back to unverified state.', 'Retract', site) }}
+
+<script>
+    $(document).ready(function () {
+        let owl = $('.owl-carousel');
+        owl.owlCarousel(
+            {
+                URLhashListener: true,
+                loop: false,
+                startPosition: 'URLHash',
+                center: false,
+                margin: 10,
+                dots: true,
+                nav: true,
+                responsiveClass: true,
+                navText: ["<i class='fa fa-arrow-circle-left fa-3x p-4'></i>", "<i class='fa fa-arrow-circle-right fa-3x p-4'></i>"],
+                responsive: {
+                    0: {
+                        items: 1,
+                    },
+                    600: {
+                        items: 2,
+                    },
+                    1200: {
+                        items: 3,
+                    }
+                }
+            }
+        );
+        let owlCard = $(".card");
+        let minHeight = -1;
+        owlCard.each((i, div) =>
+            minHeight = $(div).height() > minHeight ? $(div).height() : minHeight
+        );
+        console.log(minHeight);
+        owlCard.css("min-height", minHeight + "px");
+    });
+
+
+    $('.account-modal').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget);
+        let account = button.data('account');
+        let modal = $(this);
+        let input = modal.find('.data-account');
+        input.val(account);
+    })
+</script>
+
+{{ control_panel.iframe_end() }}

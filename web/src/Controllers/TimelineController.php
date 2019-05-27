@@ -62,10 +62,10 @@ class TimelineController extends BaseController
     {
         try {
             $parsedPrescriptions = $patient->getParsedPrescriptions();
-            $this->render('PatientTimeline.htm.twig', array('prescriptions' => $parsedPrescriptions,
+            $this->render('PatientTimeline.twig', array('prescriptions' => $parsedPrescriptions,
                 'patient' => $patient->getAccountId()), $currentAccount);
         } catch (NoPrescriptionsException $e) {
-            $this->render('PatientTimeline.htm.twig', array('prescriptions' => array(),
+            $this->render('PatientTimeline.twig', array('prescriptions' => array(),
                 'patient' => $patient->getAccountId()), $currentAccount);
         }
     }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/form_fields.twig' as form_fields %}
+
+<head>
+    {% include("part/header.twig") %}
+    <title>MediKit</title>
+
+    <!-- Custom Page CSS -->
+    <link href="{{ site }}/css/login.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="bg-image"></div>
+
+{% include("part/navbar.twig") %}
+
+<main class="mt-sm-2 pt-sm-5">
+    <div class="container">
+        <section class="wow fadeIn p-3">
+            <div class="row z-depth-3">
+
+                <div class="border d-none d-lg-block col-lg-8 text-dark text-center p-5 bg-gradient">
+                    <h1 class="mb-4">
+                        <strong>MediKit 0.0.1 alpha</strong>
+                    </h1>
+                    <h4>
+                        <strong>Best & free platform to mange all your medical needs</strong>
+                    </h4>
+                    <p class="mb-4">
+                        Loved by over 500 doctors, 2000 patients & 100 medical centers.
+                    </p>
+                    <h3 class="mb-4">
+                        <strong>Are you a Medical Center?</strong>
+                    </h3>
+                    <a class="btn btn-outline-dark btn-lg" href="{{ site }}/register/medi">
+                        CREATE ACCOUNT
+                    </a>
+                </div>
+
+                <div class="border col-lg-4 d-flex justify-content-center bg-white">
+                    <form action="{{ site }}/login" class="needs-validation p-5" method="post" novalidate>
+                        <p class="h4 mb-4 text-center">SIGN IN</p>
+
+                        {% if (error != null) %}
+                            <div class="alert alert-danger text-center" role="alert">
+                                {{ error }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_fields.input('account', 'Account ID') }}
+                        {{ form_fields.input('password', 'Password', 'password') }}
+
+                        <!--<div class="justify-content-around">-->
+                        <!--{{ form_fields.check_box('remember', 'Remember me') }}-->
+                        <!--</div>-->
+
+                        <button class="btn btn-dark btn-block my-4 button-bg" type="submit">Sign in</button>
+
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+</main>
+
+{% include "part/footer.twig" %}
+{% include "part/scripts.twig" %}
+<script src="{{ site }}/js/login.js"></script>
+</body>
+
+</html>

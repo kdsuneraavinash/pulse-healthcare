@@ -16,7 +16,7 @@ class PatientControlPanelController extends BaseController
      */
     public function get(Patient $currentAccount)
     {
-        $this->renderWithNoContext('ControlPanelPatientPage.html.twig', $currentAccount);
+        $this->renderWithNoContext('ControlPanelPatientPage.twig', $currentAccount);
     }
 
     /**
@@ -29,11 +29,11 @@ class PatientControlPanelController extends BaseController
     {
         try {
             $parsedPrescriptions = $currentAccount->getParsedPrescriptions();
-            $this->render('iframe/PatientTimelineIFrame.htm.twig', array('prescriptions' => $parsedPrescriptions), $currentAccount);
+            $this->render('iframe/PatientTimelineIFrame.twig', array('prescriptions' => $parsedPrescriptions), $currentAccount);
         } catch (InvalidDataException $e) {
             $this->redirectToErrorPage(404);
         } catch (NoPrescriptionsException $e) {
-            $this->render('iframe/NoPrescriptions.html.twig', array('prescriptions' => array()), $currentAccount);
+            $this->render('iframe/NoPrescriptions.twig', array('prescriptions' => array()), $currentAccount);
         }
     }
 }

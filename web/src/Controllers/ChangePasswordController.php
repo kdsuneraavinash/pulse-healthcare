@@ -17,7 +17,7 @@ class ChangePasswordController extends BaseController
      */
     public function get(?Account $currentAccount)
     {
-        $this->renderWithNoContext("ChangePassword.html.twig", $currentAccount);
+        $this->renderWithNoContext("ChangePassword.twig", $currentAccount);
     }
 
     public function post(?Account $currentAccount)

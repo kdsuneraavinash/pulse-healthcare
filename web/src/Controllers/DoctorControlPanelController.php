@@ -14,7 +14,7 @@ class DoctorControlPanelController extends BaseController
      */
     public function get(Doctor $currentAccount)
     {
-        $this->renderWithNoContext('ControlPanelDoctorPage.htm.twig', $currentAccount);
+        $this->renderWithNoContext('ControlPanelDoctorPage.twig', $currentAccount);
     }
 
     /**
@@ -27,9 +27,9 @@ class DoctorControlPanelController extends BaseController
     {
         $prescriptionId = $this->httpHandler()->getParameter('prescription_id');
         if ($prescriptionId == null) {
-            $this->renderWithNoContext('iframe/CreatePrescriptionSearchPatient.htm.twig', $currentAccount);
+            $this->renderWithNoContext('iframe/CreatePrescriptionSearchPatient.twig', $currentAccount);
         } else {
-            $this->render('iframe/CreatePrescriptionSearchPatient.htm.twig',
+            $this->render('iframe/CreatePrescriptionSearchPatient.twig',
                 array('prescription_id' => $prescriptionId),
                 $currentAccount);
         }
@@ -47,7 +47,7 @@ class DoctorControlPanelController extends BaseController
         $patientId = $this->httpHandler()->getParameter('patient');
         $patientName = $this->httpHandler()->getParameter('name');
 
-        $this->render('iframe/DoctorCreatePrescription.htm.twig',
+        $this->render('iframe/DoctorCreatePrescription.twig',
             array('patient_id' => $patientId,
                 'patient_name' => $patientName),
             $currentAccount);

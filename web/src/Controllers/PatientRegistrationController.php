@@ -31,7 +31,7 @@ class PatientRegistrationController extends BaseController
 
             try {
                 $password = $currentAccount->createPatientAccount($patientDetails);
-                $this->render('iframe/MedicalCenterCreatePatient.htm.twig', array(
+                $this->render('iframe/MedicalCenterCreatePatient.twig', array(
                     'requested_account_id' => $nic,
                     'account_password' => $password
                 ), $currentAccount);

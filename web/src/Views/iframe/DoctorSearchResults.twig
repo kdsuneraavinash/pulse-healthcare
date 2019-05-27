@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/control_panel/common.twig' as control_panel %}
+{% import 'macro/form_fields.twig' as form_fields %}
+
+{{ control_panel.iframe_start() }}
+
+<div class="container pt-2">
+
+    <div class="hgroup mb-5 text-white">
+        <h1>Search Results</h1>
+        <h2 class="lead"><strong class="text-danger">{{ size }}</strong> results matching the <strong
+                    class="text-danger">keywords</strong></h2>
+        <p>Go <a href="{{ site }}/control/{{ account_type }}/search/doctor">Back</a> to search page</p>
+    </div>
+
+    <section class="row">
+
+        {% for result in ret %}
+            <div class="col-md-6">
+                <article class="card bg-white search-result my-4">
+                    <div class="card-header"><b>Relevance: {{ result['relevance'] }}</b></div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h3>Dr. {{ result['display_name'] }} </h3>
+                            <a href="{{ site }}/showprofile?user={{ result['account_id'] }}" target="_blank">
+                                <div class="blue-text pb-2" style="display: inline;">
+                                    <h4><i class="fas fa-external-link-alt ml-2"></i></h4>
+                                </div>
+                            </a>
+                        </div>
+
+                        <hr/>
+                        <h6><strong>SLMC Registration:</strong> {{ result['slmc_id'] }} </h6>
+                        <h6><strong>Email:</strong> {{ result['email'] }} </h6>
+                        <h6><strong>Phone Number:</strong> {{ result['phone_number'] }}</h6>
+                    </div>
+                </article>
+            </div>
+
+        {% endfor %}
+
+    </section>
+
+</div>
+
+{{ control_panel.iframe_middle() }}
+
+{% if (account_password != null) %}
+    {% include 'modals/created_account.twig' %}
+{% endif %}
+<script src="{{ site }}/js/search.js"></script>
+{{ control_panel.iframe_end() }}
+</html>

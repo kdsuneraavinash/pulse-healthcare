@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/control_panel/common.twig' as control_panel %}
+{% import 'macro/form_fields.twig' as form_fields %}
+
+{{ control_panel.iframe_start() }}
+
+<div class="container pt-2">
+
+    {{ control_panel.card_start("Doctor Registration") }}
+
+    <form action="{{ site }}/control/med_center/register/doctor" class="needs-validation p-3" method="post"
+          novalidate>
+
+        {% if (error != null) %}
+            <div class="alert alert-danger text-center mb-3" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {{ form_fields.input_with_label('full_name', 'Full Name', "Doctor's Full Name", '', 'text',
+            'Enter the full name of the doctor') }}
+        {{ form_fields.input_with_label('display_name', 'Display Name', 'Display Name', '', 'text',
+            'Enter the name which everyone calls the doctor') }}
+        {{ form_fields.input_with_label('nic', 'NIC (Username)', 'Doctor NIC', '', 'text',
+            'This will act as your username') }}
+        {{ form_fields.input_with_label('category', 'Category', 'Specialized category', '', 'text',
+            'Eg: OPD, Rheumatologist etc.') }}
+
+        {{ form_fields.input_with_label('slmc_id', 'SLMC Reg ID', 'Doctor Registration ID in SLMC','', 'text') }}
+        {{ form_fields.input_with_label('email', 'Email', "Doctor's Email Address", '', 'email') }}
+        {{ form_fields.input_with_label('phone_number', 'Phone', 'Mobile Number', '', 'tel') }}
+
+        <div class="text-right">
+            <button class="btn btn-primary mt-4" type="submit">Register</button>
+        </div>
+    </form>
+    {{ control_panel.card_end() }}
+
+</div>
+
+{{ control_panel.iframe_middle() }}
+
+<script src="{{ site }}/js/register-doctor.js"></script>
+{% if (account_password != null) %}
+    {% include 'modals/created_account.twig' %}
+{% endif %}
+
+{{ control_panel.iframe_end() }}
+</html>

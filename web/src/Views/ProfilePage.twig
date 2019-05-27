@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+<head>
+    {% include("part/header.twig") %}
+    <title>MediKit</title>
+</head>
+<body>
+
+{% if (profile_type == 'admin') %}
+    {% set account_icon = 'user-cog' %}
+{% elseif (profile_type == 'doctor') %}
+    {% set account_icon = 'user-md' %}
+{% elseif (profile_type == 'patient') %}
+    {% set account_icon = 'user-tie' %}
+{% elseif (profile_type == 'med_center') %}
+    {% set account_icon = 'hospital' %}
+{% else %}
+    {% set account_icon = 'user' %}
+{% endif %}
+
+{% include "part/navbar.twig" with {"page": "Profile"} %}
+<div class="container py-5 my-5" style="min-height: 100vh;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8">
+
+            <!-- User profile -->
+            <div>
+                <div class="row">
+                    <div class="col-sm-3 p-3">
+                        <div class="red darken-4 text-white p-3 mx-auto text-center rounded-circle"
+                             style="height: 125px; width: 125px;">
+                            <div class="fa fa-{{ account_icon }} fa-5x"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9 px-5 text-center text-sm-left">
+                        <h4>{{ name }}</h4>
+                        <kbd>[{{ profile_account_id }}]</kbd>
+                        <p class="text-muted pt-3">
+                            Bio not available.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-5">
+                <div>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+
+                        {% if profile_type == "med_center" %}
+                            <tr>
+                                <th><strong>Medical Center Name</strong></th>
+                                <td>{{ name }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>Phsrc ID</strong></th>
+                                <td>{{ phsrc }}</td>
+                            </tr>
+                        {% elseif profile_type == "doctor" %}
+                            <tr>
+                                <th><strong>Display Name</strong></th>
+                                <td>{{ name }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>Full Name</strong></th>
+                                <td>{{ full_name }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>National Identity Card Number</strong></th>
+                                <td>{{ nic }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>SLMC Registration Number</strong></th>
+                                <td>{{ slmc_id }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>Doctor Category</strong></th>
+                                <td>{{ category }}</td>
+                            </tr>
+                        {% elseif profile_type == "patient" %}
+                            <tr>
+                                <th><strong>Name</strong></th>
+                                <td>{{ name }}</td>
+                            </tr>
+                            <tr>
+                                <th><strong>National Identity Card Number</strong></th>
+                                <td>{{ nic }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <th><strong>Account Name</strong></th>
+                                <td>{{ name }}</td>
+                            </tr>
+                        {% endif %}
+
+
+                        <tr>
+                            <th><strong>Account ID</strong></th>
+                            <td>{{ profile_account_id }}</td>
+                        </tr>
+                        <tr>
+                            <th><strong>Member Since</strong></th>
+                            <td>{{ creation_date }}</td>
+                        </tr>
+                        <tr>
+                            <th><strong>Last Login</strong></th>
+                            <td>{{ last_login }}</td>
+                        </tr>
+
+                        {% if is_viewing == false %}
+                            <tr>
+                                <th><strong>Password</strong></th>
+                                <td><a href="{{ site }}/changepsw" class="btn btn-sm btn-warning waves-effect">
+                                        Change Password
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        {% if  profile_type == "patient" and account_type == 'doctor' %}
+                            <tr>
+                                <th><strong>Timeline</strong></th>
+                                <td><a href="{{ site }}/timeline?user={{ profile_account_id }}" class="btn btn-sm btn-success waves-effect">
+                                        View Timeline
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% if profile_type != "admin" %}
+            <div class="col-xs-12 col-sm-4 mb-5 text-left">
+                <div class="text-left list-group">
+                    <div class="list-group-item">
+                        <div class="row my-1">
+                            <div class="col-3 p-1 text-center">
+                                <i class="fa fa-phone fa-2x"></i>
+                            </div>
+                            <div class="col-9">
+                                <div class="font-weight-bold text-uppercase">Contact Number</div>
+                                <small>{{ phone_number }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="row my-2">
+                            <div class="col-3 p-1 text-center">
+                                <i class="fa fa-envelope-square fa-2x"></i>
+                            </div>
+                            <div class="col-9">
+                                <div class="font-weight-bold text-uppercase">E-mail address</div>
+                                <small>{{ email }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="row my-2">
+                            <div class="col-3 p-1 text-center">
+                                <i class="fa fa-map-marker fa-2x"></i>
+                            </div>
+                            <div class="col-9">
+                                <div class="font-weight-bold text-uppercase">Work address</div>
+                                <small>{{ address }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    {% if fax %}
+                        <div class="list-group-item">
+                            <div class="row my-2">
+                                <div class="col-3 p-1 text-center">
+                                    <i class="fa fa-phone fa-2x"></i>
+                                </div>
+                                <div class="col-9">
+                                    <div class="font-weight-bold text-uppercase">Fax</div>
+                                    <small>{{ fax }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% include "part/footer.twig" %}
+{% include "part/scripts.twig" %}
+
+</body>
+
+</html>

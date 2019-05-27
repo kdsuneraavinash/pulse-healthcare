@@ -19,7 +19,7 @@ class SearchDoctorController extends BaseController
      */
     public function getIFrame(Account $currentAccount)
     {
-        $this->renderWithNoContext('iframe/SearchDoctor.html.twig', $currentAccount);
+        $this->renderWithNoContext('iframe/SearchDoctor.twig', $currentAccount);
     }
 
     /**
@@ -66,7 +66,7 @@ class SearchDoctorController extends BaseController
             $error = "No results found";
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/{$currentAccount->getAccountType()}/search/doctor?error=$error");
         } else {
-            $this->render("iframe/DoctorSearchResults.html.twig", array('ret' => $results, 'size' => sizeof($results)), $currentAccount);
+            $this->render("iframe/DoctorSearchResults.twig", array('ret' => $results, 'size' => sizeof($results)), $currentAccount);
         }
     }
 }

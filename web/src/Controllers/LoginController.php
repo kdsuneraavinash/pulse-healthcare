@@ -57,9 +57,9 @@ class LoginController extends BaseController
     public function get(?Account $currentAccount)
     {
         if ($currentAccount == null) {
-            $this->render('LoginPage.html.twig', array(), $currentAccount);
+            $this->render('LoginPage.twig', array(), $currentAccount);
         } else {
-            $this->render('AlreadyLoggedIn.html.twig', array(), $currentAccount);
+            $this->render('AlreadyLoggedIn.twig', array(), $currentAccount);
         }
     }
 }

@@ -24,7 +24,7 @@ class ProfilePageController extends BaseController
     {
             $context = $this->populate_with_account($currentAccount);
             $context['is_viewing'] = false;
-            $this->render("ProfilePage.html.twig", $context, $currentAccount);
+            $this->render("ProfilePage.twig", $context, $currentAccount);
     }
 
     /**
@@ -51,7 +51,7 @@ class ProfilePageController extends BaseController
 
         $context = $this->populate_with_account($account);
         $context['is_viewing'] = true;
-        $this->render("ProfilePage.html.twig", $context, $currentAccount);
+        $this->render("ProfilePage.twig", $context, $currentAccount);
     }
 
     private function populate_with_account(Account $account): array

@@ -11,7 +11,7 @@ class ErrorController extends BaseController
      */
     public function error404()
     {
-        $this->renderWithNoContext('errors/404.html.twig', null);
+        $this->renderWithNoContext('errors/404.twig', null);
     }
 
     /**
@@ -21,7 +21,7 @@ class ErrorController extends BaseController
      */
     public function error401()
     {
-        $this->renderWithNoContext('errors/401.html.twig', null);
+        $this->renderWithNoContext('errors/401.twig', null);
     }
 
     /**
@@ -31,7 +31,7 @@ class ErrorController extends BaseController
      */
     public function error405()
     {
-        $this->renderWithNoContext('errors/405.html.twig', null);
+        $this->renderWithNoContext('errors/405.twig', null);
     }
 
     /**
@@ -41,7 +41,7 @@ class ErrorController extends BaseController
      */
     public function error500()
     {
-        $this->renderWithNoContext('errors/500.html.twig', null);
+        $this->renderWithNoContext('errors/500.twig', null);
     }
 
     /**
@@ -52,7 +52,7 @@ class ErrorController extends BaseController
     public function errorUndefined()
     {
         $code = $this->httpHandler()->anyParameter('code');
-        $this->render('errors/undefined.html.twig', array(
+        $this->render('errors/undefined.twig', array(
             'code' => $code
         ), null);
     }
@@ -64,6 +64,6 @@ class ErrorController extends BaseController
      */
     public function errorLock()
     {
-        $this->renderWithNoContext('errors/lock.html.twig', null);
+        $this->renderWithNoContext('errors/lock.twig', null);
     }
 }

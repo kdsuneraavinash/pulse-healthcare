@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/control_panel/common.twig' as control_panel %}
+{% import 'macro/form_fields.twig' as form_fields %}
+
+
+
+{{ control_panel.iframe_start() }}
+
+<div class="container pt-2 mb-5">
+
+    {{ control_panel.card_start("Session Details") }}
+    <div class="p-3">
+
+        {% if (error != null) %}
+            <div class="alert alert-danger text-center mb-3" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <div class="form-group row">
+            <label for="id" class="col-lg-3 col-form-label">Patient ID</label>
+            <input id="id" type="text" class="col-lg-9 form-control mb-2" placeholder="PATIENT_ID"
+                   value="{{ patient_id }}" readonly>
+        </div>
+        <div class="form-group row">
+            <label for="id" class="col-lg-3 col-form-label">Patient Name</label>
+            <input type="text" class="col-lg-9 form-control mb-2" placeholder="PATIENT_NAME"
+                   value="{{ patient_name }}" readonly>
+        </div>
+        <div class="form-group row">
+            <label for="date" class="col-lg-3 col-form-label">Date </label>
+            <input id="date" type="text" class="col-lg-9 form-control mb-2" value="{{ "now"|date("m/d/Y") }}" readonly>
+        </div>
+        <div class="row text-right">
+        <div class="mt-2 col-4">
+        </div>
+        <div class="mt-2 pr-1 col-sm-4">
+            <a class="btn btn-success" href="{{ site }}/timeline?user={{ patient_id }}" target="_blank">
+                Show Patient Timeline
+            </a>
+        </div>
+        <div class="mt-2  col-sm-4">
+            <a class="btn btn-info" href="{{ site }}/showprofile?user={{ patient_id }}" target="_blank">
+                Show Patient Profile
+            </a>
+        </div>
+        </div>
+    </div>
+    {{ control_panel.card_end() }}
+
+    <div class="med">
+        <div v-for="(medCard,index) in medCards">
+
+
+            {{ control_panel.card_start("Medicine Prescription #" ~ "{{ index+1 }}", "ignore-triangle warning") }}
+            <div class="medicine-form p-3" style="margin:auto">
+                <div class="form-group row">
+                    <label for="medName" class="col-lg-3 col-form-label">Name </label>
+                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Medicine Name"
+                           v-model="medCard.name">
+                </div>
+                <div class="form-group row">
+                    <label for="dose" class="col-lg-3 col-form-label">Dose </label>
+                    <input type="text" class="col-lg-9 form-control mb-2"
+                           placeholder="Dose per time (mg/ml/tablets/pills)" v-model="medCard.dose">
+                </div>
+                <div class="form-group row">
+                    <label for="frequency" class="col-lg-3 col-form-label">Frequency </label>
+                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Eg: 3 times a day"
+                           v-model="medCard.frequency">
+                </div>
+                <div class="form-group row">
+                    <label for="time" class="col-lg-3 col-form-label">Time </label>
+                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Before Meal/ After Meal"
+                           v-model="medCard.time">
+                </div>
+
+                <div class="form-group row">
+                    <label for="comment" class="col-lg-3 col-form-label">Comment </label>
+                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Comment about this medicine"
+                           v-model="medCard.comment">
+                </div>
+            </div>
+            <button class="float-right btn btn-danger m-3" type="button" id="remove-btn" @click="removeMedCard(index)">
+                Remove This Prescription
+            </button>
+            {{ control_panel.card_end() }}
+
+        </div>
+        <button class="btn btn-green mt-4" type="button" id="add-btn" @click="addMedCard">Add Med
+            Card
+        </button>
+
+        <hr/>
+
+        <div class="text-right mt-4 mb-5">
+            <a class="btn btn-warning" href="{{ site }}/control/doctor/create/search">
+                Cancel Prescription
+            </a>
+            <button class="btn btn-blue" type="button" onclick="submitForm()">
+                Submit Added Prescriptions
+            </button>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+{{ control_panel.iframe_middle() }}
+
+{% include 'modals/prescription_save_failed.twig' %}
+{% include("modals/ajax_loading.twig") %}
+
+<!-- Vue to clone medCards-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
+<script>
+    let medVue = new Vue(
+        {
+            el: '.med',
+            data: {
+                medCards: [
+                    {
+                        name: '',
+                        dose: '',
+                        frequency: '',
+                        time: '',
+                        comment: ''
+                    }
+                ]
+            },
+            methods: {
+                addMedCard() {
+                    this.medCards.push({
+                        name: '',
+                        dose: '',
+                        frequency: '',
+                        time: '',
+                        comment: ''
+                    });
+                },
+                removeMedCard(index) {
+                    this.medCards.splice(index, 1)
+                },
+            }
+        }
+    );
+
+    function submitForm() {
+        $.ajax({
+            type: "POST",
+            url: '/control/doctor/create/prescription',
+            data: {
+                patient: $("#id").val(),
+                medications: medVue.medCards,
+            },
+            dataType: 'html',
+            success: function (data) {
+                if (data.startsWith("E|")){
+                    let message = data.replace("E|", "");
+                    $("#error_modal_message").text(message);
+                    $("#modalPrescriptionSaveFailed").modal('show');
+                }else{
+                    let url = data.replace("K|", "");
+                    window.location = "{{ site }}/control/doctor/create/search?prescription_id=" + url;
+                }
+            },
+            error: function () {
+                $("#error_modal_message").text("Server Error");
+                $("#modalPrescriptionSaveFailed").modal('show');
+            },
+        });
+    }
+
+</script>
+
+
+{{ control_panel.iframe_end() }}
+</html>

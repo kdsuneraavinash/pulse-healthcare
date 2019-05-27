@@ -14,6 +14,6 @@ class HomePageController extends BaseController
      */
     public function get(?Account $currentAccount)
     {
-        $this->renderWithNoContext('HomePage.html.twig',  $currentAccount);
+        $this->renderWithNoContext('HomePage.twig',  $currentAccount);
     }
 }

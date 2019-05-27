@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+
+{% import 'macro/control_panel/common.twig' as control_panel %}
+{% import 'macro/form_fields.twig' as form_fields %}
+
+{{ control_panel.iframe_start() }}
+
+<div class="container pt-2">
+
+    {{ control_panel.card_start("Search Patient") }}
+    <form action="{{ site }}/control/{{ account_type }}/search/patient" class="needs-validation" method="post"
+          novalidate>
+
+        {% if (error != null) %}
+            <div class="alert alert-danger text-center mb-3" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {{ form_fields.input_with_label('name', 'Name', 'Name', null, 'text') }}
+        {{ form_fields.input_with_label('nic', 'NIC', 'NIC Number', null, 'text') }}
+        {{ form_fields.input_with_label('address', 'Part of Address', 'Part of Patient Address', null, 'text') }}
+
+        <div class="text-right">
+            <button class="btn btn-primary my-4" type="submit">Search</button>
+        </div>
+    </form>
+    {{ control_panel.card_end() }}
+
+</div>
+
+{{ control_panel.iframe_middle() }}
+
+{% if (account_password != null) %}
+    {% include 'modals/created_account.twig' %}
+{% endif %}
+<script src="{{ site }}/js/search.js"></script>
+{{ control_panel.iframe_end() }}
+</html>

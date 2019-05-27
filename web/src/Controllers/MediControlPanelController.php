@@ -15,7 +15,7 @@ class MediControlPanelController extends BaseController
      */
     public function get(MedicalCenter $currentAccount)
     {
-        $this->renderWithNoContext('ControlPanelMediPage.htm.twig', $currentAccount);
+        $this->renderWithNoContext('ControlPanelMediPage.twig', $currentAccount);
     }
 
     /**
@@ -27,7 +27,7 @@ class MediControlPanelController extends BaseController
     public function getMediRegisterDoctorIframe(MedicalCenter $currentAccount)
     {
         if ($currentAccount->getVerificationState() == VerificationState::Verified) {
-            $this->render('iframe/MedicalCenterCreateDoctor.htm.twig', array(), $currentAccount);
+            $this->render('iframe/MedicalCenterCreateDoctor.twig', array(), $currentAccount);
         } else {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/lock");
         }
@@ -43,7 +43,7 @@ class MediControlPanelController extends BaseController
     public function getMediRegisterPatientIframe(MedicalCenter $currentAccount)
     {
         if ($currentAccount->getVerificationState() == VerificationState::Verified) {
-            $this->render('iframe/MedicalCenterCreatePatient.htm.twig', array(), $currentAccount);
+            $this->render('iframe/MedicalCenterCreatePatient.twig', array(), $currentAccount);
         } else {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/lock");
         }

@@ -18,7 +18,7 @@ class AdminControlPanelController extends BaseController
      */
     public function get(?Account $currentAccount)
     {
-        $this->renderWithNoContext('ControlPanelAdminPage.html.twig', $currentAccount);
+        $this->renderWithNoContext('ControlPanelAdminPage.twig', $currentAccount);
     }
 
     /**
@@ -30,7 +30,7 @@ class AdminControlPanelController extends BaseController
     public function getAdminDashboardIframe(Admin $currentAccount)
     {
         $result = $currentAccount->generateUserTypeData();
-        $this->render('iframe/AdminDashboardIFrame.htm.twig', $result, $currentAccount);
+        $this->render('iframe/AdminDashboardIFrame.twig', $result, $currentAccount);
 
     }
 
@@ -42,7 +42,7 @@ class AdminControlPanelController extends BaseController
      */
     public function getAdminVerifyMedicalCentersIframe(Admin $currentAccount)
     {
-        $this->render('iframe/AdminVerifyMedicalCentersIFrame.htm.twig', array(
+        $this->render('iframe/AdminVerifyMedicalCentersIFrame.twig', array(
             'medical_centers' => $currentAccount->retrieveMedicalCentersList()
         ), $currentAccount);
     }
