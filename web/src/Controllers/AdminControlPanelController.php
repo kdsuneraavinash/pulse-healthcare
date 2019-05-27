@@ -2,6 +2,7 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\AccountFactory;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\MedicalCenter\MedicalCenter;
@@ -10,13 +11,14 @@ use Pulse\Models\Exceptions;
 class AdminControlPanelController extends BaseController
 {
     /**
+     * @param Account $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(Account $currentAccount)
     {
-        parent::loadOnlyIfUserIsOfType(Admin::class, 'ControlPanelAdminPage.html.twig');
+        $this->render('ControlPanelAdminPage.html.twig', array(), $currentAccount);
     }
 
     /**

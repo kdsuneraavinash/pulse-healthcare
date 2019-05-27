@@ -38,7 +38,7 @@ Components\HttpHandler::init($_GET, $_POST);
 Components\TwigHandler::init();
 
 /// Initialize Router
-Components\Router::init();
+Components\Router\Router::init();
 
 /**
  * ========================================================
