@@ -118,6 +118,16 @@
                                 </td>
                             </tr>
                         {% endif %}
+
+                        {% if  profile_type == "patient" and account_type == 'doctor' %}
+                            <tr>
+                                <th><strong>Timeline</strong></th>
+                                <td><a href="{{ site }}/timeline?user={{ profile_account_id }}" class="btn btn-sm btn-success waves-effect">
+                                        View Timeline
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>

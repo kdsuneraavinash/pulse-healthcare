@@ -26,7 +26,8 @@ class Session implements BaseModel
     private function __construct(string $accountId, string $sessionKey)
     {
         // Get account accordingly
-        $this->account = Account::retrieveAccount($accountId);
+        $accountFactory = new AccountFactory();
+        $this->account = $accountFactory->createAccount($accountId);
         if (!$this->account->exists()) {
             // If the account does not exist
             throw new Exceptions\AccountNotExistException($accountId);

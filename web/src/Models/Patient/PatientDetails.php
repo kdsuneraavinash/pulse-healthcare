@@ -5,8 +5,9 @@ namespace Pulse\Models\Patient;
 use Pulse\Components\Database;
 use Pulse\Definitions;
 use Pulse\Models\Exceptions;
+use Pulse\Models\Interfaces\IDetails;
 
-class PatientDetails
+class PatientDetails implements IDetails
 {
     private $name;
     private $nic;

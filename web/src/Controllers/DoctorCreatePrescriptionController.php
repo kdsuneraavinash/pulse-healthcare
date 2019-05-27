@@ -2,7 +2,7 @@
 
 namespace Pulse\Controllers;
 
-use Pulse\Models\AccountSession\Account;
+use Pulse\Models\AccountSession\AccountFactory;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\Exceptions\AccountRejectedException;
@@ -70,7 +70,8 @@ class DoctorCreatePrescriptionController extends BaseController
         if ($currentAccount instanceof Doctor) {
             $patientId = $this->httpHandler()->postParameter('patient');
             try {
-                $account = Account::retrieveAccount($patientId, true);
+                $accountFactory = new AccountFactory();
+                $account = $accountFactory->createAccount($patientId, true);
                 if ($account instanceof Patient) {
                     $patientName = $account->getPatientDetails()->getName();
                     $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?patient=$patientId&name=$patientName");

@@ -6,6 +6,7 @@
 {% import 'macro/form_fields.htm.twig' as form_fields %}
 <head>
     {% include("part/header.htm.twig") %}
+    <link href="{{ site }}/css/timeline.css" rel="stylesheet">
     <title>MediKit</title>
 </head>
 
@@ -14,43 +15,46 @@
 
 {% include("part/navbar.htm.twig") %}
 
-<main class="mt-sm-5 mb-5 pt-5">
-    <section class="container card pt-5 wow fadeIn" style="max-width: 800px;">
-        <h2 class="text-center">Timeline: {{ patient }}</h2>
-        <hr/>
+<h1 class="text-center mt-2 p-5 mb-3" style="text-shadow: 0 0 20px #fff; text-decoration: underline">{{ patient }} Patient User Timeline</h1>
+
+<div style="min-height: 100vh">
+    <div class="timeline">
+        {% set left=true %}
         {% for prescription in prescriptions %}
-            {{ control_panel.card_start(prescription['date'],  "ignore-triangle danger") }}
-            {% for medication in prescription['medications'] %}
-                {{ control_panel.card_start("Medication ID: " ~ medication['id']) }}
-                <div class="d-flex justify-content-between">
-                    <h4>{{ medication['name'] }} </h4>
-                    <a href="https://www.google.com" target="_blank">
-                        <div class="blue-text pb-2" style="display: inline;">
-                            <h4><i class="fas fa-external-link-alt ml-2"></i></h4>
-                        </div>
-                    </a>
+            <div class="timeline-container {{ left ? 'left' : 'right' }}">
+                {{ control_panel.card_start(prescription['date']|date('F j, Y'),  "ignore-triangle content danger") }}
+                {% for medication in prescription['medications'] %}
+                    {{ control_panel.card_start("Medication ID: " ~ medication['id']) }}
+                    <div class="d-flex justify-content-between">
+                        <h4>{{ medication['name'] }} </h4>
+                        <a href="https://www.google.com" target="_blank">
+                            <div class="blue-text pb-2" style="display: inline;">
+                                <h4><i class="fas fa-external-link-alt ml-2"></i></h4>
+                            </div>
+                        </a>
+                    </div>
+                    <h5>{{ medication['dose'] }} | {{ medication['frequency'] }} |
+                        {{ medication['time'] }}.</h5>
+                    <hr/>
+                    <h6 class="text-center">
+                        {{ medication['comment'] == ''? 'No Comment' : medication['comment'] }}
+                    </h6>
+                    {{ control_panel.card_end() }}
+                {% endfor %}
+                <div class="mt-3 d-flex justify-content-between">
+                    <small class="text-muted">Doctor ID:<a
+                                href="{{ site }}/showprofile?user={{ prescription['doctor'] }}"
+                                target="_blank"> {{ prescription['doctor'] }} </a></small>
+                    <small class="text-muted">Prescription ID: {{ prescription['id'] }} </small>
                 </div>
-                <h5>{{ medication['dose'] }} | {{ medication['frequency'] }} |
-                    {{ medication['time'] }}.</h5>
-                <hr/>
-                <h6 class="text-center">
-                    {{ medication['comment'] == ''? 'No Comment' : medication['comment'] }}
-                </h6>
                 {{ control_panel.card_end() }}
-            {% endfor %}
-            <div class="mt-3 d-flex justify-content-between">
-                <small class="text-muted">Doctor ID:<a
-                            href="{{ site }}/showprofile?user={{ prescription['doctor'] }}"
-                            target="_blank"> {{ prescription['doctor'] }} </a></small>
-                <small class="text-muted">Prescription ID: {{ prescription['id'] }} </small>
             </div>
-            {{ control_panel.card_end() }}
-            <hr class="m-4"/>
+
+            {% set left=not left %}
         {% endfor %}
+    </div>
+</div>
 
-
-    </section>
-</main>
 
 {% include "part/footer.htm.twig" %}
 {% include "part/scripts.htm.twig" %}

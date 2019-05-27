@@ -22,13 +22,13 @@ class MedicalCenter extends Account implements IFavouritable
     /**
      * MedicalCenter constructor.
      * @param string $accountId
-     * @param int|null $verificationState
+     * @param AbstractVerificationState|null $verificationState
      * @param MedicalCenterDetails $medicalCenterDetails
      * @param bool $ignoreErrors
      * @throws Exceptions\AccountNotExistException
      * @throws Exceptions\AccountRejectedException
      */
-    protected function __construct(string $accountId, ?int $verificationState,
+    function __construct(string $accountId, ? AbstractVerificationState $verificationState,
                                    MedicalCenterDetails $medicalCenterDetails, bool $ignoreErrors = false)
     {
         parent::__construct($accountId, AccountType::MedicalCenter);
@@ -41,7 +41,16 @@ class MedicalCenter extends Account implements IFavouritable
             if ($query == null) {
                 throw new Exceptions\AccountNotExistException($accountId);
             }
-            $this->verificationState = (int)$query['verified'];
+
+
+            if ((int)$query['verified'] == 0) {
+                $this->verificationState = new UnverifiedState();
+            } elseif ((int)$query['verified'] == 1) {
+                $this->verificationState = new VerifiedState();
+            } else {
+                $this->verificationState = new RejectedState();
+            }
+
             if (!$ignoreErrors && $this->getVerificationState() == VerificationState::Rejected) {
                 throw new Exceptions\AccountRejectedException($accountId);
             }
@@ -65,7 +74,7 @@ class MedicalCenter extends Account implements IFavouritable
     public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails,
                                                string $password): MedicalCenter
     {
-        $medicalCenter = new MedicalCenter($accountId, VerificationState::Default, $medicalCenterDetails);
+        $medicalCenter = new MedicalCenter($accountId, new UnverifiedState(), $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
         LoginService::signUpSession($accountId, $password);
         // TODO: Add code to request verification
@@ -161,7 +170,7 @@ class MedicalCenter extends Account implements IFavouritable
      */
     public function getVerificationState(): int
     {
-        return $this->verificationState;
+        return $this->verificationState->getStatus();
     }
 
 

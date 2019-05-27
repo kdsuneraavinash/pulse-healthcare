@@ -3,17 +3,14 @@
 namespace Pulse\Controllers;
 
 use Pulse\Models\AccountSession\Account;
-use Pulse\Models\AccountSession\Credentials;
+use Pulse\Models\AccountSession\AccountFactory;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
-use Pulse\Models\Exceptions\AccountAlreadyExistsException;
 use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\Exceptions\AccountRejectedException;
 use Pulse\Models\Exceptions\InvalidDataException;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 use Pulse\Models\Patient\Patient;
-use Pulse\Models\Prescription\Medication;
-use Pulse\Models\Prescription\Prescription;
 
 class ProfilePageController extends BaseController
 {
@@ -48,7 +45,8 @@ class ProfilePageController extends BaseController
             exit();
         }
         try {
-            $account = Account::retrieveAccount($accountId, true);
+            $accountFactory = new AccountFactory();
+            $account = $accountFactory->createAccount($accountId, true);
         } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404?a=$accountId");
             exit();
@@ -92,132 +90,5 @@ class ProfilePageController extends BaseController
             $context['name'] = "Administrator";
         }
         return $context;
-    }
-
-    /**
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     */
-    public function getChangePassword()
-    {
-        $current_account = $this->getCurrentAccount();
-        if ($current_account instanceof Account) {
-            $this->render("ChangePassword.html.twig", array(), $current_account);
-        } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
-        }
-    }
-
-    public function postChangePassword()
-    {
-        $current_account = $this->getCurrentAccount();
-        if ($current_account instanceof Account) {
-            $prevPassword = $this->httpHandler()->postParameter("prev");
-            $newPassword = $this->httpHandler()->postParameter("new");
-            $retypePassword = $this->httpHandler()->postParameter("retype");
-
-            if ($newPassword != null and $newPassword != "" and $newPassword == $retypePassword) {
-                try {
-                    $isCorrect = Credentials::isPasswordCorrectOfUser($current_account->getAccountId(), $prevPassword);
-                    if (!$isCorrect) {
-                        $msg = "Current Password Incorrect";
-                        $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/changepsw?error=$msg");
-                        return;
-                    }
-                    Credentials::setNewPasswordOfUser($current_account->getAccountId(), $newPassword);
-                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/profile");
-                } catch (AccountNotExistException $e) {
-                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
-                } catch (AccountAlreadyExistsException $e) {
-                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-                }
-            } else {
-                $msg = "Retype Password Mismatch";
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/changepsw?error=$msg");
-            }
-        } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
-        }
-    }
-
-    /**
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     */
-    public function getTimeline()
-    {
-        $currentAccount = $this->getCurrentAccount();
-        try {
-            if ($currentAccount instanceof Doctor) {
-                $accountId = $this->httpHandler()->getParameter("user");
-                if ($accountId != null){
-                    $patient = Account::retrieveAccount($accountId, true);
-                    if ($patient instanceof Patient) {
-                        $this->showTimelineOfPatient($patient, $currentAccount);
-                        return;
-                    }
-                }
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-            } else if ($currentAccount instanceof Patient) {
-                $this->showTimelineOfPatient($currentAccount, $currentAccount);
-            } else {
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-            }
-        } catch (InvalidDataException $e) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
-        } catch (AccountNotExistException $e) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
-        } catch (AccountRejectedException $e) {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404");
-        }
-    }
-
-    /**
-     * @param Patient $patient
-     * @param Account $currentAccount
-     * @throws InvalidDataException
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     */
-    private function showTimelineOfPatient(Patient $patient, Account $currentAccount)
-    {
-        $prescriptions = $patient->getPrescriptions();
-        if (sizeof($prescriptions) == 0) {
-            throw new InvalidDataException("No Prescriptions");
-        }
-        $parsedPrescriptions = array();
-        foreach ($prescriptions as $prescription) {
-            $parsedMedications = array();
-            if ($prescription instanceof Prescription) {
-                foreach ($prescription->getMedications() as $medication) {
-                    if ($medication instanceof Medication) {
-                        $parsedMedication = array(
-                            'id' => $medication->getMedicationId(),
-                            'name' => $medication->getName(),
-                            'dose' => $medication->getDose(),
-                            'frequency' => $medication->getFrequency(),
-                            'time' => $medication->getTime(),
-                            'comment' => $medication->getComment(),
-                        );
-                        array_push($parsedMedications, $parsedMedication);
-                    }
-                }
-                $parsedPrescription = array(
-                    'doctor' => $prescription->getDoctorId(),
-                    'id' => $prescription->getPrescriptionId(),
-                    'date' => $prescription->getDate(),
-                    'patient' => $prescription->getPatientId(),
-                    'medications' => $parsedMedications
-                );
-                array_push($parsedPrescriptions, $parsedPrescription);
-            }
-        }
-
-        $this->render('PatientTimeline.htm.twig', array('prescriptions' => $parsedPrescriptions,
-            'patient' => $patient->getAccountId()), $currentAccount);
-        return;
     }
 }

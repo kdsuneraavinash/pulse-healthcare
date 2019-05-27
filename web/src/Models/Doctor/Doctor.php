@@ -21,7 +21,7 @@ class Doctor extends Account implements ICreatable
      * @param string $defaultPassword
      * @throws Exceptions\InvalidDataException
      */
-    protected function __construct(DoctorDetails $doctorDetails, string $defaultPassword = null)
+    function __construct(DoctorDetails $doctorDetails, string $defaultPassword = null)
     {
         parent::__construct($doctorDetails->getNic(), AccountType::Doctor);
         $this->doctorDetails = $doctorDetails;
