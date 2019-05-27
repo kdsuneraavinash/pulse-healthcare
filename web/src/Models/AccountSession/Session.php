@@ -27,7 +27,7 @@ class Session implements BaseModel
     {
         // Get account accordingly
         $accountFactory = new AccountFactory();
-        $this->account = $accountFactory->createAccount($accountId);
+        $this->account = $accountFactory->getAccount($accountId);
         if (!$this->account->exists()) {
             // If the account does not exist
             throw new Exceptions\AccountNotExistException($accountId);

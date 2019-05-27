@@ -6,6 +6,7 @@ use Pulse\Components\Database;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Enums\VerificationState;
+use Pulse\Models\Exceptions\InvalidDataException;
 use Pulse\Models\MedicalCenter\MedicalCenter;
 
 
@@ -38,6 +39,26 @@ class Admin extends Account
             $query[$i]['parsed_address'] = $dots_removed;
         }
         return $query;
+    }
+
+    /**
+     * @param MedicalCenter $targetAccount
+     * @param string|null $action
+     * @throws InvalidDataException
+     */
+    public function changeMedicalCenterVerificationState(MedicalCenter $targetAccount, ?string $action)
+    {
+        if ($action === 'verify') {
+            $this->verifyMedicalCenter($targetAccount);
+        } else if ($action === 'retract') {
+            $this->retractMedicalCenter($targetAccount);
+        } else if ($action === 'delete') {
+            $this->deleteMedicalCenter($targetAccount);
+        } else if ($action === 'reject') {
+            $this->rejectMedicalCenter($targetAccount);
+        } else {
+            throw new InvalidDataException("Unknown verification state");
+        }
     }
 
     public function deleteMedicalCenter(MedicalCenter $account)

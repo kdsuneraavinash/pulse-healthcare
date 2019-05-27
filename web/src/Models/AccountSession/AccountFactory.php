@@ -24,7 +24,7 @@ class AccountFactory
      * @throws Exceptions\AccountRejectedException
      * @throws Exceptions\InvalidDataException
      */
-    public function createAccount(string $accountId, bool $ignoreMedicalCenterVerificationError = false): ?Account
+    public function getAccount(string $accountId, bool $ignoreMedicalCenterVerificationError = false): ?Account
     {
         $account = Database::queryFirstRow("SELECT * from accounts WHERE account_id=:account_id",
             array('account_id' => $accountId));

@@ -10,49 +10,41 @@ use Pulse\Models\Exceptions\AccountNotExistException;
 class ChangePasswordController extends BaseController
 {
     /**
+     * @param Account|null $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(?Account $currentAccount)
     {
-        $current_account = $this->getCurrentAccount();
-        if ($current_account instanceof Account) {
-            $this->render("ChangePassword.html.twig", array(), $current_account);
-        } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
-        }
+        $this->renderWithNoContext("ChangePassword.html.twig", $currentAccount);
     }
 
-    public function post()
+    public function post(?Account $currentAccount)
     {
-        $current_account = $this->getCurrentAccount();
-        if ($current_account instanceof Account) {
-            $prevPassword = $this->httpHandler()->postParameter("prev");
-            $newPassword = $this->httpHandler()->postParameter("new");
-            $retypePassword = $this->httpHandler()->postParameter("retype");
+        $prevPassword = $this->httpHandler()->postParameter("prev");
+        $newPassword = $this->httpHandler()->postParameter("new");
+        $retypePassword = $this->httpHandler()->postParameter("retype");
 
-            if ($newPassword != null and $newPassword != "" and $newPassword == $retypePassword) {
-                try {
-                    $isCorrect = Credentials::isPasswordCorrectOfUser($current_account->getAccountId(), $prevPassword);
-                    if (!$isCorrect) {
-                        $msg = "Current Password Incorrect";
-                        $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/changepsw?error=$msg");
-                        return;
-                    }
-                    Credentials::setNewPasswordOfUser($current_account->getAccountId(), $newPassword);
-                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/profile");
-                } catch (AccountNotExistException $e) {
-                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
-                } catch (AccountAlreadyExistsException $e) {
-                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        if ($newPassword != null and $newPassword != "" and $newPassword == $retypePassword) {
+            try {
+                $isCorrect = Credentials::isPasswordCorrectOfUser($currentAccount->getAccountId(), $prevPassword);
+                if (!$isCorrect) {
+                    $msg = "Current Password Incorrect";
+                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/changepsw?error=$msg");
+                    return;
                 }
-            } else {
-                $msg = "Retype Password Mismatch";
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/changepsw?error=$msg");
+                Credentials::setNewPasswordOfUser($currentAccount->getAccountId(), $newPassword);
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/profile");
+            } catch (AccountNotExistException $e) {
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
+            } catch (AccountAlreadyExistsException $e) {
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
             }
         } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]");
+            $msg = "Retype Password Mismatch";
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/changepsw?error=$msg");
         }
+
     }
 }

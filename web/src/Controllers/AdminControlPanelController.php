@@ -16,93 +16,62 @@ class AdminControlPanelController extends BaseController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get(Account $currentAccount)
+    public function get(?Account $currentAccount)
     {
-        $this->render('ControlPanelAdminPage.html.twig', array(), $currentAccount);
+        $this->renderWithNoContext('ControlPanelAdminPage.html.twig', $currentAccount);
     }
 
     /**
+     * @param Admin $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getAdminDashboardIframe()
+    public function getAdminDashboardIframe(Admin $currentAccount)
     {
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount instanceof Admin){
-            $result = $currentAccount->generateUserTypeData();
-            $this->render('iframe/AdminDashboardIFrame.htm.twig', $result, $currentAccount);
-        }else{
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-        }
+        $result = $currentAccount->generateUserTypeData();
+        $this->render('iframe/AdminDashboardIFrame.htm.twig', $result, $currentAccount);
 
     }
 
     /**
+     * @param Admin $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getAdminVerifyMedicalCentersIframe()
+    public function getAdminVerifyMedicalCentersIframe(Admin $currentAccount)
     {
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount instanceof Admin) {
-            $this->render('iframe/AdminVerifyMedicalCentersIFrame.htm.twig', array(
-                'medical_centers' => $currentAccount->retrieveMedicalCentersList()
-            ), $currentAccount);
-        } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-        }
+        $this->render('iframe/AdminVerifyMedicalCentersIFrame.htm.twig', array(
+            'medical_centers' => $currentAccount->retrieveMedicalCentersList()
+        ), $currentAccount);
     }
 
     /**
+     * @param Admin $currentAccount
      * @throws Exceptions\AccountRejectedException
      */
-    public function postAdminVerifyMedicalCentersIframe()
+    public function postAdminVerifyMedicalCentersIframe(Admin $currentAccount)
     {
         $targetAccountId = $this->httpHandler()->postParameter('account');
         $action = $this->httpHandler()->postParameter('action');
 
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount instanceof Admin) {
-            /// Current user must be ADMIN
-            try {
-                /// Get target user object
-                $accountFactory = new AccountFactory();
-                $targetAccount = $accountFactory->createAccount($targetAccountId, true);
+        try {
 
-            } catch (Exceptions\AccountNotExistException $e) {
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-                exit;
-            } catch (Exceptions\InvalidDataException $e) {
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-                exit;
-            }
+            /// Get target user object
+            $accountFactory = new AccountFactory();
+            $targetAccount = $accountFactory->getAccount($targetAccountId, true);
 
             if ($targetAccount instanceof MedicalCenter) {
-                /// Target account should be a MedicalCenter
-                if ($action === 'verify') {
-                    $currentAccount->verifyMedicalCenter($targetAccount);
-                } else if ($action === 'retract') {
-                    $currentAccount->retractMedicalCenter($targetAccount);
-                } else if ($action === 'delete') {
-                    $currentAccount->deleteMedicalCenter($targetAccount);
-                } else if ($action === 'reject') {
-                    $currentAccount->rejectMedicalCenter($targetAccount);
-                } else {
-                    /// Unknown method
-                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-                }
-            } else {
-                /// Account is not a MedicalCenter
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+                $currentAccount->changeMedicalCenterVerificationState($targetAccount, $action);
+                /// Exit in normal way
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/admin/verify#$targetAccountId");
             }
 
-            /// Exit in normal way
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/admin/verify#$targetAccountId");
-        } else {
-            /// Current user is not ADMIN
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        } catch (Exceptions\AccountNotExistException|Exceptions\InvalidDataException $e) {
+            // Ignore error (to catch later)
         }
+        /// Account is not a MedicalCenter or error thrown
+        $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
     }
 }

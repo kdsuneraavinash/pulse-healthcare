@@ -46,7 +46,7 @@ class ProfilePageController extends BaseController
         }
         try {
             $accountFactory = new AccountFactory();
-            $account = $accountFactory->createAccount($accountId, true);
+            $account = $accountFactory->getAccount($accountId, true);
         } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
             $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/404?a=$accountId");
             exit();

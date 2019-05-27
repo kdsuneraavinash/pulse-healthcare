@@ -45,7 +45,7 @@ final class Router
             ['GET', '/control/doctor/create/search', ['Pulse\Controllers\DoctorControlPanelController', 'getDoctorCreatePrescriptionSearchPatientIframe'], AccountList::DoctorOnly],
             ['POST', '/control/doctor/create/search', ['Pulse\Controllers\DoctorCreatePrescriptionController', 'postSearchPatient'], AccountList::DoctorOnly],
             ['GET', '/control/doctor/create/prescription', ['Pulse\Controllers\DoctorControlPanelController', 'getDoctorCreatePrescriptionIframe'], AccountList::DoctorOnly],
-            ['POST', '/control/doctor/create/prescription', ['Pulse\Controllers\DoctorCreatePrescriptionController', 'post'], AccountList::DoctorOnly],
+            ['POST', '/control/doctor/create/prescription', ['Pulse\Controllers\DoctorCreatePrescriptionController', 'post'], AccountList::Anyone],
 
             // Control Panel - Patient
             ['GET', '/control/patient', ['Pulse\Controllers\PatientControlPanelController', 'get'], AccountList::PatientOnly],
@@ -65,10 +65,10 @@ final class Router
             ['POST', '/control/admin/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe'], AccountList::AdminOnly],
             ['GET', '/control/admin/search/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe'], AccountList::AdminOnly],
             ['POST', '/control/admin/search/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe'], AccountList::AdminOnly],
-            ['GET', '/control/doctor/search/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe'], AccountList::PatientOnly],
-            ['POST', '/control/doctor/search/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe'], AccountList::PatientOnly],
-            ['GET', '/control/patient/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe'], AccountList::DoctorOnly],
-            ['POST', '/control/patient/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe'], AccountList::DoctorOnly],
+            ['GET', '/control/doctor/search/patient', ['Pulse\Controllers\SearchPatientController', 'getIframe'], AccountList::DoctorOnly],
+            ['POST', '/control/doctor/search/patient', ['Pulse\Controllers\SearchPatientController', 'postIframe'], AccountList::DoctorOnly],
+            ['GET', '/control/patient/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'getIframe'], AccountList::PatientOnly],
+            ['POST', '/control/patient/search/doctor', ['Pulse\Controllers\SearchDoctorController', 'postIframe'], AccountList::PatientOnly],
 
             // Error Handlers
             ['GET', '/404', ['Pulse\Controllers\ErrorController', 'error404'], AccountList::Anyone],

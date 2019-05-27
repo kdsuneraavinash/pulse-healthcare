@@ -2,6 +2,7 @@
 
 namespace Pulse\Controllers;
 
+use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\AccountFactory;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Exceptions\AccountNotExistException;
@@ -13,21 +14,24 @@ use Pulse\Models\Prescription\Prescription;
 
 class DoctorCreatePrescriptionController extends BaseController
 {
-    public function post()
+    /**
+     * Even though only doctor can execute this, we need to show a custom error message.
+     * So we need to handle this by hand.
+     * @param Account|null $currentAccount
+     */
+    public function post(?Account $currentAccount)
     {
-        $currentAccount = $this->getCurrentAccount();
-
         if ($currentAccount instanceof Doctor) {
             $doctorId = $currentAccount->getAccountId();
             $patientId = $this->httpHandler()->postParameter('patient');
             $medications = $this->httpHandler()->postParameter('medications');
 
-            if ($patientId == null){
+            if ($patientId == null) {
                 $this->httpHandler()->setContent("E|No patient information submitted. Please resubmit.");
                 return;
             }
 
-            if ($medications == null || !is_array($medications)){
+            if ($medications == null || !is_array($medications)) {
                 $this->httpHandler()->setContent("E|No medications submitted. You have to enter at least one medication to submit.");
                 return;
             }
@@ -65,26 +69,22 @@ class DoctorCreatePrescriptionController extends BaseController
 
     public function postSearchPatient()
     {
-        $currentAccount = $this->getCurrentAccount();
+        $patientId = $this->httpHandler()->postParameter('patient');
+        try {
+            $accountFactory = new AccountFactory();
+            $account = $accountFactory->getAccount($patientId, true);
 
-        if ($currentAccount instanceof Doctor) {
-            $patientId = $this->httpHandler()->postParameter('patient');
-            try {
-                $accountFactory = new AccountFactory();
-                $account = $accountFactory->createAccount($patientId, true);
-                if ($account instanceof Patient) {
-                    $patientName = $account->getPatientDetails()->getName();
-                    $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?patient=$patientId&name=$patientName");
-                }else{
-                    throw new AccountNotExistException($patientId);
-                }
-            } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
-                $error = "Account ID Invalid";
-                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/search?error=$error");
-                return;
+            if ($account instanceof Patient) {
+                $patientName = $account->getPatientDetails()->getName();
+                $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/prescription?patient=$patientId&name=$patientName");
+            } else {
+                throw new AccountNotExistException($patientId);
             }
-        } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+        } catch (AccountNotExistException|AccountRejectedException|InvalidDataException $e) {
+            $error = "Account ID Invalid";
+            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/control/doctor/create/search?error=$error");
+            return;
         }
+
     }
 }

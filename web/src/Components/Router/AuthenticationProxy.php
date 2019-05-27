@@ -28,14 +28,17 @@ class AuthenticationProxy implements ICallback
         $currentAccount = $this->getCurrentAccount();
 
         if (
-            sizeof($this->authenticatedUsers) == 0 || // Anyone can access
-            in_array($currentAccount->getAccountType(), $this->authenticatedUsers) // Otherwise account has to be authenticated
+            count($this->authenticatedUsers) == 0 || // Anyone can access
+            (
+                $currentAccount != null && // If anyone can't access, has to be logged in
+                in_array($currentAccount->getAccountType(), $this->authenticatedUsers) // Otherwise account has to be authenticated
+            )
         ) {
             $callback->setCurrentAccount($currentAccount);
             $callback->execute();
-        } else {
-            HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/405");
+            return;
         }
+        HttpHandler::getInstance()->redirect("http://$_SERVER[HTTP_HOST]/405");
     }
 
     /**

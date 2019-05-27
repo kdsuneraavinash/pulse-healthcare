@@ -7,68 +7,50 @@ use Pulse\Models\Doctor\Doctor;
 class DoctorControlPanelController extends BaseController
 {
     /**
+     * @param Doctor $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function get()
+    public function get(Doctor $currentAccount)
     {
-        parent::loadOnlyIfUserIsOfType(Doctor::class, 'ControlPanelDoctorPage.htm.twig');
+        $this->renderWithNoContext('ControlPanelDoctorPage.htm.twig', $currentAccount);
     }
 
     /**
+     * @param Doctor $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getDoctorCreatePrescriptionSearchPatientIframe()
+    public function getDoctorCreatePrescriptionSearchPatientIframe(Doctor $currentAccount)
     {
         $prescriptionId = $this->httpHandler()->getParameter('prescription_id');
-
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount instanceof Doctor) {
-            if ($prescriptionId == null){
-                $this->render('iframe/CreatePrescriptionSearchPatient.htm.twig', array(),
-                    $currentAccount);
-            }else{
-                $this->render('iframe/CreatePrescriptionSearchPatient.htm.twig',
-                    array('prescription_id' => $prescriptionId),
-                    $currentAccount);
-            }
-
+        if ($prescriptionId == null) {
+            $this->renderWithNoContext('iframe/CreatePrescriptionSearchPatient.htm.twig', $currentAccount);
         } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
+            $this->render('iframe/CreatePrescriptionSearchPatient.htm.twig',
+                array('prescription_id' => $prescriptionId),
+                $currentAccount);
         }
+
     }
 
     /**
+     * @param Doctor $currentAccount
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function getDoctorCreatePrescriptionIframe()
+    public function getDoctorCreatePrescriptionIframe(Doctor $currentAccount)
     {
         $patientId = $this->httpHandler()->getParameter('patient');
         $patientName = $this->httpHandler()->getParameter('name');
 
-        $currentAccount = $this->getCurrentAccount();
-        if ($currentAccount instanceof Doctor) {
-            $this->render('iframe/DoctorCreatePrescription.htm.twig',
-                array('patient_id' => $patientId,
-                    'patient_name' => $patientName),
-                $currentAccount);
-        } else {
-            $this->httpHandler()->redirect("http://$_SERVER[HTTP_HOST]/405");
-        }
-    }
+        $this->render('iframe/DoctorCreatePrescription.htm.twig',
+            array('patient_id' => $patientId,
+                'patient_name' => $patientName),
+            $currentAccount);
 
-    /**
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     */
-    public function getDoctorRegisterPatientIframe()
-    {
-        parent::loadOnlyIfUserIsOfType(Doctor::class, 'iframe/MedicalCenterCreatePatient.htm.twig');
     }
 }

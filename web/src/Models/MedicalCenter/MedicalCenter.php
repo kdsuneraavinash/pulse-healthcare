@@ -165,5 +165,12 @@ class MedicalCenter extends Account implements IFavouritable
         return $this->medicalCenterDetails;
     }
 
+    /**
+     * @return int|null
+     */
+    public function getVerificationState(): ?int
+    {
+        return $this->verificationState;
+    }
 
 }

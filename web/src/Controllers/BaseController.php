@@ -50,6 +50,18 @@ abstract class BaseController
     }
 
     /**
+     * @param string $template
+     * @param Account|null $account
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    protected function renderWithNoContext(string $template, ?Account $account)
+    {
+        $this->render($template, array(), $account);
+    }
+
+    /**
      * @param string $className
      * @param string $page
      * @throws \Twig_Error_Loader

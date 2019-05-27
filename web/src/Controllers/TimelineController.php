@@ -32,7 +32,7 @@ class TimelineController extends BaseController
                 }
 
                 $accountFactory = new AccountFactory();
-                $patient = $accountFactory->createAccount($accountId, true);
+                $patient = $accountFactory->getAccount($accountId, true);
                 if ($patient instanceof Patient) {
                     $this->showTimelineOfPatient($patient, $currentAccount);
                     return;
