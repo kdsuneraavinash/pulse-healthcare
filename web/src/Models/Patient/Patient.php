@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\Patient;
 
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Enums\AccountType;

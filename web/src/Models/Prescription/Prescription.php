@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\Prescription;
 
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\Exceptions\InvalidDataException;
 

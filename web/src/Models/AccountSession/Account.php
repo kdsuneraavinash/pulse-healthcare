@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\AccountSession;
 
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Exceptions;
 

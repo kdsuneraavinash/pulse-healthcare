@@ -3,7 +3,7 @@
 namespace PulseTest;
 
 use PHPUnit\Framework\TestCase;
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Exceptions;
 use Pulse\Models\MedicalCenter\MedicalCenter;

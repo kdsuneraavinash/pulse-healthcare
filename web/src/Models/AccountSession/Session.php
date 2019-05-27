@@ -2,8 +2,8 @@
 
 namespace Pulse\Models\AccountSession;
 
-use Pulse\Components\Database;
-use Pulse\Components\PureSqlStatement;
+use Pulse\Components\Database\Database;
+use Pulse\Components\Database\PureSqlStatement;
 use Pulse\Components\Utils;
 use Pulse\Definitions;
 use Pulse\Models\BaseModel;

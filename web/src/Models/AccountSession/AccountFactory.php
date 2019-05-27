@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\AccountSession;
 
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Models\Admin\Admin;
 use Pulse\Models\Doctor\Doctor;
 use Pulse\Models\Doctor\DoctorDetails;

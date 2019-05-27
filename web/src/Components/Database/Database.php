@@ -1,59 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Pulse\Components;
+namespace Pulse\Components\Database;
 
-use PDO;
-
-class Database
+class Database extends ErrorHandlingDatabase
 {
-    private static $database;
-
-    private function __construct(){}
-
-    /**
-     * --------------------------------------
-     * ---------SINGLETON DESIGN PATTERN-----
-     * --------------------------------------
-     *
-     * @return PDO
-     */
-    private static function getDatabase(): PDO
-    {
-        if (self::$database == null) {
-            // Establish connection
-            // Define variables
-            $hostName = 'localhost';
-            $databaseName = 'pulse';
-            $userName = 'pulse_root';
-            $password = 'password';
-            $charset = 'latin1';
-            $dataSourceName = "mysql:host=$hostName;dbname=$databaseName;charset=$charset";
-            $options = [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES => false,
-            ];
-
-            // Try to connect to database
-            try {
-                self::$database = new PDO($dataSourceName, $userName, $password, $options);
-            } catch (\PDOException $e) {
-                self::handleErrors($e);
-            }
-        }
-        return self::$database;
-    }
-
-    /**
-     * Private database error handler
-     * @param \Exception $e
-     */
-    private static function handleErrors(\Exception $e)
-    {
-        Logger::log("Error[{$e->getCode()}] {$e->getMessage()}", Logger::ERROR, 'Database');
-        echo str_replace('[DATABASE_ERROR]', $e->getMessage(), file_get_contents("database_error.html"));
-        die;
-    }
 
     /**
      * Serves to escape mysql statements
@@ -107,13 +57,13 @@ class Database
     public static function query(string $query, array $params)
     {
         try {
-            $statement = self::getDatabase()->prepare($query);
+            $statement = DatabaseSingleton::getDatabase()->prepare($query);
             self::bindToStatement($statement, $params);
             $statement->execute();
             // Get all rows
             return $statement->fetchAll();
         } catch (\Exception $e) {
-            self::handleErrors($e);
+            parent::handleErrors($e);
             exit;
         }
     }
@@ -128,7 +78,7 @@ class Database
     public static function queryFirstRow(string $query, array $params)
     {
         try {
-            $statement = self::getDatabase()->prepare($query);
+            $statement = DatabaseSingleton::getDatabase()->prepare($query);
             self::bindToStatement($statement, $params);
             $statement->execute();
             // Get only first row
@@ -138,7 +88,7 @@ class Database
             }
             return $result;
         } catch (\Exception $e) {
-            self::handleErrors($e);
+            parent::handleErrors($e);
             exit;
         }
     }
@@ -178,11 +128,11 @@ class Database
             }
 
             // Execute
-            $statement = self::getDatabase()->prepare($query);
+            $statement = DatabaseSingleton::getDatabase()->prepare($query);
             self::bindToStatement($statement, $params);
             $statement->execute();
         } catch (\Exception $e) {
-            self::handleErrors($e);
+            parent::handleErrors($e);
             exit;
         }
     }
@@ -193,7 +143,7 @@ class Database
      */
     public static function lastInsertedId(): ?string
     {
-        return self::getDatabase()->lastInsertId();
+        return DatabaseSingleton::getDatabase()->lastInsertId();
     }
 
     /**
@@ -215,11 +165,11 @@ class Database
                 $query = self::includePureSqlStatements($query, $params);
             }
 
-            $statement = self::getDatabase()->prepare($query);
+            $statement = DatabaseSingleton::getDatabase()->prepare($query);
             self::bindToStatement($statement, $params);
             $statement->execute();
         } catch (\Exception $e) {
-            self::handleErrors($e);
+            parent::handleErrors($e);
             exit;
         }
     }
@@ -234,11 +184,11 @@ class Database
     {
         try {
             $query = "DELETE FROM $table WHERE $where";
-            $statement = self::getDatabase()->prepare($query);
+            $statement = DatabaseSingleton::getDatabase()->prepare($query);
             self::bindToStatement($statement, $params);
             $statement->execute();
         } catch (\Exception $e) {
-            self::handleErrors($e);
+            parent::handleErrors($e);
             exit;
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\Admin;
 
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\Enums\AccountType;
 use Pulse\Models\Enums\VerificationState;

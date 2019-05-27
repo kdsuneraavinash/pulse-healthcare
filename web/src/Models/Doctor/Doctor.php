@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\Doctor;
 
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Components\Utils;
 use Pulse\Models\AccountSession\Account;
 use Pulse\Models\AccountSession\LoginService;

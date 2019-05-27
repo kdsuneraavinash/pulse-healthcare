@@ -8,7 +8,7 @@
 
 namespace Pulse\Models\Search;
 
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Definitions;
 use Pulse\Models\Interfaces\ISearchable;
 

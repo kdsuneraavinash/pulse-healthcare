@@ -2,7 +2,7 @@
 
 namespace Pulse\Models\MedicalCenter;
 
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Models\Exceptions;
 use Pulse\Models\Interfaces\IDetails;
 

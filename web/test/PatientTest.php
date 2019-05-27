@@ -4,7 +4,7 @@ namespace PulseTest;
 
 use DB;
 use PHPUnit\Framework\TestCase;
-use Pulse\Components\Database;
+use Pulse\Components\Database\Database;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Exceptions;
 use Pulse\Models\Patient\Patient;
