@@ -96,6 +96,7 @@ final class Router
             ['GET', '/api/timeline', ['Pulse\Controllers\API\TimelineController', 'timeline'], AccountList::Anyone],
             ['GET', '/api/profile', ['Pulse\Controllers\API\ProfileController', 'profile'], AccountList::Anyone],
             ['GET', '/api/logout', ['Pulse\Controllers\API\LoginController', 'logout'], AccountList::Anyone],
+            ['GET', '/api/search', ['Pulse\Controllers\API\SearchController', 'search'], AccountList::Anyone],
 
 
         ];

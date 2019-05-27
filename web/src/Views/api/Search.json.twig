@@ -1,0 +1,16 @@
+{
+    "message": "{{ message }}",
+    "ok": "{{ ok }}",
+    "results": [
+        {% for result in ret %}
+        {
+            "account_id": "{{ result['account_id'] }}",
+            "nic": "{{ result['nic'] }}",
+            "full_name": "{{ result['full_name'] }}",
+            "display_name": "{{ result['display_name'] }}",
+            "category": "{{ result['category'] }}",
+            "slmc_id": "{{ result['slmc_id'] }}",
+            "email": "{{ result['email'] }}",
+            "phone_number": "{{ result['phone_number'] }}"
+        },{% endfor %}]
+}

@@ -2,27 +2,12 @@
 
 namespace Pulse\Controllers\API;
 
-use Pulse\Controllers\BaseController;
 use Pulse\Models\AccountSession\LoginService;
 use Pulse\Models\Exceptions;
 use Pulse\Models\Patient\Patient;
 
-class LoginController extends BaseController
+class LoginController extends APIController
 {
-
-    /**
-     * @param string $message
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     */
-    private function echoError(string $message)
-    {
-        $this->render('api/Login.json.twig',
-            array('message' => $message, 'ok' => 'false'),
-            null);
-    }
-
     /**
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
@@ -30,11 +15,13 @@ class LoginController extends BaseController
      */
     public function login()
     {
+        $jsonTemplate = 'api/Login.json.twig';
+
         $accountId = $this->httpHandler()->getParameter('account');
         $password = $this->httpHandler()->getParameter('password');
 
         if ($accountId == null || $password == null) {
-            $this->echoError('Account ID or Password was empty');
+            $this->echoError($jsonTemplate, 'Account ID or Password was empty');
             return;
         }
 
@@ -53,18 +40,18 @@ class LoginController extends BaseController
         }
 
         if (isset($message)) {
-            $this->echoError($message);
+            $this->echoError($jsonTemplate, $message);
             return;
         }
 
         /// Redirect to correct location
         $account = $session->getSessionAccount();
-        if (!($account  instanceof Patient)){
-            $this->echoError("Account Type is not of Patient");
+        if (!($account instanceof Patient)) {
+            $this->echoError($jsonTemplate, "Account Type is not of Patient");
             $session->closeSession();
             return;
         }
-        $this->render('api/Login.json.twig', array('message' => "Logged In as {$account->getAccountId()}", 'ok' => 'true'), null);
+        $this->render($jsonTemplate, array('message' => "Logged In as {$account->getAccountId()}", 'ok' => 'true'), null);
     }
 
     /**

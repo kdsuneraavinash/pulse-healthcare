@@ -2,29 +2,11 @@
 
 namespace Pulse\Controllers\API;
 
-use Pulse\Controllers\BaseController;
 use Pulse\Models\AccountSession\Account;
-use Pulse\Models\AccountSession\LoginService;
-use Pulse\Models\Exceptions;
 use Pulse\Models\Patient\Patient;
-use Pulse\Components\Definitions;
 
-class ProfileController extends BaseController
+class ProfileController extends APIController
 {
-    /**
-     * @param string $message
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
-     */
-    private function echoError(string $message)
-    {
-        $this->render('api/Profile.json.twig',
-            array('message' => $message, 'ok' => 'false'),
-            null);
-    }
-
-
     /**
      * @param Account $currentAccount
      * @throws \Twig_Error_Loader
@@ -33,6 +15,8 @@ class ProfileController extends BaseController
      */
     public function profile(?Account $currentAccount)
     {
+        $jsonTemplate = 'api/Profile.json.twig';
+
         if ($currentAccount instanceof Patient) {
             $context = array();
             $context['id'] = $currentAccount->getAccountId();
@@ -42,14 +26,14 @@ class ProfileController extends BaseController
             $context['phone_number'] = $currentAccount->getPatientDetails()->getPhoneNumber();
             $context['address'] = $currentAccount->getPatientDetails()->getAddress();
             $context['postal_code'] = $currentAccount->getPatientDetails()->getPostalCode();
-            $this->render('api/Profile.json.twig',
+            $this->render($jsonTemplate,
                 array('message' => "Account Details Loaded", 'ok' => 'true', 'context' => $context),
                 $currentAccount);
         } else if ($currentAccount == null) {
-            $this->echoError("User not logged in");
+            $this->echoError($jsonTemplate,"User not logged in");
             return;
         } else {
-            $this->echoError("Current account is not a Patient");
+            $this->echoError($jsonTemplate,"Current account is not a Patient");
             return;
         }
     }
