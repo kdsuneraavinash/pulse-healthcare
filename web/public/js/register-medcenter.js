@@ -4,6 +4,7 @@ let phsrcRegex = /^PHSRC\/[A-Z]+\/[0-9]+$/;
 let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 let faxRegex = /^\+?[0-9]+$/;
 let accountRegex = /^(?=.{8,32}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+let phoneNumberRegex = /^\d{10}$/;
 
 /// Validate forms in the page
 $(document).ready(function () {
@@ -43,7 +44,7 @@ $(document).ready(function () {
         validateEmptyOrRegex(fax, faxRegex);
     });
     phoneNumber.on("input", function () {
-        validateNotEmpty(phoneNumber);
+        validateNotEmptyAndRegex(phoneNumber, phoneNumberRegex);
     });
     address.on("input", function () {
         validateNotEmpty(address);
@@ -62,7 +63,7 @@ $(document).ready(function () {
                 validateNotEmptyAndRegex(phsrc, phsrcRegex) &&
                 validateNotEmptyAndRegex(email, emailRegex) &&
                 validateEmptyOrRegex(fax, faxRegex) &&
-                validateNotEmpty(phoneNumber) &&
+                validateNotEmptyAndRegex(phoneNumber, phoneNumberRegex) &&
                 validateNotEmpty(address) &&
                 validateNotEmpty(postal)) {
                 form.submit();

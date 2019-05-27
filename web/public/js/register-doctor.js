@@ -1,6 +1,9 @@
 'use strict';
 
 let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+let phoneNumberRegex = /^\d{10}$/;
+let nicRegex = /^([0-9]{9}|[0-9]{11})[x|X|v|V]$/;
+
 
 /// Validate forms in the page
 $(document).ready(function () {
@@ -30,10 +33,10 @@ $(document).ready(function () {
         validateNotEmptyAndRegex(email, emailRegex);
     });
     phoneNumber.on("input", function () {
-        validateNotEmpty(phoneNumber);
+        validateNotEmptyAndRegex(phoneNumber, phoneNumberRegex);
     });
     nic.on("input", function () {
-        validateNotEmpty(nic);
+        validateNotEmptyAndRegex(nic, nicRegex);
     });
 
     Array.prototype.filter.call(forms, function (form) {
@@ -43,8 +46,8 @@ $(document).ready(function () {
                 validateNotEmpty(category) &&
                 validateNotEmpty(slmcId) &&
                 validateNotEmpty(email, emailRegex) &&
-                validateNotEmpty(phoneNumber) &&
-                validateNotEmpty(nic)) {
+                validateNotEmptyAndRegex(phoneNumber, phoneNumberRegex) &&
+                validateNotEmptyAndRegex(nic, nicRegex)) {
                 form.submit();
             }
         }, false);

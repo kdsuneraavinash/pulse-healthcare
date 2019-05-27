@@ -1,6 +1,8 @@
 'use strict';
 
 let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+let phoneNumberRegex = /^\d{10}$/;
+let nicRegex = /^([0-9]{9}|[0-9]{11})[x|X|v|V]$/;
 
 /// Validate forms in the page
 $(document).ready(function () {
@@ -17,13 +19,13 @@ $(document).ready(function () {
         validateNotEmpty(name);
     });
     nic.on("input", function () {
-        validateNotEmpty(nic);
+        validateNotEmptyAndRegex(nic, nicRegex);
     });
     email.on("input", function () {
         validateNotEmptyAndRegex(email, emailRegex);
     });
     phoneNumber.on("input", function () {
-        validateNotEmpty(phoneNumber);
+        validateNotEmptyAndRegex(phoneNumber, phoneNumberRegex);
     });
     address.on("input", function () {
         validateNotEmpty(address);
@@ -35,9 +37,9 @@ $(document).ready(function () {
     Array.prototype.filter.call(forms, function (form) {
         form.addEventListener('submit', function () {
             if (validateNotEmpty(name) &&
-                validateNotEmpty(nic) &&
+                validateNotEmptyAndRegex(nic, nicRegex) &&
                 validateNotEmptyAndRegex(email, emailRegex) &&
-                validateNotEmpty(phoneNumber) &&
+                validateNotEmptyAndRegex(phoneNumber, phoneNumberRegex) &&
                 validateNotEmpty(address) &&
                 validateNotEmpty(postal)) {
                 form.submit();

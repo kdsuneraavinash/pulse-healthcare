@@ -77,7 +77,6 @@ class MedicalCenter extends Account implements IFavouritable
         $medicalCenter = new MedicalCenter($accountId, VerificationState::Default, $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
         LoginService::signUpSession($accountId, $password);
-        // TODO: Add code to request verification
         return $medicalCenter;
     }
 
@@ -150,11 +149,6 @@ class MedicalCenter extends Account implements IFavouritable
     public function createDoctorAccount(DoctorDetails $doctorDetails): string
     {
         return Doctor::register($doctorDetails);
-    }
-
-    public function searchPatient()
-    {
-        // TODO: implementation of searchPatient() function
     }
 
     /**
