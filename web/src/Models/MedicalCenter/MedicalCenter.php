@@ -22,14 +22,14 @@ class MedicalCenter extends Account implements IFavouritable
     /**
      * MedicalCenter constructor.
      * @param string $accountId
-     * @param AbstractVerificationState|null $verificationState
+     * @param int|null $verificationState
      * @param MedicalCenterDetails $medicalCenterDetails
      * @param bool $ignoreErrors
      * @throws Exceptions\AccountNotExistException
      * @throws Exceptions\AccountRejectedException
      */
-    function __construct(string $accountId, ? AbstractVerificationState $verificationState,
-                                   MedicalCenterDetails $medicalCenterDetails, bool $ignoreErrors = false)
+    function __construct(string $accountId, ?int $verificationState,
+                         MedicalCenterDetails $medicalCenterDetails, bool $ignoreErrors = false)
     {
         parent::__construct($accountId, AccountType::MedicalCenter);
         $this->medicalCenterDetails = $medicalCenterDetails;
@@ -44,14 +44,14 @@ class MedicalCenter extends Account implements IFavouritable
 
 
             if ((int)$query['verified'] == 0) {
-                $this->verificationState = new UnverifiedState();
+                $this->verificationState = VerificationState::Default;
             } elseif ((int)$query['verified'] == 1) {
-                $this->verificationState = new VerifiedState();
+                $this->verificationState = VerificationState::Verified;
             } else {
-                $this->verificationState = new RejectedState();
+                $this->verificationState = VerificationState::Rejected;
             }
 
-            if (!$ignoreErrors && $this->getVerificationState() == VerificationState::Rejected) {
+            if (!$ignoreErrors && $this->verificationState == VerificationState::Rejected) {
                 throw new Exceptions\AccountRejectedException($accountId);
             }
         } else {
@@ -74,7 +74,7 @@ class MedicalCenter extends Account implements IFavouritable
     public static function requestRegistration(string $accountId, MedicalCenterDetails $medicalCenterDetails,
                                                string $password): MedicalCenter
     {
-        $medicalCenter = new MedicalCenter($accountId, new UnverifiedState(), $medicalCenterDetails);
+        $medicalCenter = new MedicalCenter($accountId, VerificationState::Default, $medicalCenterDetails);
         $medicalCenter->saveInDatabase();
         LoginService::signUpSession($accountId, $password);
         // TODO: Add code to request verification
@@ -93,7 +93,7 @@ class MedicalCenter extends Account implements IFavouritable
         parent::saveInDatabase();
         Database::insert('medical_centers', array(
             'account_id' => parent::getAccountId(),
-            'verified' => (string)$this->getVerificationState()
+            'verified' => (string)$this->verificationState
         ));
         $this->getMedicalCenterDetails()->saveInDatabase(parent::getAccountId());
     }
@@ -163,14 +163,6 @@ class MedicalCenter extends Account implements IFavouritable
     public function getMedicalCenterDetails(): MedicalCenterDetails
     {
         return $this->medicalCenterDetails;
-    }
-
-    /**
-     * @return int
-     */
-    public function getVerificationState(): int
-    {
-        return $this->verificationState->getStatus();
     }
 
 
