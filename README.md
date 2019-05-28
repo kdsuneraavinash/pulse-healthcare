@@ -72,13 +72,25 @@ To run the app, your web site must be functioning correctly. Run web in `https:/
 
 ## Screenshots 🖼️
 
-| ![Home Page](web/screenshots/home_page.png)         | ![Login Page](web/screenshots/sign_in.png) |
-| --------------------------------------------------- | ------------------------------------------ |
-| **Home Page**                                       | **Login Page**                             |
-| ![Medical Center Page](web/screenshots/sign_up.png) |                                            |
-| **Medical Center Registration Page**                |                                            |
+### Web
 
+| ![Home Page](web/screenshots/home_page.png)         | ![Login Page](web/screenshots/sign_in.png)                   |
+| --------------------------------------------------- | ------------------------------------------------------------ |
+| **Home Page**                                       | **Login Page**                                               |
+| ![Medical Center Page](web/screenshots/sign_up.png) | ![Doctor Search](web/screenshots/doctor_search.png)          |
+| **Medical Center Registration Page**                | **Doctor Search Page**                                       |
+| ![Timeline](web/screenshots/timeline.png)           | ![Doctor Prescription](web/screenshots/doctor_prescription.png) |
+| **Time line Page**                                  | **Doctor Prescription Add Page**                             |
+| ![Admin Verify](web/screenshots/admin_verify.png)   | ![Admin Chart](web/screenshots/admin_chart.png)              |
+| **Medical Center Verification Page**                | **Admin Dashboard Page**                                     |
 
+### App
+
+| ![Timeline](app/screenshots/timeline.png) | ![Search](app/screenshots/search.png)   |
+| ----------------------------------------- | --------------------------------------- |
+| **Timeline**                              | **Search Doctors**                      |
+| ![Search](app/screenshots/search_2.png)   | ![Dark Theme](app/screenshots/dark.png) |
+| **Search Doctors**                        | **Dark Mode**                           |
 
 ## User Management
 
