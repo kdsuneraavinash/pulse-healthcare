@@ -53,7 +53,7 @@
 
 *For ease of testing we have included all default passwords of users in the table without encrypting. It can be easily removed in production use.*
 
-## Running Tests
+## Running Tests 🤖
 
 * Unit tests and integration tests for the web site can be found in `web/test` folder. You need to have installed the dependencies using composer before testing.
 * Automated selenium tests can be found in `test/selenium` directory. You have to have installed,
@@ -69,6 +69,16 @@
 ## Running App
 
 To run the app, your web site must be functioning correctly. Run web in `https://localhost:8000`. **Currently app only works in an emulator because web is deployed in localhost and not in a real web server.** You need to have flutter 1.5 installed and working correctly in order to run the app. Run `flutter run` from `app/` directory in order to run the debug version.
+
+## Screenshots 🖼️
+
+| ![Home Page](web/screenshots/home_page.png)         | ![Login Page](web/screenshots/sign_in.png) |
+| --------------------------------------------------- | ------------------------------------------ |
+| **Home Page**                                       | **Login Page**                             |
+| ![Medical Center Page](web/screenshots/sign_up.png) |                                            |
+| **Medical Center Registration Page**                |                                            |
+
+
 
 ## User Management
 

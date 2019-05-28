@@ -28,7 +28,7 @@ class MonolithicTest(unittest.TestCase):
 
     def save_screenshot(self, name):
         # time.sleep(2)
-        # file = '../../screenshots/web/{}.png'.format(name)
+        # file = '../../screenshots/{}.png'.format(name)
         # self.browser.save_screenshot(file)
         # print('Saved screenshot: {}'.format(file))
         pass
