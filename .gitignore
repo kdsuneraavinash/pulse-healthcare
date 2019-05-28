@@ -8,3 +8,6 @@
 **/*.log
 
 **/composer.phar
+web/\.vscode/
+
+web/test/selenium/__pycache__/

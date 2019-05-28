@@ -64,7 +64,7 @@
    1. `sudo apt-get install chromium-chromedriver`
    2. If you get a `SessionNotCreatedException: session not created: Chrome version must be between 70 and 73` or a similar message, go to http://chromedriver.chromium.org/ and download chrome driver matching your chrome browser version.
    3. Replace the `chromedriver` file in `/usr/bin/chromedriver` with the downloaded file.
-4. Run `python start.py`
+4. Run `python main.py`
 
 ## Running App
 
