@@ -3,6 +3,7 @@ import time
 from selenium import webdriver
 
 class MonolithicTest(unittest.TestCase):
+
     def _steps(self):
         for name in dir(self):
             if name.startswith("step"):
@@ -21,4 +22,13 @@ class MonolithicTest(unittest.TestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome()
+        self.browser.maximize_window()
+        time.sleep(1)
         self.addCleanup(self.browser.quit)
+
+    def save_screenshot(self, name):
+        # time.sleep(2)
+        # file = '../../screenshots/web/{}.png'.format(name)
+        # self.browser.save_screenshot(file)
+        # print('Saved screenshot: {}'.format(file))
+        pass

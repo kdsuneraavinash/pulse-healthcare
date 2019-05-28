@@ -7,6 +7,7 @@ class TestAllPublicPages(monolithic.MonolithicTest):
     def step_1_go_to_homepage(self):
         self.browser.get('http://localhost:8000')
         self.assertIn('medikit', self.browser.title.lower())
+        self.save_screenshot('home_page')
 
     def step_2_click_signin_button(self):
         signInButton = self.browser.find_element_by_css_selector(
@@ -20,6 +21,7 @@ class TestAllPublicPages(monolithic.MonolithicTest):
         loginButton = self.browser.find_element_by_css_selector(
             "body > main > div > section > div > div.border.col-lg-4.d-flex.justify-content-center.bg-white > form > button")
         self.assertIn('sign in', loginButton.text.lower())
+        self.save_screenshot('sign_in')
 
     def step_4_click_homepage_button(self):
         homePageButton = self.browser.find_element_by_css_selector(
@@ -33,8 +35,10 @@ class TestAllPublicPages(monolithic.MonolithicTest):
         signUpButton.click()
 
     def step_6_verify_signup_page(self):
+        self.assertIn('medi center registration', self.browser.title.lower())
         self.assertIn('medical center registration',
                       self.browser.page_source.lower())
+        self.save_screenshot('sign_up')
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
