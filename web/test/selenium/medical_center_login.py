@@ -67,7 +67,7 @@ class TestMedicalCenterRegistrationUnverified(monolithic.MonolithicTest):
     def step_08_submit_and_check_if_redirected(self):
         self.signInButton.click()
         time.sleep(2)
-        self.assertNotIn('http://localhost:8000/register/medi',
+        self.assertNotIn('http://localhost:8000/login',
                          self.browser.current_url.lower())
         self.assertIn('http://localhost:8000/control/med_center',
                       self.browser.current_url.lower())
