@@ -50,7 +50,7 @@ class DoctorCreatePrescriptionController extends BaseController
                 array_push($medicationsArr, $medication);
             };
 
-            $prescription = new Prescription(null, $patientId, $doctorId, $medicationsArr);
+            $prescription = new Prescription(null, $patientId, $doctorId, $medicationsArr, time());
             try {
                 $prescription->saveInDatabase();
             } catch (InvalidDataException|AccountNotExistException $error) {

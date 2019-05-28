@@ -65,4 +65,11 @@ class Utils
         }
         return $log_a;
     }
+
+    public static function dump($var){
+        echo '<pre>';
+        echo var_dump($var);
+        echo '</pre>';
+        die;
+    }
 }

@@ -3,6 +3,7 @@
 namespace Pulse\Models\Prescription;
 
 use Pulse\Components\Database\Database;
+use Pulse\Components\Utils;
 use Pulse\Models\Exceptions\AccountNotExistException;
 use Pulse\Models\Exceptions\InvalidDataException;
 
@@ -21,16 +22,17 @@ class Prescription
      * @param string $patientId
      * @param string $doctorId
      * @param array $medications
+     * @param int $date
      */
-    public function __construct(?string $prescriptionId, string $patientId, string $doctorId, array $medications)
+    public function __construct(?string $prescriptionId, string $patientId, string $doctorId, array $medications, int $date)
     {
         $this->patientId = $patientId;
         $this->doctorId = $doctorId;
         $this->medications = $medications;
         $this->prescriptionId = $prescriptionId;
 
-        // Date have to be today
-        $this->date = date('m/d/Y', time());
+        // Date have to be today if null
+        $this->date = date('m/d/Y', $date);
     }
 
     /**
@@ -50,8 +52,8 @@ class Prescription
             )
         );
 
-         $this->prescriptionId = Database::lastInsertedId();
-         $this->saveMedicationsInDatabase();
+        $this->prescriptionId = Database::lastInsertedId();
+        $this->saveMedicationsInDatabase();
     }
 
     /**
@@ -75,13 +77,14 @@ class Prescription
      * @return Prescription
      * @throws InvalidDataException
      */
-    public static function fromDatabase(string $prescriptionId){
-        $query = Database::queryFirstRow("SELECT * FROM prescriptions where id=:id", array('id'=>$prescriptionId));
-        if ($query == null){
+    public static function fromDatabase(string $prescriptionId)
+    {
+        $query = Database::queryFirstRow("SELECT * FROM prescriptions where id=:id", array('id' => $prescriptionId));
+        if ($query == null) {
             throw new InvalidDataException("Invalid Prescription ID.");
         }
         $medications = Medication::fromPrescription($prescriptionId);
-        return new Prescription($query['id'], $query['patient_id'], $query['doctor_id'], $medications);
+        return new Prescription($query['id'], $query['patient_id'], $query['doctor_id'], $medications, date_create_from_format('Y-m-d H:i:s', $query['date'])->getTimestamp());
     }
 
     /**
