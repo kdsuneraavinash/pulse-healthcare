@@ -18,17 +18,10 @@ class MyApp extends StatelessWidget {
         builder: (_) => APIController(),
         child: Builder(
           builder: (context) => MaterialApp(
-                title: 'MediKit',
-                // Theme Definition
-                theme: ThemeData(
-                  primaryColor: Provider.of<ThemeStash>(context).primaryColor,
-                  accentColor: Provider.of<ThemeStash>(context).accentColor,
-                  iconTheme: IconThemeData(
-                    color: Provider.of<ThemeStash>(context).iconColor,
-                  ),
-                ),
-                home: LoginScreen()
-              ),
+              title: 'MediKit',
+              // Theme Definition
+              theme: Provider.of<ThemeStash>(context).theme.toTheme(),
+              home: LoginScreen()),
         ),
       ),
     );

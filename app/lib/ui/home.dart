@@ -108,7 +108,12 @@ class _HomePageState extends State<HomePage> {
             () {
               showAboutDialog(
                   context: context,
-                  applicationIcon: Icon(FontAwesomeIcons.medkit),
+                  applicationIcon: Icon(
+                    FontAwesomeIcons.medkit,
+                    color: Provider.of<ThemeStash>(context)
+                        .theme
+                        .textColorOnScaffold,
+                  ),
                   applicationName: "MediKit",
                   applicationVersion: "v1.0.0",
                   children: <Widget>[
@@ -133,7 +138,8 @@ class _HomePageState extends State<HomePage> {
     return ListTile(
       title: Text(title),
       subtitle: Text(subtitle),
-      leading: Icon(icon, color: Theme.of(context).primaryColor),
+      leading: Icon(icon,
+          color: Provider.of<ThemeStash>(context).theme.textColorOnScaffold),
       onTap: onPressed,
     );
   }

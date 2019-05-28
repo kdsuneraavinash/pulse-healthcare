@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pulse_healthcare/logic/data/doctor.dart';
 import 'package:pulse_healthcare/logic/api_controller/api_controller.dart';
+import 'package:pulse_healthcare/logic/theme/theme_stash.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -57,7 +58,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                       child: Text(
                                         "Dr. ${doctor.displayName}",
                                         style: TextStyle(
-                                            color: Colors.black,
+                                            color:
+                                                Provider.of<ThemeStash>(context)
+                                                    .theme
+                                                    .textColorOnScaffold,
                                             fontWeight: FontWeight.w700,
                                             fontSize: 22),
                                       ),
@@ -133,12 +137,18 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildListTile(IconData icon, String title, String subtitle) {
     return ListTile(
-      leading: Icon(icon, color: Colors.black),
+      leading: Icon(icon,
+          color: Provider.of<ThemeStash>(context).theme.textColorOnScaffold),
       title: Text(
         title,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+        style: TextStyle(
+            color: Provider.of<ThemeStash>(context).theme.textColorOnScaffold,
+            fontWeight: FontWeight.w700),
       ),
-      subtitle: Text(subtitle, style: TextStyle(color: Colors.black)),
+      subtitle: Text(subtitle,
+          style: TextStyle(
+              color:
+                  Provider.of<ThemeStash>(context).theme.textColorOnScaffold)),
     );
   }
 }

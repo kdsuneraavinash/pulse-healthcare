@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:pulse_healthcare/logic/theme/theme_stash.dart';
 import 'package:pulse_healthcare/logic/data/timeline_entry.dart';
 import 'package:pulse_healthcare/logic/api_controller/api_controller.dart';
+import 'package:pulse_healthcare/logic/theme/theme_stash.dart';
 
 class TimelinePage extends StatelessWidget {
   TimelinePage({Key key}) : super(key: key);
@@ -21,8 +21,7 @@ class TimelinePage extends StatelessWidget {
       child: timelineEntries.length == 0
           ? Center(
               child: Icon(FontAwesomeIcons.boxOpen,
-                  size: 72.0,
-                  color: Provider.of<ThemeStash>(context).primaryColor),
+                  size: 72.0, color: Theme.of(context).primaryColor),
             )
           : ListView.builder(
               itemBuilder: (BuildContext context, int index) {
@@ -146,20 +145,28 @@ class TimeLineCard extends StatelessWidget {
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(FontAwesomeIcons.userMd, color: Colors.black),
+              leading: Icon(FontAwesomeIcons.userMd,
+                  color: Provider.of<ThemeStash>(context)
+                      .theme
+                      .textColorOnScaffold),
               title: Text("Dr. ${this.timelineEntry.doctorName}",
                   style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w700)),
+                      color: Provider.of<ThemeStash>(context)
+                          .theme
+                          .textColorOnScaffold,
+                      fontWeight: FontWeight.w700)),
               subtitle: Text("Prescribed doctor"),
             ),
             SizedBox(
               height: 40,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: tags.map<Widget>((w) => Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 3.0),
-                      child: w,
-                    )).toList(),
+                children: tags
+                    .map<Widget>((w) => Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 3.0),
+                          child: w,
+                        ))
+                    .toList(),
               ),
             )
           ],

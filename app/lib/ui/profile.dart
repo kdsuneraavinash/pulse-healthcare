@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pulse_healthcare/logic/api_controller/api_controller.dart';
+import 'package:pulse_healthcare/logic/theme/theme_stash.dart';
 import 'package:pulse_healthcare/ui/login.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -26,14 +27,18 @@ class ProfilePage extends StatelessWidget {
               color: Colors.white,
             ),
           ),
+          _buildListTile(FontAwesomeIcons.key, apiController.userId,
+              "Patient ID", context),
           _buildListTile(
-              FontAwesomeIcons.key, apiController.userId, "Patient ID"),
-          _buildListTile(FontAwesomeIcons.userAlt, apiController.name, "Name"),
-          _buildListTile(FontAwesomeIcons.idCard, apiController.nic, "NIC"),
-          _buildListTile(FontAwesomeIcons.envelope, apiController.email, "Email"),
+              FontAwesomeIcons.userAlt, apiController.name, "Name", context),
           _buildListTile(
-              FontAwesomeIcons.phone, apiController.phoneNumber, "Phone Number"),
-          _buildListTile(FontAwesomeIcons.city, apiController.address, "Address"),
+              FontAwesomeIcons.idCard, apiController.nic, "NIC", context),
+          _buildListTile(
+              FontAwesomeIcons.envelope, apiController.email, "Email", context),
+          _buildListTile(FontAwesomeIcons.phone, apiController.phoneNumber,
+              "Phone Number", context),
+          _buildListTile(
+              FontAwesomeIcons.city, apiController.address, "Address", context),
           OutlineButton(
             onPressed: () => loggedOut(context),
             child: Padding(
@@ -42,7 +47,9 @@ class ProfilePage extends StatelessWidget {
                 'Logout',
                 style: TextStyle(
                   fontSize: 18,
-                  color: Theme.of(context).primaryColor,
+                  color: Provider.of<ThemeStash>(context)
+                      .theme
+                      .textColorOnScaffold,
                 ),
               ),
             ),
@@ -52,12 +59,16 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(IconData icon, String title, String subtitle) {
+  Widget _buildListTile(
+      IconData icon, String title, String subtitle, BuildContext context) {
     return ListTile(
-      leading: Icon(icon, color: Colors.black),
+      leading: Icon(icon,
+          color: Provider.of<ThemeStash>(context).theme.textColorOnScaffold),
       title: Text(
         title,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+        style: TextStyle(
+            color: Provider.of<ThemeStash>(context).theme.textColorOnScaffold,
+            fontWeight: FontWeight.w700),
       ),
       subtitle: Text(subtitle),
     );

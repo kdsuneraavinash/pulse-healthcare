@@ -248,7 +248,7 @@ class LoginFailedDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      backgroundColor: Provider.of<ThemeStash>(context).warningColor,
+      backgroundColor: Provider.of<ThemeStash>(context).theme.warningColor,
       children: <Widget>[
         Container(
           margin: EdgeInsets.symmetric(vertical: 24.0),
