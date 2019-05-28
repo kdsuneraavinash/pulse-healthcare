@@ -9,8 +9,11 @@ class MonolithicTest(unittest.TestCase):
                 yield name, getattr(self, name)
 
     def test_steps(self):
-        for _, step in self._steps():
+        print()
+        for name, step in self._steps():
             try:
+                test_name = " ".join(name.split('_')[2:])
+                print("Running test: {}".format(test_name))
                 step()
                 time.sleep(1)
             except Exception as e:
