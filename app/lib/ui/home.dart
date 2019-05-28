@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:pulse_healthcare/profile.dart';
-import 'package:pulse_healthcare/search.dart';
-import 'package:pulse_healthcare/timeline.dart';
+import 'package:pulse_healthcare/ui/profile.dart';
+import 'package:pulse_healthcare/ui/search.dart';
+import 'package:pulse_healthcare/ui/timeline.dart';
 
-import 'package:pulse_healthcare/logic/theme.dart';
-import 'package:pulse_healthcare/logic/user_manager.dart';
+import 'package:pulse_healthcare/logic/theme/theme_stash.dart';
+import 'package:pulse_healthcare/logic/api_controller/api_controller.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("MedKit"),
         centerTitle: true,
-        leading: Provider.of<UserManager>(context).pending
+        leading: Provider.of<APIController>(context).pending
             ? Center(child: CircularProgressIndicator())
             : null,
         actions: <Widget>[
@@ -84,14 +84,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildDrawer() {
-    UserManager userManager = Provider.of<UserManager>(context);
+    APIController apiController = Provider.of<APIController>(context);
 
     return Drawer(
       child: Column(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountEmail: Text(userManager.userId),
-            accountName: Text(userManager.name),
+            accountEmail: Text(apiController.userId),
+            accountName: Text(apiController.name),
             currentAccountPicture: CircleAvatar(
               child: Icon(
                 FontAwesomeIcons.userTie,
@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
             "Logout",
             "Logout from the app",
             FontAwesomeIcons.signOutAlt,
-            () => userManager.logout(),
+            () => apiController.logout(),
           ),
         ],
       ),

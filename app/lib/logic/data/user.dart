@@ -1,4 +1,4 @@
-import 'package:pulse_healthcare/logic/timeline_entry.dart';
+import 'package:pulse_healthcare/logic/data/timeline_entry.dart';
 
 class User {
   String headers;

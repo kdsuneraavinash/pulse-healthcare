@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pulse_healthcare/home.dart';
+import 'package:pulse_healthcare/ui/home.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'logic/theme.dart';
-import 'logic/user_manager.dart';
+import 'package:pulse_healthcare/logic/theme/theme_stash.dart';
+import 'package:pulse_healthcare/logic/api_controller/api_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text("Login"),
             centerTitle: true,
-            leading: Provider.of<UserManager>(context).pending
+            leading: Provider.of<APIController>(context).pending
                 ? Center(child: CircularProgressIndicator())
                 : Icon(FontAwesomeIcons.medkit),
             actions: <Widget>[
@@ -41,11 +41,11 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
         IgnorePointer(
-          ignoring: Provider.of<UserManager>(context).userDataRetrieved,
+          ignoring: Provider.of<APIController>(context).userDataRetrieved,
           child: AnimatedOpacity(
             duration: Duration(seconds: 1),
             opacity:
-                Provider.of<UserManager>(context).userDataRetrieved ? 0 : 1,
+                Provider.of<APIController>(context).userDataRetrieved ? 0 : 1,
             child: Container(
               color: Theme.of(context).primaryColor,
               child: Center(child: CircularProgressIndicator()),
@@ -96,14 +96,14 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void takePrefsAndLoadNextPage() async {
-    Map<String, String> map = await Provider.of<UserManager>(context)
+    Map<String, String> map = await Provider.of<APIController>(context)
         .setPreviousUsernameAndPassword();
     if (map == null) {
       // loginFailed("Prefs Not Found");
       return;
     }
 
-    String result = await Provider.of<UserManager>(context)
+    String result = await Provider.of<APIController>(context)
         .loginAndGetAllData(map['username'], map['password']);
     if (result == null) {
       loginSuccessful();
@@ -209,7 +209,7 @@ class _LoginFormState extends State<LoginForm> {
 
   void _loginButtonPress() async {
     if (_formKey.currentState.validate()) {
-      String result = await Provider.of<UserManager>(context)
+      String result = await Provider.of<APIController>(context)
           .loginAndGetAllData(
               _usernameController.text, _passwordController.text);
       if (result == null) {

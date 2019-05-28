@@ -3,43 +3,70 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:pulse_healthcare/logic/doctor.dart';
-import 'package:pulse_healthcare/logic/timeline_entry.dart';
-import 'package:pulse_healthcare/logic/user.dart';
-import 'package:pulse_healthcare/logic/user_manager.dart';
+import 'package:pulse_healthcare/logic/data/doctor.dart';
+import 'package:pulse_healthcare/logic/data/timeline_entry.dart';
+import 'package:pulse_healthcare/logic/data/user.dart';
 
+/// Function definition for onSuccess and OnError funcions
 typedef MapAcceter(Map<String, dynamic> data);
 
-abstract class UserFunctions {
+/// Abstract function to isolate unlining user functions from user manager
+abstract class APIFunctions {
+  static const String PC_IP = "10.0.2.2:8000";
+  static const String EMPTY = "-";
+
+  /// Current user object
   @protected
   User user;
+
+  /// Website link (currently it is set to computer IP)
   final String website;
 
-  UserFunctions(website) : this.website = website {
+  APIFunctions(this.website) {
+    /// Initialize User object
     this.user = User();
   }
 
-  Future<String> _getDataAndProcess(
-      {String apiLink, MapAcceter ifOkay, MapAcceter ifError}) async {
-    ifOkay ??= _doNothing;
-    ifError ??= _doNothing;
-    // apiLink = HtmlEscape().convert(apiLink);
+  /// Most base function to visit a given api link and parse data.
+  /// Outputs null if no error was thrown.
+  /// Otherwise error message will be thhrown.
+  Future<String> _getDataAndProcess({
+    String apiLink,
+    MapAcceter onSuccess,
+    MapAcceter onError,
+  }) async {
+    /// If undefined, reset to do nothing
+    onSuccess ??= (_) {};
+    onError ??= (_) {};
 
-    http.Response response =
-        await http.get(apiLink, headers: {'cookie': user.headers});
-    Map<String, dynamic> data =
-        json.decode(response.body.replaceAll(",]", "]"));
+    http.Response response;
 
-    bool success = data['ok'] == 'true';
+    try {
+      /// Try to get api response
+      response = await http.get(apiLink, headers: {'cookie': user.headers});
+    } catch (SocketException) {
+      /// Error occurred, so return the error message
+      String errorMessage = "Network Error";
+      onError({'message': errorMessage});
+      return errorMessage;
+    }
+
+    /// Try to decode json, (Since returned json has a trialing comma at the end, we have to remove it)
+    String parsedJson = response.body.replaceAll(",]", "]");
+    Map<String, dynamic> data = json.decode(parsedJson);
+
+    /// Check if api request was successful
+    bool success = (data['ok'] == 'true');
 
     if (success) {
+      /// If successfull, update cookies(to save session_id and session_key)
       _updateCookie(response);
-      ifOkay(data);
+      onSuccess(data);
+      return null;
     } else {
-      ifError(data);
+      onError(data);
+      return data['message'];
     }
-    if (success) return null;
-    return data['message'];
   }
 
   /// Login callback
@@ -47,7 +74,8 @@ abstract class UserFunctions {
   Future<String> login(String username, String password) async {
     return await _getDataAndProcess(
       apiLink: "http://$PC_IP/api/login?account=$username&password=$password",
-      ifError: (_) {
+      onError: (_) {
+        /// Clear headers if login failed
         user.headers = "";
       },
     );
@@ -58,7 +86,7 @@ abstract class UserFunctions {
   Future<String> getUserData() async {
     return await _getDataAndProcess(
       apiLink: "http://$PC_IP/api/profile",
-      ifOkay: (data) {
+      onSuccess: (data) {
         user.userId = data['data']['id'];
         user.name = data['data']['name'];
         user.nic = data['data']['nic'];
@@ -76,12 +104,18 @@ abstract class UserFunctions {
 
     await _getDataAndProcess(
         apiLink: "http://$PC_IP/api/search?name=$searchTerm",
-        ifOkay: (data) {
-          maps = List<Doctor>.from(List<Map>.from(data['results'])
-                  .map<Doctor>((v) => Doctor.fromMap(Map<String, String>.from(v))))
-              .toList();
-        },
-        ifError: (data) {});
+        onSuccess: (data) {
+          maps = List<Doctor>.from(
+            /// Create doctor list
+            List<Map>.from(data['results']).map<Doctor>(
+              /// Parse map to doctor
+              (v) => Doctor.fromMap(
+                    /// Parse each map
+                    Map<String, String>.from(v),
+                  ),
+            ),
+          ).toList();
+        });
     return maps;
   }
 
@@ -90,9 +124,10 @@ abstract class UserFunctions {
   Future<String> getTimelineData() async {
     return await _getDataAndProcess(
       apiLink: "http://$PC_IP/api/timeline",
-      ifOkay: (data) {
+      onSuccess: (data) {
         user.timeline = TimelineEntry.getTimeline(
-            List<Map<String, dynamic>>.from(data['prescriptions']));
+          List<Map<String, dynamic>>.from(data['prescriptions']),
+        );
       },
     );
   }
@@ -103,6 +138,7 @@ abstract class UserFunctions {
     return await _getDataAndProcess(apiLink: "http://$PC_IP/api/logout");
   }
 
+  /// Get response and update cookies with session_id and session_key
   void _updateCookie(http.Response response) {
     String rawCookie = response.headers['set-cookie'];
     Map<String, String> cookieJar = Map();
@@ -129,6 +165,4 @@ abstract class UserFunctions {
       user.headers = params.join(";");
     }
   }
-
-  void _doNothing(_) {}
 }

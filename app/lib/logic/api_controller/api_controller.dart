@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pulse_healthcare/logic/doctor.dart';
-import 'package:pulse_healthcare/logic/timeline_entry.dart';
+import 'package:pulse_healthcare/logic/data/doctor.dart';
+import 'package:pulse_healthcare/logic/data/timeline_entry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:pulse_healthcare/logic/user_functions.dart';
-
-const String PC_IP = "10.0.2.2:8000";
-const String EMPTY = "-";
+import 'package:pulse_healthcare/logic/api_controller/api_functions.dart';
 
 typedef Future<String> CommandCallback({
   String apiLink,
@@ -13,28 +10,26 @@ typedef Future<String> CommandCallback({
   Function ifError,
 });
 
-class UserManager extends UserFunctions with ChangeNotifier {
-  bool _pending; // is some action pending
+class APIController extends APIFunctions with ChangeNotifier {
+  /// is some api call pending (Api call started, but not ended)
+  bool _pending;
 
+  /// is all user data (username/password) retrieved from shared prefs
   bool _userDataRetrieved;
 
-  String usernameText;
-  String passwordText;
-
-  get userDataRetrieved => _userDataRetrieved;
-
+  get userDataRetrieved => _userDataRetrieved ?? false;
   get authorized => user.authorized ?? false;
   get pending => _pending ?? false;
   List<TimelineEntry> get timeline => user.timeline ?? [];
 
-  String get userId => user.userId ?? EMPTY;
-  String get name => user.name ?? EMPTY;
-  String get nic => user.nic ?? EMPTY;
-  String get email => user.email ?? EMPTY;
-  String get phoneNumber => user.phoneNumber ?? EMPTY;
-  String get address => user.address ?? EMPTY;
+  String get userId => user.userId ?? APIFunctions.EMPTY;
+  String get name => user.name ?? APIFunctions.EMPTY;
+  String get nic => user.nic ?? APIFunctions.EMPTY;
+  String get email => user.email ?? APIFunctions.EMPTY;
+  String get phoneNumber => user.phoneNumber ?? APIFunctions.EMPTY;
+  String get address => user.address ?? APIFunctions.EMPTY;
 
-  UserManager({website = PC_IP}) : super(website) {
+  APIController({website = APIFunctions.PC_IP}) : super(website) {
     _pending = false;
     _userDataRetrieved = false;
   }

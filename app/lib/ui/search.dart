@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:pulse_healthcare/logic/doctor.dart';
-import 'package:pulse_healthcare/logic/user_manager.dart';
+import 'package:pulse_healthcare/logic/data/doctor.dart';
+import 'package:pulse_healthcare/logic/api_controller/api_controller.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -110,7 +110,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 _isSearching = true;
               });
 
-              _doctors = await Provider.of<UserManager>(context)
+              _doctors = await Provider.of<APIController>(context)
                       .getSearchResults(_text) ??
                   [];
               setState(() {

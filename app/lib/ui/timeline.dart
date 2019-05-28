@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:pulse_healthcare/logic/theme.dart';
-import 'package:pulse_healthcare/logic/timeline_entry.dart';
-import 'logic/user_manager.dart';
+import 'package:pulse_healthcare/logic/theme/theme_stash.dart';
+import 'package:pulse_healthcare/logic/data/timeline_entry.dart';
+import 'package:pulse_healthcare/logic/api_controller/api_controller.dart';
 
 class TimelinePage extends StatelessWidget {
   TimelinePage({Key key}) : super(key: key);
@@ -15,7 +15,7 @@ class TimelinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<TimelineEntry> timelineEntries =
-        Provider.of<UserManager>(context).timeline;
+        Provider.of<APIController>(context).timeline;
 
     return Container(
       child: timelineEntries.length == 0
