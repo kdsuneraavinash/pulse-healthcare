@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
         builder: (_) => APIController(),
         child: Builder(
           builder: (context) => MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'MediKit',
               // Theme Definition
               theme: Provider.of<ThemeStash>(context).theme.toTheme(),
