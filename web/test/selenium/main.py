@@ -1,9 +1,11 @@
 import public_pages
 import medical_center_create
+import medical_center_login
 import unittest
 
 if __name__ == "__main__":
-    test_classes_to_run = [public_pages.TestAllPublicPages, medical_center_create.TestMedicalCenterRegistration]
+    test_classes_to_run = [public_pages.TestAllPublicPages, medical_center_create.TestMedicalCenterRegistration,
+                           medical_center_login.TestMedicalCenterRegistrationUnverified]
 
     loader = unittest.TestLoader()
 

@@ -37,7 +37,7 @@ class TestMedicalCenterRegistration(monolithic.MonolithicTest):
         self.assertIn('medical center registration',
                       self.browser.page_source.lower())
 
-    def step_03_fill_all_fields(self):
+    def step_03_find_all_fields(self):
         self.account = self.browser.find_element_by_id('account')
         self.password = self.browser.find_element_by_id('password')
         self.password_retype = self.browser.find_element_by_id(
