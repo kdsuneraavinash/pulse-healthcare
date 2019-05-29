@@ -18,7 +18,14 @@
                aria-haspopup="true"
                aria-expanded="false">
                 <i class="fas fa-{{ account_icon }} mr-2"></i> {{ account_id }} </a>
-            <div class="dropdown-menu dropdown-default blue-grey"
+
+            {% if (control_panel == false) %}
+                {% set color = 'blue-grey lighten-2' %}
+            {% else %}
+                {% set color = 'bg-white' %}
+            {% endif %}
+
+            <div class="dropdown-menu dropdown-default {{ color }}"
                  aria-labelledby="profileNav">
                 <a onclick="post('{{ site }}/profile', null, 'get')" class="dropdown-item" href="#"><i
                             class="fas fa-address-card mr-2" style="width: 20px;"></i>My Account</a>
