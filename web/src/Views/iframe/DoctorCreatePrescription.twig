@@ -34,74 +34,72 @@
             <label for="date" class="col-lg-3 col-form-label">Date </label>
             <input id="date" type="text" class="col-lg-9 form-control mb-2" value="{{ "now"|date("m/d/Y") }}" readonly>
         </div>
-        <div class="row text-right">
-        <div class="mt-2 col-4">
-        </div>
-        <div class="mt-2 pr-1 col-sm-4">
-            <a class="btn btn-success" href="{{ site }}/timeline?user={{ patient_id }}" target="_blank">
-                Show Patient Timeline
+
+        <div class="text-right mt-2">
+            <a class="btn btn-primary" href="{{ site }}/timeline?user={{ patient_id }}" target="_blank">
+                Show Timeline
             </a>
-        </div>
-        <div class="mt-2  col-sm-4">
-            <a class="btn btn-info" href="{{ site }}/showprofile?user={{ patient_id }}" target="_blank">
-                Show Patient Profile
+            <a class="btn btn-primary" href="{{ site }}/showprofile?user={{ patient_id }}" target="_blank">
+                Show Profile
             </a>
-        </div>
         </div>
     </div>
     {{ control_panel.card_end() }}
 
     <div class="med">
-        <div v-for="(medCard,index) in medCards">
+        <div class="card p-4 unique-color">
+            <div v-for="(medCard,index) in medCards">
 
 
-            {{ control_panel.card_start("Medicine Prescription #" ~ "{{ index+1 }}", "ignore-triangle warning") }}
-            <div class="medicine-form p-3" style="margin:auto">
-                <div class="form-group row">
-                    <label for="medName" class="col-lg-3 col-form-label">Name </label>
-                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Medicine Name"
-                           v-model="medCard.name">
-                </div>
-                <div class="form-group row">
-                    <label for="dose" class="col-lg-3 col-form-label">Dose </label>
-                    <input type="text" class="col-lg-9 form-control mb-2"
-                           placeholder="Dose per time (mg/ml/tablets/pills)" v-model="medCard.dose">
-                </div>
-                <div class="form-group row">
-                    <label for="frequency" class="col-lg-3 col-form-label">Frequency </label>
-                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Eg: 3 times a day"
-                           v-model="medCard.frequency">
-                </div>
-                <div class="form-group row">
-                    <label for="time" class="col-lg-3 col-form-label">Time </label>
-                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Before Meal/ After Meal"
-                           v-model="medCard.time">
-                </div>
+                {{ control_panel.card_start("Medicine Prescription #" ~ "{{ index+1 }}", "ignore-triangle warning") }}
+                <div class="medicine-form p-3" style="margin:auto">
+                    <div class="form-group row">
+                        <label for="medName" class="col-lg-3 col-form-label">Name </label>
+                        <input type="text" class="col-lg-9 form-control mb-2" placeholder="Medicine Name"
+                               v-model="medCard.name">
+                    </div>
+                    <div class="form-group row">
+                        <label for="dose" class="col-lg-3 col-form-label">Dose </label>
+                        <input type="text" class="col-lg-9 form-control mb-2"
+                               placeholder="Dose per time (mg/ml/tablets/pills)" v-model="medCard.dose">
+                    </div>
+                    <div class="form-group row">
+                        <label for="frequency" class="col-lg-3 col-form-label">Frequency </label>
+                        <input type="text" class="col-lg-9 form-control mb-2" placeholder="Eg: 3 times a day"
+                               v-model="medCard.frequency">
+                    </div>
+                    <div class="form-group row">
+                        <label for="time" class="col-lg-3 col-form-label">Time </label>
+                        <input type="text" class="col-lg-9 form-control mb-2" placeholder="Before Meal/ After Meal"
+                               v-model="medCard.time">
+                    </div>
 
-                <div class="form-group row">
-                    <label for="comment" class="col-lg-3 col-form-label">Comment </label>
-                    <input type="text" class="col-lg-9 form-control mb-2" placeholder="Comment about this medicine"
-                           v-model="medCard.comment">
+                    <div class="form-group row">
+                        <label for="comment" class="col-lg-3 col-form-label">Comment </label>
+                        <input type="text" class="col-lg-9 form-control mb-2" placeholder="Comment about this medicine"
+                               v-model="medCard.comment">
+                    </div>
                 </div>
+                <button class='float-right btn btn-danger m-3' type='button' id='remove-btn'
+                        @click='removeMedCard(index)'>
+                    <span class="fa fa-trash-alt"></span> &nbsp; Remove Prescription
+                </button>
+                {{ control_panel.card_end() }}
+
             </div>
-            <button class="float-right btn btn-danger m-3" type="button" id="remove-btn" @click="removeMedCard(index)">
-                Remove This Prescription
-            </button>
-            {{ control_panel.card_end() }}
-
         </div>
-        <button class="btn btn-green mt-4" type="button" id="add-btn" @click="addMedCard">Add Med
-            Card
+        <button class="btn btn-green mt-4" type="button" id="add-btn" @click="addMedCard">
+            <span class="fa fa-plus"></span> &nbsp; Add Med Card
         </button>
 
         <hr/>
 
         <div class="text-right mt-4 mb-5">
-            <a class="btn btn-warning" href="{{ site }}/control/doctor/create/search">
-                Cancel Prescription
+            <a class="btn btn-danger" href="{{ site }}/control/doctor/create/search">
+                <span class="fa fa-times"></span> &nbsp;  Cancel Prescription
             </a>
-            <button class="btn btn-blue" type="button" onclick="submitForm()">
-                Submit Added Prescriptions
+            <button class="btn btn-dark" type="button" onclick="submitForm()">
+                <span class="fa fa-cloud-upload-alt"></span> &nbsp; Submit Prescriptions
             </button>
         </div>
 
@@ -160,11 +158,11 @@
             },
             dataType: 'html',
             success: function (data) {
-                if (data.startsWith("E|")){
+                if (data.startsWith("E|")) {
                     let message = data.replace("E|", "");
                     $("#error_modal_message").text(message);
                     $("#modalPrescriptionSaveFailed").modal('show');
-                }else{
+                } else {
                     let url = data.replace("K|", "");
                     window.location = "{{ site }}/control/doctor/create/search?prescription_id=" + url;
                 }
