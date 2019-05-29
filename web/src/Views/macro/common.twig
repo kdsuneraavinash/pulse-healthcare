@@ -13,12 +13,12 @@
     {% endif %}
 
     <ul class="navbar-nav ml-auto nav-flex-icons font-weight-bold">
-        <li class="nav-item dropdown">
+        <li class="nav-item dropright">
             <a class="nav-link dropdown-toggle" id="profileNav" data-toggle="dropdown"
                aria-haspopup="true"
                aria-expanded="false">
                 <i class="fas fa-{{ account_icon }} mr-2"></i> {{ account_id }} </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-default"
+            <div class="dropdown-menu dropdown-default blue-grey"
                  aria-labelledby="profileNav">
                 <a onclick="post('{{ site }}/profile', null, 'get')" class="dropdown-item" href="#"><i
                             class="fas fa-address-card mr-2" style="width: 20px;"></i>My Account</a>
