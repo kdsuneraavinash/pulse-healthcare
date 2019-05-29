@@ -59,8 +59,8 @@ Home Page
 
 
 #doctor-image {
-    background-image: url(../images/doctor-2.png);
-    background-size: cover;
+    background-image: url(../images/dark.png);
+    /*background-size: cover;*/
     background-repeat: no-repeat;
 }
 
