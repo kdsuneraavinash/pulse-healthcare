@@ -121,6 +121,7 @@ IFrame
 {#</script>#}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
@@ -137,7 +138,7 @@ IFrameCards
 */
 
 {% macro card_start(title, color="primary") -%}
-<div class="card my-2">
+<div class="card my-2"  data-aos="zoom-in">
     <div class="card-header elegant-color-dark text-white">
         <span class="fa fa-briefcase-medical pr-2"></span>&nbsp;
         {{ title }}
