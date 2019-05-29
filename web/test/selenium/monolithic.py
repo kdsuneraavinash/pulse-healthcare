@@ -2,12 +2,19 @@ import unittest
 import time
 from selenium import webdriver
 
+
 class MonolithicTest(unittest.TestCase):
 
     def _steps(self):
         for name in dir(self):
             if name.startswith("step"):
                 yield name, getattr(self, name)
+
+    def assertBrowserTitle(self, expected):
+        self.assertIn(expected, self.browser.title.lower())
+
+    def assertElementText(self, expected, element):
+        self.assertIn(expected, element.text.lower())
 
     def test_steps(self):
         print()
@@ -25,10 +32,3 @@ class MonolithicTest(unittest.TestCase):
         self.browser.maximize_window()
         time.sleep(1)
         self.addCleanup(self.browser.quit)
-
-    def save_screenshot(self, name):
-        # time.sleep(2)
-        # file = '../../screenshots/{}.png'.format(name)
-        # self.browser.save_screenshot(file)
-        # print('Saved screenshot: {}'.format(file))
-        pass
