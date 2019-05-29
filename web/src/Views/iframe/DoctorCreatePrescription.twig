@@ -34,19 +34,14 @@
             <label for="date" class="col-lg-3 col-form-label">Date </label>
             <input id="date" type="text" class="col-lg-9 form-control mb-2" value="{{ "now"|date("m/d/Y") }}" readonly>
         </div>
-        <div class="row text-right">
-            <div class="mt-2 col-4">
-            </div>
-            <div class="mt-2 pr-1 col-sm-4">
-                <a class="btn btn-primary" href="{{ site }}/timeline?user={{ patient_id }}" target="_blank">
-                    <span class="fa fa-chart-line"></span> &nbsp; Show Patient Timeline
-                </a>
-            </div>
-            <div class="mt-2  col-sm-4">
-                <a class="btn btn-primary" href="{{ site }}/showprofile?user={{ patient_id }}" target="_blank">
-                    Show Patient Profile
-                </a>
-            </div>
+
+        <div class="text-right mt-2">
+            <a class="btn btn-primary" href="{{ site }}/timeline?user={{ patient_id }}" target="_blank">
+                Show Timeline
+            </a>
+            <a class="btn btn-primary" href="{{ site }}/showprofile?user={{ patient_id }}" target="_blank">
+                Show Profile
+            </a>
         </div>
     </div>
     {{ control_panel.card_end() }}
@@ -101,10 +96,10 @@
 
         <div class="text-right mt-4 mb-5">
             <a class="btn btn-danger" href="{{ site }}/control/doctor/create/search">
-                Cancel Prescription
+                <span class="fa fa-times"></span> &nbsp;  Cancel Prescription
             </a>
             <button class="btn btn-dark" type="button" onclick="submitForm()">
-                <span class="fa fa-cloud-upload-alt"></span> &nbsp; Submit Added Prescriptions
+                <span class="fa fa-cloud-upload-alt"></span> &nbsp; Submit Prescriptions
             </button>
         </div>
 
