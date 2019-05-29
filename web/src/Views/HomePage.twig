@@ -59,24 +59,23 @@
             <div class="row text-center mt-5">
                 <div class="col-12 col-sm-4" data-aos="fade-in">
                     <img alt="image" class="icon" src="images/svg/pills.svg" data-aos="zoom-in" data-aos-delay="300">
-                    <h3><strong>Feature One</strong></h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                        there live the blind texts</p>
+                    <h3><strong>Health Information Management</strong></h3>
+                    <p>Manage all your health care needs by joining with us. Watch your health history any where anytime.</p>
                 </div>
 
                 <div class="col-12 col-sm-4 pt-4 pt-sm-0" data-aos="fade-in">
                     <img alt="image" class="icon" src="images/svg/medicine.svg" data-aos="zoom-in" data-aos-delay="300">
-                    <h3><strong>Feature Two</strong></h3>
-                    <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language
-                        ocean. </p>
+                    <h3><strong>Manage Doctors & Patients</strong></h3>
+                    <p>Doctors and Patients can register and can maintain their accounts.
+                        Get rid of the traditional "medication-book"</p>
                 </div>
 
                 <div class="col-12 col-sm-4 pt-4 pt-sm-0" data-aos="fade-in">
                     <img alt="image" class="icon" src="images/svg/medicine_bottle.svg" data-aos="zoom-in"
                          data-aos-delay="300">
-                    <h3><strong>Feature Three</strong></h3>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary
-                        regelialia. It is a paradisematic country,</p>
+                    <h3><strong>e-Prescriptions to your fingertips</strong></h3>
+                    <p>Tired of reading the letters of your doctor? No worries! Get your prescription to your mobile device.
+                    </p>
                 </div>
             </div>
 
@@ -112,26 +111,30 @@
                 <div class="col-md-7 py-4 py-md-5">
                     <div class="mb-5" data-aos="fade-in" data-aos-delay="200">
                         <div class="pl-md-5 ml-md-5">
-                            <span>About MediKit</span>
-                            <h2 class="mb-4" style="font-size: 28px;">Medical specialty concerned with the care of
-                                acutely ill hospitalized patients</h2>
+                            <span>About MediKit App</span>
+                            <h2 class="mb-4" style="font-size: 28px;">
+                                Companion mobile app is now out on Android
+                            </h2>
                         </div>
                     </div>
                     <div class="pl-md-5 ml-md-5 mb-5" data-aos="fade-up" data-aos-delay="400">
-                        <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it
-                            would have been rewritten a thousand times and everything that was left from its origin
-                            would be the word.</p>
+                        <p>
+                            Our newly released mobile app is targeted to make this service easier to access, especially to patients.
+                            Now patients can easily log in to the eb site through the app and be notified of alerts.
+                            Even though this app only provides the features in the web site YET, we hope to extend the use cases of this app in the future.
+                            <br/>
+                            So sign in with our beta programme to experience this great experience easily.
+                        </p>
                         <div class="row mt-5 pt-2">
 
-                            {{ home_utils.feature_2("fas fa-medkit", "Primary Care",
-                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
-                            {{ home_utils.feature_2("fas fa-eye-dropper", "Lab Test",
-                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
-                            {{ home_utils.feature_2("fas fa-chart-area", "Symptom Check",
-                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
-                            {{ home_utils.feature_2("fas fa-heartbeat", "Heart Rate",
-                                "Far far away, behind the word mountains, far from the countries Vokalia.") }}
-
+                            {{ home_utils.feature_2("fas fa-medkit", " View Timeline",
+                                "View your past medications as well as ongoing ones.") }}
+                            {{ home_utils.feature_2("fas fa-search", "Search Doctors",
+                                "Now connecting with a doctor is easier than ever.") }}
+                            {{ home_utils.feature_2("fas fa-chart-area", "Future Features",
+                                "This app is an early build. Get notied ot newest updates as soon as they arrive.") }}
+                            {{ home_utils.feature_2("fas fa-fill", "Give Feedback",
+                                "Give us feedback so we can make this service better for you.") }}
                         </div>
                     </div>
                 </div>
@@ -147,15 +150,18 @@
                 <div class="col-md-6 col-lg-12 d-flex justify-content-center p-4">
                     <div class="col-md-8 text-center heading-section">
                         <h1 class="mb-4 font-weight-bold">Our Team</h1>
-                        <div>Separated they live in. A small river named Duden flows by their place and supplies it with
-                            the
-                            necessary regelialia. It is a paradisematic country
+                        <div>We are Computer Science and Engineering undergraduates of University of Moratuwa, Sri Lanka,
+                            currently studying in semester 3. We contribute our best to MediKit to solve the health-care
+                            issues in Sri Lanka.
                         </div>
                     </div>
                 </div>
-                {{ home_utils.about_us_card(site ~ "/images/team/sunera.jpg", "Sunera Avinash") }}
-                {{ home_utils.about_us_card(site ~ "/images/team/anju.jpg", "Anju Chamantha") }}
-                {{ home_utils.about_us_card(site ~ "/images/team/lahiru.jpg", "Lahiru Udayanga") }}
+                {{ home_utils.about_us_card(site ~ "/images/team/sunera.jpg", "Sunera Avinash",
+                    "https://www.facebook.com/kdsuneraavinash", "https://github.com/kdsuneraavinash","https://www.linkedin.com/in/kdsuneraavinash/") }}
+                {{ home_utils.about_us_card(site ~ "/images/team/anju.jpg", "Anju Chamantha",
+                    "https://www.facebook.com/anju.chamantha.77","https://github.com/anju97chamantha","https://www.linkedin.com/in/anju-chamantha-181970179/") }}
+                {{ home_utils.about_us_card(site ~ "/images/team/lahiru.jpg", "Lahiru Udayanga",
+                    "https://www.facebook.com/lahiru.udayanga.1029","https://github.com/NomadXD","https://www.linkedin.com/in/lahiru-udayanga/") }}
             </div>
         </div>
     </section>
@@ -166,8 +172,7 @@
                 <div class="col-12 col-md-8 col-lg-7">
                     <h1 class="font-weight-bold">Contact Us</h1>
                     <p class="lead">
-                        One day however a small line of blind text by the name of Lorem Ipsum decided
-                        to leave for the far World of Grammar.
+                        Feel free to contact us and share anything with us.
                     </p>
                 </div>
             </div>
