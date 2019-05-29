@@ -13,8 +13,30 @@ class MonolithicTest(unittest.TestCase):
     def assertBrowserTitle(self, expected):
         self.assertIn(expected, self.browser.title.lower())
 
+    def assertCurrentUrl(self, expected):
+        self.assertIn(expected, self.browser.current_url.lower())
+
     def assertElementText(self, expected, element):
         self.assertIn(expected, element.text.lower())
+
+    def assertPanelLocked(self, button_id, is_locked):
+        locked = True
+        button = self.browser.find_element_by_id(button_id)
+        button.click()
+        time.sleep(1)
+        self.browser.switch_to.frame(
+            self.browser.find_element_by_id('content-iframe')
+        )
+
+        try:
+            # If error then Error element does not exist -> Unlocked
+            self.browser.find_element_by_id("unverified_text")
+        except:
+            self.browser.switch_to.default_content()
+            locked = False
+
+        self.browser.switch_to.default_content()
+        self.assertEqual(is_locked, locked)
 
     def test_steps(self):
         print()
