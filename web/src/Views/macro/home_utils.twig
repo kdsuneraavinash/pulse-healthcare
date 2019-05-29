@@ -66,7 +66,7 @@
     </div>
 {%- endmacro %}
 
-{% macro about_us_card(image, title,fb,github,linkedin,google) -%}
+{% macro about_us_card(image, title,fb,github,linkedin) -%}
     <div class="col-md-6 col-lg-4 p-3">
         <div class="card p-0" data-aos="flip-left">
             <div style="background-image: url('{{ image }}'); background-size: cover; height: 300px"></div>
@@ -77,13 +77,13 @@
                 </small>
                 <hr/>
                 <div class="row">
-                    <a class="text-primary" href={{ fb }} data-aos="zoom-in"><span
+                    <a class="text-primary" href={{ fb }} target="_blank" data-aos="zoom-in"><span
                                 class="fab fa-facebook fa-2x indigo-text waves-effect p-4"></span> </a>
-                    <a class="text-primary" href="github" data-aos="zoom-in"><span
+                    <a class="text-primary" href={{ github }} target="_blank" data-aos="zoom-in"><span
                                 class="fab fa-github fa-2x blue-text waves-effect p-4"></span> </a>
-                    <a class="text-primary" href="linkedin" data-aos="zoom-in"><span
+                    <a class="text-primary" href={{ linkedin}} target="_blank" data-aos="zoom-in"><span
                                 class="fab fa-linkedin fa-2x blue-text waves-effect p-4"></span> </a>
-                    <a class="text-primary" href="google" data-aos="zoom-in"><span
+                    <a class="text-primary" href="https://www.google.lk/" target="_blank" data-aos="zoom-in"><span
                                 class="fab fa-google fa-2x red-text waves-effect p-4"></span> </a>
                 </div>
             </div>
