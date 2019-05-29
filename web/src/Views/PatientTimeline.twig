@@ -44,9 +44,13 @@
         <div class="timeline">
             <div style="height: 100px"></div>
             {% set left=true %}
+
+
             {% for prescription in prescriptions %}
                 <div class="timeline-container {{ left ? 'left' : 'right' }}">
-                    {{ control_panel.card_start(prescription['date']|date('F j, Y'),  "ignore-triangle content danger") }}
+                    <div class="card red p-3 text-white">{{ prescription['date']|date('F j, Y') }}</div>
+
+
                     {% for medication in prescription['medications'] %}
                         {{ control_panel.card_start("Medication ID: " ~ medication['id']) }}
                         <div class="d-flex justify-content-between">
@@ -65,17 +69,23 @@
                         </h6>
                         {{ control_panel.card_end() }}
                     {% endfor %}
-                    <div class="mt-3 d-flex justify-content-between">
-                        <small class="text-muted">Doctor ID:<a
-                                    href="{{ site }}/showprofile?user={{ prescription['doctor'] }}"
-                                    target="_blank"> {{ prescription['doctor'] }} </a></small>
-                        <small class="text-muted">Prescription ID: {{ prescription['id'] }} </small>
+
+                    <div class="card white py-2 px-3 mt-1">
+                        <div class="d-flex justify-content-between">
+                            <small class="text-dark">Doctor ID:<a
+                                        href="{{ site }}/showprofile?user={{ prescription['doctor'] }}"
+                                        target="_blank"> {{ prescription['doctor'] }} </a></small>
+                            <small class="text-dark">Prescription ID: {{ prescription['id'] }} </small>
+                        </div>
                     </div>
-                    {{ control_panel.card_end() }}
+                    
                 </div>
+
 
                 {% set left=not left %}
             {% endfor %}
+
+
         </div>
     {% endif %}
 </div>
