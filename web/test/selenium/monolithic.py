@@ -32,7 +32,6 @@ class MonolithicTest(unittest.TestCase):
             # If error then Error element does not exist -> Unlocked
             self.browser.find_element_by_id("unverified_text")
         except:
-            self.browser.switch_to.default_content()
             locked = False
 
         self.browser.switch_to.default_content()

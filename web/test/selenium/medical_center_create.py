@@ -1,7 +1,6 @@
 import monolithic
 import time
 import unittest
-from selenium.common.exceptions import NoSuchElementException
 
 
 class TestMedicalCenterRegistration(monolithic.MonolithicTest):
