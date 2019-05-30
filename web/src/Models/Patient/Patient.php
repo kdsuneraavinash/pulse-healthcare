@@ -95,7 +95,7 @@ class Patient extends Account implements ICreatable
      */
     public function getPrescriptions()
     {
-        $prescriptionIds = Database::query("SELECT id from prescriptions where patient_id=:patient_id",
+        $prescriptionIds = Database::query("SELECT id from prescriptions where patient_id=:patient_id ORDER BY date DESC",
             array('patient_id' => $this->getAccountId()));
         $prescriptions = array();
         foreach ($prescriptionIds as $prescriptionId) {
