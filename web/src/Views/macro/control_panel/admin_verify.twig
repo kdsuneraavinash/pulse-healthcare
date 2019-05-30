@@ -1,10 +1,10 @@
 {% macro account_verify_card(account_id, name, phsrc, email,
-    fax, phone_number, address, parsed_address, postal_code, state) -%}
+    fax, phone_number, address, parsed_address, postal_code, state, i) -%}
     {% import  'macro/control_panel/common.twig' as control_panel %}
     <!--suppress HtmlFormInputWithoutLabel, HtmlUnknownTarget -->
     <div data-hash="{{ account_id }}" class="owl-card">
         {{ control_panel.card_start(account_id) }}
-        <h3 class="card-title"><strong>{{ name }}</strong></h3>
+        <h3 class="card-title"><strong id="admin_card_header_{{ i }}">{{ name }}</strong></h3>
         <a href="http://www.phsrc.lk/pages_e.php?id=16" target="_blank"><h5 class="blue-text pb-2">
                 <strong>{{ phsrc }}<i class="fas fa-link ml-2"></i></strong></h5></a>
 
@@ -44,11 +44,12 @@
                         data-target="#modelRetractAccount">Retract
                 </button>
                 <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-account="{{ account_id }}"
+                        id="admin_delete_button_{{ account_id }}"
                         data-target="#modelDeleteConfirm">Delete
                 </button>
             {% elseif (state == '0') %} {# Normal #}
                 <button type="button" class="btn btn-outline-danger" data-account="{{ account_id }}"
-                        data-toggle="modal"
+                        data-toggle="modal" id="admin_reject_button_{{ account_id }}"
                         data-target="#modelRejectConfirm">Reject
                 </button>
                 <button type="button" class="btn btn-outline-success" data-account="{{ account_id }}"
@@ -95,7 +96,8 @@
                                 <input name="account" class="data-account" hidden>
                                 <input name="action" value="{{ action|lower }}" hidden>
                                 <button type="submit" class="btn btn-{{ theme }} waves-effect"
-                                        onclick="window.location='{{ site }}/control/admin/verify'">{{ action }}
+                                        onclick="window.location='{{ site }}/control/admin/verify'"
+                                        id="modal_verification_button_{{ model_id }}">{{ action }}
                                     <i class="fas fa-{{ icon }} ml-1"></i></button>
                             </form>
                             <button type="button" class="btn btn-outline-{{ theme }} waves-effect waves-light"

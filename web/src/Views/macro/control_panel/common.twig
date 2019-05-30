@@ -21,13 +21,19 @@ Sidebar
     </div>
 
     <div>
-        <a href="#" class="waves-effect red-text text-center p-3" id="drawer-close">
+        <a href="#" class="waves-effect white-text text-center p-3" id="drawer-close">
             <strong><i class="fas fa-times mr-3"></i>Close Drawer</strong>
         </a>
         {%- endmacro %}
         {% macro sidebar_end() -%}
     </div>
-
+    <hr/>
+    <div>
+        <form action="{{ site }}/logout" method="post">
+            <button class="list-group-item list-group-item-action waves-effect btn-danger">
+                <i class="fas fa-sign-out-alt mr-3"></i>Sign Out</button>
+        </form>
+    </div>
 </div>
 {%- endmacro %}
 
@@ -39,12 +45,12 @@ Buttons in sidebar
 
 {% macro sidebar_button(text, id, icon, active) -%}
     {% if (active) %}
-        {% set additional_classes = "active rounded black" %}
+        {% set additional_classes = "active rounded amber" %}
     {% else %}
         {% set additional_classes = "light" %}
     {% endif %}
     <button id="{{ id }}"
-            class="list-group-item list-group-item-action waves-effect {{ additional_classes }} sidebar-button">
+            class="list-group-item list-group-item-action waves-effect text-dark {{ additional_classes }} sidebar-button">
         <i class="fas {{ icon }} mr-3"></i>{{ text }}</button>
 {%- endmacro %}
 
@@ -77,9 +83,9 @@ IFrame
         <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
               rel="stylesheet">
         <style>
-            body, main{
-                background-color: #330000;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Cdefs%3E%3CradialGradient id='a' cx='396' cy='281' r='514' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23D18'/%3E%3Cstop offset='1' stop-color='%23330000'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='148' x2='400' y2='333'%3E%3Cstop offset='0' stop-color='%23FA3' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23FA3' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='800' height='400'/%3E%3Cg fill-opacity='0.4'%3E%3Ccircle fill='url(%23b)' cx='267.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='532.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='400' cy='30' r='300'/%3E%3C/g%3E%3C/svg%3E");
+            body, main {
+                background-color: #ffffff;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='600' y1='25' x2='600' y2='777'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%2385d6ff'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='650' y1='25' x2='650' y2='777'%3E%3Cstop offset='0' stop-color='%23f4fbff'/%3E%3Cstop offset='1' stop-color='%236fc8fe'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' gradientUnits='userSpaceOnUse' x1='700' y1='25' x2='700' y2='777'%3E%3Cstop offset='0' stop-color='%23e9f8ff'/%3E%3Cstop offset='1' stop-color='%2359b9fc'/%3E%3C/linearGradient%3E%3ClinearGradient id='d' gradientUnits='userSpaceOnUse' x1='750' y1='25' x2='750' y2='777'%3E%3Cstop offset='0' stop-color='%23def4ff'/%3E%3Cstop offset='1' stop-color='%2343a8fb'/%3E%3C/linearGradient%3E%3ClinearGradient id='e' gradientUnits='userSpaceOnUse' x1='800' y1='25' x2='800' y2='777'%3E%3Cstop offset='0' stop-color='%23d3f0ff'/%3E%3Cstop offset='1' stop-color='%232e96f8'/%3E%3C/linearGradient%3E%3ClinearGradient id='f' gradientUnits='userSpaceOnUse' x1='850' y1='25' x2='850' y2='777'%3E%3Cstop offset='0' stop-color='%23c8ecff'/%3E%3Cstop offset='1' stop-color='%231982f6'/%3E%3C/linearGradient%3E%3ClinearGradient id='g' gradientUnits='userSpaceOnUse' x1='900' y1='25' x2='900' y2='777'%3E%3Cstop offset='0' stop-color='%23bce9ff'/%3E%3Cstop offset='1' stop-color='%230b6eec'/%3E%3C/linearGradient%3E%3ClinearGradient id='h' gradientUnits='userSpaceOnUse' x1='950' y1='25' x2='950' y2='777'%3E%3Cstop offset='0' stop-color='%23b1e5ff'/%3E%3Cstop offset='1' stop-color='%230c5cd4'/%3E%3C/linearGradient%3E%3ClinearGradient id='i' gradientUnits='userSpaceOnUse' x1='1000' y1='25' x2='1000' y2='777'%3E%3Cstop offset='0' stop-color='%23a6e1ff'/%3E%3Cstop offset='1' stop-color='%230c4cbc'/%3E%3C/linearGradient%3E%3ClinearGradient id='j' gradientUnits='userSpaceOnUse' x1='1050' y1='25' x2='1050' y2='777'%3E%3Cstop offset='0' stop-color='%239bddff'/%3E%3Cstop offset='1' stop-color='%230c3ea5'/%3E%3C/linearGradient%3E%3ClinearGradient id='k' gradientUnits='userSpaceOnUse' x1='1100' y1='25' x2='1100' y2='777'%3E%3Cstop offset='0' stop-color='%2390daff'/%3E%3Cstop offset='1' stop-color='%230c318e'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' gradientUnits='userSpaceOnUse' x1='1150' y1='25' x2='1150' y2='777'%3E%3Cstop offset='0' stop-color='%2385d6ff'/%3E%3Cstop offset='1' stop-color='%230b2677'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg %3E%3Crect fill='url(%23a)' width='1200' height='800'/%3E%3Crect fill='url(%23b)' x='100' width='1100' height='800'/%3E%3Crect fill='url(%23c)' x='200' width='1000' height='800'/%3E%3Crect fill='url(%23d)' x='300' width='900' height='800'/%3E%3Crect fill='url(%23e)' x='400' width='800' height='800'/%3E%3Crect fill='url(%23f)' x='500' width='700' height='800'/%3E%3Crect fill='url(%23g)' x='600' width='600' height='800'/%3E%3Crect fill='url(%23h)' x='700' width='500' height='800'/%3E%3Crect fill='url(%23i)' x='800' width='400' height='800'/%3E%3Crect fill='url(%23j)' x='900' width='300' height='800'/%3E%3Crect fill='url(%23k)' x='1000' width='200' height='800'/%3E%3Crect fill='url(%23l)' x='1100' width='100' height='800'/%3E%3C/g%3E%3C/svg%3E");
                 background-attachment: fixed;
                 background-size: cover;
             }
@@ -104,23 +110,24 @@ IFrame
 </main>
 
 {% include "part/scripts.twig" %}
-<script>
-    // Wallpaper dynamic set
-    $(document).ready(function () {
-        // Card Header
-        let pattern = Trianglify({
-            width: 2000,
-            height: 2000,
-            cell_size: 150,
-            x_colors: ['#D84315', '#1565C0', '#000000']
-        });
-        let dataUrl = pattern.canvas().toDataURL();
-        $(".card-header-text").not(".ignore-triangle").css("background-image", 'url(' + dataUrl + ')');
-    });
+{#<script>#}
+{#// Wallpaper dynamic set#}
+{#$(document).ready(function () {#}
+{#// Card Header#}
+{#let pattern = Trianglify({#}
+{#width: 2000,#}
+{#height: 2000,#}
+{#cell_size: 150,#}
+{#x_colors: ['#D84315', '#1565C0', '#000000']#}
+{#});#}
+{#let dataUrl = pattern.canvas().toDataURL();#}
+{#$(".card-header-text").not(".ignore-triangle").css("background-image", 'url(' + dataUrl + ')');#}
+{#});#}
 
-</script>
+{#</script>#}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
@@ -137,8 +144,9 @@ IFrameCards
 */
 
 {% macro card_start(title, color="primary") -%}
-<div class="card my-2 border border-dark">
-    <div class="card-header text-center {{ color }}-color-dark text-white card-header-text">
+<div class="card my-2">
+    <div class="card-header elegant-color-dark text-white">
+        <span class="fa fa-briefcase-medical pr-2"></span>&nbsp;
         {{ title }}
     </div>
     <div class="card-body">

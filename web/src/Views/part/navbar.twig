@@ -10,7 +10,7 @@
         <div class="container">
 
             <!-- Logo -->
-            <a class="navbar-brand pr-3" href="{{ site }}">
+            <a class="navbar-brand pr-3" href="{{ site }}" id="site_logo">
                 <strong>MediKit</strong>
             </a>
 
@@ -54,9 +54,6 @@
                 {% else %}
                     {% import 'macro/common.twig' as common %}
                     {{ common.profile_button(account_id, account_type, site, true) }}
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fas fa-search"></i>
-                    </a>
                 {% endif %}
 
 

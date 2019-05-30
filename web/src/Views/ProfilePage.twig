@@ -30,12 +30,13 @@
                 <div class="row">
                     <div class="col-sm-3 p-3">
                         <div class="red darken-4 text-white p-3 mx-auto text-center rounded-circle"
+                             data-aos="zoom-in"
                              style="height: 125px; width: 125px;">
                             <div class="fa fa-{{ account_icon }} fa-5x"></div>
                         </div>
                     </div>
-                    <div class="col-sm-9 px-5 text-center text-sm-left">
-                        <h4>{{ name }}</h4>
+                    <div class="col-sm-9 px-5 text-center text-sm-left" data-aos="fade-left">
+                        <h4 id="profile_name">{{ name }}</h4>
                         <kbd>[{{ profile_account_id }}]</kbd>
                         <p class="text-muted pt-3">
                             Bio not available.
@@ -46,7 +47,7 @@
 
             <div class="my-5">
                 <div>
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" data-aos="fade-right">
                         <tbody>
 
                         {% if profile_type == "med_center" %}
@@ -138,7 +139,7 @@
         </div>
 
         {% if profile_type != "admin" %}
-            <div class="col-xs-12 col-sm-4 mb-5 text-left">
+            <div class="col-xs-12 col-sm-4 mb-5 text-left"  data-aos="fade-up">
                 <div class="text-left list-group">
                     <div class="list-group-item">
                         <div class="row my-1">

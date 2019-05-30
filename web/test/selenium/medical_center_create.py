@@ -1,37 +1,17 @@
 import monolithic
 import time
 import unittest
-from selenium.common.exceptions import NoSuchElementException
 
 
 class TestMedicalCenterRegistration(monolithic.MonolithicTest):
     def _check_if_in_page_even_after_submit(self):
         self.signUpButton.click()
-        time.sleep(1)
-        self.assertIn('http://localhost:8000/register/medi',
-                      self.browser.current_url.lower())
-
-    def _is_panel_locked(self, idx):
-        button = self.browser.find_element_by_id(idx)
-        button.click()
-
-        time.sleep(2)
-        self.browser.switch_to.frame(
-            self.browser.find_element_by_id('content-iframe'))
-
-        try:
-            # If error then Error element does not exist -> Unlocked
-            self.browser.find_element_by_xpath(
-                "/html/body/div/table/tbody/tr/td/div/div[2]/h1")
-        except NoSuchElementException:
-            self.browser.switch_to.default_content()
-            return True
-        self.browser.switch_to.default_content()
-        return False
+        time.sleep(0.5)
+        self.assertCurrentUrl('http://localhost:8000/register/medi')
 
     def step_01_go_to_registerpage(self):
         self.browser.get('http://localhost:8000/register/medi')
-        self.assertIn('medi center registration', self.browser.title.lower())
+        self.assertBrowserTitle('medi center registration')
 
     def step_02_verify_signup_page(self):
         self.assertIn('medical center registration',
@@ -49,8 +29,7 @@ class TestMedicalCenterRegistration(monolithic.MonolithicTest):
         self.phone_number = self.browser.find_element_by_id('phone_number')
         self.address = self.browser.find_element_by_id('address')
         self.postal = self.browser.find_element_by_id('postal')
-        self.signUpButton = self.browser.find_element_by_css_selector(
-            "body > main > div > section > div > div.border.border-light.col-lg-8.p-0.m-0 > form > div.text-right > button")
+        self.signUpButton = self.browser.find_element_by_id("med_center_register_button")
 
     def step_04_submit_without_data(self):
         self._check_if_in_page_even_after_submit()
@@ -115,55 +94,35 @@ class TestMedicalCenterRegistration(monolithic.MonolithicTest):
     def step_11_submit_and_check_if_redirected(self):
         self.signUpButton.click()
         time.sleep(2)
-        self.assertNotIn('http://localhost:8000/register/medi',
-                         self.browser.current_url.lower())
-        self.assertIn('http://localhost:8000/profile',
-                      self.browser.current_url.lower())
-        profile_name = self.browser.find_element_by_css_selector(
-            "body > div.container.py-5.my-5 > div > div.col-xs-12.col-sm-8 > div:nth-child(1) > div > div.col-sm-9.px-5.text-center.text-sm-left > h4")
-
+        self.assertCurrentUrl('http://localhost:8000/profile')
+        profile_name = self.browser.find_element_by_id("profile_name")
         self.assertIn('selenium tester', profile_name.text.lower())
 
     def step_12_go_to_control_panel(self):
         self.browser.find_element_by_id('profileNav').click()
-
-        control_panel_button = self.browser.find_element_by_css_selector(
-            "#navbar-content > ul > li > div > a:nth-child(2)")
+        control_panel_button = self.browser.find_element_by_id("control_panel_link")
         control_panel_button.click()
         time.sleep(2)
-        self.assertNotIn('http://localhost:8000/profile',
-                         self.browser.current_url.lower())
-        self.assertIn('http://localhost:8000/control/med_center',
-                      self.browser.current_url.lower())
+        self.assertCurrentUrl('http://localhost:8000/control/med_center')
 
     def step_13_register_patient_locked(self):
-        unlocked = self._is_panel_locked("register/doctor")
-        self.assertFalse(unlocked)
+        self.assertPanelLocked("register/doctor", True)
 
     def step_14_register_doctors_locked(self):
-        unlocked = self._is_panel_locked("register/patient")
-        self.assertFalse(unlocked)
+        self.assertPanelLocked("register/patient", True)
 
     def step_15_search_doctors_unlocked(self):
-        unlocked = self._is_panel_locked("search/doctor")
-        self.assertTrue(unlocked)
+        self.assertPanelLocked("search/doctor", False)
 
     def step_16_search_patients_unlocked(self):
-        unlocked = self._is_panel_locked("search/patient")
-        self.assertTrue(unlocked)
+        self.assertPanelLocked("search/patient", False)
 
     def step_17_logout(self):
         self.browser.find_element_by_id('profileNav').click()
-
-        logout_button = self.browser.find_element_by_css_selector(
-            "body > header > div > div.text-center.pb-4.text-white > ul > li > div > a:nth-child(3)")
+        logout_button = self.browser.find_element_by_id("profile_logout")
         logout_button.click()
-
         time.sleep(2)
-        self.assertNotIn('http://localhost:8000/control/med_center',
-                         self.browser.current_url.lower())
-        self.assertIn('http://localhost:8000',
-                      self.browser.current_url.lower())
+        self.assertCurrentUrl('http://localhost:8000')
 
 
 if __name__ == '__main__':

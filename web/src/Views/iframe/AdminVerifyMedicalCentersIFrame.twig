@@ -9,6 +9,7 @@
 
 <div class="row p-4">
     <div class="owl-carousel owl-theme">
+        {% set i = 0 %}
         {% for item in medical_centers %}
             {{ admin_verify.account_verify_card(
                 item['account_id'],
@@ -20,8 +21,10 @@
                 item['address'],
                 item['parsed_address'],
                 item['postal_code'],
-                item['verified']
+                item['verified'],
+                i
             ) }}
+            {% set i = i + 1 %}
         {% endfor %}
     </div>
 
